@@ -80,8 +80,9 @@ In the following section we demonstate the application of this approach for diff
 \subsection{Three-Pool Model}
 
 Consider for simplicity the system where only one bacteria species is present $N=1$.
-According to the growth curves (\cmt{some references on bacteria growth curves??}) quite often at the beginning no increase in bacterial count is present and so-called lag-phase is observed.
+According to the growth curves (\cmt{some references on bacteria growth curves??}) \cite{buchananLifePhasesBacterial1918, rolfeLagPhaseDistinct2012} quite often at the beginning no increase in bacterial count is present and so-called lag-phase is observed.
 This phenomenon appears due to adaptation of the microbial community, for example, to the new environmental conditions.
+\cmt{\cite{rolfeLagPhaseDistinct2012}: About Lag-phase machanisms.}
 After this some bacteria enter the exponential growth phase, while some of it may not be able to adjust and experience the cell death.
 Some bacteria even may not be able to adjust and die other will enter the exponential growth phase after a lag phase. 
 After exponential growth the system reaches the saturation where the balance between the number of dying bacteria is in balance with the growing one leads to the stationary state.
@@ -129,7 +130,8 @@ Then the ODEs describing such a model can be written as
 
 Based on experimental observations, it was shown that the bacterial growth is strongly influenced by the limiting resource. \cmt{ref review}
 In the system where all needed nutritients are in excess except for one the total growth is linear to the conentration of this liminting nutritient. \cmt{ref Monod}
-\cmt{Ref about Quorum sensing. Signalling mechanism that controll gene expression (bacteria growth within species) in response to environment. }
+\cite{monodGrowthBacterialCultures1949}
+\cmt{Ref about Quorum sensing. Signalling mechanism that controll gene expression (bacteria growth within species) in response to environment. \cite{ngBacterialQuorumsensingNetwork2009}}
 
 According to this, we aim to include a resource pool which is used by the growing bacteria using the second order kinetic reaction:
 \begin{equation}
@@ -286,12 +288,15 @@ The ordinary differential equations for the pool model with environmental-shock 
 \section{Interaction between species}
 
 As it was mentioned above, bacteria usually coexist in large multispecies interacting communities whose growth is vastly determined by the developed survival mechanisms.
-These survival mechanisms mostly aim to secure as much available nutrition which lead to competitive strategies or, if it is advantageous, cooperative ones.
+These survival mechanisms mostly aim to secure as much available nutrition which lead to competitive strategies or, if it is advantageous, cooperative ones. \cite{hibbingBacterialCompetitionSurviving2010, stubbendieckBacterialCommunitiesInteractions2016} \cmt{Both good reviews on bacterial interaction}
 Further we show that the TPM can be readily extended to the systems with more than one bacteria an take describe more complex relationships between species. 
+
+\cmt{\cite{h.tusonBacteriaSurfaceInteractions2013}: Attachment of bacteria to surfaces. (One of the mechanisms to stick to the areas with nutritients)}
 
 \subsection{Resource Competition}
 
-One on the ways to descibe competition between bacteria populations is as a function of limiting resources ratio. \cmt{Ref Tilman 1977, Ref Smith 2002}
+One on the ways to descibe competition between bacteria populations is as a function of limiting resources ratio. 
+\cmt{Ref Tilman 1977 \cite{tilmanResourceCompetitionPlankton1977}, Ref Smith 2002 \cite{smithEffectsResourceSupplies2002}}
 To descibe such a situation we consider for simplicity only one common limiting resource pool. 
 The simplest pool model for bacterial species $A$ and $B$ encompassing lag-phases, growth-phases and a common resource pool is given by (no back-flow to the lag-pool):
 
@@ -360,6 +365,8 @@ However, except the inhibition due to resource competition, bacteria developed d
 One of the examples of such mechanisms is a production of the antimicrobial compounds, which can be also called antibiotics or inhibitors.
 
 \cmt{Read how this antibiotics affect the system. Which eq form to use?}
+
+\cmt{\cite{lenskiCoexistenceTwoCompetitors1986}: Modelling of the 2 sp. system with 1resource and 1 inhibitor.}
 
 Now extend our model where bacteria not only consume nutritions from resource pool $R$ but one of the species also actively produce the inhibiting compounds $I$. 
 It is the accumulation of the bacteria waste which is responsible for the spoilage of food products. 
@@ -431,6 +438,8 @@ On the other hand, one can also observe some cooperative behaviours between spec
 Quite often it happens between the species that are close relatives or clonal populations and such process is called kin selection. \cmt{Ref 25 from review}
 Sometimes neighbours, so-called 'social cheaters', can benefit from a certain behaviour without expressing it by itself.  \cmt{Ref 29 from review}
 
+\cmt{\cite{rochaBaseCompositionBias2002}: Symbiosis host/bacteria. bacterial genomes suffering reductive evolution due to this. Maybe it's connected with 'social cheaters'?}
+
 The benefit, or mutual activation, of the two species from the presence of the other can be simply introduced by mathematical functions. 
 For sake of clarity we omit again the lag pool and write:
 \begin{eqnarray}
@@ -452,5 +461,6 @@ $W_A$ and $W_B$ denote the substance produced by species A and B, respectively. 
 
 \section{Conclusion}
 
+\bibliography{references}
 
 \end{document}
