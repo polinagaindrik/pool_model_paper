@@ -32,6 +32,9 @@ Activation/inhibition/waste production, resource competition, back-flow to lag-p
 
 ...
 
+\cmtb{Maybe add here motivations about bacteria states: So toy system where we can eliminate states (sum and get F(n1, n2)).
+And describe it initially without states/1state. Get the difference.}
+
 \cmtb{Maybe Example from Seminar by Jens? 2 species,  1 resource, 1 waste production.}
 
 \section{General Mathemetical Formulation}
@@ -80,14 +83,18 @@ In the following section we demonstate the application of this approach for diff
 \subsection{Three-Pool Model}
 
 Consider for simplicity the system where only one bacteria species is present $N=1$.
-According to the growth curves (\cmt{some references on bacteria growth curves??}) \cite{buchananLifePhasesBacterial1918, rolfeLagPhaseDistinct2012} quite often at the beginning no increase in bacterial count is present and so-called lag-phase is observed.
+The bacterial growth curves usually consists of different consecutive phases~\cite{buchanan_when_1997}.
+At the beginning no increase in bacterial count is present and so-called lag-phase is observed.
 This phenomenon appears due to adaptation of the microbial community, for example, to the new environmental conditions.
-\cmt{\cite{rolfeLagPhaseDistinct2012}: About Lag-phase machanisms.}
-After this some bacteria enter the exponential growth phase, while some of it may not be able to adjust and experience the cell death.
-Some bacteria even may not be able to adjust and die other will enter the exponential growth phase after a lag phase. 
-After exponential growth the system reaches the saturation where the balance between the number of dying bacteria is in balance with the growing one leads to the stationary state.
+This so-called preparation to the exponential growth includes synthesys of the needed compounds, initiation of the transciption~\cite{rolfe_lag_2012} and poorly studied physiological and regulatory mechanisms~\cite{monod_growth_1949,}
+\cmt{For example, in Baranyi and Roberts modelling of lag-phase ???(maybe add).}
+After this, the succeeded in adaptation bacteria enter the exponential growth phase, where the process of cell division is directly happening \cmt{Add Ref}.
+When the nutrition is exhausted by the growing bacteria, the stationary state of the growth curve occurres.
+In this state the cultures accumulate waste products of metabolitic activity that leads to cell death of the bacteria.
+At the same time dying cells release the nutritions for survivors to continue growing.
+As a result the balance between the growing and dyuing processes leads to the constant with time bacterial count~\cite{navarro_llorens_stationary_2010}.
 In the described simplified version of the real-life system three possible bacteria states are mentioned corresponding to which process is happeng: adaplation, growth or death.
-Motivated by this we divide a bacterial population into three pools (states) (\textbf{Figure \ref{SchematicRep}}): 
+Motivated by this we divide a bacterial population into three pools (states) (\textbf{Figure \ref{fig:SchematicRep}}): 
 \begin{itemize}
 \item $L(t)$: the fraction of the population in the lag phase
 \item $G(t)$: the fraction of the population growing and dividing
@@ -99,7 +106,7 @@ Here the concentrations of the pools are components of our variable vector $\mbx
     \begin{center}
     \includegraphics[width=0.7\textwidth]{Figures/TPM_fig.pdf}
     \caption{Schematic representation of exchange between three states or pools.}
-    \label{SchematicRep}
+    \label{fig:SchematicRep}
     \end{center}
     \end{figure}
 
@@ -128,11 +135,12 @@ Then the ODEs describing such a model can be written as
 
 \subsubsection{Resource Dependence}
 
-Based on experimental observations, it was shown that the bacterial growth is strongly influenced by the limiting resource. \cmt{ref review}
-In the system where all needed nutritients are in excess except for one the total growth is linear to the conentration of this liminting nutritient. \cmt{ref Monod}
-\cite{monodGrowthBacterialCultures1949}
-\cmt{Ref about Quorum sensing. Signalling mechanism that controll gene expression (bacteria growth within species) in response to environment. \cite{ngBacterialQuorumsensingNetwork2009}}
+Based on experimental observations, it was shown that the bacterial growth is strongly influenced by the limiting resource.
+In the system where all needed nutritients are in excess except for one the total growth is linear to the conentration of this liminting nutritient~\cite{hibbing_bacterial_2010, monod_growth_1949}.
+The controll of the population density with respect to the available nutritions is implemented using cell communication process called quorum sensing. 
+Using release of the extracellular signalling molecules (autoinducers) it is possible to synchronize the gene expression of the whole group~\cite{ng_bacterial_2009}.
 
+We would not dive into the processes of quorum sensing and try to keep it as simple as possible.
 According to this, we aim to include a resource pool which is used by the growing bacteria using the second order kinetic reaction:
 \begin{equation}
     G + R_0  \stackrel{\alpha_0}{\longrightarrow} 2G.
@@ -241,6 +249,8 @@ $\lambda$ is the rate by which cells go from the lag phase to the growth phase; 
 
 \subsection{Back flow from G to L}
 
+\cmt{Look into this!}
+
 We explore now the idea that under certain conditions, as sudden change in the environment, part of the population $G$ will enter a lag-phase, i.e., there is a back-flow from $G$ to $L$. 
 \begin{eqnarray}
 L &\stackrel{\lambda}{\longrightarrow} & G\\
@@ -288,15 +298,13 @@ The ordinary differential equations for the pool model with environmental-shock 
 \section{Interaction between species}
 
 As it was mentioned above, bacteria usually coexist in large multispecies interacting communities whose growth is vastly determined by the developed survival mechanisms.
-These survival mechanisms mostly aim to secure as much available nutrition which lead to competitive strategies or, if it is advantageous, cooperative ones. \cite{hibbingBacterialCompetitionSurviving2010, stubbendieckBacterialCommunitiesInteractions2016} \cmt{Both good reviews on bacterial interaction}
+These survival mechanisms mostly aim to secure as much available nutrition which lead to competitive strategies or, if it is advantageous, cooperative ones~\cite{hibbing_bacterial_2010, stubbendieck_bacterial_2016}.
 Further we show that the TPM can be readily extended to the systems with more than one bacteria an take describe more complex relationships between species. 
 
-\cmt{\cite{h.tusonBacteriaSurfaceInteractions2013}: Attachment of bacteria to surfaces. (One of the mechanisms to stick to the areas with nutritients)}
 
 \subsection{Resource Competition}
 
-One on the ways to descibe competition between bacteria populations is as a function of limiting resources ratio. 
-\cmt{Ref Tilman 1977 \cite{tilmanResourceCompetitionPlankton1977}, Ref Smith 2002 \cite{smithEffectsResourceSupplies2002}}
+One on the ways to descibe competition between bacteria populations is as a function of limiting resources ratio~\cite{tilman_resource_1977, smith_effects_2002}.
 To descibe such a situation we consider for simplicity only one common limiting resource pool. 
 The simplest pool model for bacterial species $A$ and $B$ encompassing lag-phases, growth-phases and a common resource pool is given by (no back-flow to the lag-pool):
 
@@ -329,7 +337,11 @@ In order to better see this, we set $L_A=L_B=0$:
 \label{Comp_Model}
 \dot{G}_A &=& \alpha_A G_A\left(1 - \frac{G_A}{N_t}\right ) - \frac{\alpha_A}{N_t}G_AG_B\\
 \dot{G}_B &=& \alpha_B G_B\left(1-\frac{G_B}{N_t}\right ) -\frac{\alpha_B}{N_t}G_AG_B. 
+\label{eq:LV_simple}
 \end{eqnarray} 
+
+Equations (\ref{eq:LV_simple}) are basically competitive Lotka-Volterra equations that are widely used in ecological studies and show the principle of competive excursion.
+That principle claims that two species in competition for the same resource cannot coexist~\cite{wangersky_lotka-volterra_1978}. 
 
 For $N_t\gg\alpha_{A/B}$ the equations decouple. 
 The null-clines of the system given by Eqs. \ref{Model_Comp1} - \ref{Model_Comp4} coincide and are given by $N_t=L_A+G_A+L_B+G_B$. 
@@ -359,6 +371,8 @@ Non-linear functional responses can be introduced without any problem (see how s
 
 \cmt{Plots / results}
 
+\cmtb{Look papers on modelling of the LV in bacterial communities. Did anyone do the same as we??}
+
 \subsection{Interspecies Competition}
 
 However, except the inhibition due to resource competition, bacteria developed differnt others active competition mechanisms.
@@ -366,7 +380,7 @@ One of the examples of such mechanisms is a production of the antimicrobial comp
 
 \cmt{Read how this antibiotics affect the system. Which eq form to use?}
 
-\cmt{\cite{lenskiCoexistenceTwoCompetitors1986}: Modelling of the 2 sp. system with 1resource and 1 inhibitor.}
+\cmt{\cite{lenski_coexistence_1986}: Modelling of the 2 sp. system with 1resource and 1 inhibitor.}
 
 Now extend our model where bacteria not only consume nutritions from resource pool $R$ but one of the species also actively produce the inhibiting compounds $I$. 
 It is the accumulation of the bacteria waste which is responsible for the spoilage of food products. 
@@ -435,10 +449,11 @@ We can separate three cases:
 \subsection{Interspecies Cooperation}
 
 On the other hand, one can also observe some cooperative behaviours between species in case when it facilitates the competition with others.
-Quite often it happens between the species that are close relatives or clonal populations and such process is called kin selection. \cmt{Ref 25 from review}
-Sometimes neighbours, so-called 'social cheaters', can benefit from a certain behaviour without expressing it by itself.  \cmt{Ref 29 from review}
+Quite often it happens between the species that are close relatives or clonal populations and such process is called kin selection \cite{west_social_2007}.
+Sometimes neighbours, so-called 'social cheaters', can benefit from a certain behaviour without expressing it by itself \cite{rainey_evolution_2003}.
 
-\cmt{\cite{rochaBaseCompositionBias2002}: Symbiosis host/bacteria. bacterial genomes suffering reductive evolution due to this. Maybe it's connected with 'social cheaters'?}
+\cmt{\cite{rocha_base_2002}: Symbiosis host/bacteria. bacterial genomes suffering reductive evolution due to this. 
+Maybe it's connected with 'social cheaters'?}
 
 The benefit, or mutual activation, of the two species from the presence of the other can be simply introduced by mathematical functions. 
 For sake of clarity we omit again the lag pool and write:
@@ -449,7 +464,9 @@ For sake of clarity we omit again the lag pool and write:
 \dot{W}_A &=& \mathcal{F}_A(R,G_A)\\
 \dot{W}_B &=& \mathcal{F}_B(R,G_B).
 \end{eqnarray}
-$W_A$ and $W_B$ denote the substance produced by species A and B, respectively. The functions $\mathcal{B}_A(W_B,R)$ and $\mathcal{B}_B(W_A,R)$ capture the resource dependent growth. Setting $\mathcal{B}_A(W_B,R)=\alpha_A W_BR$, $\mathcal{B}_B(W_A,R)=\alpha_B W_AR$, $\mathcal{F}_A(R,G_A)=\kappa_A RG_A$, $\mathcal{F}_B(R,G_B)=\kappa_B RG_B$, rescaling $G_A$, $G_B$, and $W_B$ with $N_t$, $W_A$ with $\kappa_A/\alpha_A$, time with $\alpha_AN_t^2$, defining $\phi=\kappa_A\alpha_B/(\alpha_A^2N_t)$, and $\psi=\kappa_B/(\alpha_A N_t)$ results in: 
+$W_A$ and $W_B$ denote the substance produced by species A and B, respectively. 
+The functions $\mathcal{B}_A(W_B,R)$ and $\mathcal{B}_B(W_A,R)$ capture the resource dependent growth. 
+Setting $\mathcal{B}_A(W_B,R)=\alpha_A W_BR$, $\mathcal{B}_B(W_A,R)=\alpha_B W_AR$, $\mathcal{F}_A(R,G_A)=\kappa_A RG_A$, $\mathcal{F}_B(R,G_B)=\kappa_B RG_B$, rescaling $G_A$, $G_B$, and $W_B$ with $N_t$, $W_A$ with $\kappa_A/\alpha_A$, time with $\alpha_AN_t^2$, defining $\phi=\kappa_A\alpha_B/(\alpha_A^2N_t)$, and $\psi=\kappa_B/(\alpha_A N_t)$ results in: 
 \begin{eqnarray}
 \dot{G}_A &=& W_BG_A\left(1 - G_A-G_B\right )\\
 \dot{G}_B &=& \phi W_AG_B\left(1 - G_A-G_B\right )\\
@@ -457,10 +474,23 @@ $W_A$ and $W_B$ denote the substance produced by species A and B, respectively. 
 \dot{W}_B &=&\psi G_B\left(1 - G_A-G_B\right ).
 \end{eqnarray}
 
+\section{Spatial Limitations}
 
+\cmtb{Maybe as motivation can be spatial competitive mechanisms as adhesion to survaces and motility. 
+So how much including these effects will affect system.}
+
+\cmt{\cite{htuson_bacteriasurface_2013}: Attachment of bacteria to surfaces. (One of the mechanisms to stick to the areas with nutritients)}
+
+
+\cmtb{We can take some toy model (e.g the one from group seminar) and do agent-based simulation. (add spatial component)
+Then from this simulation we sum bacteria and get growth curves.
+And using our model equations we get also growth curves.
+And find prob diffusion coef, maybe rates where model works fine.
+For sim maybe we will need to name specific bacteria species. (maybe nicer)}
 
 \section{Conclusion}
 
-\bibliography{references}
+\newpage
+\printbibliography
 
 \end{document}
