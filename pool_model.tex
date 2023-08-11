@@ -331,7 +331,7 @@ Inserting Eq. \ref{Resource} into Eqs. \ref{Model_Comp1} - \ref{Model_Comp4} yie
 \dot{G}_B &=& \lambda_B L_B - \frac{\lambda_B}{N_t}\left(L_A+G_A+L_B+G_B\right )L_B  +\alpha_B G_B -\frac{\alpha_B}{N_t}\left(L_A+G_A+L_B+G_B\right )G_B
 \end{eqnarray*}
 
-which has the structure of a generalised Lotka-Volterra system. \cmt{Add reference about Lotka-Volterra. Compare with different states LV.}
+which has the structure of a generalised Lotka-Volterra system (gLV). \cmt{Add reference about Lotka-Volterra. Compare with different states LV.}
 In order to better see this, we set $L_A=L_B=0$: 
 \begin{eqnarray}
 \label{Comp_Model}
@@ -342,6 +342,8 @@ In order to better see this, we set $L_A=L_B=0$:
 
 Equations (\ref{eq:LV_simple}) are basically competitive Lotka-Volterra equations that are widely used in ecological studies and show the principle of competive excursion.
 That principle claims that two species in competition for the same resource cannot coexist~\cite{wangersky_lotka-volterra_1978}. 
+In previous studies it was shown that gLV equations can be sucessfully applied to predict the microbial community dynamics, determine different types of the pairwise interspecies interactions~\cite{dedrick_when_2023, stein_ecological_2013, venturelli_deciphering_2018, hoffmann_power_2007}.
+In food studies the gLV was applied by Mounier \etal~\cite{mounier_microbial_2008} to study interactions of 6 bacteria species  with yeast omissin in cheese.
 
 For $N_t\gg\alpha_{A/B}$ the equations decouple. 
 The null-clines of the system given by Eqs. \ref{Model_Comp1} - \ref{Model_Comp4} coincide and are given by $N_t=L_A+G_A+L_B+G_B$. 
@@ -414,16 +416,21 @@ For sake of simplicity we ignore the lag pool and write for a mutual inhibition:
 \dot{G}_A &=& \mathcal{B}_A(G_B)G_A\left(1 - \frac{G_A+G_B}{N_t}\right )\\
 \dot{G}_B &=& \mathcal{B}_B(G_A) G_B\left(1-\frac{G_A+G_B}{N_t}\right ). 
 \end{eqnarray}
-The function $\mathcal{B}_{A/B}$ captures the inhibiting effects in an effective way. It is straight forward to make the mechanism of inhibition more explicit by, e.g., introducing a waste pool. One possible choice for $\mathcal{B}$ is: 
+The function $\mathcal{B}_{A/B}$ captures the inhibiting effects in an effective way. 
+It is straight forward to make the mechanism of inhibition more explicit by, e.g., introducing a waste pool. 
+One possible choice for $\mathcal{B}$ is: 
 \begin{eqnarray}
 \mathcal{B}(G)&=&\frac{\alpha}{1+KG}. 
 \end{eqnarray}
-This corresponds to the case $W\sim G$, where $W$ is the waste (or whatever one chooses to call it) of species A affecting species B. If the waste accumulates one needs to replace $G$ by $\int G dt$. Keeping it simple yields:
+This corresponds to the case $W\sim G$, where $W$ is the waste (or whatever one chooses to call it) of species A affecting species B. 
+If the waste accumulates one needs to replace $G$ by $\int G dt$. Keeping it simple yields:
 \begin{eqnarray}
 \dot{G}_A &=& \frac{\alpha_A G_A}{1+K_BG_B}\left(1 - \frac{G_A+G_B}{N_t}\right )\\
 \dot{G}_B &=& \frac{\alpha_B G_B}{1+K_AG_A}\left(1-\frac{G_A+G_B}{N_t}\right ). 
 \end{eqnarray}
-One can distinguish two limiting cases: {\it i}) $K_{A/B}\ll N_t$ and {\it ii}) $K_{A/B}\gg N_t$. In the first case the inhibition is of minor importance and could be ignored. In the latter case one can simplify the equations, given $n_A$ and $n_B$ are non-zero:
+One can distinguish two limiting cases: {\it i}) $K_{A/B}\ll N_t$ and {\it ii}) $K_{A/B}\gg N_t$. 
+In the first case the inhibition is of minor importance and could be ignored. 
+In the latter case one can simplify the equations, given $n_A$ and $n_B$ are non-zero:
 \begin{eqnarray}
 \label{Mut_Inhib}
 \dot{G}_A &=&\tilde{\alpha}_A\frac{G_A}{G_B}\left(1 - G_A-G_B\right )\\
