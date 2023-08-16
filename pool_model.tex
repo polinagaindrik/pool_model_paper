@@ -137,7 +137,7 @@ Then the ODEs describing such a model can be written as
 
 Based on experimental observations, it was shown that the bacterial growth is strongly influenced by the limiting resource.
 In the system where all needed nutritients are in excess except for one the total growth is linear to the conentration of this liminting nutritient~\cite{hibbing_bacterial_2010, monod_growth_1949}.
-The controll of the population density with respect to the available nutritions is implemented using cell communication process called quorum sensing. 
+The control of the population density with respect to the available nutritions is implemented using cell communication process called quorum sensing. 
 Using release of the extracellular signalling molecules (autoinducers) it is possible to synchronize the gene expression of the whole group~\cite{ng_bacterial_2009}.
 
 We would not dive into the processes of quorum sensing and try to keep it as simple as possible.
@@ -249,7 +249,14 @@ $\lambda$ is the rate by which cells go from the lag phase to the growth phase; 
 
 \subsection{Back flow from G to L}
 
-\cmt{Look into this!}
+Due to the life in rather unfavourable conditions bacteria developed different surviving mechanisms, one of which is adapting their metabolism and transitioning into dormant state.
+By defeinition dormancy in bacteria is a reversible state where cell continue living with low metabolic activity while the cell division stops~\cite{kaprelyants_dormancy_1993}. 
+This survival strategy can appear in response to different external stresses, e.g., nutritient deficiency, temperature stress or extreme fluctuations of environment parameters.
+And after "difficult times" bacteria, also called viable but non-culturable(VBNC), can continue cell division~\cite{kell_viability_1998}.
+The models including transition of bacteria to the dormant state were proposed and studied by Bär \etal~\cite{bar_modelling_2002} and Jones and Lennon~\cite{jones_dormancy_2010}.
+
+\cmt{So now is it better to use flow to dormancy instead?}
+
 
 We explore now the idea that under certain conditions, as sudden change in the environment, part of the population $G$ will enter a lag-phase, i.e., there is a back-flow from $G$ to $L$. 
 \begin{eqnarray}
@@ -263,6 +270,9 @@ The rate $\gamma(t)$ depends on the rate of change of the environment. Stronger 
 Let the change in the environment be in temperature $T$ (\textbf{Figure \ref{default}}).
 
 \subsubsection{Maxwell type of stress - strain relation}
+
+One of the reasons of the dormant state appearence can be also the temperature shift~\cite{oliver_viable_1995}.
+
 We propose a kind of visco-elastic Maxwell type of stress-strain relation and write down the ordinary differential equation for $\gamma$ to be:
 \begin{eqnarray}
 \dot{\gamma} &=& \Gamma \left |\dot{T}\right |-\delta \gamma.
