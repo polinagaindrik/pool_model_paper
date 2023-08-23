@@ -39,13 +39,13 @@ And describe it initially without states/1state. Get the difference.}
 
 \section{General Mathemetical Formulation}
 Consider the system conssisting of $N$ species in $M$ different states.
-In the general representation the system can be described with the Ordinary Differential Equations (ODEs) using a non-linear function $\mbF$:
+In the general representation, the system can be described with the Ordinary Differential Equations (ODEs) using a non-linear function $\mbF$:
 \begin{equation}
    \dot{\mbx} = \mbF(\mbx, \mbm, \mbp, \mbu),
    \label{eq:model_ODE}
 \end{equation}
 where  $\mbx \in \mathbb{R}^{N}  \otimes \mathbb{R}^{M}$ is a vector descibing bacterial count.
-In a matrix form it can be written as
+In matrix form it can be written as
 \begin{equation}
     \mbx = \begin{pmatrix}
         x^1_1  & \dots & x^1_M  \\
@@ -64,7 +64,7 @@ The vector $\mbm \in \mathbb{R}^{K}$ includes all variables corresponding to the
 Here function $\mbH$ is in general case also non-linear.
 
 The advantage of the following formulation is its generality. 
-Depending on the knowledge about system as well as the needed level of accuracy one can define arbitrary number of states $M$ and control the complexity of teh model.
+Depending on the knowledge about the system as well as the needed level of accuracy one can define an arbitrary number of states $M$ and control the complexity of the model.
 Moreover, opposite to the already known Predictive Microbiology like Baranyi and Roberts one can easily change.
 
 To calculate the bacterial count for one species $i$, we simply need to sum the tensor/vector $\mbx$ over all possible states:
@@ -249,10 +249,10 @@ $\lambda$ is the rate by which cells go from the lag phase to the growth phase; 
 
 \subsection{Back flow from G to L}
 
-Due to the life in rather unfavourable conditions bacteria developed different surviving mechanisms, one of which is adapting their metabolism and transitioning into dormant state.
+Due to its life in rather unfavourable conditions bacteria developed different surviving mechanisms, one of which is adapting their metabolism and transitioning into dormant state.
 By defeinition dormancy in bacteria is a reversible state where cell continue living with low metabolic activity while the cell division stops~\cite{kaprelyants_dormancy_1993}. 
 This survival strategy can appear in response to different external stresses, e.g., nutritient deficiency, temperature stress or extreme fluctuations of environment parameters.
-And after "difficult times" bacteria, also called viable but non-culturable(VBNC), can continue cell division~\cite{kell_viability_1998}.
+And after "difficult times" bacteria, also called viable but non-culturable (VBNC), can continue cell division~\cite{kell_viability_1998}.
 The models including transition of bacteria to the dormant state were proposed and studied by Bär \etal~\cite{bar_modelling_2002} and Jones and Lennon~\cite{jones_dormancy_2010}.
 
 \cmt{So now is it better to use flow to dormancy instead?}
@@ -272,8 +272,8 @@ Let the change in the environment be in temperature $T$ (\textbf{Figure \ref{def
 \subsubsection{Maxwell type of stress - strain relation}
 
 One of the reasons of the dormant state appearence can be also the temperature shift~\cite{oliver_viable_1995}.
-
-We propose a kind of visco-elastic Maxwell type of stress-strain relation and write down the ordinary differential equation for $\gamma$ to be:
+Moreover, the rapid shift in temperature is associated with the appearence of an additional lag phase~\cite{zwietering_modeling_1994}.
+To model it we propose a kind of visco-elastic Maxwell type of stress-strain relation and write down the ordinary differential equation for $\gamma$ to be:
 \begin{eqnarray}
 \dot{\gamma} &=& \Gamma \left |\dot{T}\right |-\delta \gamma.
 \end{eqnarray}
@@ -492,6 +492,8 @@ Setting $\mathcal{B}_A(W_B,R)=\alpha_A W_BR$, $\mathcal{B}_B(W_A,R)=\alpha_B W_A
 \end{eqnarray}
 
 \section{Spatial Limitations}
+
+
 
 \cmtb{Maybe as motivation can be spatial competitive mechanisms as adhesion to survaces and motility. 
 So how much including these effects will affect system.}
