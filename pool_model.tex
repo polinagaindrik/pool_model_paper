@@ -108,7 +108,7 @@ Here the concentrations of the pools are components of our variable vector $\mbx
     \caption{Schematic representation of exchange between three states or pools.}
     \label{fig:SchematicRep}
     \end{center}
-    \end{figure}
+\end{figure}
 
 To detremine the function $\mbF(\mbx, \mbm, \mbp, \mbu)$ consider the flows between different states.
 The pools $G$ and $D$ are unidirectionally connected with the pool $L$. 
@@ -500,12 +500,79 @@ So how much including these effects will affect system.}
 
 \cmt{\cite{htuson_bacteriasurface_2013}: Attachment of bacteria to surfaces. (One of the mechanisms to stick to the areas with nutritients)}
 
+To test the spatial limitations of the described above approach consider the system consisting from two bacterial species thet can be described bt two internal states: lag and growth states. 
+Both of these species grow using limiting resource pool $R$ with different growth constants $\alpha$ and different lengths of lag phase determined by parameter $\lambda$.
+Moreover, the species 1 is able to release a certain antimicrobial component $I$ that shows inhibitory effect on species 2.
+The ODEs the bacterial population can be written as: 
+\begin{equation}
+    \begin{cases}
+        \dot{L_1} = -\lambda_1 R L_1\\
+        \dot{G_1} = \lambda_1 R L_1 + \alpha_1 R G_1\\
+        \dot{L_2} = -\lambda_2 R L_2\\
+        \dot{G_2} = \lambda_2 R L_2 + \frac{\alpha_2}{1 + \mu_I I} R G_2\\
+    \end{cases}.
+    \label{eq:spatial_limit_F}
+\end{equation}
 
-\cmtb{We can take some toy model (e.g the one from group seminar) and do agent-based simulation. (add spatial component)
-Then from this simulation we sum bacteria and get growth curves.
-And using our model equations we get also growth curves.
-And find prob diffusion coef, maybe rates where model works fine.
-For sim maybe we will need to name specific bacteria species. (maybe nicer)}
+The microenvironment of our system contains the resource and the inhibitor molecules:
+\begin{equation}
+    \begin{cases}
+        \dot{R} = -\frac{\alpha_1}{N_t} R G_1-\frac{\alpha_2}{N_t} R G_2 \\
+        \dot{I} = \kappa G_1
+    \end{cases}.
+    \label{eq:spatial_limit_H}
+\end{equation}
+
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccc}
+    \specialrule{.1em}{.01em}{.05em} 
+    \textbf{Parameter} \hspace{3mm} & \textbf{Value} \hspace{3mm} & \textbf{Units}\\
+    \toprule
+    $\lambda_1$ & 0.008  & [time$^{-1}$]                 \\
+    $\lambda_2$ & 0.005  & [time$^{-1}$]                 \\
+    $\alpha_1$  & 4.0    & [time$^{-1}$]                 \\
+    $\alpha_2$  & 5.0    & [time$^{-1}$]                 \\
+    $\kappa$    & 0.1    & [(cell $\cdot$ time)$^{-1}$]  \\
+    $\mu_I$     & 0.1    & [cell$^{-1}$]                 \\
+    $N_t$       & $10^4$ & [cell]                        \\
+    \bottomrule
+    \end{tabular}
+    \caption{{\footnotesize The list of the parameters of the system.}}
+    \label{tab:spatial_limit_param}
+\end{table}
+
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccc}
+    \specialrule{.1em}{.01em}{.05em} 
+    \textbf{Variable} \hspace{3mm} & \textbf{Initial Value} \hspace{3mm} & \textbf{Units}\\
+    \toprule
+    $L_1$ & 5.0 & [cell]        \\
+    $G_1$ & 0.0 & [cell]        \\
+    $L_2$ & 5.0 & [cell]        \\
+    $G_2$ & 0.0 & [cell]        \\
+    $R$   & 1.0 & [cell/cell]   \\
+    $I$   & 0.0 & [cell]        \\
+    \bottomrule
+    \end{tabular}
+    \caption{{\footnotesize The list of the initial values of the system.}}
+    \label{tab:spatial_limit_init}
+\end{table}
+
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=0.67\textwidth]{Figures/pool_model_spatial.pdf}
+    \caption{{\footnotesize The output of the model (\ref{eq:spatial_limit_F}, \ref{eq:spatial_limit_H}) for given parameters and initial valued presented in Tables \ref{tab:spatial_limit_param}, \ref{tab:spatial_limit_init}, respectively.
+    The observables of the system are the bacterial count of each species $L+G$ (blue and orange lines) and the total bacterial count of the system (green).}}
+    \label{fig:spatial_limit_plot1}
+    \end{center}
+\end{figure}
+
+\cmtb{The ABM additional parameters $D_R$, $D_I$, $q$ (At which level of $R_i$ cell division happens) and more parameters describing bacterial division.}
+
 
 \section{Conclusion}
 
