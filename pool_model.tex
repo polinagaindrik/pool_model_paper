@@ -517,7 +517,7 @@ The ODEs the bacterial population can be written as:
 The microenvironment of our system contains the resource and the inhibitor molecules:
 \begin{equation}
     \begin{cases}
-        \dot{R} = -\frac{\alpha_1}{N_t} R G_1-\frac{\alpha_2}{N_t} R G_2 \\
+        \dot{R} = -\frac{\alpha_1}{N_t} R G_1-\frac{\alpha_2}{(1 + \mu_I I) N_t} R G_2 \\
         \dot{I} = \kappa G_1
     \end{cases}.
     \label{eq:spatial_limit_H}
