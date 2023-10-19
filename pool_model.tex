@@ -38,7 +38,7 @@ And describe it initially without states/1state. Get the difference.}
 \cmtb{Maybe Example from Seminar by Jens? 2 species,  1 resource, 1 waste production.}
 
 \section{General Mathemetical Formulation}
-Consider the system conssisting of $N$ species in $M$ different states.
+Consider the system consisting of $N$ species in $M$ different states.
 In the general representation, the system can be described with the Ordinary Differential Equations (ODEs) using a non-linear function $\mbF$:
 \begin{equation}
    \dot{\mbx} = \mbF(\mbx, \mbm, \mbp, \mbu),
@@ -138,7 +138,6 @@ or in matrix form it shows the linear dependency
                     \mu              & \mu'          & -\beta 
                  \end{pmatrix} \mbx .
 \end{equation}
-
 
 \subsection{Resource Dependence}
 
@@ -244,37 +243,6 @@ t_L &\approx& -\frac{1}{\alpha}\ln\left(\frac{2\lambda}{\mu+\lambda+\alpha}\righ
 \end{eqnarray}
 The lag time $t_L$ diverges very slowly, logarithmically with $\lambda\to 0$.
 
-\subsection{Resource-dependent lag-phase}
-
-Another way to encorporate the resource dependence is to assume that the bacteria only leave the lag-phase if there are nutrients, i.e., resources. 
-Otherwise they stay in the lag-phase.
-Then using the model consisted of two bacteria states $L$ and $G$ we can define the system as
-\begin{equation}
-    \begin{cases}
-        \dot{L} = - \lambda R L\\
-        \dot{G} = \lambda R L +\alpha R G\\
-        \dot{R} =-\frac{\alpha}{N_t} R G.
-    \end{cases}
-\end{equation}
-
-
-Turning back to the equations above we can state: $L+G+N_tR=N_t$. For $t=0$ we have $n_0+N_tR_0=N_t$ (given $L_0=n_0$ and $G_0=0$) and from this: $N_tR_0=N_t-n_0$. Using this we eliminate $R$ and arrive at: 
-\begin{equation}
-    \begin{cases}
-        \dot{L} = - \lambda \left(1-\frac{L+G}{N_t}\right)L\\
-        \dot{G} = \lambda \left(1-\frac{L+G}{N_t}\right)L +\alpha \left(1-\frac{L+G}{N_t}\right) G
-\end{cases}
-\end{equation}
-The steady state is $L_s+G_s=N_t$. However, it depends on the initial conditions and the parameters what $L_s$ and $G_s$ are. There is no way to determine $L_s$ and $G_s$ besides solving the dynamical equations, i.e., the steady state cannot be determined directly by solving a set of algebraic equations. To see this we determine the nullclines: the first nullcline is $G=N_t-L$ and the second is $G=N_t-L$, i.e., the nullclines coincides. Every point on the line $G=N_t-L$ is a fixed point. 
-This can be seen in Fig. \ref{Phaseplot}. 
-For $\lambda\ll \alpha$ the lag-pool is not emptied before all resources are consumed. As a consequence the lag-pool is non-zero in steady-state. 
-In contrast, for $\lambda\gg \alpha$ the lag-pool is depleted before the resources are consumed, i.e., the lag-pool is zero in steady state.
-
-The fraction $G$ of the exponentially growing cells will go to steady state due to limitations in resources. 
-$\lambda$ is the rate by which cells go from the lag phase to the growth phase; $\mu$ is the rate by which cells go from the lag phase to the state in which they die; $\alpha$ is the growth rate of the healthy population; $\beta$ is the rate by which the cells are removed from the $D$ pool. 
-
-\cmt{Plots / results}
-
 \subsection{Back flow from Growth to Lag pool}
 
 Due to its life in rather unfavourable conditions bacteria developed different surviving mechanisms, one of which is adapting their metabolism and transitioning into dormant state.
@@ -294,9 +262,8 @@ We explore now the idea that under certain conditions, as sudden change in the e
     G &\stackrel{\gamma(t)}{\longrightarrow} & L\\
     D &\stackrel{\beta}{\longrightarrow} & \emptyset
 \end{eqnarray}
-The rate $\gamma(t)$ depends on the rate of change of the environment. Stronger and quicker changes will lead to a higher rate $\gamma$. 
-Let the change in the environment be in temperature $T$ (\textbf{Figure \ref{default}}).
-
+The rate $\gamma(t)$ depends on the rate of change of the environment.
+Stronger and quicker changes will lead to a higher rate $\gamma$. 
 \subsubsection{Maxwell type of stress - strain relation}
 
 One of the reasons of the dormant state appearence can be also the temperature shift~\cite{oliver_viable_1995}.
@@ -364,22 +331,23 @@ One on the ways to descibe competition between bacteria populations is as a func
 To descibe such a situation we consider for simplicity only one common limiting resource pool. 
 The simplest pool model for bacterial species $A$ and $B$ encompassing lag-phases, growth-phases and a common resource pool is given by (no back-flow to the lag-pool):
 
-\begin{eqnarray}
-\label{Model_Comp1}
-\dot{L}_A &=& - \lambda_A R L_A\\
-\dot{L}_B &=& - \lambda_B R L_B \\
-\dot{G}_A &=& \lambda_A R L_A +\alpha_A R G_A\\
-\label{Model_Comp4}
-\dot{G}_B &=& \lambda_B R L_B +\alpha_B R G_B\\
-\dot{R} &=&-\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{N_t} R G_B
-\end{eqnarray}
+\begin{equation}
+    \begin{cases}
+        \dot{L}_A = - \lambda_A R L_A\\
+        \dot{L}_B = - \lambda_B R L_B \\
+        \dot{G}_A = \lambda_A R L_A +\alpha_A R G_A\\
+        \dot{G}_B = \lambda_B R L_B +\alpha_B R G_B\\
+        \dot{R} =-\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{N_t} R G_B
+    \end{cases}
+    \label{eq:model_2sp_resource_comp}
+\end{equation}
+
 We again rescaled the resource pool with $N_t$ and find
 \begin{eqnarray}
 \label{Resource}
-R &=&1-\frac{L_A+G_A+L_B+G_B}{N_t}\\
-R_0&=&1-\frac{n_A+n_B}{N_t}. 
+R &=&1-\frac{L_A+G_A+L_B+G_B}{N_t}
 \end{eqnarray}
-Inserting Eq. \ref{Resource} into Eqs. \ref{Model_Comp1} - \ref{Model_Comp4} yields:
+Inserting Eq. \ref{Resource} into Eqs. \ref{eq:model_2sp_resource_comp} yields:
 \begin{eqnarray*}
 \dot{L}_A &=& - \lambda_A  L_A + \frac{\lambda_A}{N_t}\left(L_A+G_A+L_B+G_B\right )L_A\\
 \dot{L}_B &=& - \lambda_B L_B + \frac{\lambda_B}{N_t}\left(L_A+G_A+L_B+G_B\right )L_B \\
@@ -401,33 +369,21 @@ That principle claims that two species in competition for the same resource cann
 In previous studies it was shown that gLV equations can be sucessfully applied to predict the microbial community dynamics, determine different types of the pairwise interspecies interactions~\cite{dedrick_when_2023, stein_ecological_2013, venturelli_deciphering_2018, hoffmann_power_2007}.
 In food studies the gLV was applied by Mounier \etal~\cite{mounier_microbial_2008} to study interactions of 6 bacteria species  with yeast omissin in cheese.
 
-For $N_t\gg\alpha_{A/B}$ the equations decouple. 
-The null-clines of the system given by Eqs. \ref{Model_Comp1} - \ref{Model_Comp4} coincide and are given by $N_t=L_A+G_A+L_B+G_B$. 
-If $\lambda_{A/B}>\alpha_{A/B}$ the lag-pools are completely depleted before the depletion of the resource pool stops the dynamics. 
-To simplify the investigation of the systems dynamics we therefore ignore the $L_A$ and $L_B$ dimension and only consider the dynamics on the centre-manifold given by the $G_A\times G_B$ plane. 
-The corresponding phase-plot is shown in Fig. \ref{Competition}. 
-The advantage in using the pool model in contrast to using Lotka-Volterra directly is that all parameters have a clear meaning and consistent parameter relations arrive naturally. 
-And a species can have more than one internal state. 
-However, it is instructive to rewrite the system by setting $x_1\equiv G_A$, $x_2\equiv G_B$, and $\mathbf{x}=(x_1,x_2)^T$:
-
-\begin{eqnarray}
-\dot{\mathbf{x}}&=&A\mathbf{x}+\frac{1}{2}\mathbf{x}B\mathbf{x}\\
-A&=&
-\begin{bmatrix}
-\alpha_A&0\\
-0 &\alpha_B
-\end{bmatrix}\\
-B&=&
-\frac{-2}{N_t}\begin{bmatrix}
-\alpha_A&\alpha_A\\
-\alpha_B &\alpha_B
-\end{bmatrix}
-\end{eqnarray}
-
 The pool model, in contrast to the classical Lotka-Volterra approach, allows for far more flexibility. 
-Non-linear functional responses can be introduced without any problem (see how section \ref{Gen_Lot_Vol} for an extended discussion).
 
-\cmt{Plots / results}
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=0.67\textwidth]{Figures/pool_model_2pools_resource_competition.pdf}
+    \caption{{\footnotesize The competition of the two bacterial species due to the common limiting resource calculated using Eq. (\ref{eq:model_2sp_resource_comp}).
+    The red solid curve describes the growth of the bacteria $A$ $N_A = \sum_{k} x_A^k = L_A+G_A$ with model parameters $\lambda_A=10^{-2}$, $\alpha_A=3.0$.
+    The blue solid curve describes the growth of the bacteria $B$ $N_B = \sum_{k} x_B^k = L_B+G_B$ with model parameters $\lambda_A=5\cdot 10^{-2}$, $\alpha_A=2.5$.
+    The purple dashed line shows the total bacterial count of the system  $N(t)=\sum_i\sum_k\mbx_i^k=N_A+N_B$.
+    The gray solid line denotes the dynamic of the resource pool scaled with its capacity $N_t=10^4$.}}
+    \label{fig:2pool_resource_2sp}
+    \end{center}
+\end{figure}
+As one can see in Figure~\ref{fig:2pool_resource_2sp} even without direct interaction between species the bacterial growth was inhibited due to the limitation of the resource.
+Here species $A$ was able to supress species $B$ due to the higher values of the growth constant $\alpha$..
 
 \cmtb{Look papers on modelling of the LV in bacterial communities. Did anyone do the same as we??}
 
@@ -437,7 +393,6 @@ However, except the inhibition due to resource competition, bacteria developed d
 One of the examples of such mechanisms is a production of the antimicrobial compounds, which can be also called antibiotics or inhibitors. \cmt{toxins}
 
 \cmt{Read how this antibiotics affect the system. Which eq form to use?}
-
 
 \subsubsection{Toxins Production}
 Now extend our model where bacteria not only consume nutritions from resource pool $R$ but one of the species also actively produce the inhibiting compounds $T$. 
@@ -452,16 +407,42 @@ In order to take this into account we add an equation for the waste production:
 The function $\mathcal{F}$ denotes the model for the antibiotic production rate. 
 We shall discuss two possible models:
 \begin{eqnarray}
-\mathcal{F}_1(R,G)&=&\kappa\alpha R G=-\kappa N_t\dot{R}\\
-\mathcal{F}_2(R,G)&=&\kappa G
+\mathcal{F}_1(R,G)&=&\kappa G\\
+\mathcal{F}_2(R,G)&=&\kappa\alpha R G=-\kappa N_t\dot{R}
 \end{eqnarray}
-Model $\mathcal{F}_1$ results in waste accumulation in steady state $I_1^s=\lim_{t\to\infty}I_1(t)=\kappa(N_t-n_0)$. 
-To see this we note $\dot{T}_1=\kappa(\dot{L}+\dot{G})$, which yields: $I_1(t)=\kappa(L(t)+G(t)-n_0)$ where we used $T_1(0)=G(0)=0$, $L(0)=n_0$. 
+We would like to test the following model:
+\begin{equation}
+    \begin{cases}
+        \dot{L}_A = - \lambda_A R L_A\\
+        \dot{L}_B = - \lambda_B R L_B \\
+        \dot{G}_A = \lambda_A R L_A + \alpha_A R G_A - \frac{\mu}{\kappa N_t} T G_A\\
+        \dot{G}_B = \lambda_B R L_B + \alpha_B R G_B\\
+        \dot{R} = -\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{N_t} R G_B\\
+        \dot{T} = \mathcal{F}_{1,2} (R, G_B) \\
+    \end{cases}
+    \label{eq:model_2sp_toxin}
+\end{equation}
+
+As it can be seen in Figure~\ref{fig:2pool_2sp_toxin}, model $\mathcal{F}_1$ results in $I_1(t)=\kappa\int_{t_0}^tG(t')dt'$. 
+As long as $G>0$ toxin is produced, no matter whether the amount of bacteria is still growing. 
+Model $\mathcal{F}_2$ results in waste accumulation in steady state $I_2^s=\lim_{t\to\infty}I_1(t)=\kappa(N_t-n_0)$. 
+To see this we note $\dot{T}_2=\kappa(\dot{L}+\dot{G})$, which yields: $I_2(t)=\kappa(L(t)+G(t)-n_0)$ where we used $T_2(0)=G(0)=0$, $L(0)=n_0$. 
 This model assumes that inhibitor is only produced when the bacteria grow and divide. \\
 
-Model $\mathcal{F}_2$ results in $I_2(t)=\kappa\int_{t_0}^tG(t')dt'$. 
-As long as $G>0$ toxin is produced, no matter whether the amount of bacteria is still growing. 
-The amount of toxin depends therefore on the back-flow model employed, which can be seen in Fig. \ref{Waste}. 
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=1.\textwidth]{Figures/pool_model_2pools_toxin.pdf}
+    \caption{{\footnotesize The two species system competing for the common nutritient $R$ with production of the toxin $T$ (brown solid line) calculated using Eq. (\ref{eq:model_2sp_toxin}).
+    The growing bacteria $B$ produces toxin $T$ (a) constantly $\dot{T} = \mathcal{F}_1 = \kappa G_B$ and (b) only during growth process $\dot{T} = \mathcal{F}_2 = \kappa \alpha_B R G_B$ with 
+    production rate $\kappa=0.2$.
+    The toxin $T$ causes the cell death of bacteria $A$ with rate constant $\mu = 0.2$.
+    The red solid curve describes the growth of the bacteria $A$ $N_A = \sum_{k} x_A^k = L_A+G_A$ with model parameters $\lambda_A=10^{-2}$, $\alpha_A=3.0$.
+    The blue solid curve describes the growth of the bacteria $B$ $N_B = \sum_{k} x_B^k = L_B+G_B$ with model parameters $\lambda_A=5\cdot 10^{-2}$, $\alpha_A=2.5$.
+    The gray solid line denotes the dynamic of the resource pool scaled with its capacity $N_t=10^4$.}}
+    \label{fig:2pool_2sp_toxin}
+    \end{center}
+\end{figure}
+
 
 
 \subsubsection{Species Inhibition}
