@@ -443,8 +443,6 @@ This model assumes that inhibitor is only produced when the bacteria grow and di
     \end{center}
 \end{figure}
 
-
-
 \subsubsection{Species Inhibition}
 \cmt{\cite{lenski_coexistence_1986}: Modelling of the 2 sp. system with 1resource and 1 inhibitor.}
 The simplest way to introduce inhibition of species A by species B is via a growth rate of species A depending on the abundance of species B. 
@@ -480,8 +478,10 @@ We introduced the rescaled growth rates $\tilde{\alpha}_A=\alpha_A/(N_tK_B)$ and
 \end{eqnarray}
 results in: 
 \begin{eqnarray}
-\dot{G}_A &=&\frac{G_A}{G_B}\left(1 - G_A-G_B\right )\\
+\dot{G}_A &=&\frac{G_A}{G_B}\left(1 - G_A-G_B\right )
+\label{eq:2sp_1pool_inhibit_unitless1}\\
 \dot{G}_B &=&\psi\frac{G_B}{G_A}\left(1-G_A-G_B\right ). 
+\label{eq:2sp_1pool_inhibit_unitless2}
 \end{eqnarray}
 We can separate three cases: 
 \begin{eqnarray}
@@ -489,6 +489,19 @@ We can separate three cases:
 \psi&=&1:\quad\text{A and B are equivalent}\\
 \psi&<&1:\quad\text{Species A growth faster and/or inhibits B stronger}
 \end{eqnarray}
+
+
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=0.5\textwidth]{Figures/pool_model_1pool_inhib.pdf}
+    \caption{{\footnotesize The two species system where species inhibit each other defined with equations~(\ref{eq:2sp_1pool_inhibit_unitless1}-\ref{eq:2sp_1pool_inhibit_unitless2}).
+    Here the red lines describes the evolution of the species $A$ and blue lines correspond to species $B$.
+    The relation between inhibition strength of spesies $B$ and $A$ are defined by controll parameter value (a) $\psi$ = 0.5, (b) $\psi$ = 1 or (c) $\psi$ = 2.}}
+    \label{fig:1pool_2sp_inhibit}
+    \end{center}
+\end{figure}
+
+
 
 \subsection{Interspecies Cooperation}
 
