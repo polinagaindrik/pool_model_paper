@@ -175,7 +175,7 @@ Such model can be simplified by explointing that limitation of the resource pool
 \begin{equation}
     R = 1 - \frac{L+G+D}{N_t}
 \end{equation}
-and, hence, the full system can be written as
+and, hence, the full system can be written as 
 \begin{equation}
     \begin{cases}
         \dot{L} = -(\mu + \lambda) L\\
@@ -184,7 +184,16 @@ and, hence, the full system can be written as
         \label{eq:3pool_resource} 
     \end{cases}.
 \end{equation}
-
+Rewriting the equations above, we get the following non-linear system:
+\begin{equation}
+    \dot \mbx = \begin{pmatrix}
+        -(\mu + \lambda) & 0       & 0 \\
+         \lambda         & \alpha  & 0 \\
+         \mu & + \mu'& - \beta 
+    \end{pmatrix} 
+    \mbx + \frac{\alpha}{N_t} x^2 \sum_i^3 x^i \begin{pmatrix} 0 \\ 1 \\ 0  \end{pmatrix}.
+\end{equation}
+Here the first term is the linear part and the second term define the quadratic behaviour of the system.
 
 \begin{figure}[t]
     \begin{center}
@@ -341,7 +350,14 @@ The simplest pool model for bacterial species $A$ and $B$ encompassing lag-phase
     \end{cases}
     \label{eq:model_2sp_resource_comp}
 \end{equation}
-
+This system of equations defines the microenvironment $\mbm$ and bacteria state matrix $\mbx$ as
+\begin{equation}
+    \mbm = R, \hspace{1cm}
+    \mbx = \begin{pmatrix}
+        L_A & L_B \\
+        G_A & G_B 
+    \end{pmatrix}.
+\end{equation}
 We again rescaled the resource pool with $N_t$ and find
 \begin{eqnarray}
 \label{Resource}
