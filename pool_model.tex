@@ -86,13 +86,12 @@ Consider for simplicity the system where only one bacteria species is present $N
 The bacterial growth curves usually consists of different consecutive phases~\cite{buchanan_when_1997}.
 At the beginning no increase in bacterial count is present and so-called lag-phase is observed.
 This phenomenon appears due to adaptation of the microbial community, for example, to the new environmental conditions.
-This so-called preparation to the exponential growth includes synthesys of the needed compounds, initiation of the transciption~\cite{rolfe_lag_2012} and poorly studied physiological and regulatory mechanisms~\cite{monod_growth_1949,}
-\cmt{For example, in Baranyi and Roberts modelling of lag-phase ???(maybe add).}
+This so-called preparation to the exponential growth includes synthesys of the needed compounds, initiation of the transciption~\cite{rolfe_lag_2012} and poorly studied physiological and regulatory mechanisms~\cite{monod_growth_1949}
 After this, the succeeded in adaptation bacteria enter the exponential growth phase, where the process of cell division is directly happening \cmt{Add Ref}.
 When the nutrition is exhausted by the growing bacteria, the stationary state of the growth curve occurres.
 In this state the cultures accumulate waste products of metabolitic activity that leads to cell death of the bacteria.
 At the same time dying cells release the nutritions for survivors to continue growing.
-As a result the balance between the growing and dyuing processes leads to the constant with time bacterial count~\cite{navarro_llorens_stationary_2010}.
+As a result the balance between the growing and dying processes leads to the constant with time bacterial count~\cite{navarro_llorens_stationary_2010}.
 In the described simplified version of the real-life system three possible bacteria states are mentioned corresponding to which process is happeng: adaplation, growth or death.
 Motivated by this we divide a bacterial population into three pools (states) (\textbf{Figure \ref{fig:SchematicRep}}): 
 \begin{itemize}
@@ -113,7 +112,7 @@ Here the concentrations of the pools are components of our variable vector $\mbx
 To detremine the function $\mbF(\mbx, \mbm, \mbp, \mbu)$ consider the flows between different states.
 The pools $G$ and $D$ are unidirectionally connected with the pool $L$. 
 For now we assume for simplicity that there is no back flow between growth state $G$ and lag-state $L$. 
-The suggested model can be cast in the following reactions:
+The suggested model can be cast in the following reactions: \cmt{Use notations x ??}
 \begin{eqnarray}
 L &\stackrel{\lambda}{\longrightarrow} & G\\
 L &\stackrel{\mu}{\longrightarrow} & D\\
@@ -197,7 +196,7 @@ Here the first term is the linear part and the second term define the quadratic 
 
 \begin{figure}[t]
     \begin{center}
-    \includegraphics[width=0.67\textwidth]{Figures/pool_model_3pools_resource.pdf}
+    \includegraphics[width=0.6\textwidth]{Figures/pool_model_3pools_resource.pdf}
     \caption{{\footnotesize The time dependence of the total bacterial count $N(t) = \sum_i \sum_k \mbx_i^k = L(t) + G(t) + D(t)$ is obtained as a sum of bacteria in all states.
     All curves were calculated using the model (\ref{eq:3pool_resource}) with parameters $\alpha=2.5$, $\mu'=0.5$ and $\beta=5$.
     The purple curve shows significant dip in behaviour of the system where the death of the bacteria is present $\mu = 0.5$.
@@ -300,7 +299,7 @@ If $T$ exhibits $n$ temperature jumps, one finds:
 
 \begin{figure}[t]
     \begin{center}
-    \includegraphics[width=0.67\textwidth]{Figures/pool_model_3pools_resource_tempshift.pdf}
+    \includegraphics[width=0.6\textwidth]{Figures/pool_model_3pools_resource_tempshift.pdf}
     \caption{{\footnotesize (a) The time dependence of the total bacterial count $N$ for the model including the back-flow to the lag phase due to temperature stres (\ref{eq:ODE_tempshift}).
     (b) The value of the corresponding back-flow rate $\gamma$ calculated according to (\ref{eq:gamma_tempshift}).
     The curves represent no temperature shift (blue), one temperature jump $\Delta T = 10$ at time $t=4$ (red) 
@@ -371,19 +370,20 @@ Inserting Eq. \ref{Resource} into Eqs. \ref{eq:model_2sp_resource_comp} yields:
 \dot{G}_B &=& \lambda_B L_B - \frac{\lambda_B}{N_t}\left(L_A+G_A+L_B+G_B\right )L_B  +\alpha_B G_B -\frac{\alpha_B}{N_t}\left(L_A+G_A+L_B+G_B\right )G_B
 \end{eqnarray*}
 
-which has the structure of a generalised Lotka-Volterra system (gLV). \cmt{Add reference about Lotka-Volterra. Compare with different states LV.}
+which has the structure of a generalised Lotka-Volterra system (gLV).
 In order to better see this, we set $L_A=L_B=0$: 
 \begin{eqnarray}
-\label{Comp_Model}
+\label{eq:LV_simple1}
 \dot{G}_A &=& \alpha_A G_A\left(1 - \frac{G_A}{N_t}\right ) - \frac{\alpha_A}{N_t}G_AG_B\\
 \dot{G}_B &=& \alpha_B G_B\left(1-\frac{G_B}{N_t}\right ) -\frac{\alpha_B}{N_t}G_AG_B. 
-\label{eq:LV_simple}
+\label{eq:LV_simple2}
 \end{eqnarray} 
 
-Equations (\ref{eq:LV_simple}) are basically competitive Lotka-Volterra equations that are widely used in ecological studies and show the principle of competive excursion.
+Equations (\ref{eq:LV_simple1}-\ref{eq:LV_simple2}) are basically competitive Lotka-Volterra equations that are widely used in ecological studies and show the principle of competive excursion.
 That principle claims that two species in competition for the same resource cannot coexist~\cite{wangersky_lotka-volterra_1978}. 
-In previous studies it was shown that gLV equations can be sucessfully applied to predict the microbial community dynamics, determine different types of the pairwise interspecies interactions~\cite{dedrick_when_2023, stein_ecological_2013, venturelli_deciphering_2018, hoffmann_power_2007}.
-In food studies the gLV was applied by Mounier \etal~\cite{mounier_microbial_2008} to study interactions of 6 bacteria species  with yeast omissin in cheese.
+In previous studies it was shown that gLV equations with one bacterial state can be sucessfully applied to predict the microbial community dynamics, determine different types of the pairwise interspecies interactions~\cite{dedrick_when_2023, stein_ecological_2013, venturelli_deciphering_2018, hoffmann_power_2007}.
+In food studies the gLV was applied by Mounier \etal~\cite{mounier_microbial_2008} to study interactions of six bacteria species  with yeast omissin in cheese.
+Cauchie \etal~\cite{cauchie_modeling_2020} applied Lotka-Volterra model to study the three-species system of the bacteria majorly present in minced pork meat.
 
 The pool model, in contrast to the classical Lotka-Volterra approach, allows for far more flexibility. 
 
@@ -399,16 +399,14 @@ The pool model, in contrast to the classical Lotka-Volterra approach, allows for
     \end{center}
 \end{figure}
 As one can see in Figure~\ref{fig:2pool_resource_2sp} even without direct interaction between species the bacterial growth was inhibited due to the limitation of the resource.
-Here species $A$ was able to supress species $B$ due to the higher values of the growth constant $\alpha$..
+Here species $A$ was able to supress species $B$ due to the higher values of the growth constant $\alpha$.
 
-\cmtb{Look papers on modelling of the LV in bacterial communities. Did anyone do the same as we??}
+\cmt{But LV for several bacteria states in literature? Didn't find!}
 
 \subsection{Interspecies Competition}
 
-However, except the inhibition due to resource competition, bacteria developed differnt others active competition mechanisms.
-One of the examples of such mechanisms is a production of the antimicrobial compounds, which can be also called antibiotics or inhibitors. \cmt{toxins}
-
-\cmt{Read how this antibiotics affect the system. Which eq form to use?}
+However, except the inhibition due to resource competition, bacteria developed different others active competition mechanisms.
+One of the examples of such mechanisms is a production of the antimicrobial compounds, inhibitors or toxins~\ref{wloch-salamon_effect_2008, chao_structured_1981}.
 
 \subsubsection{Toxins Production}
 Now extend our model where bacteria not only consume nutritions from resource pool $R$ but one of the species also actively produce the inhibiting compounds $T$. 
