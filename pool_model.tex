@@ -1,8 +1,9 @@
 \documentclass[10pt,A4paper]{article}
-\usepackage[a4paper,
-            inner=2.5cm,
-            outer=3cm
-            ]{geometry}
+\usepackage[
+    a4paper,
+    inner=2.5cm,
+    outer=3cm
+]{geometry}
 \input{additional_tex/packages}
 
 \title{Pool Model Paper}
@@ -247,12 +248,12 @@ To find a substantial initial drop one needs $\beta \mu \gg \alpha \lambda$.
 The lag time $t_L$ can be approximated by the time at which half of the initial population is in the growth phase, i.e., $n_0=2G(t_L)$. 
 Assuming $L\ll N_t$ we can ignore the non-linear term in the equation for $G$, which gives rise to:
 \begin{eqnarray}
-1&=& 2\int_0^{t_L} \lambda L(t)e^{\alpha(t_L-t)}dt\\
-1  &=& 2\lambda e^{\alpha t_L}\frac{1-e^{-(\mu+\lambda+\alpha)t_L}}{\mu+\lambda+\alpha}.
+    1&=& 2\int_0^{t_L} \lambda L(t)e^{\alpha(t_L-t)}dt\\
+    1  &=& 2\lambda e^{\alpha t_L}\frac{1-e^{-(\mu+\lambda+\alpha)t_L}}{\mu+\lambda+\alpha}.
 \end{eqnarray}
 For $\alpha > \mu+\lambda$ $t_L$ can be approximated by:
 \begin{eqnarray}
-t_L &\approx& -\frac{1}{\alpha}\ln\left(\frac{2\lambda}{\mu+\lambda+\alpha}\right).
+    t_L &\approx& -\frac{1}{\alpha}\ln\left(\frac{2\lambda}{\mu+\lambda+\alpha}\right).
 \end{eqnarray}
 The lag time $t_L$ diverges very slowly, logarithmically with $\lambda\to 0$.
 %
@@ -308,12 +309,13 @@ If $T$ exhibits $n$ temperature jumps, one finds:
 \begin{figure}[t]
     \begin{center}
     \includegraphics[width=0.6\textwidth]{Figures/pool_model_3pools_resource_tempshift.pdf}
-    \caption{{\footnotesize (a) The time dependence of the total bacterial count $N$ for the model including the back-flow to the lag phase due to temperature stres (\ref{eq:ODE_tempshift}).
-    (b) The value of the corresponding back-flow rate $\gamma$ calculated according to (\ref{eq:gamma_tempshift}).
-    The curves represent no temperature shift (blue), one temperature jump $\Delta T = 10$ at time $t=4$ (red) 
-    and the series of different temperature shifts of value 10, 5 and 15 at the tme points 1, 3 asnd 7, respectively (green).
-    The paremeters of the back-flow rate are $\Gamma=1$ and $\delta=5$.
-    The other model parameters are $\alpha=2.5$, $\mu'=0.5$, $\beta=5$, $\lambda=10^{-2}$, $\mu = 0$ fe each curve.
+    \caption{{
+        \footnotesize (a) The time dependence of the total bacterial count $N$ for the model including the back-flow to the lag phase due to temperature stres (\ref{eq:ODE_tempshift}).
+        (b) The value of the corresponding back-flow rate $\gamma$ calculated according to (\ref{eq:gamma_tempshift}).
+        The curves represent no temperature shift (blue), one temperature jump $\Delta T = 10$ at time $t=4$ (red) 
+        and the series of different temperature shifts of value 10, 5 and 15 at the tme points 1, 3 asnd 7, respectively (green).
+        The paremeters of the back-flow rate are $\Gamma=1$ and $\delta=5$.
+        The other model parameters are $\alpha=2.5$, $\mu'=0.5$, $\beta=5$, $\lambda=10^{-2}$, $\mu = 0$ fe each curve.
     }}
     \label{fig:TempJump}
     \end{center}
@@ -394,11 +396,13 @@ The pool model, in contrast to the classical Lotka-Volterra approach, allows for
 \begin{figure}[H]
     \begin{center}
     \includegraphics[width=0.67\textwidth]{Figures/pool_model_2pools_resource_competition.pdf}
-    \caption{{\footnotesize The competition of the two bacterial species due to the common limiting resource calculated using Eq. (\ref{eq:model_2sp_resource_comp}).
-    The red solid curve describes the growth of the bacteria $A$ $N_A = \sum_{k} x_A^k = L_A+G_A$ with model parameters $\lambda_A=10^{-2}$, $\alpha_A=3.0$.
-    The blue solid curve describes the growth of the bacteria $B$ $N_B = \sum_{k} x_B^k = L_B+G_B$ with model parameters $\lambda_A=5\cdot 10^{-2}$, $\alpha_A=2.5$.
-    The purple dashed line shows the total bacterial count of the system  $N(t)=\sum_i\sum_k\mbx_i^k=N_A+N_B$.
-    The gray solid line denotes the dynamic of the resource pool scaled with its capacity $N_t=10^4$.}}
+    \caption{{
+        \footnotesize The competition of the two bacterial species due to the common limiting resource calculated using Eq. (\ref{eq:model_2sp_resource_comp}).
+        The red solid curve describes the growth of the bacteria $A$ $N_A = \sum_{k} x_A^k = L_A+G_A$ with model parameters $\lambda_A=10^{-2}$, $\alpha_A=3.0$.
+        The blue solid curve describes the growth of the bacteria $B$ $N_B = \sum_{k} x_B^k = L_B+G_B$ with model parameters $\lambda_A=5\cdot 10^{-2}$, $\alpha_A=2.5$.
+        The purple dashed line shows the total bacterial count of the system  $N(t)=\sum_i\sum_k\mbx_i^k=N_A+N_B$.
+        The gray solid line denotes the dynamic of the resource pool scaled with its capacity $N_t=10^4$.
+    }}
     \label{fig:2pool_resource_2sp}
     \end{center}
 \end{figure}
@@ -454,13 +458,15 @@ This model assumes that inhibitor is only produced when the bacteria grow and di
 \begin{figure}[H]
     \begin{center}
     \includegraphics[width=1.\textwidth]{Figures/pool_model_2pools_toxin.pdf}
-    \caption{{\footnotesize The two species system competing for the common nutritient $R$ with production of the toxin $T$ (brown solid line) calculated using Eq. (\ref{eq:model_2sp_toxin}).
-    The growing bacteria $B$ produces toxin $T$ (a) constantly $\dot{T} = \mathcal{F}_1 = \kappa G_B$ and (b) only during growth process $\dot{T} = \mathcal{F}_2 = \kappa \alpha_B R G_B$ with 
-    production rate $\kappa=0.2$.
-    The toxin $T$ causes the cell death of bacteria $A$ with rate constant $\mu = 0.2$.
-    The red solid curve describes the growth of the bacteria $A$ $N_A = \sum_{k} x_A^k = L_A+G_A$ with model parameters $\lambda_A=10^{-2}$, $\alpha_A=3.0$.
-    The blue solid curve describes the growth of the bacteria $B$ $N_B = \sum_{k} x_B^k = L_B+G_B$ with model parameters $\lambda_A=5\cdot 10^{-2}$, $\alpha_A=2.5$.
-    The gray solid line denotes the dynamic of the resource pool scaled with its capacity $N_t=10^4$.}}
+    \caption{{
+        \footnotesize The two species system competing for the common nutritient $R$ with production of the toxin $T$ (brown solid line) calculated using Eq. (\ref{eq:model_2sp_toxin}).
+        The growing bacteria $B$ produces toxin $T$ (a) constantly $\dot{T} = \mathcal{F}_1 = \kappa G_B$ and (b) only during growth process $\dot{T} = \mathcal{F}_2 = \kappa \alpha_B R G_B$ with 
+        production rate $\kappa=0.2$.
+        The toxin $T$ causes the cell death of bacteria $A$ with rate constant $\mu = 0.2$.
+        The red solid curve describes the growth of the bacteria $A$ $N_A = \sum_{k} x_A^k = L_A+G_A$ with model parameters $\lambda_A=10^{-2}$, $\alpha_A=3.0$.
+        The blue solid curve describes the growth of the bacteria $B$ $N_B = \sum_{k} x_B^k = L_B+G_B$ with model parameters $\lambda_A=5\cdot 10^{-2}$, $\alpha_A=2.5$.
+        The gray solid line denotes the dynamic of the resource pool scaled with its capacity $N_t=10^4$.
+    }}
     \label{fig:2pool_2sp_toxin}
     \end{center}
 \end{figure}
@@ -518,9 +524,11 @@ We can separate three cases:
 \begin{figure}[H]
     \begin{center}
     \includegraphics[width=0.5\textwidth]{Figures/pool_model_1pool_inhib.pdf}
-    \caption{{\footnotesize The two species system where species inhibit each other defined with equations~(\ref{eq:2sp_1pool_inhibit_unitless1}-\ref{eq:2sp_1pool_inhibit_unitless2}).
-    Here the red lines describes the evolution of the species $A$ and blue lines correspond to species $B$.
-    The relation between inhibition strength of spesies $B$ and $A$ are defined by controll parameter value (a) $\psi$ = 0.5, (b) $\psi$ = 1 or (c) $\psi$ = 2.}}
+    \caption{{
+        \footnotesize The two species system where species inhibit each other defined with equations~(\ref{eq:2sp_1pool_inhibit_unitless1}-\ref{eq:2sp_1pool_inhibit_unitless2}).
+        Here the red lines describes the evolution of the species $A$ and blue lines correspond to species $B$.
+        The relation between inhibition strength of spesies $B$ and $A$ are defined by controll parameter value (a) $\psi$ = 0.5, (b) $\psi$ = 1 or (c) $\psi$ = 2.
+    }}
     \label{fig:1pool_2sp_inhibit}
     \end{center}
 \end{figure}
@@ -612,17 +620,17 @@ The microenvironment of our system contains the resource and the inhibitor molec
 \begin{table}[H]
     \centering
     \begin{tabular}{ccc}
-    \specialrule{.1em}{.01em}{.05em} 
-    \textbf{Parameter} \hspace{3mm} & \textbf{Value} \hspace{3mm} & \textbf{Units}\\
-    \toprule
-    $\lambda_1$ & 0.008  & [time$^{-1}$]                 \\
-    $\lambda_2$ & 0.005  & [time$^{-1}$]                 \\
-    $\alpha_1$  & 4.0    & [time$^{-1}$]                 \\
-    $\alpha_2$  & 5.0    & [time$^{-1}$]                 \\
-    $\kappa$    & 0.1    & [(cell $\cdot$ time)$^{-1}$]  \\
-    $\mu_I$     & 0.1    & [cell$^{-1}$]                 \\
-    $N_t$       & $10^4$ & [cell]                        \\
-    \bottomrule
+        \specialrule{.1em}{.01em}{.05em} 
+        \textbf{Parameter} \hspace{3mm} & \textbf{Value} \hspace{3mm} & \textbf{Units}\\
+        \toprule
+        $\lambda_1$ & 0.008  & [time$^{-1}$]                 \\
+        $\lambda_2$ & 0.005  & [time$^{-1}$]                 \\
+        $\alpha_1$  & 4.0    & [time$^{-1}$]                 \\
+        $\alpha_2$  & 5.0    & [time$^{-1}$]                 \\
+        $\kappa$    & 0.1    & [(cell $\cdot$ time)$^{-1}$]  \\
+        $\mu_I$     & 0.1    & [cell$^{-1}$]                 \\
+        $N_t$       & $10^4$ & [cell]                        \\
+        \bottomrule
     \end{tabular}
     \caption{{\footnotesize The list of the parameters of the system.}}
     \label{tab:spatial_limit_param}
@@ -631,16 +639,16 @@ The microenvironment of our system contains the resource and the inhibitor molec
 \begin{table}[H]
     \centering
     \begin{tabular}{ccc}
-    \specialrule{.1em}{.01em}{.05em} 
-    \textbf{Variable} \hspace{3mm} & \textbf{Initial Value} \hspace{3mm} & \textbf{Units}\\
-    \toprule
-    $L_1$ & 5.0 & [cell]        \\
-    $G_1$ & 0.0 & [cell]        \\
-    $L_2$ & 5.0 & [cell]        \\
-    $G_2$ & 0.0 & [cell]        \\
-    $R$   & 1.0 & [cell/cell]   \\
-    $I$   & 0.0 & [cell]        \\
-    \bottomrule
+        \specialrule{.1em}{.01em}{.05em} 
+        \textbf{Variable} \hspace{3mm} & \textbf{Initial Value} \hspace{3mm} & \textbf{Units}\\
+        \toprule
+        $L_1$ & 5.0 & [cell]        \\
+        $G_1$ & 0.0 & [cell]        \\
+        $L_2$ & 5.0 & [cell]        \\
+        $G_2$ & 0.0 & [cell]        \\
+        $R$   & 1.0 & [cell/cell]   \\
+        $I$   & 0.0 & [cell]        \\
+        \bottomrule
     \end{tabular}
     \caption{{\footnotesize The list of the initial values of the system.}}
     \label{tab:spatial_limit_init}
@@ -649,8 +657,10 @@ The microenvironment of our system contains the resource and the inhibitor molec
 \begin{figure}[H]
     \begin{center}
     \includegraphics[width=0.67\textwidth]{Figures/pool_model_spatial.pdf}
-    \caption{{\footnotesize The output of the model (\ref{eq:spatial_limit_F}, \ref{eq:spatial_limit_H}) for given parameters and initial valued presented in Tables \ref{tab:spatial_limit_param}, \ref{tab:spatial_limit_init}, respectively.
-    The observables of the system are the bacterial count of each species $L+G$ (blue and orange lines) and the total bacterial count of the system (green).}}
+    \caption{{
+        \footnotesize The output of the model (\ref{eq:spatial_limit_F}, \ref{eq:spatial_limit_H}) for given parameters and initial valued presented in Tables \ref{tab:spatial_limit_param}, \ref{tab:spatial_limit_init}, respectively.
+        The observables of the system are the bacterial count of each species $L+G$ (blue and orange lines) and the total bacterial count of the system (green).
+    }}
     \label{fig:spatial_limit_plot1}
     \end{center}
 \end{figure}
