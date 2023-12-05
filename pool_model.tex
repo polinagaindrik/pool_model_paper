@@ -15,11 +15,19 @@
 \tableofcontents
 
 \newpage
-
+%
+%
+%
+%
+% ================================================================================================
 \section{Introduction}
 
 Comprehensive reviews about competition/cooperation bacterial mechanisms: \cite{ghoul_ecology_2016, stubbendieck_bacterial_2016, hibbing_bacterial_2010, west_social_2007}
-
+%
+%
+%
+%
+% ================================================================================================
 \section{Motivating Example}
 
 ...
@@ -28,7 +36,11 @@ Comprehensive reviews about competition/cooperation bacterial mechanisms: \cite{
 And describe it initially without states/1state. Get the difference.}
 
 \cmtb{Maybe Example from Seminar by Jens? 2 species,  1 resource, 1 waste production.}
-
+%
+%
+%
+%
+% ================================================================================================
 \section{General Mathemetical Formulation}
 Consider the system consisting of $N$ species in $M$ different states.
 In the general representation, the system can be described with the Ordinary Differential Equations (\acp{ode}) using a non-linear function $\mbF$:
@@ -71,7 +83,11 @@ In the following section we demonstate the application of this approach for diff
 \newpage
 %
 %
+%
+%
+% ================================================================================================
 \section{One Species Modelling}
+% ------------------------------------------------------------------------------------------------
 \subsection{Three-Pool Model}
 Consider for simplicity the system where only one bacteria species is present $N=1$.
 The bacterial growth curves usually consists of different consecutive phases~\cite{buchanan_when_1997}.
@@ -127,6 +143,8 @@ or in matrix form it shows the linear dependency
 \end{equation}
 %
 %
+%
+% ------------------------------------------------------------------------------------------------
 \subsection{Resource Dependence}
 Based on experimental observations, it was shown that the bacterial growth is strongly influenced by the limiting resource.
 In the system where all needed nutritients are in excess except for one the total growth is linear to the concentration of this liminting nutritient~\cite{hibbing_bacterial_2010, monod_growth_1949}.
@@ -154,8 +172,7 @@ In this case the growth term can be simply written as $\alpha G R$ and the model
     \end{pmatrix} \mbx\\
     \dot \mbm &=& \mbH (\mbx, \mbm, \mbp, \mbu) = -\frac{\alpha}{N_t} R G.
 \end{eqnarray}
-
-
+%
 Such model can be simplified by explointing that limitation of the resource pool also limits the total bacterial count of the system:
 \begin{equation}
     R = 1 - \frac{L+G+D}{N_t}
@@ -194,6 +211,8 @@ Here the first term is the linear part and the second term define the quadratic 
 \end{figure}
 %
 %
+%
+% ------------------------------------------------------------------------------------------------
 \subsection{Lag-time Estimation}
 Note that one could further simplify this model to a two pool or state model by omitting the pool $D$ and removing cells with rate $\beta$ directly from pool $L$. 
 The relevant question here is whether cells in the pool $D$ still contribute to the limitation of the resources by, e.g., occupying space or consuming important nutrients. 
@@ -238,6 +257,8 @@ t_L &\approx& -\frac{1}{\alpha}\ln\left(\frac{2\lambda}{\mu+\lambda+\alpha}\righ
 The lag time $t_L$ diverges very slowly, logarithmically with $\lambda\to 0$.
 %
 %
+%
+% ------------------------------------------------------------------------------------------------
 \subsection{Back flow from Growth to Lag pool}
 Due to its life in rather unfavourable conditions bacteria developed different surviving mechanisms, one of which is adapting their metabolism and transitioning into dormant state.
 By defeinition dormancy in bacteria is a reversible state where cell continue living with low metabolic activity while the cell division stops~\cite{kaprelyants_dormancy_1993}. 
@@ -259,6 +280,7 @@ The rate $\gamma(t)$ depends on the rate of change of the environment.
 Stronger and quicker changes will lead to a higher rate $\gamma$. 
 %
 %
+% ................................................................................................
 \subsubsection{Maxwell type of stress - strain relation}
 One of the reasons of the dormant state appearence can be also the temperature shift~\cite{oliver_viable_1995}.
 Moreover, the rapid shift in temperature is associated with the appearence of an additional lag phase~\cite{zwietering_modeling_1994}.
@@ -308,12 +330,16 @@ The ordinary differential equations for the pool model with environmental-shock 
 \newpage
 %
 %
+%
+% ================================================================================================
 \section{Interaction between species}
 As it was mentioned above, bacteria usually coexist in large multispecies interacting communities whose growth is vastly determined by the developed survival mechanisms.
 These survival mechanisms mostly aim to secure as much available nutrition which lead to competitive strategies or, if it is advantageous, cooperative ones~\cite{hibbing_bacterial_2010, stubbendieck_bacterial_2016}.
 Further we show that the TPM can be readily extended to the systems with more than one bacteria an take describe more complex relationships between species. 
 %
 %
+%
+% ------------------------------------------------------------------------------------------------
 \subsection{Resource Competition}
 One on the ways to descibe competition between bacteria populations is as a function of limiting resources ratio~\cite{tilman_resource_1977, smith_effects_2002}.
 To descibe such a situation we consider for simplicity only one common limiting resource pool. 
@@ -378,14 +404,18 @@ The pool model, in contrast to the classical Lotka-Volterra approach, allows for
 \end{figure}
 As one can see in Figure~\ref{fig:2pool_resource_2sp} even without direct interaction between species the bacterial growth was inhibited due to the limitation of the resource.
 Here species $A$ was able to supress species $B$ due to the higher values of the growth constant $\alpha$.
-
+%
 \cmt{But LV for several bacteria states in literature? Didn't find!}
-
+%
+%
+%
+% ------------------------------------------------------------------------------------------------
 \subsection{Interspecies Competition}
-
 However, except the inhibition due to resource competition, bacteria developed different others active competition mechanisms.
 One of the examples of such mechanisms is a production of the antimicrobial compounds, inhibitors or toxins~\cite{wloch-salamon_effect_2008, chao_structured_1981}.
-
+%
+%
+% ................................................................................................
 \subsubsection{Toxins Production}
 Now extend our model where bacteria not only consume nutritions from resource pool $R$ but one of the species also actively produce the inhibiting compounds $T$. 
 It is the accumulation of the bacteria waste which is responsible for the spoilage of food products. 
@@ -434,7 +464,9 @@ This model assumes that inhibitor is only produced when the bacteria grow and di
     \label{fig:2pool_2sp_toxin}
     \end{center}
 \end{figure}
-
+%
+%
+% ................................................................................................
 \subsubsection{Species Inhibition}
 \cmt{\cite{lenski_coexistence_1986}: Modelling of the 2 sp. system with 1resource and 1 inhibitor.}
 The simplest way to introduce inhibition of species A by species B is via a growth rate of species A depending on the abundance of species B. 
@@ -494,6 +526,8 @@ We can separate three cases:
 \end{figure}
 %
 %
+%
+% ------------------------------------------------------------------------------------------------
 \subsection{Interspecies Cooperation}
 On the other hand, one can also observe some cooperative behaviours between species in case when it facilitates the competition with others.
 Quite often it happens between the species that are close relatives or clonal populations and such process is called kin selection \cite{west_social_2007}.
@@ -524,6 +558,9 @@ Setting $\mathcal{B}_A(W_B,R)=\alpha_A W_BR$, $\mathcal{B}_B(W_A,R)=\alpha_B W_A
 \end{eqnarray}
 %
 %
+%
+%
+% ================================================================================================
 \section{Spatial Limitations}
 As described above, the proposed above model operates with the total number of the bacterial counts for different species and states in the system not accounting for their spatial distributions.
 Assuming that the bacteria is uniformly distributed we can simplify the problem to the system of the \acp{ode}.
@@ -621,6 +658,7 @@ The microenvironment of our system contains the resource and the inhibitor molec
 \cmtb{The ABM additional parameters $D_R$, $D_I$, $q$ (At which level of $R_i$ cell division happens) and more parameters describing bacterial division.}
 %
 %
+% ================================================================================================
 \section{Conclusion}
 \newpage
 \printbibliography
