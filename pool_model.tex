@@ -18,15 +18,7 @@
 
 \section{Introduction}
 
-...
-
-- See Papers.
-
-- Different processes in bacterial communities. 
-Differents states, lag-phase, growth, stationary state. What processes behind.
-Activation/inhibition/waste production, resource competition, back-flow to lag-phase.
-
-- About known models for Predictive Microbiology Modelling, e.g., Baranyi/Roberts
+Comprehensive reviews about competition/cooperation bacterial mechanisms: \cite{ghoul_ecology_2016, stubbendieck_bacterial_2016, hibbing_bacterial_2010, west_social_2007}
 
 \section{Motivating Example}
 
@@ -39,7 +31,7 @@ And describe it initially without states/1state. Get the difference.}
 
 \section{General Mathemetical Formulation}
 Consider the system consisting of $N$ species in $M$ different states.
-In the general representation, the system can be described with the Ordinary Differential Equations (ODEs) using a non-linear function $\mbF$:
+In the general representation, the system can be described with the Ordinary Differential Equations (\acp{ode}) using a non-linear function $\mbF$:
 \begin{equation}
    \dot{\mbx} = \mbF(\mbx, \mbm, \mbp, \mbu),
    \label{eq:model_ODE}
@@ -121,7 +113,7 @@ G &\stackrel{\mu'}{\longrightarrow} & D\\
 D &\stackrel{\beta}{\longrightarrow} & \emptyset
 \end{eqnarray}
 
-Then the ODEs describing such a model can be written as 
+Then the \acp{ode} describing such a model can be written as 
 \begin{equation}
 \begin{cases}
     \dot{L} = -(\mu + \lambda) L\\
@@ -406,7 +398,7 @@ Here species $A$ was able to supress species $B$ due to the higher values of the
 \subsection{Interspecies Competition}
 
 However, except the inhibition due to resource competition, bacteria developed different others active competition mechanisms.
-One of the examples of such mechanisms is a production of the antimicrobial compounds, inhibitors or toxins~\ref{wloch-salamon_effect_2008, chao_structured_1981}.
+One of the examples of such mechanisms is a production of the antimicrobial compounds, inhibitors or toxins~\cite{wloch-salamon_effect_2008, chao_structured_1981}.
 
 \subsubsection{Toxins Production}
 Now extend our model where bacteria not only consume nutritions from resource pool $R$ but one of the species also actively produce the inhibiting compounds $T$. 
@@ -549,36 +541,34 @@ Setting $\mathcal{B}_A(W_B,R)=\alpha_A W_BR$, $\mathcal{B}_B(W_A,R)=\alpha_B W_A
 
 \section{Spatial Limitations}
 
-- \ref{gorochowski_bsim_2012, li_nufeb_2019}: examples of other toolboxes for bacterial communities modelling.\\
+As described above, the proposed above model operates with the total number of the bacterial counts for different species and states in the system not accounting for their spatial distributions.
+Assuming that the bacteria is uniformly distributed we can simplify the problem to the system of the \acp{ode}.
+However, in reality spatial effects play significant role for population survival forcing some species develop such competitive mechanism as cell adhesion to surfaces in the areas rich with nutritients~\cite{htuson_bacteriasurface_2013}.
+Another mechanism is the motility of bacteria, e.g., the flagellates bacteria as \textit{E. coli} or \textit{B. subtilis} can experience the chemostatic motion of driven by oxygen concentrations~\cite{decoene_microscopic_2011}.
+The bacterial social interactions such as releasing the toxins or public goods can also significantly affect the spatial structure of the community~\cite{blanchard_bacterial_2015}.
+Therefore, it is rather important to establish the limitations for the model application.\\
 
-In general, bacterial communities in 2D can experience collective motion called swarming~\ref{wu_collective_2015}.
-Some works modelled 2D motile bacteria:\\
-- \ref{decoene_microscopic_2011}: 2D chemostatic self-propelled bacterial motion of the flagellated bactreia (e.g. E. coli, B. subtilis).
-Chemostaxis here was driven by the oxygen concentrations.
+- \cite{gorochowski_bsim_2012, li_nufeb_2019}: examples of another toolboxes for bacterial communities modelling (ABM).\\
+More about the modelling of the motile bacteria can be seen in works:~\cite{decoene_microscopic_2011, rosser_modelling_2014, sokolov_physical_2012, li_amplified_2008}.
 
-- \ref{rosser_modelling_2014}: modelling of the bacterial reorintation, rotation.
-
-- \ref{sokolov_physical_2012, li_amplified_2008}: modelling of the bacteria using hydrodynamic interactions and Brownian motion.
-Fluctuations in velocity and rotations.
-(\ref{li_amplified_2008}: Brownian motion gives right motion observed using microscopy).
-
-- \ref{farrell_mechanically_2013}: 2D modelling using Newtonian dynamics and only mechanical interactions + nutritient diffusion.
-Diff limits where diffusion dominant and limits growth, and where it's irrelevant.
-Mechanical pressure (due to bacteria-bacteria interactions) affects growth, can limit it.
-
-- \ref{blanchard_bacterial_2015}: Modelled bacterial social interactions (toxins/public goods release) and its effect on the spatial structure.
-
-
-
-\cmtb{Maybe as motivation can be spatial competitive mechanisms as adhesion to survaces and motility. 
-So how much including these effects will affect system.}
-
-\cmt{\cite{htuson_bacteriasurface_2013}: Attachment of bacteria to surfaces. (One of the mechanisms to stick to the areas with nutritients)}
+In general, bacterial communities in 2D can experience collective motion called swarming~\cite{wu_collective_2015}.
+Some works modelled 2D motile bacteria:
+\begin{itemize}
+    \item \cite{decoene_microscopic_2011}: 2D chemostatic self-propelled bacterial motion of the flagellated bactreia (e.g. E. coli, B. subtilis).
+    Chemostaxis here was driven by the oxygen concentrations.
+    \item \cite{rosser_modelling_2014}: modelling of the bacterial reorintation, rotation.
+    \item \cite{sokolov_physical_2012, li_amplified_2008}: modelling of the bacteria using hydrodynamic interactions and Brownian motion.
+    Fluctuations in velocity and rotations.
+    (\cite{li_amplified_2008}: Brownian motion gives right motion observed using microscopy).
+    \item \cite{farrell_mechanically_2013}: 2D modelling using Newtonian dynamics and only mechanical interactions + nutritient diffusion.
+    Branching parameter defines diff limits where diffusion dominant and limits growth, and where it's irrelevant.
+    Mechanical pressure (due to bacteria-bacteria interactions) affects growth, can limit it. (!!!)
+\end{itemize}
 
 To test the spatial limitations of the described above approach consider the system consisting from two bacterial species thet can be described bt two internal states: lag and growth states. 
 Both of these species grow using limiting resource pool $R$ with different growth constants $\alpha$ and different lengths of lag phase determined by parameter $\lambda$.
 Moreover, the species 1 is able to release a certain antimicrobial component $I$ that shows inhibitory effect on species 2 (amensalism).
-The ODEs the bacterial population can be written as: 
+The \acp{ode} the bacterial population can be written as: 
 \begin{equation}
     \begin{cases}
         \dot{L_1} = -\lambda_1 R L_1\\
