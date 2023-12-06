@@ -110,7 +110,7 @@ Motivated by this we divide a bacterial population into three pools (states) (Fi
 Here the concentrations of the pools are components of our variable vector $\mbx (t) = (L(t), G(t), D(t))^T$.
 \begin{figure}[t]
     \begin{center}
-    \includegraphics[width=0.7\textwidth]{Figures/TPM_fig.pdf}
+    \includegraphics[width=0.6\textwidth]{Figures/TPM_fig.pdf}
     \caption{Schematic representation of exchange between three states or pools.}
     \label{fig:SchematicRep}
     \end{center}
@@ -265,7 +265,7 @@ The lag time $t_L$ diverges very slowly, logarithmically with $\lambda\to 0$.
 %
 % ------------------------------------------------------------------------------------------------
 \subsection{Back flow from Growth to Lag pool}
-Due to its life in rather unfavourable conditions bacteria developed different surviving mechanisms, one of which is adapting their metabolism and transitioning into dormant state.
+Due to its life in rather unfavorable conditions bacteria developed different surviving mechanisms, one of which is adapting their metabolism and transitioning into dormant state.
 By definition dormancy in bacteria is a reversible state where cell continue living with low metabolic activity while the cell division stops~\cite{kaprelyants_dormancy_1993}. 
 This survival strategy can appear in response to different external stresses, e.g., nutritient deficiency, temperature stress or extreme fluctuations of environment parameters.
 And after "difficult times" bacteria, also called viable but non-culturable (VBNC), can continue cell division~\cite{kell_viability_1998}.
@@ -344,7 +344,7 @@ If the shift happened rather early in time, when most of the bacteria were in la
 \section{Interaction between species}
 As it was mentioned above, bacteria usually coexist in large multispecies interacting communities whose growth is vastly determined by the developed survival mechanisms.
 These survival mechanisms mostly aim to secure as much available nutrition which lead to competitive strategies or, if it is advantageous, cooperative ones~\cite{hibbing_bacterial_2010, stubbendieck_bacterial_2016}.
-Further we show that the TPM can be readily extended to the systems with more than one bacterium and describe more complex relationships between species. 
+Further we show that the model can be readily extended to the systems with more than one bacterium and describe more complex relationships between species. 
 %
 %
 %
@@ -373,48 +373,49 @@ This system of equations defines the microenvironment $\mbm$ and bacteria state 
 \end{equation}
 We again rescaled the resource pool with $N_t$ and find
 \begin{eqnarray}
-\label{Resource}
+\label{eq:Resource}
 R &=&1-\frac{L_A+G_A+L_B+G_B}{N_t}
 \end{eqnarray}
-Inserting Eq. \ref{Resource} into Eqs. \ref{eq:model_2sp_resource_comp} yields:
+Inserting Eq.~\ref{eq:Resource} into Eqs.~\ref{eq:model_2sp_resource_comp} yields:
 \begin{eqnarray*}
     \dot{L}_A &=& - \lambda_A  L_A + \frac{\lambda_A}{N_t}\left(L_A+G_A+L_B+G_B\right)L_A\\
     \dot{L}_B &=& - \lambda_B L_B + \frac{\lambda_B}{N_t}\left(L_A+G_A+L_B+G_B\right)L_B \\
     \dot{G}_A &=&  \lambda_A  L_A - \frac{\lambda_A}{N_t}\left(L_A+G_A+L_B+G_B\right)L_A +\alpha_A G_A - \frac{\alpha_A}{N_t}\left(L_A+G_A+L_B+G_B\right)G_A\\
-    \dot{G}_B &=& \lambda_B L_B - \frac{\lambda_B}{N_t}\left(L_A+G_A+L_B+G_B\right)L_B  +\alpha_B G_B -\frac{\alpha_B}{N_t}\left(L_A+G_A+L_B+G_B\right)G_B
+    \dot{G}_B &=&  \lambda_B L_B - \frac{\lambda_B}{N_t}\left(L_A+G_A+L_B+G_B\right)L_B  +\alpha_B G_B -\frac{\alpha_B}{N_t}\left(L_A+G_A+L_B+G_B\right)G_B
 \end{eqnarray*}
-which has the structure of a \ac{glv}.
-In order to better see this, we set $L_A=L_B=0$: 
-\begin{eqnarray}
-    \dot{G}_A &=& \alpha_A G_A\left(1 - \frac{G_A}{N_t}\right) - \frac{\alpha_A}{N_t}G_AG_B
-    \label{eq:LV_simple1}\\
-    \dot{G}_B &=& \alpha_B G_B\left(1-\frac{G_B}{N_t}\right) -\frac{\alpha_B}{N_t}G_AG_B. 
-    \label{eq:LV_simple2}
-\end{eqnarray} 
-
-Equations (\ref{eq:LV_simple1}-\ref{eq:LV_simple2}) are basically competitive Lotka-Volterra equations that are widely used in ecological studies and show the principle of competive excursion.
-That principle claims that two species in competition for the same resource cannot coexist~\cite{wangersky_lotka-volterra_1978}. 
-In previous studies it was shown that \ac{glv} equations with one bacterial state can be sucessfully applied to predict the microbial community dynamics, determine different types of the pairwise interspecies interactions~\cite{dedrick_when_2023, stein_ecological_2013, venturelli_deciphering_2018, hoffmann_power_2007}.
-In food studies the \ac{glv} was applied by Mounier \etal~\cite{mounier_microbial_2008} to study interactions of six bacteria species  with yeast omissin in cheese.
-Cauchie \etal~\cite{cauchie_modeling_2020} applied Lotka-Volterra model to study the three-species system of the bacteria majorly present in minced pork meat.
-
-The pool model, in contrast to the classical Lotka-Volterra approach, allows for far more flexibility. 
-
+which has the structure of a \ac{glv} expanded with different internal states for one species.
+As one can see in Figure~\ref{fig:2pool_resource_2sp} even without direct interaction between species the bacterial growth was inhibited due to the limitation of the resource.
+Here species $A$ has a longer lag-phase than $B$ but the exponential growth of $A$ is stronger than the one that bacteria $B$ experiences.
+As a result, species $A$ was able to suppress species $B$ consuming the larger amount of nutritient and reaching larger bacterial count at the end.
 \begin{figure}[H]
     \begin{center}
-    \includegraphics[width=0.67\textwidth]{Figures/pool_model_2pools_resource_competition.pdf}
+    \includegraphics[width=0.6\textwidth]{Figures/pool_model_2pools_resource_competition.pdf}
     \caption{
-        The competition of the two bacterial species due to the common limiting resource calculated using Eq. (\ref{eq:model_2sp_resource_comp}).
-        The red curve describes the growth of the bacteria $A$ $N_A = \sum_{k} x_A^k = L_A+G_A$ with model parameters $\lambda_A=10^{-2}$, $\alpha_A=3.0$.
-        The blue curve describes the growth of the bacteria $B$ $N_B = \sum_{k} x_B^k = L_B+G_B$ with model parameters $\lambda_A=5\cdot 10^{-2}$, $\alpha_A=2.5$.
+        The competition of the two bacterial species due to the common limiting resource calculated using Eq.~(\ref{eq:model_2sp_resource_comp}).
+        The red curve describes the growth of the bacteria $A$ ($N_A = \sum_{k} x_A^k = L_A+G_A$) with model parameters $\lambda_A=10^{-2}$, $\alpha_A=3.0$.
+        The blue curve describes the growth of the bacteria $B$ ($N_B = \sum_{k} x_B^k = L_B+G_B$) with model parameters $\lambda_B=5\cdot 10^{-2}$, $\alpha_B=2.5$.
         The purple line shows the total bacterial count of the system  $N(t)=\sum_i\sum_k\mbx_i^k=N_A+N_B$.
         The gray line denotes the dynamic of the resource pool scaled with its capacity $N_t=10^4$.
     }
     \label{fig:2pool_resource_2sp}
     \end{center}
 \end{figure}
-As one can see in Figure~\ref{fig:2pool_resource_2sp} even without direct interaction between species the bacterial growth was inhibited due to the limitation of the resource.
-Here species $A$ was able to supress species $B$ due to the higher values of the growth constant $\alpha$.
+%
+In order to get the commonly used form of the \ac{glv}, we need to simply eliminate of the bacterial states by setting $L_A=L_B=0$: 
+\begin{eqnarray}
+    \dot{G}_A &=& \alpha_A G_A\left(1 - \frac{G_A}{N_t}\right) - \frac{\alpha_A}{N_t}G_AG_B
+    \label{eq:LV_simple1}\\
+    \dot{G}_B &=& \alpha_B G_B\left(1-\frac{G_B}{N_t}\right) -\frac{\alpha_B}{N_t}G_AG_B. 
+    \label{eq:LV_simple2}
+\end{eqnarray} 
+%
+Equations (\ref{eq:LV_simple1}-\ref{eq:LV_simple2}) are basically competitive Lotka-Volterra equations that are widely used in ecological studies and show the principle of competitive excursion.
+That principle claims that two species in competition for the same resource cannot coexist~\cite{wangersky_lotka-volterra_1978}. 
+In previous studies it was shown that \ac{glv} equations with one bacterial state can be sucessfully applied to predict the microbial community dynamics, determine different types of the pairwise interspecies interactions~\cite{dedrick_when_2023, stein_ecological_2013, venturelli_deciphering_2018, hoffmann_power_2007}.
+In food studies the \ac{glv} was applied by Mounier \etal~\cite{mounier_microbial_2008} to study interactions of six bacteria species influenced by yeast omissions in cheese.
+Cauchie \etal~\cite{cauchie_modeling_2020} applied Lotka-Volterra model to study the three-species system of the bacteria majorly present in minced pork meat.\\
+%
+However, in contrast to the classical Lotka-Volterra approach, the introduced pool model allows for far more flexibility in tuning properties of the bacterial interactions within and between species. 
 %
 \cmt{But LV for several bacteria states in literature? Didn't find!}
 %
@@ -424,6 +425,8 @@ Here species $A$ was able to supress species $B$ due to the higher values of the
 \subsection{Interspecies Competition}
 However, except the inhibition due to resource competition, bacteria developed different others active competition mechanisms.
 One of the examples of such mechanisms is a production of the antimicrobial compounds, inhibitors or toxins~\cite{wloch-salamon_effect_2008, chao_structured_1981}.
+On the other hand, some bacteria can produce public goods, the compounds that benefit growth of other species.
+In this way, can suppress the non-preferred species by helping their competitors~\cite{hibbing_bacterial_2010}.
 %
 %
 % ................................................................................................
@@ -455,13 +458,13 @@ We would like to test the following model:
     \end{cases}
     \label{eq:model_2sp_toxin}
 \end{equation}
-
+%
 As it can be seen in Figure~\ref{fig:2pool_2sp_toxin}, model $\mathcal{F}_1$ results in $I_1(t)=\kappa\int_{t_0}^tG(t')dt'$. 
 As long as $G>0$ toxin is produced, no matter whether the amount of bacteria is still growing. 
 Model $\mathcal{F}_2$ results in waste accumulation in steady state $I_2^s=\lim_{t\to\infty}I_1(t)=\kappa(N_t-n_0)$. 
 To see this we note $\dot{T}_2=\kappa(\dot{L}+\dot{G})$, which yields: $I_2(t)=\kappa(L(t)+G(t)-n_0)$ where we used $T_2(0)=G(0)=0$, $L(0)=n_0$. 
 This model assumes that inhibitor is only produced when the bacteria grow and divide.\\
-
+%
 \begin{figure}[H]
     \begin{center}
     \includegraphics[width=1.\textwidth]{Figures/pool_model_2pools_toxin.pdf}
@@ -530,7 +533,7 @@ We can separate three cases:
 %
 \begin{figure}[H]
     \begin{center}
-    \includegraphics[width=0.5\textwidth]{Figures/pool_model_1pool_inhib.pdf}
+    \includegraphics[width=0.6\textwidth]{Figures/pool_model_1pool_inhib.pdf}
     \caption{
         The two species system where species inhibit each other defined with equations~(\ref{eq:2sp_1pool_inhibit_unitless1}-\ref{eq:2sp_1pool_inhibit_unitless2}).
         Here the red lines describes the evolution of the species $A$ and blue lines correspond to species $B$.
@@ -677,7 +680,7 @@ The microenvironment of our system contains the resource and the inhibitor molec
 %
 \begin{figure}[H]
     \begin{center}
-    \includegraphics[width=0.67\textwidth]{Figures/pool_model_spatial.pdf}
+    \includegraphics[width=0.6\textwidth]{Figures/pool_model_spatial.pdf}
     \caption{
         The output of the model (\ref{eq:spatial_limit_F}, \ref{eq:spatial_limit_H}) for given parameters and initial valued presented in Tables \ref{tab:spatial_limit_param}, \ref{tab:spatial_limit_init}, respectively.
         The observables of the system are the bacterial count of each species $L+G$ (blue and orange lines) and the total bacterial count of the system (green).
