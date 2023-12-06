@@ -91,13 +91,13 @@ In the following section we demonstate the application of this approach for diff
 % ------------------------------------------------------------------------------------------------
 \subsection{Three-Pool Model}
 Consider for simplicity the system where only one bacteria species is present $N=1$.
-The bacterial growth curves usually consists of different consecutive phases~\cite{buchanan_when_1997}.
+The bacterial growth curves usually consist of different consecutive phases~\cite{buchanan_when_1997}.
 At the beginning no increase in bacterial count is present and so-called lag-phase is observed.
 This phenomenon appears due to adaptation of the microbial community, for example, to the new environmental conditions.
 This so-called preparation to the exponential growth includes synthesys of the needed compounds, initiation of the transciption~\cite{rolfe_lag_2012} and poorly studied physiological and regulatory mechanisms~\cite{monod_growth_1949}
 After this, the succeeded in adaptation bacteria enter the exponential growth phase, where the process of cell division is directly happening \cmt{Add Ref}.
 When the nutrition is exhausted by the growing bacteria, the stationary state of the growth curve occurs.
-In this state the cultures accumulate waste products of metabolitic activity that leads to cell death of the bacteria.
+In this state the cultures accumulate waste products of metabolic activity that leads to cell death of the bacteria.
 At the same time dying cells release the nutritions for survivors to continue growing.
 As a result the balance between the growing and dying processes leads to the constant with time bacterial count~\cite{navarro_llorens_stationary_2010}.
 In the described simplified version of the real-life system three possible bacteria states are mentioned corresponding to which process is happening: adaptation, growth or death.
@@ -148,7 +148,7 @@ or in matrix form it shows the linear dependency
 % ------------------------------------------------------------------------------------------------
 \subsection{Resource Dependence}
 Based on experimental observations, it was shown that the bacterial growth is strongly influenced by the limiting resource.
-In the system where all needed nutritients are in excess except for one the total growth is linear to the concentration of this liminting nutritient~\cite{hibbing_bacterial_2010, monod_growth_1949}.
+According to the works of Jacques Monod, in the system where all needed nutritients are in excess except for one the total growth is linear to the concentration of this liminting nutritient~\cite{monod_growth_1949}.
 The control of the population density with respect to the available nutritions is implemented using cell communication process called quorum sensing. 
 Using release of the extracellular signalling molecules (autoinducers) it is possible to synchronize the gene expression of the whole group~\cite{ng_bacterial_2009}.
 We would not dive into the processes of quorum sensing and try to keep it as simple as possible.
@@ -469,8 +469,8 @@ The difference between the two toxin production models for resulting solution of
         The growing bacteria $B$ produces toxin $T$ (a) constantly $\dot{T} = \mathcal{F}_1 = \kappa G_B$ and (b) only during growth process $\dot{T} = \mathcal{F}_2 = \kappa \alpha_B R G_B$ with 
         production rate $\kappa=0.2$.
         The toxin $T$ causes the cell death of bacteria $A$ with rate constant $\mu = 0.2$.
-        The red curve describes the growth of the bacteria $A$ $N_A = \sum_{k} x_A^k = L_A+G_A$ with model parameters $\lambda_A=10^{-2}$, $\alpha_A=3.0$.
-        The blue curve describes the growth of the bacteria $B$ $N_B = \sum_{k} x_B^k = L_B+G_B$ with model parameters $\lambda_A=5\cdot 10^{-2}$, $\alpha_A=2.5$.
+        The red curve describes the growth of the bacteria $A$ ($N_A = \sum_{k} x_A^k = L_A+G_A$) with model parameters $\lambda_A=10^{-2}$, $\alpha_A=3.0$.
+        The blue curve describes the growth of the bacteria $B$ ($N_B = \sum_{k} x_B^k = L_B+G_B$) with model parameters $\lambda_A=5\cdot 10^{-2}$, $\alpha_A=2.5$.
         The gray line denotes the dynamic of the resource pool scaled with its capacity $N_t=10^4$.
     }
     \label{fig:2pool_2sp_toxin}
@@ -485,22 +485,24 @@ This model assumes that toxin is only produced when the total bacterial grow and
 %
 %
 % ................................................................................................
-\subsubsection{Species Inhibition}
-\cmt{\cite{lenski_coexistence_1986}: Modeling of the 2 sp. system with 1resource and 1 inhibitor.}
-The simplest way to introduce inhibition of species A by species B is via a growth rate of species A depending on the abundance of species B. 
+\subsubsection{Mutual Inhibition}
+Another special case of the species competition is when the produced toxin does not cause the death of the bacteria but rather inhibit its growth.
+Such situation with 2 bacteria species, limiting resource and produced inhibitor was modeled, e.g., by Lenski and Hattingh~\cite{lenski_coexistence_1986}.
+In our case, we would like to look at rather simplified case reducing the number of variables of the system.
+The easiest way to introduce inhibition of species $A$ by species $B$ is via a growth rate of species $A$ depending on the abundance of species $B$.
 For sake of simplicity we ignore the lag pool and write for a mutual inhibition:
 \begin{eqnarray}
     \dot{G}_A &=& \mathcal{B}_A(G_B)G_A\left(1 - \frac{G_A+G_B}{N_t}\right)\\
     \dot{G}_B &=& \mathcal{B}_B(G_A) G_B\left(1-\frac{G_A+G_B}{N_t}\right). 
 \end{eqnarray}
-The function $\mathcal{B}_{A/B}$ captures the inhibiting effects effectively. 
-It is straight forward to make the mechanism of inhibition more explicit by, e.g., introducing a waste pool. 
+The function $\mathcal{B}_{A/B}$ captures the inhibiting effects effectively.
+It is straight forward to make the mechanism of inhibition more explicit by, e.g., introducing a toxin pool. 
 One possible choice for $\mathcal{B}$ is: 
 \begin{eqnarray}
     \mathcal{B}(G)&=&\frac{\alpha}{1+KG}. 
 \end{eqnarray}
-This corresponds to the case $W\sim G$, where $W$ is the waste (or whatever one chooses to call it) of species A affecting species B. 
-If the waste accumulates one needs to replace $G$ by $\int G dt$. Keeping it simple yields:
+This corresponds to the case $T\sim G$, where $T$ is the toxin produced. 
+If the toxin accumulates one needs to replace $G$ by $\int G dt$. Keeping it simple yields:
 \begin{eqnarray}
     \dot{G}_A &=& \frac{\alpha_A G_A}{1+K_BG_B}\left(1 - \frac{G_A+G_B}{N_t}\right)\\
     \dot{G}_B &=& \frac{\alpha_B G_B}{1+K_AG_A}\left(1-\frac{G_A+G_B}{N_t}\right). 
@@ -526,7 +528,7 @@ results in:
     \dot{G}_B &=&\psi\frac{G_B}{G_A}\left(1-G_A-G_B\right). 
     \label{eq:2sp_1pool_inhibit_unitless2}
 \end{eqnarray}
-We can separate three cases: 
+We can separate three cases (see Figure~\ref{fig:1pool_2sp_inhibit}): 
 \begin{eqnarray}
     \psi&>&1:\quad\text{Species B growth faster and/or inhibits A stronger}\\
     \psi&=&1:\quad\text{A and B are equivalent}\\
@@ -535,9 +537,9 @@ We can separate three cases:
 %
 \begin{figure}[H]
     \begin{center}
-    \includegraphics[width=0.6\textwidth]{Figures/pool_model_1pool_inhib.pdf}
+    \includegraphics[width=0.5\textwidth]{Figures/pool_model_1pool_inhib.pdf}
     \caption{
-        The two species system where species inhibit each other defined with equations~(\ref{eq:2sp_1pool_inhibit_unitless1}-\ref{eq:2sp_1pool_inhibit_unitless2}).
+        The two-species system mutually inhibiting each other is defined with equations~(\ref{eq:2sp_1pool_inhibit_unitless1}-\ref{eq:2sp_1pool_inhibit_unitless2}).
         Here the red lines describes the evolution of the species $A$ and blue lines correspond to species $B$.
         The relation between inhibition strength of species $B$ and $A$ are defined by control parameter value (a) $\psi$ = 0.5, (b) $\psi$ = 1 or (c) $\psi$ = 2.
     }
