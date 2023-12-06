@@ -224,32 +224,32 @@ The relevant question here is whether cells in the pool $D$ still contribute to 
 If yes, the three pool model would be advantageous, if not the two pool model is sufficient with the advantages of having one parameter less.\\
 %
 The dynamics of the three pool model can be captures by the coupled system of ordinary differential equations (the two pool model can be achieved by setting $D\equiv 0$ and replacing $\mu$ with $\beta$):
-to be solved with the initial conditions $L(0)=n_0$, $G(0)=0$, and $D(0)=0$, where $n_0$ is the initial bacterial population. 
+to be solved with the initial conditions $L(0)=N_0$, $G(0)=0$, and $D(0)=0$, where $N_0$ is the initial bacterial population. 
 $N_t$ denotes the maximal size of the total bacterial population due to environmental limitations (\textbf{Figure \ref{fig:3pool_resource_plots}}). 
 For $\mu'=0$ the equations for $L$ and $D$ can be readily integrated resulting in:
 \begin{equation}
     \begin{cases}
-        L(t) = n_0 e^{-(\mu+\lambda)t}\\
-        D(t) = n_0 \mu e^{-\beta t}\frac{1-e^{-(\mu+\lambda-\beta)t}}{\mu+\lambda-\beta}
+        L(t) = N_0 e^{-(\mu+\lambda)t}\\
+        D(t) = N_0 \mu e^{-\beta t}\frac{1-e^{-(\mu+\lambda-\beta)t}}{\mu+\lambda-\beta}
     \end{cases}.
 \end{equation}
 For constant parameters $\mu$, $\lambda$, and $\beta$ the integrals for $L$ and $D$ can be put into the differential equation for $G$. 
 However, for time dependent parameters, e.g., for a dependence on a non-static, dynamic temperature, it appears to be not advantageous to use the analytical results for $L$ and $D$ and work instead with all three equations for $L$, $G$, and $D$. 
-It is interesting to see what type of equations result for the total bacterial population $n=L+G+D$:
+It is interesting to see what type of equations result for the total bacterial population $N=L+G+D$:
 \begin{equation}
     \begin{cases}
-        \dot{G} = \lambda L + \alpha G\left(1-\frac{n}{N_t}\right)\\
-        \dot{n} = - \beta D + \alpha G\left(1-\frac{n}{N_t}\right)
+        \dot{G} = \lambda L + \alpha G\left(1-\frac{N}{N_t}\right)\\
+        \dot{N} = - \beta D + \alpha G\left(1-\frac{N}{N_t}\right)
     \end{cases}
 \end{equation}
-with the initial conditions $G(0)=0$ and $n(0)=n_0$. 
+with the initial conditions $G(0)=0$ and $N(0)=N_0$. 
 These equations have a clear interpretation, are derived from simple principles, and are different from the popular Barayni-Roberts and modified-Gompertz models. 
 A notable difference is that the growth rate $\alpha$ is time independent. 
 For the functions $L$ and $D$ it holds: $\lim_{t\to\infty} L(t) = \lim_{t\to\infty} D(t) = 0$. 
 It follows immediately that $\lim_{t\to\infty} G(t) = N_t$. 
 The equation exhibit a lag phase and an initial drop due to cell death. 
 To find a substantial initial drop one needs $\beta \mu \gg \alpha \lambda$. 
-The lag time $t_L$ can be approximated by the time at which half of the initial population is in the growth phase, i.e., $n_0=2G(t_L)$. 
+The lag time $t_L$ can be approximated by the time at which half of the initial population is in the growth phase, i.e., $N_0=2G(t_L)$. 
 Assuming $L\ll N_t$ we can ignore the non-linear term in the equation for $G$, which gives rise to:
 \begin{eqnarray}
     1&=& 2\int_0^{t_L} \lambda L(t)e^{\alpha(t_L-t)}dt\\
@@ -431,22 +431,15 @@ In this way, can suppress the non-preferred species by helping their competitors
 %
 % ................................................................................................
 \subsubsection{Toxins Production}
-Now extend our model where bacteria not only consume nutritions from resource pool $R$ but one of the species also actively produce the inhibiting compounds $T$. 
-It is the accumulation of the bacteria waste which is responsible for the spoilage of food products. 
-In order to take this into account we add an equation for the waste production:
+To introduce active competitive mechanisms, we extend our model with one of the species producing the toxic compounds $T$ during its growth:
 \begin{eqnarray}
-    \dot{L} &=& - \lambda_f R L + \mathcal{B}(R)G\\
-    \dot{G} &=& \lambda_f R L +\alpha R G-\mathcal{B}(R)G\\
-    \dot{R} &=&-\frac{\alpha}{N_t} R G\\
     \dot{T} &=& \mathcal{F}(R,G).
 \end{eqnarray}
-The function $\mathcal{F}$ denotes the model for the antibiotic production rate. 
-We shall discuss two possible models:
-\begin{eqnarray}
-    \mathcal{F}_1(R,G)&=&\kappa G\\
-    \mathcal{F}_2(R,G)&=&\kappa\alpha R G=-\kappa N_t\dot{R}
-\end{eqnarray}
-We would like to test the following model:
+The function $\mathcal{F}$ denotes the model for the toxin production rate.
+It can be, for example, the accumulation of the bacteria waste which is responsible for the spoilage of food products and affecting another species in negative way.
+Consider the system for two species competing for resource $R$ with the production of the toxin $T$ by species $B$.
+Assume that the toxin causes the death of the species $A$ with rate $\mu$.
+Then the full \ac{ode} system is
 \begin{equation}
     \begin{cases}
         \dot{L}_A = - \lambda_A R L_A\\
@@ -455,15 +448,18 @@ We would like to test the following model:
         \dot{G}_B = \lambda_B R L_B + \alpha_B R G_B\\
         \dot{R} = -\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{N_t} R G_B\\
         \dot{T} = \mathcal{F}_{1,2} (R, G_B) \\
-    \end{cases}
+    \end{cases}.
     \label{eq:model_2sp_toxin}
 \end{equation}
 %
-As it can be seen in Figure~\ref{fig:2pool_2sp_toxin}, model $\mathcal{F}_1$ results in $I_1(t)=\kappa\int_{t_0}^tG(t')dt'$. 
-As long as $G>0$ toxin is produced, no matter whether the amount of bacteria is still growing. 
-Model $\mathcal{F}_2$ results in waste accumulation in steady state $I_2^s=\lim_{t\to\infty}I_1(t)=\kappa(N_t-n_0)$. 
-To see this we note $\dot{T}_2=\kappa(\dot{L}+\dot{G})$, which yields: $I_2(t)=\kappa(L(t)+G(t)-n_0)$ where we used $T_2(0)=G(0)=0$, $L(0)=n_0$. 
-This model assumes that inhibitor is only produced when the bacteria grow and divide.\\
+Where we consider two possible models of the toxin production:
+\begin{eqnarray}
+    \mathcal{F}_1(R,G)&=&\kappa G_B\\
+    \mathcal{F}_2(R,G)&=&\kappa\alpha_B R G_B.
+\end{eqnarray}
+Here $\kappa$ is the toxin production rate.
+The difference between the two toxin production models for resulting solution of the \acp{ode} is presented in Figure~\ref{fig:2pool_2sp_toxin}.
+%
 %
 \begin{figure}[H]
     \begin{center}
@@ -480,6 +476,12 @@ This model assumes that inhibitor is only produced when the bacteria grow and di
     \label{fig:2pool_2sp_toxin}
     \end{center}
 \end{figure}
+%
+Model $\mathcal{F}_1$ results in toxin concentration $T_1(t)=\kappa\int_{t_0}^tG(t')dt'$.
+That means that as long as there are bacteria in the growth phase $G_B>0$ toxin is produced, no matter whether the total bacterial count $N_B$ is still growing. 
+On the other hand, model $\mathcal{F}_2$ results in toxin accumulation in steady state $T_2^s=\lim_{t\to\infty}T_2(t)=\kappa(N_t-N_0)$. 
+To see this we note $\dot{T}_2=\kappa(\dot{L_B}+\dot{G_B})$, which yields: $T_2(t)=\kappa(L_B(t)+G_B(t)-N_{B0})$ where we used $T_2(0)=G_B(0)=0$, $L_B(0)=N_{B0}$. 
+This model assumes that toxin is only produced when the total bacterial grow and divide, hence, the total bacterial count $N_B$ increases.\\
 %
 %
 % ................................................................................................
@@ -505,7 +507,7 @@ If the waste accumulates one needs to replace $G$ by $\int G dt$. Keeping it sim
 \end{eqnarray}
 One can distinguish two limiting cases: {\it i}) $K_{A/B}\ll N_t$ and {\it ii}) $K_{A/B}\gg N_t$. 
 In the first case the inhibition is of minor importance and could be ignored. 
-In the latter case one can simplify the equations, given $n_A$ and $n_B$ are non-zero:
+In the latter case one can simplify the equations, given $N_A$ and $N_B$ are non-zero:
 \begin{eqnarray}
 \label{Mut_Inhib}
     \dot{G}_A &=&\tilde{\alpha}_A\frac{G_A}{G_B}\left(1 - G_A-G_B\right)\\
