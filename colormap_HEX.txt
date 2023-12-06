@@ -1,0 +1,9 @@
+Fig2: dark green='#386641'; green='#679E48'; yellow='#E2B100'; blue='#0982A4';
+
+Fig3: green='#679E48'; orange='#ED733E'; rose='#C3568A';
+
+Fig4: NA(red)='#D06062'; NB(blue)='#4E89B1', N(purple)='#7E57A5'; R(gray)='#808080';
+
+Fig5: NA(red)='#D06062'; NB(blue)='#4E89B1', R(gray)='#808080'; T(brown)='#99582A';
+
+Fig6: GA(red)='#D06062'; GB(blue)='#4E89B1'
