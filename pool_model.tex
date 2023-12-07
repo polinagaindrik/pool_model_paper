@@ -450,17 +450,17 @@ Then the full \ac{ode} system is
         \dot{L}_A = - \lambda_A R L_A\\
         \dot{L}_B = - \lambda_B R L_B \\
         \dot{G}_A = \lambda_A R L_A + \alpha_A R G_A - \frac{\mu}{\kappa N_t} T G_A\\
-        \dot{G}_B = \lambda_B R L_B + \alpha_B R G_B\\
+        \dot{G}_B = \lambda_B R L_B + \alpha_B R G_B\\ 
         \dot{R} = -\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{N_t} R G_B\\
-        \dot{T} = \mathcal{F}_{1,2} (R, G_B) \\
+        \dot{T}_{B}^{1,2} = \mathcal{F}^{1,2} (R, G_B) \\
     \end{cases}.
     \label{eq:model_2sp_toxin}
 \end{equation}
 %
 Where we consider two possible models of the toxin production:
 \begin{eqnarray}
-    \mathcal{F}_1(R,G)&=&\kappa G_B\\
-    \mathcal{F}_2(R,G)&=&\kappa\alpha_B R G_B.
+    \mathcal{F}^1(R,G)&=&\kappa G_B\\
+    \mathcal{F}^2(R,G)&=&\kappa\alpha_B R G_B.
 \end{eqnarray}
 Here $\kappa$ is the toxin production rate.
 The difference between the two toxin production models for resulting solution of the \acp{ode} is presented in Figure~\ref{fig:2pool_2sp_toxin}.
@@ -470,10 +470,10 @@ The difference between the two toxin production models for resulting solution of
     \begin{center}
     \includegraphics[width=1.\textwidth]{Figures/pool_model_2pools_toxin.pdf}
     \caption{
-        The two species system competing for the common nutritient $R$ with production of the toxin $T$ (brown line) calculated using Eq. (\ref{eq:model_2sp_toxin}).
-        The growing bacteria $B$ produces toxin $T$ (a) constantly $\dot{T} = \mathcal{F}_1 = \kappa G_B$ and (b) only during growth process $\dot{T} = \mathcal{F}_2 = \kappa \alpha_B R G_B$ with 
+        The two species system competing for the common nutritient $R$ with production of the toxin $T_B$ (brown line) calculated using Eq.~(\ref{eq:model_2sp_toxin}).
+        The growing bacteria $B$ produces toxin $T_B$ (a) constantly $\dot{T}_B^1 = \mathcal{F}^1 = \kappa G_B$ or (b) only during growth process $\dot{T}_B^2 = \mathcal{F}^2 = \kappa \alpha_B R G_B$ with 
         production rate $\kappa=0.2$.
-        The toxin $T$ causes the cell death of bacteria $A$ with rate constant $\mu = 0.2$.
+        The toxin $T_B$ causes the cell death of bacteria $A$ with rate constant $\mu = 0.2$.
         The red curve describes the growth of the bacteria $A$ ($N_A = \sum_{k} x_A^k = L_A+G_A$) with model parameters $\lambda_A=10^{-2}$, $\alpha_A=3.0$.
         The blue curve describes the growth of the bacteria $B$ ($N_B = \sum_{k} x_B^k = L_B+G_B$) with model parameters $\lambda_A=5\cdot 10^{-2}$, $\alpha_A=2.5$.
         The gray line denotes the dynamic of the resource pool scaled with its capacity $N_t=10^4$.
@@ -482,10 +482,10 @@ The difference between the two toxin production models for resulting solution of
     \end{center}
 \end{figure}
 %
-Model $\mathcal{F}_1$ results in toxin concentration $T_1(t)=\kappa\int_{t_0}^tG(t')dt'$.
+Model $\mathcal{F}^1$ results in toxin concentration $T_B^1(t)=\kappa\int_{t_0}^tG(t')dt'$.
 That means that as long as there are bacteria in the growth phase $G_B>0$ toxin is produced, no matter whether the total bacterial count $N_B$ is still growing.
-On the other hand, model $\mathcal{F}_2$ results in toxin accumulation in steady state $T_2^s=\lim_{t\to\infty}T_2(t)=\kappa(N_t-N_0)$.
-To see this we note $\dot{T}_2=\kappa(\dot{L_B}+\dot{G_B})$, which yields: $T_2(t)=\kappa(L_B(t)+G_B(t)-N_{B0})$ where we used $T_2(0)=G_B(0)=0$, $L_B(0)=N_{B0}$.
+On the other hand, model $\mathcal{F}^2$ results in toxin accumulation in steady state $T_B^{2s}=\lim_{t\to\infty}T_B^2(t)=\kappa(N_t-N_0)$.
+To see this we note $\dot{T}_B^2=\kappa(\dot{L_B}+\dot{G_B})$, which yields: $T_B^2(t)=\kappa(L_B(t)+G_B(t)-N_{B0})$ where we used $T_B^2(0)=G_B(0)=0$, $L_B(0)=N_{B0}$.
 This model assumes that toxin is only produced when the total bacterial grow and divide, hence, the total bacterial count $N_B$ increases.
 %
 %
@@ -535,8 +535,8 @@ results in:
 \end{equation}
 We can separate three cases (see Figure~\ref{fig:1pool_2sp_inhibit}):
 \begin{eqnarray}
-    \psi&>&1:\quad\text{Species B growth faster and/or inhibits A stronger}\\
     \psi&=&1:\quad\text{A and B are equivalent}\\
+    \psi&>&1:\quad\text{Species B growth faster and/or inhibits A stronger}\\
     \psi&<&1:\quad\text{Species A growth faster and/or inhibits B stronger}
 \end{eqnarray}
 %
@@ -546,7 +546,7 @@ We can separate three cases (see Figure~\ref{fig:1pool_2sp_inhibit}):
     \caption{
         The two-species system mutually inhibiting each other is defined with equations~(\ref{eq:2sp_1pool_inhibit_unitless}).
         Here the red lines describes the evolution of the species $A$ and blue lines correspond to species $B$.
-        The relation between inhibition strength of species $B$ and $A$ are defined by control parameter value (a) $\psi$ = 0.5, (b) $\psi$ = 1 or (c) $\psi$ = 2.
+        The relation between inhibition strength of species $B$ and $A$ are defined by control parameter value (a) $\psi$ = 1, (b) $\psi$ = 0.5 or (c) $\psi$ = 2.
     }
     \label{fig:1pool_2sp_inhibit}
     \end{center}
@@ -557,32 +557,50 @@ We can separate three cases (see Figure~\ref{fig:1pool_2sp_inhibit}):
 % ------------------------------------------------------------------------------------------------
 \subsection{Interspecies Cooperation}
 On the other hand, one can also observe some cooperative behaviors between species in case when it facilitates the competition with others.
+It happens if bacteria species as a result of their metabolism produce the compounds that are beneficial for the growth of each other, so-called public goods.
 Quite often it happens between the species that are close relatives or clonal populations and such process is called kin selection \cite{west_social_2007}.
-Sometimes neighbors, so-called 'social cheaters', can benefit from a certain behavior without expressing it by itself \cite{rainey_evolution_2003}.
+Furthermore, Sometimes neighbors can benefit from a certain behavior without expressing it by itself, so-called 'social cheaters'~\cite{rainey_evolution_2003}.
 %
-\cmt{\cite{rocha_base_2002}: Symbiosis host/bacteria bacterial genomes suffering reductive evolution due to this.
-Maybe it's connected with 'social cheaters'?}
-%
-\cmt{Production of public goods!}
 %
 The benefit, or mutual activation, of the two species from the presence of the other can be simply introduced by mathematical functions.
 For sake of clarity we omit again the lag pool and write:
 \begin{eqnarray}
-    \dot{G}_A &=& \mathcal{B}_A(W_B,R)G_A\\
-    \dot{G}_B &=& \mathcal{B}_B(W_A,R)G_B\\
-    \dot{R} &=&-\mathcal{B}_A(W_B,R)G_A-\mathcal{B}_B(W_A,R)G_B\\
-    \dot{W}_A &=& \mathcal{F}_A(R,G_A)\\
-    \dot{W}_B &=& \mathcal{F}_B(R,G_B).
+    \dot{G}_A &=& \mathcal{B}_A(P_B,R)G_A\\
+    \dot{G}_B &=& \mathcal{B}_B(P_A,R)G_B\\
+    \dot{R} &=&-\mathcal{B}_A(P_B,R)G_A-\mathcal{B}_B(P_A,R)G_B\\
+    \dot{P}_A &=& \mathcal{F}_A(R,G_A)\\
+    \dot{P}_B &=& \mathcal{F}_B(R,G_B).
 \end{eqnarray}
-$W_A$ and $W_B$ denote the substance produced by species A and B, respectively.
-The functions $\mathcal{B}_A(W_B,R)$ and $\mathcal{B}_B(W_A,R)$ capture the resource dependent growth.
-Setting $\mathcal{B}_A(W_B,R)=\alpha_A W_BR$, $\mathcal{B}_B(W_A,R)=\alpha_B W_AR$, $\mathcal{F}_A(R,G_A)=\kappa_A RG_A$, $\mathcal{F}_B(R,G_B)=\kappa_B RG_B$, rescaling $G_A$, $G_B$, and $W_B$ with $N_t$, $W_A$ with $\kappa_A/\alpha_A$, time with $\alpha_AN_t^2$, defining $\phi=\kappa_A\alpha_B/(\alpha_A^2N_t)$, and $\psi=\kappa_B/(\alpha_A N_t)$ results in:
-\begin{eqnarray}
-    \dot{G}_A &=& W_BG_A\left(1 - G_A-G_B\right)\\
-    \dot{G}_B &=& \phi W_AG_B\left(1 - G_A-G_B\right)\\
-    \dot{W}_A &=& G_A\left(1 - G_A-G_B\right)\\
-    \dot{W}_B &=&\psi G_B\left(1 - G_A-G_B\right).
-\end{eqnarray}
+$P_A$ and $P_B$ denote the substance produced by species A and B, respectively.
+The functions $\mathcal{B}_A(P_B,R)$ and $\mathcal{B}_B(P_A,R)$ capture the resource dependent growth.
+Setting $\mathcal{B}_A(P_B,R)=\alpha_A P_BR$, $\mathcal{B}_B(P_A,R)=\alpha_B P_A R$, $\mathcal{F}_A(R,G_A)=\kappa_A RG_A$, $\mathcal{F}_B(R,G_B)=\kappa_B RG_B$, rescaling $G_A$, $G_B$, and $P_B$ with $N_t$, $P_A$ with $\kappa_A/\alpha_A$, time with $\alpha_AN_t^2$, defining $\psi=\kappa_A\alpha_B/(\alpha_A^2N_t)$, and $\phi=\kappa_B/(\alpha_A N_t)$ results in:
+\begin{equation}
+    \begin{cases}
+    \dot{G}_A = P_B G_A\left(1 - G_A-G_B\right)\\
+    \dot{G}_B = \psi P_A G_B\left(1 - G_A-G_B\right)\\
+    \dot{P}_A = G_A\left(1 - G_A-G_B\right)\\
+    \dot{P}_B =\phi G_B\left(1 - G_A-G_B\right)
+    \end{cases}.
+    \label{eq:1pool_2sp_cooper}
+\end{equation}
+%
+The solution of the system~\ref{eq:1pool_2sp_cooper} is presented in Figure~\ref{fig:1pool_2sp_cooper}.
+Here we can see that if $\psi=1$ and $\phi=1$ (see Figure~\ref{fig:1pool_2sp_cooper}a) the production of the public goods of the two species is happening with the same rate as well as the growth of bacteria.
+Increasing the production rate of the public good produced by species $B$ (see Figure~\ref{fig:1pool_2sp_cooper}b) causes increasing the growth of species $A$ that profit from the presence of $B$.
+On the other hand, choosing $\psi=2$ (see Figure~\ref{fig:1pool_2sp_cooper}c), we increase the profit that species $B$ has from public goods $P_A$.
+That indirectly leads to larger amount of $P_B$ produced by species $B$.
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=0.5\textwidth]{Figures/pool_model_2sp_1pool_coop.pdf}
+    \caption{
+        The two-species system where each of the species release public goods $P$ is defined with equations~(\ref{eq:1pool_2sp_cooper}) and calculated for different parameters:
+        (a) $\psi=1, \phi=1$, (b) $\psi=1, \phi=2$ and (b) $\psi=2, \phi=1$.
+        Here the red lines describes the evolution of the species $G_A$ and blue lines correspond to species $G_B$.
+        Light brown curve corresponds to public good released by species $A$ ($P_A$) and brown curve shows public goods produced by species $B$ ($P_B$).
+    }
+    \label{fig:1pool_2sp_cooper}
+    \end{center}
+\end{figure}
 %
 %
 %
