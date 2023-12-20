@@ -703,39 +703,148 @@ The microenvironment of our system contains the resource and the inhibitor molec
     \label{eq:spatial_limit_H}
 \end{equation}
 %
-\begin{table}[H]
+%
+%
+% ------------------------------------------------------------------------------------------------
+\subsection{Constructing an Agent-Based Pool Model}
+We use \texttt{cellular\_raza}~\cite{Pleyer_cellular_raza_2023} to implement an \ac{abm}.
+\subsubsection{Cellular Reactions}
+To construct an \ac{abm} which resembles the given \ac{ode} system of equations~\eqref{eq:spatial_limit_F} and \eqref{eq:spatial_limit_H}, we consider multiple cellular reactions.
+The first is uptake of an extracellular resource $[R_e]$ into the cell $[R_i]$ with rate $u$ in \unit{\per\minute}.
+Nutrients are only taken up at the position of the cell $x_c$
+\begin{align}
+    \dot{[R_i]} &= u [R_e](x_c)\\
+    \dot{[R_e]}(x) &= -u \frac{V_c}{V_D} [R_e] \delta(x-x_c)
+\end{align}
+where $\delta(x-x_\text{cell})$ is the dirac delta-distribution.
+Note that $[R_e]=[R_e](x)$ explicitly depends on the spatial coordinate but we choose to omit its notation.
+In the second equation, we need to account for the ratio of cellular $V_c$ and domain volume $V_D$ to calculate the correct change.
+Further, we want to modify the cellular volume by growing it increasingly with rate $a$.
+Therefore, we need to specify how many resource molecules are turned into one volumetric units $\sigma$ in \unit{\micro\metre\cubed\per\mole}.
+The total amount of resource molecules present inside the cell is given by the current concentration multiplied by the cell-volume $V_c [R_i]$.
+With a rate $a$ and conversion $\sigma$, the cell turns these resource molecules into volume.
+\begin{align}
+    \dot{V_c} &= a\sigma [R_i] V_c\\
+    \dot{[R_i]} &= - a[R_i]
+\end{align}
+Furthermore, we let cells produce an inhibitor with production rate $b$ which inhibits the cells ability to uptake and thus use the resource by a factor of $1+\nu_I [I]$
+\begin{align}
+    \dot{[I]} &= b\frac{V_c}{V_D}\delta(x-x_c)\\
+    u &\longrightarrow \frac{u}{1+\nu_I [I]}.
+\end{align}
+If we combine all equations and consider multiple cells, we obtain the system
+\begin{align}
+    \dot{V_c} &= a\sigma [R_i] V_c\\
+    \dot{[R_i]} &= \frac{u}{1+\nu_I [I]} [R_e] - a[R_i]\\
+    \dot{[R_e]} &= -\frac{u}{1+\nu_I [I]} \frac{V_c}{V_D} [R_e] \delta(x-x_c)\\
+    \dot{[I]} &= b\frac{V_c}{V_D}\delta(x-x_c).
+    \label{eq:spatial-full-system-non-simplified}
+\end{align}
+In order to simplify this system, we can assume that the internal resources are constantly being depleted by the growth and the limiting process is the uptake of the resource.
+This means, we can effectively set $\dot{[R_i]}=0$.
+Therefore, we obtain the relation $\frac{u}{1+\nu_I [I]}[R_e] = a[R_i]$ which we can use to eliminate the variable monitoring internal resource concentrations $[R_i]$.
+Additionally, we require our external components to be freely diffusable with constants $D_R,D_I$.
+Plugging this into equation~\eqref{eq:spatial-full-system-non-simplified} yields.
+\begin{align}
+    \dot{V_c} &= \frac{u}{1+\nu_I [I]} \sigma [R]V_c\\
+    \dot{[R]} &= \sum\limits_c -\frac{u}{1+\nu_I [I]} \frac{V_c}{V_D} [R] \delta(x-x_c) + D_R\Delta [R]\\
+    \dot{[I]} &= \sum\limits_c b\frac{V_c}{V_D}\delta(x-x_c) + D_I\Delta [I].
+    \label{eq:spatial-full-system-simplified}
+\end{align}
+For the diffusion, we require Neumann (zero-flux) boundary conditions.
+Since, we will not explicitly model intracellular concentrations $[R_i]$, we will drop the index entirely, only considering the extracellular resource.
+%
+%
+% ................................................................................................
+\subsubsection{Physical Mechanics}
+We represent cells as spherical objects in 2D space.
+They can be represented by their position $x_c$ and radius $r_c$ which is of course related to their (2D) volume
+\begin{equation}
+    V_c = \pi r_c^2
+\end{equation}
+As the coupled reactions from equations~\eqref{eq:spatial-full-system-simplified} change $V_c$, we also automatically adapt the cell radius accordingly.
+Notice however, that how the radius is updated does not correspond to the cellular reactions defined previously but is a purely mechanical consideration.
+The dimensionality of the problem does not find its way into the cellular reactions but only manifests itself in these mechanical considerations.
+Cells are interacting via a point-like interaction potential.
+We can calculate the interaction strength via
+\begin{alignat}{3}
+    \vec{z} &= \vec{x_1} - \vec{x_2} \hspace{2em}&& r = ||\vec{z}||\\
+    \sigma &= \frac{r}{r_1+r_2} && q=0.2\\
+    \vec{F} &= \epsilon \frac{1+q}{q+\sigma} \theta(\sigma - 1) \frac{1}{r}\vec{z}
+\end{alignat}
+Cells are not sticky and thus only pushing on each other.
+No attractive force is present.
+This means that colonies are expanding as individual cells grow and push each other further apart.
+%
+\begin{figure}
     \centering
-    \begin{tabular}{ccc}
-        \specialrule{.1em}{.01em}{.05em} 
-        \textbf{Parameter} \hspace{3mm} & \textbf{Value} \hspace{3mm} & \textbf{Units}\\
-        \toprule
-        $\lambda_1$ & 0.008  & [time$^{-1}$]                 \\
-        $\lambda_2$ & 0.005  & [time$^{-1}$]                 \\
-        $\alpha_1$  & 4.0    & [time$^{-1}$]                 \\
-        $\alpha_2$  & 5.0    & [time$^{-1}$]                 \\
-        $\kappa$    & 0.1    & [(cell $\cdot$ time)$^{-1}$]  \\
-        $\mu_I$     & 0.1    & [cell$^{-1}$]                 \\
-        $N_t$       & $10^4$ & [cell]                        \\
-        \bottomrule
-    \end{tabular}
-    \caption{The list of the parameters of the system.}
-    \label{tab:spatial_limit_param}
-\end{table}
+    \includegraphics[width=0.6\textwidth]{Figures/interaciton_potential.png}
+    \caption{
+        Overall form of the interaction force between two cells.
+        A value $\sigma<1$ indicates that cells are overlapping which results in a positive force outwards.
+        Conversely, as long as cells are apart $\sigma>=1$, no force is acting.
+    }
+    \label{fig:spatial-interaction-potential}
+\end{figure}
+%
+%
+% ................................................................................................
+\subsubsection{Cell Cycle}
+Typically, cell cycles consist of multiple phases.
+Since our goal is to include only the necessary details of the underlying biological problem, we drastically simplify the description of the cell cycle.
+Cell growth is already being described the system of coupled \acp{ode} given in equations~\eqref{eq:spatial-full-system-simplified}.
+Thus we introduce an additional rule that splits apart the cell whenever a certain volume threshold is reached.
+The volume of the cell is divided equally between the new and old cell and both are assigned new random positions close to each other such that their radii do touch but not overlap.
+\begin{figure}
+    \begin{center}
+    \includegraphics[width=0.4\textwidth]{Figures/snapshot-2-cells-before-division.png}
+    \includegraphics[width=0.4\textwidth]{Figures/snapshot-2-cells-after-division.png}
+    \caption{
+        A cell right before and after a division event.
+        The volume is equally distributed between each new cell and the new positions are picked random but at opposing sides on a circle around the original center of the single cell.
+    }
+    \label{fig:spatial-cell-division-example}
+    \end{center}
+\end{figure}
 %
 \begin{table}[H]
     \centering
-    \begin{tabular}{ccc}
-        \specialrule{.1em}{.01em}{.05em} 
-        \textbf{Variable} \hspace{3mm} & \textbf{Initial Value} \hspace{3mm} & \textbf{Units}\\
+    \begin{tabularx}{\textwidth}{@{}l *5{>{\centering\arraybackslash}X}@{}}
+        \multicolumn{3}{c}{\textbf{\acs{ode}}} & \multicolumn{3}{c}{\textbf{\acs{abm}}}\\
+        \cmidrule[1pt](l{\tabcolsep}r{\tabcolsep}){1-3}
+        \cmidrule[1pt](l{\tabcolsep}r{\tabcolsep}){4-6}
+         & \textbf{Symbol} & \textbf{Value} && \textbf{Symbol} & \textbf{Value}\\
         \toprule
-        $L_1$ & 5.0 & [cell]        \\
-        $G_1$ & 0.0 & [cell]        \\
-        $L_2$ & 5.0 & [cell]        \\
-        $G_2$ & 0.0 & [cell]        \\
-        $R$   & 1.0 & [cell/cell]   \\
-        $I$   & 0.0 & [cell]        \\
+        Rate $L_A\rightarrow G_A$   & $\lambda_A$   & $0.001$\unit{\per\minute}
+        &                           & $\lambda_A$   & $0.001$\unit{\per\minute}\\
+        Rate $L_B\rightarrow G_B$   & $\lambda_B$   & $0.0005$\unit{\per\minute}
+        &                           & $\lambda_B$   & $0.0005$\unit{\per\minute}\\
+        Production $G_A$            & $\alpha_A$    & ??\unit{\per\minute}
+        & Uptake                    & $u_A$         & $0.01$\unit{\per\minute}\\
+        Production $G_B$            & $\alpha_B$    & ??\unit{\per\minute}
+        & Uptake                    & $u_B$         & $0.01$\unit{\per\minute}\\
+        Production $I$              & $\kappa$      & $1.18\cdot10^{-5}$\unit{\per\minute}
+        &&&\\
+        Inhibition         & $\mu_I$       & $1.11\cdot 10^{-6}$\unit{\per\micro\metre\cubed}
+        &&&\\
+        Total volume     & $N_t$         & $1.80\cdot 10^4$\unit{\micro\metre\cubed}
+        &&&\\
+        \textbf{Initial Values}\\
+        \toprule
+        Volume of $L_A$             & $L_A$         & $35.34$\unit{\micro\metre\cubed}
+        & Cell Number               & $C_A$         & 5\\
+        Volume of $G_A$             & $G_A$         & $0.0$\unit{\micro\metre\cubed}
+        &                           &               & 0\\
+        Volume of $L_B$             & $L_B$         & $28.27$\unit{\micro\metre\cubed}
+        & Cell Number               & $C_B$         & 4\\
+        Volume of $G_B$             & $G_B$         & $0.0$\unit{\micro\metre\cubed}
+        &                           &               & 0\\
+        Relative nutrients          & $R$           & $1.0$
+        & Nutrients                 & $A$           & 2.0\unit{\mol\per\micro\metre\cubed}\\
+        Volume inhibitor            & $I$           & $0.0$\unit{\micro\metre\cubed}
+        & Inhibitor                 &               & $0.0$\unit{\mol\per\micro\metre\cubed}\\
         \bottomrule
-    \end{tabular}
+    \end{tabularx}
     \caption{The list of the initial values of the system.}
     \label{tab:spatial_limit_init}
 \end{table}
@@ -758,5 +867,116 @@ The microenvironment of our system contains the resource and the inhibitor molec
 \section{Conclusion}
 \newpage
 \printbibliography
+%
+%
+% ================================================================================================
+\beginsupplement
+\section*{Supplementary Material}
+\subsection{Deriving the Pool Model}
+Since the \ac{abm} can be considered more fundamental than the \ac{ode} model, we should be able to derive the latter one from the former.
+This can be achieved by starting with equations~\eqref{eq:spatial-full-system-simplified}.
+We integrate the spatial equations over the total domain starting with the resource concentration $[R]$.
+\begin{alignat}{7}
+    \int\limits_D\dot{[R]}\text{dVol} 
+    &= \int\limits_D\bigg[&&\sum\limits_c &&-\frac{u}{1+\nu_I [I]} \frac{V_c}{V_D} [R] \delta(x-x_c) &&+ D_R\Delta [R]\bigg]\text{dVol}\\
+    &= \int\limits_D\bigg[&&\sum\limits_c &&-\frac{u}{1+\nu_I [I]} \frac{V_c}{V_D} [R] \delta(x-x_c)\bigg]\text{dVol} &&+ \int\limits_D D_R\Delta [R]\text{dVol}\\
+    &= \int\limits_D\bigg[&&\sum\limits_c &&-\frac{u}{1+\nu_I [I]} \frac{V_c}{V_D} [R] \delta(x-x_c)\bigg]\text{dVol} &&+ \int\limits_{\partial D} D_R\vec{\nabla} [R]\vec{\text{dA}}\\
+    &= &&\sum\limits_c &&-\frac{u}{1+\nu_I [I]} V_c \int\limits_D \frac{1}{V_D} [R] \delta(x-x_c)\text{dVol}\\
+    &= &&\sum\limits_c &&-\frac{u}{1+\nu_I [I]} V_c [R]_{x=x_c}\\
+    &= &&\sum\limits_c &&-\frac{u}{1+\nu_I [I]} V_c [R]\\
+    &= &&&&-\frac{u}{1+\nu_I [I]V_D V_D^{-1}} V [R]\frac{V_D}{V_D}\\
+    \dot{R} &= &&&&-\frac{u}{1+\nu_I V_D^{-1}I} \frac{1}{V_D} R V\\
+\end{alignat}
+We can split up the integral into two parts.
+The second part can then be transformed into an integral over the flux of the resource along the boundary.
+Since we chose Neumann boundary conditions, this contribution vanishes identically.
+Afterwards, the first part can be evaluated by using the delta-distribution.
+Note that we additionally need to consume a $V_D^{-1}$ term since our volume is finite.
+We evaluate the resource concentration $[R]$ at the position of the individual cells and sum over all contributions.
+Now we assume homogeneity in the sense, that we can reduce $[R]$ to only a single variable instead of considering its spatial distribution.
+This means that every contribution does not depend on the position at which it was evaluated, ie. $[R]_{x=x_c}=[R]$.
+Finally, we can perform the sum to gain the total volume of all cells $V=\sum\limits_c V_c$.
+\begin{alignat}{7}
+    \int\limits_D\dot{[I]} &= \int\limits_D \bigg[&&\sum\limits_c b\frac{V_c}{V_D}&&\delta(x-x_c) &&+ D_I\Delta [I]\bigg]\text{dVol}\\
+    &= \int\limits_D&&\sum\limits_c b\frac{V_c}{V_D}&&\delta(x-x_c) \text{dVol} &&+ \int\limits_D D_I\Delta [I]\text{dVol}\\
+    &= \int\limits_D&&\sum\limits_c b\frac{V_c}{V_D}&&\delta(x-x_c) \text{dVol} &&+ \int\limits_{\partial D} D_I\nabla [I]\vec{\text{dA}}\\
+    &= &&\sum\limits_c b V_c\int\limits_D \frac{1}{V_D} &&\delta(x-x_c) \text{dVol}\\
+    \dot{I} &= b V
+\end{alignat}
+Following the same principle as before, we can integrate the inhibitor equation.
+For the equation describing the growth of the cell volume, we simply add up all cells to obtain the total volume of all cells.
+\begin{alignat}{3}
+    \sum\limits_c\dot{V_c}
+    &= \sum\limits_c&&\frac{u}{1+\nu_I [I]} \sigma [R]V_c\\
+    &= &&\frac{u}{1+\nu_I [I]} \sigma [R]V\\
+    \dot{V} &= &&\frac{u}{1+\nu_I V_D^{-1} I} \frac{1}{V_D}\sigma R V
+\end{alignat}
+We can thus summarize the equations obtained
+\begin{align}
+    \dot{R} &= -\frac{u}{1+\nu_I V_D^{-1}I} \frac{1}{V_D} R V\\
+    \dot{I} &= b V\\
+    \dot{V} &= \frac{u}{1+\nu_I V_D^{-1} I} \frac{1}{V_D}\sigma R V.
+\end{align}
+It is clear that the original model is recovered this way.
+%
+%
+% ................................................................................................
+\subsection{Code Samples}
+The code samples show sample code from the simulation that calculate cellular interactions and cell cycle.
+\begin{listing}
+\begin{lstlisting}[language=rust]
+let z = ext_pos - own_pos;
+let r = z.norm();
+let sigma = r / (self.cell_radius + ext_radius);
+if sigma < 1.0 {
+    let q = 0.2;
+    let dir = z.normalize();
+    let modifier = (1.0 + q) / (q + sigma);
+    return self.potential_strength * dir * modifier;
+} else {
+    return Vector2::zero();
+}
+\end{lstlisting}
+\caption{
+    Sample code for calculation of interactions between two bacteria cells.
+}
+\label{listing:spatial-interaction-strength}
+\end{listing}
+%
+%
+\begin{listing}
+\begin{lstlisting}[language=rust]
+// Clone existing cell
+let mut c2 = c1.clone();
+
+let r = c1.interaction.cell_radius;
+
+// Make both cells smaller
+c1.interaction.cell_radius /= std::f64::consts::SQRT_2;
+c2.interaction.cell_radius /= std::f64::consts::SQRT_2;
+
+// Generate cellular splitting direction randomly
+let angle_1 = rng.gen_range(0.0..2.0 * std::f64::consts::PI);
+let dir_vec = nalgebra::Rotation2::new(angle_1) * Vector2::from([1.0, 0.0]);
+
+// Define new positions for cells
+// It is randomly chosen if the old cell is left or right
+let offset = dir_vec * r / std::f64::consts::SQRT_2;
+let old_pos = c1.pos();
+
+// Increase the remaining food in the bacteria by the fraction of volumes
+// from before and after the division. This exactly coincides with factor 2
+// since we half the volume of the cell
+c1.cellular_reactions.intracellular_concentrations[0] *= 2.0;
+c2.cellular_reactions.intracellular_concentrations[0] *= 2.0;
+
+c1.set_pos(&(old_pos + offset));
+c2.set_pos(&(old_pos - offset));
+\end{lstlisting}
+\caption{
+    Sample code for dividing one bacteria cell into two.
+}
+\end{listing}
+%
 %
 \end{document}
