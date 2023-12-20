@@ -816,6 +816,29 @@ For each time point of the simulation, we generate a boolean value from a random
 If this boolean is true, we move the cell from the inactive state to the active state where it starts to consume nutrients and grow.
 It is clear that this is exactly identical to the \ac{ode} model.
 %
+%
+%
+% ------------------------------------------------------------------------------------------------
+\subsection{Comparing \acs{abm} and \acs{ode} Models}
+The \ac{abm} model is more fundamental than the \ac{ode} model in the sense that it incorporates more biological aspects and maps them closer to realistic biological mechanisms.
+We are thus able to derive the \ac{ode} pool model from its \ac{abm} version in the homogenenous case (see supplementary material~\ref{subsec:supplement-deriving-pool-odes}).
+By doing so, we find a mapping between parameters from the \ac{abm} to parameters used in the \ac{ode} description.
+\begin{align}
+    \kappa &= b\\
+    \alpha &= u\sigma\frac{1}{V_D}\\
+    \mu_I &= \nu_I \frac{1}{V_D}
+\end{align}
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=0.6\textwidth]{Figures/pool_model_spatial.pdf}
+    \caption{
+        The output of the model (\ref{eq:spatial_limit_F}, \ref{eq:spatial_limit_H}) for given parameters and initial valued presented in Tables \ref{tab:spatial_limit_param}, \ref{tab:spatial_limit_init}, respectively.
+        The observables of the system are the bacterial count of each species $L+G$ (blue and orange lines) and the total bacterial count of the system (green).
+    }
+    \label{fig:spatial_limit_plot1}
+    \end{center}
+\end{figure}
+%
 \begin{table}[H]
     \centering
     \begin{tabularx}{\textwidth}{@{}l *5{>{\centering\arraybackslash}X}@{}}
@@ -857,17 +880,6 @@ It is clear that this is exactly identical to the \ac{ode} model.
     \caption{The list of the initial values of the system.}
     \label{tab:spatial_limit_init}
 \end{table}
-%
-\begin{figure}[H]
-    \begin{center}
-    \includegraphics[width=0.6\textwidth]{Figures/pool_model_spatial.pdf}
-    \caption{
-        The output of the model (\ref{eq:spatial_limit_F}, \ref{eq:spatial_limit_H}) for given parameters and initial valued presented in Tables \ref{tab:spatial_limit_param}, \ref{tab:spatial_limit_init}, respectively.
-        The observables of the system are the bacterial count of each species $L+G$ (blue and orange lines) and the total bacterial count of the system (green).
-    }
-    \label{fig:spatial_limit_plot1}
-    \end{center}
-\end{figure}
 %
 \cmtb{The ABM additional parameters $D_R$, $D_I$, $q$ (At which level of $R_i$ cell division happens) and more parameters describing bacterial division.}
 %
