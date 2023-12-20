@@ -734,7 +734,7 @@ Since, we will not explicitly model intracellular concentrations $[R_i]$, we wil
 %
 %
 % ................................................................................................
-\subsubsection{Physical Mechanics}
+\subsubsection{Physical Mechanics \& Interactions}
 We represent cells as spherical objects in 2D space.
 They can be represented by their position $x_c$ and radius $r_c$ which is of course related to their (2D) volume
 \begin{equation}
@@ -743,6 +743,10 @@ They can be represented by their position $x_c$ and radius $r_c$ which is of cou
 As the coupled reactions from equations~\eqref{eq:spatial-full-system-simplified} change $V_c$, we also automatically adapt the cell radius accordingly.
 Notice however, that how the radius is updated does not correspond to the cellular reactions defined previously but is a purely mechanical consideration.
 The dimensionality of the problem does not find its way into the cellular reactions but only manifests itself in these mechanical considerations.
+The underlying equation of motion is that of a standard damped particle
+\begin{equation}
+    m \ddot{\vec{x}} = -\eta\dot{\vec{x}} + \vec{F}
+\end{equation}
 Cells are interacting via a point-like interaction potential.
 We can calculate the interaction strength via
 \begin{alignat}{3}
@@ -872,40 +876,52 @@ Figure~\ref{fig:spatial-snapshots} shows individual snapshots of different
 %
 \begin{table}[H]
     \centering
-    \begin{tabularx}{\textwidth}{@{}l *5{>{\centering\arraybackslash}X}@{}}
+    \begin{tabularx}{\textwidth}{@{}l *2{>{\centering\arraybackslash}X} l *2{>{\centering\arraybackslash}X}@{}}
         \multicolumn{3}{c}{\textbf{\acs{ode}}} & \multicolumn{3}{c}{\textbf{\acs{abm}}}\\
-        \cmidrule[1pt](l{\tabcolsep}r{\tabcolsep}){1-3}
-        \cmidrule[1pt](l{\tabcolsep}r{\tabcolsep}){4-6}
-         & \textbf{Symbol} & \textbf{Value} && \textbf{Symbol} & \textbf{Value}\\
         \toprule
-        Rate $L_A\rightarrow G_A$   & $\lambda_A$   & $0.0025$\unit{\per\minute}
-        &                           & $\lambda_A$   & $0.0025$\unit{\per\minute}\\
-        Rate $L_B\rightarrow G_B$   & $\lambda_B$   & $0.0005$\unit{\per\minute}
-        &                           & $\lambda_B$   & $0.0005$\unit{\per\minute}\\
+        \multicolumn{6}{c}{\textbf{Cellular Reactions}}\\
+        \toprule
         Production $G_A$            & $\alpha_A$    & $0.002$\unit{\per\minute}
         & Uptake                    & $u_A$         & $0.01$\unit{\per\minute}\\
         Production $G_B$            & $\alpha_B$    & $0.002$\unit{\per\minute}
         & Uptake                    & $u_B$         & $0.01$\unit{\per\minute}\\
         Production $I$              & $\kappa$      & $0.1$\unit{\per\minute}
-        & Production                & $b$           & $0.1$\unit{\per\minute}\\
+        & Production $I$            & $b$           & $0.1$\unit{\per\minute}\\
         Inhibition                  & $\mu_I$       & $1.0\cdot 10^{-7}$\unit{\per\micro\metre\cubed}
-        & Inhibition                & $\nu_I$       & $0.1$\unit{\micro\metre\cubed\per\mol}\\
+        &                           & $\nu_I$       & $0.1$\unit{\micro\metre\cubed\per\mol}\\
+        &&
+        & Conversion                & $\sigma$      & $0.1$\unit{\micro\metre\cubed\per\mol}\\
         Total volume                & $G_\text{max}$& $2.0\cdot 10^5$\unit{\micro\metre\cubed}
         &&&\\
-        \textbf{Initial Values}\\
+        \toprule
+        \multicolumn{6}{c}{\textbf{Physical Mechanics \& Interactions}}\\
+        \toprule
+        &&& Damping                 & $\eta$        & $0.5$\unit{\per\minute}\\
+        &&& Mass                    & $m$           & $7.70$\unit{\pico\gram}\\
+        &&& Potential               & $\epsilon$    & $0.5$\unit{\pico\gram\micro\metre\per\minute\squared}\\
+        \toprule
+        \multicolumn{6}{c}{\textbf{Cell Cycle}}\\
+        \toprule
+        Rate $L_A\rightarrow G_A$   & $\lambda_A$   & $0.0025$\unit{\per\minute}
+        &                           & $\lambda_A$   & $0.0025$\unit{\per\minute}\\
+        Rate $L_B\rightarrow G_B$   & $\lambda_B$   & $0.0005$\unit{\per\minute}
+        &                           & $\lambda_B$   & $0.0005$\unit{\per\minute}\\
+        &&& Division Vol.           & $V_t$         & $14.14$\unit{\micro\metre\cubed}\\
+        \toprule
+        \multicolumn{6}{c}{\textbf{Initial Values}}\\
         \toprule
         Volume of $L_A$             & $L_A$         & $127.2$\unit{\micro\metre\cubed}
         & Cell Number               & $C_A$         & 18\\
         Volume of $G_A$             & $G_A$         & $0.0$\unit{\micro\metre\cubed}
-        &                           &               & 0\\
+        & Cell Volume               & $V_{c,A}$     & $7.07$\unit{\micro\metre\cubed}\\
         Volume of $L_B$             & $L_B$         & $127.23$\unit{\micro\metre\cubed}
         & Cell Number               & $C_B$         & 18\\
         Volume of $G_B$             & $G_B$         & $0.0$\unit{\micro\metre\cubed}
-        &                           &               & 0\\
-        Relative nutrients          & $R$           & $1.0$
-        & Nutrients                 & $A$           & $1.0$\unit{\mol\per\micro\metre\cubed}\\
-        Volume inhibitor            & $I$           & $0.0$\unit{\micro\metre\cubed}
-        & Inhibitor                 &               & $0.0$\unit{\mol\per\micro\metre\cubed}\\
+        & Cell Volume               & $V_{c,B}$     & $7.07$\unit{\micro\metre\cubed}\\
+        Relative Nutrients          & $R^*$         & $1.0$
+        & Nutrients                 & $[R_0]$       & $1.0$\unit{\mol\per\micro\metre\cubed}\\
+        Inhibitor                   & $I_0$         & $0.0$\unit{\mol}
+        & Inhibitor                 & $[I_0]$       & $0.0$\unit{\mol\per\micro\metre\cubed}\\
         \bottomrule
     \end{tabularx}
     \caption{
