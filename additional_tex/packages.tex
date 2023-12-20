@@ -98,7 +98,7 @@ pages = {},
 }
 \usepackage{newfloat}
 \DeclareFloatingEnvironment[
-  name=listing,
+  name=Listing,
   listname=List of Listings,
   within=section,
 ]{listing}
@@ -112,6 +112,8 @@ pages = {},
   \renewcommand{\thetable}{S\arabic{table}}%
   \setcounter{figure}{0}
   \renewcommand{\thefigure}{S\arabic{figure}}%
+  \setcounter{listing}{0}
+  \renewcommand{\thelisting}{S\arabic{listing}}
 }
 
 \newcommand{\mbP}{\textbf{P: }}
