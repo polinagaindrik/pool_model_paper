@@ -1030,6 +1030,8 @@ Figure~\ref{fig:spatial-snapshots} shows individual snapshots of different
     \caption{
         Simulation snapshots at $1.04$\unit{\day},$2.08$\unit{\day},$3.13$\unit{\day} and $4.17$\unit{\day} corresponding to the parameters given in table~table~\ref{tab:spatial_limit_init}.
         Species $B$ is colored blue while species $A$ is colored in red.
+        The background shows the resource concentration $[R]$.
+        Darker colours indicate less present nutrients.
     }
     \label{fig:spatial-snapshots}
 \end{figure}
@@ -1056,6 +1058,13 @@ Figure~\ref{fig:spatial-snapshots} shows individual snapshots of different
     \caption{
         Comparison of the \ac{ode} and \ac{abm} model for different parameter configurations.
         Snapshots of the spatial configurations of cells are included in the appendix~\ref{fig:supplement-spatial-initial-config-cells}.
+        We see that in the highly-diffusive homogenous case of subfigure (a), the pool model is a good fit to the \ac{abm} model.
+        Heterogeneity and slower diffusion cause larger differences between the two models as can be seen in subfigures (b) and (c).
+        The combination of the two effects shows the largest difference between model predictions.
+        In subfigure (d), due to the heterogenous cell distribution (see also~\ref{fig:supplement-spatial-initial-config-cells}) and slow diffusion, overall inhibition of species $B$ does not play as large of a role.
+        We furthermore note that the total bacteria volume of the \ac{abm} model is always smaller than the \ac{ode} model.
+        This is expected, since processes such as diffusion and cells growing outward introduce another time component which is simply assumed to be instantanous in the \ac{ode} model.
+        The chosen diffusion constants $D_I=D_R=30.0$\unit{\micro\metre\squared\per\minute} are in the order of small molecules such as $NaCl$ while the lower values $D_I=D_R=5.0$\unit{\micro\metre\squared\per\minute} are around values of Glucose in water.
     }
     \label{fig:spatial-growth-curve}
 \end{figure}
@@ -1126,8 +1135,6 @@ Figure~\ref{fig:spatial-snapshots} shows individual snapshots of different
     }
     \label{tab:spatial_limit_init}
 \end{table}
-%
-\cmtb{The ABM additional parameters $D_R$, $D_I$, $q$ (At which level of $R_i$ cell division happens) and more parameters describing bacterial division.}
 %
 %
 % ================================================================================================
