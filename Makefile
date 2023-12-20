@@ -1,3 +1,13 @@
+ZIP_TARGETS:= README.md\
+	Bacteria\ Modelling.bib\
+	listings-rust.sty\
+	pool_model.tex\
+	pool_model.pdf\
+	$(wildcard Figures/abm-homogenous/*)\
+	$(wildcard Figures/abm-homogenous-low-diffusion/*)\
+	$(wildcard Figures/abm-inhomogenous/*)\
+	$(wildcard Figures/abm-random/*)\
+
 all:
 	latexmk -pdf -shell-escape pool_model.tex
 
@@ -17,3 +27,5 @@ clean:
 
 fresh: clean all
 
+zip: all
+	zip release.zip $(ZIP_TARGETS)
