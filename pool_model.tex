@@ -681,15 +681,16 @@ For simulation results:
 \end{itemize}
 %
 To test the spatial limitations of the described above approach consider the system consisting from two bacterial species that can be described by two internal states: lag and growth states. 
-Both of these species grow using limiting resource pool $R$ with different growth constants $\alpha$ and different lengths of lag phase determined by parameter $\lambda$.
+Both of these species grow using limiting resource pool $R^*$ with different growth constants $\alpha$ and different lengths of lag phase determined by parameter $\lambda$.
+It has to be noted that the resource pool is normalized by its initial value, ie $R^* = R/R_0$.
 Moreover, the species 1 is able to release a certain antimicrobial component $I$ that shows inhibitory effect on species 2 (amensalism).
 The \acp{ode} the bacterial population can be written as:
 \begin{equation}
     \begin{cases}
-        \dot{L_A} = -\lambda_A R L_A\\
-        \dot{G_A} = \lambda_A R L_A + \alpha_A R G_A\\
-        \dot{L_B} = -\lambda_B R L_B\\
-        \dot{G_B} = \lambda_B R L_B + \frac{\alpha_B}{1 + \mu_I I} R G_B\\
+        \dot{L_A} = -\lambda_A R^* L_A\\
+        \dot{G_A} = \lambda_A R^* L_A + \alpha_A R^* G_A\\
+        \dot{L_B} = -\lambda_B R^* L_B\\
+        \dot{G_B} = \lambda_B R^* L_B + \frac{\alpha_B}{1 + \mu_I I} R^* G_B\\
     \end{cases}.
     \label{eq:spatial_limit_F}
 \end{equation}
@@ -697,7 +698,7 @@ The \acp{ode} the bacterial population can be written as:
 The microenvironment of our system contains the resource and the inhibitor molecules:
 \begin{equation}
     \begin{cases}
-        \dot{R} = -\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{(1 + \mu_I I) N_t} R G_B \\
+        \dot{R^*} = -\frac{\alpha_A}{N_t} R^* G_A-\frac{\alpha_B}{(1 + \mu_I I) N_t} R^* G_B \\
         \dot{I} = \kappa G_A
     \end{cases}.
     \label{eq:spatial_limit_H}
