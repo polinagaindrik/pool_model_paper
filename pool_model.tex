@@ -614,14 +614,15 @@ That indirectly leads to larger amount of $P_B$ produced by species $B$.
 %
 %
 % ================================================================================================
-\section{Spatial Limitations}
-As described above, the proposed above model operates with the total number of the bacterial counts for different species and states in the system not accounting for their spatial distributions.
-Assuming that the bacteria is uniformly distributed we can simplify the problem to the system of the \acp{ode}.
-However, in reality spatial effects play significant role for population survival forcing some species develop such competitive mechanism as cell adhesion to surfaces in the areas rich with nutritients~\cite{htuson_bacteriasurface_2013}.
+\section{Spatial Effects}
+As described above, the proposed model operates with the total number of the bacterial counts for different species and states in the system not accounting for their spatial distributions.
+Assuming that the bacterial system is uniformly distributed (sometimes also called 'well-stirred') we can simplify the problem to a system of \acp{ode}.
+However, in reality spatial effects can play a significant role for population survival forcing some species develop competitive mechanisms such as cell adhesion to surfaces in the areas rich with nutritients~\cite{htuson_bacteriasurface_2013}.
 Another mechanism is the motility of bacteria, e.g., the flagellates bacteria as \textit{E. coli} or \textit{B. subtilis} can experience the chemotactic motion of driven by oxygen concentrations~\cite{decoene_microscopic_2011}.
 The bacterial social interactions such as releasing the toxins or public goods can also significantly affect the spatial structure of the community~\cite{blanchard_bacterial_2015}.
-Therefore, it is rather important to establish the limitations for the model application.\\
-
+These effects can only be treated with a spatial model that is able to describe the observed effects.\\
+%
+%
 - \cite{emonet_agentcell_2005, gorochowski_bsim_2012, li_nufeb_2019, kreft_bacsim_1998}: examples of another toolboxes for bacterial communities modeling (ABM).\\
 More about the modelling of the motile bacteria can be seen in works:~\cite{decoene_microscopic_2011, rosser_modelling_2014, sokolov_physical_2012, li_amplified_2008}.
 \begin{figure}
@@ -685,10 +686,10 @@ Moreover, the species 1 is able to release a certain antimicrobial component $I$
 The \acp{ode} the bacterial population can be written as:
 \begin{equation}
     \begin{cases}
-        \dot{L_1} = -\lambda_1 R L_1\\
-        \dot{G_1} = \lambda_1 R L_1 + \alpha_1 R G_1\\
-        \dot{L_2} = -\lambda_2 R L_2\\
-        \dot{G_2} = \lambda_2 R L_2 + \frac{\alpha_2}{1 + \mu_I I} R G_2\\
+        \dot{L_A} = -\lambda_A R L_A\\
+        \dot{G_A} = \lambda_A R L_A + \alpha_A R G_A\\
+        \dot{L_B} = -\lambda_B R L_B\\
+        \dot{G_B} = \lambda_B R L_B + \frac{\alpha_B}{1 + \mu_I I} R G_B\\
     \end{cases}.
     \label{eq:spatial_limit_F}
 \end{equation}
@@ -696,8 +697,8 @@ The \acp{ode} the bacterial population can be written as:
 The microenvironment of our system contains the resource and the inhibitor molecules:
 \begin{equation}
     \begin{cases}
-        \dot{R} = -\frac{\alpha_1}{N_t} R G_1-\frac{\alpha_2}{(1 + \mu_I I) N_t} R G_2 \\
-        \dot{I} = \kappa G_1
+        \dot{R} = -\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{(1 + \mu_I I) N_t} R G_B \\
+        \dot{I} = \kappa G_A
     \end{cases}.
     \label{eq:spatial_limit_H}
 \end{equation}
