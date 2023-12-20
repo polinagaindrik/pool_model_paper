@@ -90,8 +90,29 @@ pages = {},
 \usepackage{float}
 \usepackage{tabularx}
 \usepackage{siunitx}
+\usepackage{listings}
+\usepackage{listings-rust}
+\lstset{
+    language=Rust,
+    showstringspaces=false
+}
+\usepackage{newfloat}
+\DeclareFloatingEnvironment[
+  name=listing,
+  listname=List of Listings,
+  within=section,
+]{listing}
 \restylefloat{table}
 \numberwithin{equation}{section}
+
+\newcommand{\beginsupplement}{%
+  \setcounter{subsection}{0}
+  \renewcommand{\thesubsection}{S\arabic{subsection}}
+  \setcounter{table}{0}
+  \renewcommand{\thetable}{S\arabic{table}}%
+  \setcounter{figure}{0}
+  \renewcommand{\thefigure}{S\arabic{figure}}%
+}
 
 \newcommand{\mbP}{\textbf{P: }}
 \newcommand{\mbC}{\textbf{C: }}
