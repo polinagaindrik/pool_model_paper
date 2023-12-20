@@ -923,6 +923,9 @@ It is clear that the original model is recovered this way.
 % ................................................................................................
 \subsection{Code Samples}
 The code samples show sample code from the simulation that calculate cellular interactions and cell cycle.
+Since backend of the simulation is written in Rust, so is the implementation of cellular aspects.
+Additionally bindings are generated such that the full power of the simulation tool can be accessed.
+This significantly improves handling and development time of new models.
 \begin{listing}
 \begin{lstlisting}[language=rust]
 let z = ext_pos - own_pos;
