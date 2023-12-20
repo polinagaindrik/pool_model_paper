@@ -1,0 +1,11 @@
+{
+  "random_seed": 1,
+  "n_times": 40001,
+  "dt": 0.25,
+  "t_start": 0.0,
+  "save_interval": 1000,
+  "n_threads": 8,
+  "show_progressbar": true,
+  "save_path": "out/pool_model",
+  "save_add_date": true
+}
