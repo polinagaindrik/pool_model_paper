@@ -1,0 +1,1082 @@
+[
+  {
+    "mechanics": {
+      "pos": [
+        142.85714285714286,
+        142.85714285714286
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S1",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        142.85714285714286,
+        428.57142857142856
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S1",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        142.85714285714286,
+        714.2857142857143
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S1",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        285.7142857142857,
+        285.7142857142857
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S1",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        285.7142857142857,
+        571.4285714285714
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S1",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        285.7142857142857,
+        857.1428571428572
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S1",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        428.57142857142856,
+        142.85714285714286
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S1",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        428.57142857142856,
+        428.57142857142856
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S1",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        428.57142857142856,
+        714.2857142857143
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S1",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        571.4285714285714,
+        285.7142857142857
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S1",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        571.4285714285714,
+        571.4285714285714
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S1",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        571.4285714285714,
+        857.1428571428572
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S1",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        714.2857142857143,
+        142.85714285714286
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S1",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        714.2857142857143,
+        428.57142857142856
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S1",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        714.2857142857143,
+        714.2857142857143
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S1",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        857.1428571428572,
+        285.7142857142857
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S1",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        857.1428571428572,
+        571.4285714285714
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S1",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        857.1428571428572,
+        857.1428571428572
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S1",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        142.85714285714286,
+        285.7142857142857
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S2",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        142.85714285714286,
+        571.4285714285714
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S2",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        142.85714285714286,
+        857.1428571428572
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S2",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        285.7142857142857,
+        428.57142857142856
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S2",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        285.7142857142857,
+        714.2857142857143
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S2",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        285.7142857142857,
+        142.85714285714286
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S2",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        428.57142857142856,
+        285.7142857142857
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S2",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        428.57142857142856,
+        571.4285714285714
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S2",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        428.57142857142856,
+        857.1428571428572
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S2",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        571.4285714285714,
+        428.57142857142856
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S2",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        571.4285714285714,
+        714.2857142857143
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S2",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        571.4285714285714,
+        142.85714285714286
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S2",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        714.2857142857143,
+        285.7142857142857
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S2",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        714.2857142857143,
+        571.4285714285714
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S2",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        714.2857142857143,
+        857.1428571428572
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S2",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        857.1428571428572,
+        428.57142857142856
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S2",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        857.1428571428572,
+        714.2857142857143
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S2",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  },
+  {
+    "mechanics": {
+      "pos": [
+        857.1428571428572,
+        142.85714285714286
+      ],
+      "vel": [
+        0.0,
+        0.0
+      ],
+      "damping_constant": 0.5,
+      "mass": 7.704755982928968
+    },
+    "cycle": {
+      "food_to_volume_conversion": 0.1,
+      "volume_division_threshold": 14.137166941154069,
+      "lag_phase_transition_rate_1": 0.0025,
+      "lag_phase_transition_rate_2": 0.008
+    },
+    "cellular_reactions": {
+      "potential_strength": 0.5,
+      "lag_phase_active": true,
+      "species": "S2",
+      "cell_volume": 7.0685834705770345,
+      "uptake_rate": 0.01,
+      "inhibition_production_rate": 0.1,
+      "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+  }
+]
