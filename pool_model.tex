@@ -807,6 +807,14 @@ The volume of the cell is divided equally between the new and old cell and both 
     \label{fig:spatial-cell-division-example}
     \end{center}
 \end{figure}
+In addition to modeling division events, the cells have are subject to the lag-phase which delays their ability to proliferate.
+We model this by assigning a transition rate to each cell.
+For each time point of the simulation, we generate a boolean value from a random number generator with probability
+\begin{equation}
+    P(\text{transition}) = \Delta t \lambda \frac{[R]}{[R_0]}.
+\end{equation}
+If this boolean is true, we move the cell from the inactive state to the active state where it starts to consume nutrients and grow.
+It is clear that this is exactly identical to the \ac{ode} model.
 %
 \begin{table}[H]
     \centering
