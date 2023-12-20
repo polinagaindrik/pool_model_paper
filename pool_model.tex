@@ -1046,9 +1046,81 @@ c2.set_pos(&(old_pos - offset));
 \subsection{Full List of Parameters}
 \label{sec:supplement-full-parameters}
 \begin{listing}
-\begin{lstlisting}
-
+\begin{lstlisting}[language=json]
+{
+    "diffusion_constants": [
+        15.0,
+        15.0
+    ],
+    "initial_concentrations": [
+        2.0,
+        0.0
+    ],
+    "size": 1000.0,
+    "n_voxels": null
+}
 \end{lstlisting}
+\caption{
+    The \texttt{domain.json} file specifying initial values of the domain.
+}
+\end{listing}
+%
+\begin{listing}
+\begin{lstlisting}[language=json]
+{
+    "random_seed": 1,
+    "n_times": 20001,
+    "dt": 0.5,
+    "t_start": 0.0,
+    "save_interval": 500,
+    "n_threads": 8,
+    "show_progressbar": true,
+    "save_path": "out/pool_model",
+    "save_add_date": true
+}
+\end{lstlisting}
+\caption{
+    The \texttt{meta\_params.json} file specifying all parameters not directly related to the simulation content.
+    These settings do not represent any model-specific properties but rather generic ones such as time-span or number of threads.
+}
+\end{listing}
+%
+\begin{listing}
+\begin{lstlisting}[language=json]
+{
+    "mechanics": {
+        "pos": [
+        142.85714285714286,
+        142.85714285714286
+        ],
+        "vel": [
+        0.0,
+        0.0
+        ],
+        "damping_constant": 0.5,
+        "mass": 7.704755982928968
+    },
+    "cycle": {
+        "volume_division_threshold": 14.137166941154069,
+        "lag_phase_transition_rate_1": 0.005,
+        "lag_phase_transition_rate_2": 0.0025
+    },
+    "cellular_reactions": {
+        "potential_strength": 0.5,
+        "food_to_volume_conversion": 0.1,
+        "lag_phase_active": true,
+        "species": "S1",
+        "cell_volume": 7.0685834705770345,
+        "uptake_rate": 0.01,
+        "inhibition_production_rate": 0.1,
+        "inhibition_coefficient": 0.1
+    },
+    "interactionextracellulargradient": null
+}
+\end{lstlisting}
+\caption{
+    The first entry of the \texttt{initial\_cells.json} file which defines every individual particle present in the simulation initially.
+}
 \end{listing}
 %
 %
