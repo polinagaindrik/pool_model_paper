@@ -625,31 +625,6 @@ These effects can only be treated with a spatial model that is able to describe 
 %
 - \cite{emonet_agentcell_2005, gorochowski_bsim_2012, li_nufeb_2019, kreft_bacsim_1998}: examples of another toolboxes for bacterial communities modeling (ABM).\\
 More about the modelling of the motile bacteria can be seen in works:~\cite{decoene_microscopic_2011, rosser_modelling_2014, sokolov_physical_2012, li_amplified_2008}.
-\begin{figure}
-    \includegraphics[width=0.49\textwidth]{Figures/snapshot_00000000.png}\hspace{0.02\textwidth}%
-    \includegraphics[width=0.49\textwidth]{Figures/snapshot_00006500.png}\vspace{0.02\textwidth}\\
-    \includegraphics[width=0.49\textwidth]{Figures/snapshot_00013000.png}\hspace{0.02\textwidth}%
-    \includegraphics[width=0.49\textwidth]{Figures/snapshot_00020000.png}%
-    \caption{}
-    \label{fig:spatial-snapshots}
-\end{figure}
-%
-%
-\begin{figure}
-    \centering
-    \includegraphics[width=0.6\textwidth]{Figures/spatial_cell_growth.png}
-    \caption{}
-    \label{fig:spatial-growth-curve}
-\end{figure}
-%
-%
-\begin{figure}
-    \includegraphics[width=0.5\textwidth]{Figures/lag_phase.png}%
-    \includegraphics[width=0.5\textwidth]{Figures/entropy.png}
-    % TODO difference to pool model
-    \caption{}
-    \label{fig:spatial-lag-phase-entropy}
-\end{figure}
 %
 %
 In general, bacterial communities in 2D can experience collective motion called swarming~\cite{wu_collective_2015}.
@@ -698,7 +673,7 @@ The \acp{ode} the bacterial population can be written as:
 The microenvironment of our system contains the resource and the inhibitor molecules:
 \begin{equation}
     \begin{cases}
-        \dot{R^*} = -\frac{\alpha_A}{N_t} R^* G_A-\frac{\alpha_B}{(1 + \mu_I I) N_t} R^* G_B \\
+        \dot{R^*} = -\frac{\alpha_A}{G_\text{max}} R^* G_A-\frac{\alpha_B}{(1 + \mu_I I) G_\text{max}} R^* G_B \\
         \dot{I} = \kappa G_A
     \end{cases}.
     \label{eq:spatial_limit_H}
@@ -733,6 +708,8 @@ Furthermore, we let cells produce an inhibitor with production rate $b$ which in
     \dot{[I]} &= b\frac{V_c}{V_D}\delta(x-x_c)\\
     u &\longrightarrow \frac{u}{1+\nu_I [I]}.
 \end{align}
+Note that we do not need to distinguish between the two species because we can set parameters individually on agent-level.
+This means, we can implement the most general version of the equations and by choosing appropriate parameters, set the species of the respective cell-agent.
 If we combine all equations and consider multiple cells, we obtain the system
 \begin{align}
     \dot{V_c} &= a\sigma [R_i] V_c\\
@@ -823,21 +800,75 @@ It is clear that this is exactly identical to the \ac{ode} model.
 The \ac{abm} model is more fundamental than the \ac{ode} model in the sense that it incorporates more biological aspects and maps them closer to realistic biological mechanisms.
 We are thus able to derive the \ac{ode} pool model from its \ac{abm} version in the homogenenous case (see supplementary material~\ref{subsec:supplement-deriving-pool-odes}).
 By doing so, we find a mapping between parameters from the \ac{abm} to parameters used in the \ac{ode} description.
+The derived equations read
 \begin{align}
-    \kappa &= b\\
-    \alpha &= u\sigma\frac{1}{V_D}\\
-    \mu_I &= \nu_I \frac{1}{V_D}
+    \dot{R} &= -\frac{u}{1+\nu_I V_D^{-1}I} \frac{1}{V_D} R V\\
+    \dot{I} &= b V\\
+    \dot{V} &= \frac{u}{1+\nu_I V_D^{-1} I} \frac{1}{V_D}\sigma R V.
 \end{align}
-\begin{figure}[H]
-    \begin{center}
-    \includegraphics[width=0.6\textwidth]{Figures/pool_model_spatial.pdf}
-    \caption{
-        The output of the model (\ref{eq:spatial_limit_F}, \ref{eq:spatial_limit_H}) for given parameters and initial valued presented in Tables \ref{tab:spatial_limit_param}, \ref{tab:spatial_limit_init}, respectively.
-        The observables of the system are the bacterial count of each species $L+G$ (blue and orange lines) and the total bacterial count of the system (green).
-    }
-    \label{fig:spatial_limit_plot1}
-    \end{center}
+and the \ac{ode} equations are
+\begin{align}
+    \dot{L_A} &= -\lambda_A R^* L_A\\
+    \dot{G_A} &= \lambda_A R^* L_A + \alpha_A R^* G_A\\
+    \dot{L_B} &= -\lambda_B R^* L_B\\
+    \dot{G_B} &= \lambda_B R^* L_B + \frac{\alpha_B}{1 + \mu_I I} R^* G_B\\
+    \dot{R^*} &= -\frac{\alpha_A}{G_\text{max}} R^* G_A-\frac{\alpha_B}{(1 + \mu_I I) G_\text{max}} R^* G_B \\
+    \dot{I} &= \kappa G_A
+\end{align}
+We compare the most general version and thus omit species $A$ for the moment.
+\begin{table}
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabularx}{\textwidth}{@{}l *3{>{\centering\arraybackslash}X}@{}}
+        & \textbf{\acs{ode}}
+        & \textbf{\acs{abm}}
+        & \textbf{Mappings}\\
+
+        \toprule
+
+        \multirow{2}{*}{Resource}
+        & \multirow{2}{*}{$\displaystyle \dot{R^*} = - \frac{\alpha}{(1 + \mu_I I) G_\text{max}} R^* G$}
+        & \multirow{2}{*}{$\displaystyle \dot{R} = -\frac{u}{1+\nu_I V_D^{-1}I} \frac{1}{V_D} R V$}
+        & $\displaystyle G_\text{max} = [R_0] V_D \sigma$\\
+
+        &&& $\displaystyle \mu_I = \frac{\nu_I}{V_D}$\\
+
+        Volume
+        & $\displaystyle \dot{G} = \frac{\alpha}{1 + \mu_I I} R^* G$
+        & $\displaystyle \dot{V} = \frac{u}{1+\nu_I V_D^{-1} I} \frac{1}{V_D}\sigma R V$
+        & $\displaystyle \alpha = u[R_0]\sigma$\\
+
+        Inhibitor
+        & $\displaystyle \dot{I} = \kappa G_A$
+        & $\displaystyle \dot{I} = b V$
+        & $\displaystyle \kappa = b$\\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+We can use these mappings to numerically compare both approaches.
+Table~\ref{tab:spatial_limit_init} shows a comparison of paramters of two simulations for the \ac{ode} and \ac{abm} model which have been mapped onto each other.
+Figure~\ref{fig:spatial-snapshots} shows individual snapshots of different 
+%
+\begin{figure}
+    \includegraphics[width=0.49\textwidth]{Figures/snapshot_00000000.png}\hspace{0.02\textwidth}%
+    \includegraphics[width=0.49\textwidth]{Figures/snapshot_00006500.png}\vspace{0.02\textwidth}\\
+    \includegraphics[width=0.49\textwidth]{Figures/snapshot_00013000.png}\hspace{0.02\textwidth}%
+    \includegraphics[width=0.49\textwidth]{Figures/snapshot_00020000.png}%
+    \caption{}
+    \label{fig:spatial-snapshots}
 \end{figure}
+%
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{Figures/abm_ode_comparison.png}
+    \caption{
+        Comparison of the \ac{abm} and \ac{ode} output corresponding to the parameters presented in table~\ref{tab:spatial_limit_init}.
+        % TODO
+    }
+    \label{fig:spatial-growth-curve}
+\end{figure}
+%
 %
 \begin{table}[H]
     \centering
@@ -847,32 +878,32 @@ By doing so, we find a mapping between parameters from the \ac{abm} to parameter
         \cmidrule[1pt](l{\tabcolsep}r{\tabcolsep}){4-6}
          & \textbf{Symbol} & \textbf{Value} && \textbf{Symbol} & \textbf{Value}\\
         \toprule
-        Rate $L_A\rightarrow G_A$   & $\lambda_A$   & $0.001$\unit{\per\minute}
-        &                           & $\lambda_A$   & $0.001$\unit{\per\minute}\\
+        Rate $L_A\rightarrow G_A$   & $\lambda_A$   & $0.0025$\unit{\per\minute}
+        &                           & $\lambda_A$   & $0.008$\unit{\per\minute}\\
         Rate $L_B\rightarrow G_B$   & $\lambda_B$   & $0.0005$\unit{\per\minute}
         &                           & $\lambda_B$   & $0.0005$\unit{\per\minute}\\
-        Production $G_A$            & $\alpha_A$    & ??\unit{\per\minute}
+        Production $G_A$            & $\alpha_A$    & $0.002$\unit{\per\minute}
         & Uptake                    & $u_A$         & $0.01$\unit{\per\minute}\\
-        Production $G_B$            & $\alpha_B$    & ??\unit{\per\minute}
+        Production $G_B$            & $\alpha_B$    & $0.002$\unit{\per\minute}
         & Uptake                    & $u_B$         & $0.01$\unit{\per\minute}\\
-        Production $I$              & $\kappa$      & $1.18\cdot10^{-5}$\unit{\per\minute}
+        Production $I$              & $\kappa$      & $0.1$\unit{\per\minute}
         &&&\\
-        Inhibition         & $\mu_I$       & $1.11\cdot 10^{-6}$\unit{\per\micro\metre\cubed}
+        Inhibition         & $\mu_I$       & $1.0\cdot 10^{-7}$\unit{\per\micro\metre\cubed}
         &&&\\
-        Total volume     & $N_t$         & $1.80\cdot 10^4$\unit{\micro\metre\cubed}
+        Total volume     & $G_\text{max}$         & $2.0\cdot 10^5$\unit{\micro\metre\cubed}
         &&&\\
         \textbf{Initial Values}\\
         \toprule
-        Volume of $L_A$             & $L_A$         & $35.34$\unit{\micro\metre\cubed}
-        & Cell Number               & $C_A$         & 5\\
+        Volume of $L_A$             & $L_A$         & $127.2$\unit{\micro\metre\cubed}
+        & Cell Number               & $C_A$         & 18\\
         Volume of $G_A$             & $G_A$         & $0.0$\unit{\micro\metre\cubed}
         &                           &               & 0\\
-        Volume of $L_B$             & $L_B$         & $28.27$\unit{\micro\metre\cubed}
-        & Cell Number               & $C_B$         & 4\\
+        Volume of $L_B$             & $L_B$         & $127.23$\unit{\micro\metre\cubed}
+        & Cell Number               & $C_B$         & 18\\
         Volume of $G_B$             & $G_B$         & $0.0$\unit{\micro\metre\cubed}
         &                           &               & 0\\
         Relative nutrients          & $R$           & $1.0$
-        & Nutrients                 & $A$           & 2.0\unit{\mol\per\micro\metre\cubed}\\
+        & Nutrients                 & $A$           & $1.0$\unit{\mol\per\micro\metre\cubed}\\
         Volume inhibitor            & $I$           & $0.0$\unit{\micro\metre\cubed}
         & Inhibitor                 &               & $0.0$\unit{\mol\per\micro\metre\cubed}\\
         \bottomrule
