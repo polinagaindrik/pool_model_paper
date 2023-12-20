@@ -792,42 +792,43 @@ The bacterial social interactions such as releasing the toxins or public goods c
 These effects can only be treated with a spatial model that is able to describe the observed effects.\\
 %
 %
-- \cite{emonet_agentcell_2005, gorochowski_bsim_2012, li_nufeb_2019, kreft_bacsim_1998}: examples of another toolboxes for bacterial communities modeling (ABM).\\
-More about the modelling of the motile bacteria can be seen in works:~\cite{decoene_microscopic_2011, rosser_modelling_2014, sokolov_physical_2012, li_amplified_2008}.
+% - \cite{emonet_agentcell_2005, gorochowski_bsim_2012, li_nufeb_2019, kreft_bacsim_1998}: examples of another toolboxes for bacterial communities modeling (ABM).\\
+% More about the modelling of the motile bacteria can be seen in works:~\cite{decoene_microscopic_2011, rosser_modelling_2014, sokolov_physical_2012, li_amplified_2008}.
 %
 %
-In general, bacterial communities in 2D can experience collective motion called swarming~\cite{wu_collective_2015}.
-Some works modelled 2D motile bacteria:
-\begin{itemize}
-    \item \cite{decoene_microscopic_2011}: 2D chemotactic self-propelled bacterial motion of the flagellated bacteria (e.g. E. coli, B. subtilis).
-    Chemotaxis here was driven by the oxygen concentrations.
-    \item \cite{rosser_modelling_2014}: modeling of the bacterial reorintation, rotation.
-    \item \cite{sokolov_physical_2012, li_amplified_2008}: modeling of the bacteria using hydrodynamic interactions and Brownian motion.
-    Fluctuations in velocity and rotations.
-    (\cite{li_amplified_2008}: Brownian motion gives right motion observed using microscopy).
-    \item \cite{farrell_mechanically_2013}: 2D modeling using Newtonian dynamics and only mechanical interactions + nutritient diffusion.
-    Branching parameter defines diff limits where diffusion dominant and limits growth, and where it's irrelevant.
-    Mechanical pressure (due to bacteria-bacteria interactions) affects growth, can limit it.(!!!)
-\end{itemize}
+% In general, bacterial communities in 2D can experience collective motion called swarming~\cite{wu_collective_2015}.
+% Some works modelled 2D motile bacteria:
+% \begin{itemize}
+%     \item \cite{decoene_microscopic_2011}: 2D chemotactic self-propelled bacterial motion of the flagellated bacteria (e.g. E. coli, B. subtilis).
+%     Chemotaxis here was driven by the oxygen concentrations.
+%     \item \cite{rosser_modelling_2014}: modeling of the bacterial reorintation, rotation.
+%     \item \cite{sokolov_physical_2012, li_amplified_2008}: modeling of the bacteria using hydrodynamic interactions and Brownian motion.
+%     Fluctuations in velocity and rotations.
+%     (\cite{li_amplified_2008}: Brownian motion gives right motion observed using microscopy).
+%     \item \cite{farrell_mechanically_2013}: 2D modeling using Newtonian dynamics and only mechanical interactions + nutritient diffusion.
+%     Branching parameter defines diff limits where diffusion dominant and limits growth, and where it's irrelevant.
+%     Mechanical pressure (due to bacteria-bacteria interactions) affects growth, can limit it.(!!!)
+% \end{itemize}
 %
-For simulation results:
-\begin{itemize}
-    \item \cite{farrell_mechanically_2013}: Showed the influence of mechanic interactions between bacteria in 2D system with bacteria consuming the nutritient.
-    The growth of bacterial colonies where non-motile microorganisms replicate and push each other away as they grow.
-    Found a transition between two different growth regimes, controlled by the balance between growth and uptake of nutrient:\\
-    Exponential growth where diffusion of the nutritient does not play any role. Sublinear growth where growth is limited by nutritient diffusion.
-    (Structurally in 2D it's regimes: smooth propagating of bacterial front vs. branching.)
-    \item \cite{nagarajan_agent-based_2022-1}: review on the ABM for bacterial population.
-    The ABM represent a microbial colony as a group of discrete agents that are governed by a set of rules, where each agent can be an individual cell or a collection of cells.
-    Can use citation when talk about general processes we are accounting as growth, uptake of nutritient, production of inhibitor, e.g.,:
-    Physical interactions between agents are calculated using excluded volume interactions.
-    Chemical interactions as releasing inhibitors are described using concentrations and solved using PDEs.
-\end{itemize}
+% For simulation results:
+% \begin{itemize}
+%     \item \cite{farrell_mechanically_2013}: Showed the influence of mechanic interactions between bacteria in 2D system with bacteria consuming the nutritient.
+%     The growth of bacterial colonies where non-motile microorganisms replicate and push each other away as they grow.
+%     Found a transition between two different growth regimes, controlled by the balance between growth and uptake of nutrient:\\
+%     Exponential growth where diffusion of the nutritient does not play any role. Sublinear growth where growth is limited by nutritient diffusion.
+%     (Structurally in 2D it's regimes: smooth propagating of bacterial front vs. branching.)
+%     \item \cite{nagarajan_agent-based_2022-1}: review on the ABM for bacterial population.
+%     The ABM represent a microbial colony as a group of discrete agents that are governed by a set of rules, where each agent can be an individual cell or a collection of cells.
+%     Can use citation when talk about general processes we are accounting as growth, uptake of nutritient, production of inhibitor, e.g.,:
+%     Physical interactions between agents are calculated using excluded volume interactions.
+%     Chemical interactions as releasing inhibitors are described using concentrations and solved using PDEs.
+% \end{itemize}
 %
 To test the spatial limitations of the described above approach consider the system consisting from two bacterial species that can be described by two internal states: lag and growth states. 
 Both of these species grow using limiting resource pool $R^*$ with different growth constants $\alpha$ and different lengths of lag phase determined by parameter $\lambda$.
 It has to be noted that the resource pool is normalized by its initial value, ie $R^* = R/R_0$.
-Moreover, the species 1 is able to release a certain antimicrobial component $I$ that shows inhibitory effect on species 2 (amensalism).
+Moreover, the species $A$ is able to release a certain antimicrobial component $I$ that shows inhibitory effect on species 2 (amensalism).
+We assume that $L,G$ are measured in terms of overall volume and $R,I$ are measured as total amount.
 The \acp{ode} the bacterial population can be written as:
 \begin{equation}
     \begin{cases}
