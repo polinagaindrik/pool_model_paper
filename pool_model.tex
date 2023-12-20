@@ -1023,21 +1023,39 @@ Table~\ref{tab:spatial_limit_init} shows a comparison of paramters of two simula
 Figure~\ref{fig:spatial-snapshots} shows individual snapshots of different 
 %
 \begin{figure}
-    \includegraphics[width=0.49\textwidth]{Figures/snapshot_00000000.png}\hspace{0.02\textwidth}%
-    \includegraphics[width=0.49\textwidth]{Figures/snapshot_00006500.png}\vspace{0.02\textwidth}\\
-    \includegraphics[width=0.49\textwidth]{Figures/snapshot_00013000.png}\hspace{0.02\textwidth}%
-    \includegraphics[width=0.49\textwidth]{Figures/snapshot_00020000.png}%
-    \caption{}
+    \includegraphics[width=0.49\textwidth]{Figures/abm-homogenous/snapshot_00006000.png}\hspace{0.02\textwidth}%
+    \includegraphics[width=0.49\textwidth]{Figures/abm-homogenous/snapshot_00012000.png}\vspace{0.02\textwidth}\\
+    \includegraphics[width=0.49\textwidth]{Figures/abm-homogenous/snapshot_00018000.png}\hspace{0.02\textwidth}%
+    \includegraphics[width=0.49\textwidth]{Figures/abm-homogenous/snapshot_00024000.png}%
+    \caption{
+        Simulation snapshots at $1.04$\unit{\day},$2.08$\unit{\day},$3.13$\unit{\day} and $4.17$\unit{\day} corresponding to the parameters given in table~table~\ref{tab:spatial_limit_init}.
+        Species $B$ is colored blue while species $A$ is colored in red.
+    }
     \label{fig:spatial-snapshots}
 \end{figure}
 %
 %
 \begin{figure}
     \centering
-    \includegraphics[width=0.7\textwidth]{Figures/abm_ode_comparison.png}
+    \begin{subfigure}[c]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{Figures/abm-homogenous/abm_ode_comparison.png}
+        \subcaption{Homogenous initial cell distribution, $D_R=D_I=30.0$\unit{\micro\metre\squared\per\minute}}
+    \end{subfigure}%
+    \begin{subfigure}[c]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{Figures/abm-homogenous-low-diffusion/abm_ode_comparison.png}
+        \subcaption{Homogenous initial cell distribution, $D_R=D_I=5.0$\unit{\micro\metre\squared\per\minute}}
+    \end{subfigure}\\
+    \begin{subfigure}[c]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{Figures/abm-inhomogenous/abm_ode_comparison.png}%
+        \subcaption{Inhomogenous initial cell distribution, $D_R=D_I=30.0$\unit{\micro\metre\squared\per\minute}}
+    \end{subfigure}%
+    \begin{subfigure}[c]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{Figures/abm-inhomogenous-low-diffusion/abm_ode_comparison.png}%
+        \subcaption{Inhomogenous initial cell distribution, $D_R=D_I=5.0$\unit{\micro\metre\squared\per\minute}}
+    \end{subfigure}
     \caption{
-        Comparison of the \ac{abm} and \ac{ode} output corresponding to the parameters presented in table~\ref{tab:spatial_limit_init}.
-        % TODO
+        Comparison of the \ac{ode} and \ac{abm} model for different parameter configurations.
+        Snapshots of the spatial configurations of cells are included in the appendix~\ref{fig:supplement-spatial-initial-config-cells}.
     }
     \label{fig:spatial-growth-curve}
 \end{figure}
@@ -1307,6 +1325,36 @@ c2.set_pos(&(old_pos - offset));
     The first entry of the \texttt{initial\_cells.json} file which defines every individual particle present in the simulation initially.
 }
 \end{listing}
+%
+%
+% ................................................................................................
+\subsection{Homogenous and Inhomogenous Initial Cell Distributions}
+To clarify what we mean by homogenous and inhomogenous initial configurations, we include snapshots of the simulation.
+At this point, cells have already grown such that the sizes of cell-clumps are better visible by the naked eye.
+The snapshots were taken after $2.08$\unit{\day}.
+\begin{figure}
+    \centering
+    \begin{subfigure}[c]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{Figures/abm-homogenous/snapshot_00012000.png}
+        \subcaption{Homogenous initial cell distribution, $D_R=D_I=30.0$\unit{\micro\metre\squared\per\minute}}
+    \end{subfigure}%
+    \begin{subfigure}[c]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{Figures/abm-homogenous-low-diffusion/snapshot_00012000.png}
+        \subcaption{Homogenous initial cell distribution, $D_R=D_I=5.0$\unit{\micro\metre\squared\per\minute}}
+    \end{subfigure}\\
+    \begin{subfigure}[c]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{Figures/abm-inhomogenous/snapshot_00012000.png}%
+        \subcaption{Inhomogenous initial cell distribution, $D_R=D_I=30.0$\unit{\micro\metre\squared\per\minute}}
+    \end{subfigure}%
+    \begin{subfigure}[c]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{Figures/abm-inhomogenous-low-diffusion/snapshot_00012000.png}%
+        \subcaption{Inhomogenous initial cell distribution, $D_R=D_I=5.0$\unit{\micro\metre\squared\per\minute}}
+    \end{subfigure}
+    \caption{
+        Spatial configuration of cells corresponding to the pictures shown in figure~\ref{fig:spatial-growth-curve}.
+    }
+    \label{fig:supplement-spatial-initial-config-cells}
+\end{figure}
 %
 %
 \end{document}
