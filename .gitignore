@@ -11,4 +11,5 @@
 *.run.xml
 *.toc
 *.gz
+*.pyc
 release.zip
