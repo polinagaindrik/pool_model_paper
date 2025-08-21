@@ -12,4 +12,6 @@
 *.toc
 *.gz
 *.pyc
+*.bbl-SAVE-ERROR
+*.bcf-SAVE-ERROR
 release.zip
