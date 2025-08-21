@@ -604,14 +604,14 @@ The function $\mathcal{B}_{A/B}$ captures the inhibiting effects effectively.
 It is straight forward to make the mechanism of inhibition more explicit by, e.g., introducing a toxin pool.
 One possible choice for $\mathcal{B}$ is:
 \begin{eqnarray}
-    \mathcal{B}(G)&=&\frac{\alpha}{1+KG}. 
+    \mathcal{B}(G)&=&\frac{\alpha}{1+KI(G)},
 \end{eqnarray}
-This corresponds to the case $T\sim G$, where $T$ is the toxin produced.
-If the toxin accumulates one needs to replace $G$ by $\int G dt$. Keeping it simple yields:
+where $I$ is the concentration of the inhibiting metabolic byproduct producing during bacterial growth.
 \begin{eqnarray}
     \dot{G}_A &=& \frac{\alpha_A G_A}{1+K_BG_B}\left(1 - \frac{G_A+G_B}{N_t}\right)\\
     \dot{G}_B &=& \frac{\alpha_B G_B}{1+K_AG_A}\left(1-\frac{G_A+G_B}{N_t}\right). 
 \end{eqnarray}
+Note that if the toxin accumulates, i.e., $\dot I \sim G$,  one needs to replace $G$ by $\int G dt$.
 One can distinguish two limiting cases: {\it i}) $K_{A/B}\ll N_t$ and {\it ii}) $K_{A/B}\gg N_t$.
 In the first case the inhibition is of minor importance and could be ignored.
 In the latter case one can simplify the equations, given $N_A$ and $N_B$ are non-zero:
@@ -659,7 +659,7 @@ We can separate three cases (see Figure~\ref{fig:1pool_2sp_inhibit}):
 On the other hand, one can also observe some cooperative behaviors between species in case when it facilitates the competition with others.
 It happens if bacteria species as a result of their metabolism produce the compounds that are beneficial for the growth of each other, so-called public goods.
 Quite often it happens between the species that are close relatives or clonal populations and such process is called kin selection \cite{west_social_2007}.
-Furthermore, Sometimes neighbors can benefit from a certain behavior without expressing it by itself, so-called 'social cheaters'~\cite{rainey_evolution_2003}.
+Furthermore, neighbors can also benefit from a certain behavior without expressing it by itself, so-called 'social cheaters'~\cite{rainey_evolution_2003}.
 %
 %
 The benefit, or mutual activation, of the two species from the presence of the other can be simply introduced by mathematical functions.
