@@ -233,11 +233,11 @@ Consider for simplicity the system where only one bacteria species is present $N
 The bacterial growth curves usually consist of different consecutive phases~\cite{buchanan_when_1997}.
 At the beginning no increase in bacterial count is present and so-called lag-phase is observed.
 This phenomenon appears due to adaptation of the microbial community, for example, to the new environmental conditions.
-This so-called preparation to the exponential growth includes synthesys of the needed compounds, initiation of the transciption~\cite{rolfe_lag_2012} and poorly studied physiological and regulatory mechanisms~\cite{monod_growth_1949}.
+This so-called preparation to the exponential growth includes synthesis of the needed compounds, initiation of the transcription~\cite{rolfe_lag_2012} and poorly studied physiological and regulatory mechanisms~\cite{monod_growth_1949}.
 After this, the succeeded in adaptation bacteria enter the exponential growth phase, where the process of cell division is directly happening.
 When the nutrition is exhausted by the growing bacteria, the stationary state of the growth curve occurs.
 In this state the cultures accumulate waste products of metabolic activity that leads to cell death of the bacteria.
-At the same time dying cells release the nutritions for survivors to continue growing.
+At the same time dying cells release the nutrients for survivors to continue growing.
 As a result the balance between the growing and dying processes leads to the constant with time bacterial count~\cite{navarro_llorens_stationary_2010}.
 In the described simplified version of the real-life system three possible bacteria states are mentioned corresponding to which process is happening: adaptation, growth or death.
 Motivated by this we divide a bacterial population into three pools (states)~(\ref{fig:SchematicRep}) defining the fraction of the population in the lag phase $L(t)$, growing and dividing $G(t)$ and undergoing cell death $D(t)$.
@@ -270,9 +270,9 @@ Then the \acp{ode} describing such a model can be written as
 \end{equation}
 %
 Based on experimental observations, it was shown that the bacterial growth is strongly influenced by the limiting resource.
-According to the works of Jacques Monod, in the system where all needed nutritients are in excess except for one the total growth is linear to the concentration of this limiting nutritient~\cite{monod_growth_1949}.
+According to the works of Jacques Monod, in the system where all needed nutrients are in excess except for one the total growth is linear to the concentration of this limiting nutrient~\cite{monod_growth_1949}.
 The control of the population density with respect to the available nutrition is implemented using cell communication process called quorum sensing.
-Using release of the extracellular signalling molecules (autoinducers) it is possible to synchronize the gene expression of the whole group~\cite{ng_bacterial_2009}.
+Using release of the extracellular signalling molecules (autoinducer molecules) it is possible to synchronize the gene expression of the whole group~\cite{ng_bacterial_2009}.
 We would not dive into the processes of quorum sensing and try to keep it as simple as possible.
 According to this, we aim to include a resource pool which is used by the growing bacteria using the second order kinetic reaction:
 \begin{equation}
@@ -380,7 +380,7 @@ The lag time $t_L$ diverges very slowly, logarithmically with $\lambda\to 0$.
 \subsection{Back flow from Growth to Lag pool}
 Due to its life in rather unfavorable conditions bacteria developed different surviving mechanisms, one of which is adapting their metabolism and transitioning into dormant state.
 By definition dormancy in bacteria is a reversible state where cell continue living with low metabolic activity while the cell division stops~\cite{kaprelyants_dormancy_1993}.
-This survival strategy can appear in response to different external stresses, e.g., nutritient deficiency, temperature stress or extreme fluctuations of environment parameters.
+This survival strategy can appear in response to different external stresses, e.g., nutrient deficiency, temperature stress or extreme fluctuations of environment parameters.
 And after "difficult times" bacteria, also called viable but non-culturable (VBNC), can continue cell division~\cite{kell_viability_1998}.
 The models including transition of bacteria to the dormant state were proposed and studied by Bär \etal~\cite{bar_modelling_2002} and Jones and Lennon~\cite{jones_dormancy_2010}.
 %
@@ -490,7 +490,7 @@ Inserting Eq.~\ref{eq:Resource} into Eqs.~\ref{eq:model_2sp_resource_comp} yield
 which has the structure of a \ac{glv} expanded with different internal states for one species.
 As one can see in Figure~\ref{fig:2pool_resource_2sp} even without direct interaction between species the bacterial growth was inhibited due to the limitation of the resource.
 Here species $A$ has a longer lag-phase than $B$ but the exponential growth of $A$ is stronger than the one that bacteria $B$ experiences.
-As a result, species $A$ was able to suppress species $B$ consuming the larger amount of nutritient and reaching larger bacterial count at the end.
+As a result, species $A$ was able to suppress species $B$ consuming the larger amount of nutrient and reaching larger bacterial count at the end.
 \begin{figure}[H]
     \begin{center}
     \includegraphics[width=0.6\textwidth]{Figures/pool_model_2pools_resource_competition.pdf}
@@ -709,7 +709,7 @@ That indirectly leads to larger amount of $P_B$ produced by species $B$.
 \section{Spatial Effects}
 As described above, the proposed model operates with the total number of the bacterial counts for different species and states in the system not accounting for their spatial distributions.
 Assuming that the bacterial system is uniformly distributed (sometimes also called 'well-stirred') we can simplify the problem to a system of \acp{ode}.
-However, in reality spatial effects can play a significant role for population survival forcing some species develop competitive mechanisms such as cell adhesion to surfaces in the areas rich with nutritients~\cite{htuson_bacteriasurface_2013}.
+However, in reality spatial effects can play a significant role for population survival forcing some species develop competitive mechanisms such as cell adhesion to surfaces in the areas rich with nutrients~\cite{htuson_bacteriasurface_2013}.
 Another mechanism is the motility of bacteria, e.g., the flagellates bacteria as \textit{E. coli} or \textit{B. subtilis} can experience the chemotactic motion of driven by oxygen concentrations~\cite{decoene_microscopic_2011}.
 The bacterial social interactions such as releasing the toxins or public goods can also significantly affect the spatial structure of the community~\cite{blanchard_bacterial_2015}.
 These effects can only be treated with a spatial model that is able to describe the observed effects.\\
@@ -728,29 +728,29 @@ These effects can only be treated with a spatial model that is able to describe 
 %     \item \cite{sokolov_physical_2012, li_amplified_2008}: modeling of the bacteria using hydrodynamic interactions and Brownian motion.
 %     Fluctuations in velocity and rotations.
 %     (\cite{li_amplified_2008}: Brownian motion gives right motion observed using microscopy).
-%     \item \cite{farrell_mechanically_2013}: 2D modeling using Newtonian dynamics and only mechanical interactions + nutritient diffusion.
+%     \item \cite{farrell_mechanically_2013}: 2D modeling using Newtonian dynamics and only mechanical interactions + nutrient diffusion.
 %     Branching parameter defines diff limits where diffusion dominant and limits growth, and where it's irrelevant.
 %     Mechanical pressure (due to bacteria-bacteria interactions) affects growth, can limit it.(!!!)
 % \end{itemize}
 %
 % For simulation results:
 % \begin{itemize}
-%     \item \cite{farrell_mechanically_2013}: Showed the influence of mechanic interactions between bacteria in 2D system with bacteria consuming the nutritient.
+%     \item \cite{farrell_mechanically_2013}: Showed the influence of mechanic interactions between bacteria in 2D system with bacteria consuming the nutrient.
 %     The growth of bacterial colonies where non-motile microorganisms replicate and push each other away as they grow.
 %     Found a transition between two different growth regimes, controlled by the balance between growth and uptake of nutrient:\\
-%     Exponential growth where diffusion of the nutritient does not play any role. Sublinear growth where growth is limited by nutritient diffusion.
+%     Exponential growth where diffusion of the nutrient does not play any role. Sublinear growth where growth is limited by nutrient diffusion.
 %     (Structurally in 2D it's regimes: smooth propagating of bacterial front vs. branching.)
 %     \item \cite{nagarajan_agent-based_2022-1}: review on the ABM for bacterial population.
 %     The ABM represent a microbial colony as a group of discrete agents that are governed by a set of rules, where each agent can be an individual cell or a collection of cells.
-%     Can use citation when talk about general processes we are accounting as growth, uptake of nutritient, production of inhibitor, e.g.,:
+%     Can use citation when talk about general processes we are accounting as growth, uptake of nutrient, production of inhibitor, e.g.,:
 %     Physical interactions between agents are calculated using excluded volume interactions.
 %     Chemical interactions as releasing inhibitors are described using concentrations and solved using PDEs.
 % \end{itemize}
 %
 To test the spatial limitations of the described above approach consider the system consisting from two bacterial species that can be described by two internal states: lag and growth states. 
 Both of these species grow using limiting resource pool $R^*$ with different growth constants $\alpha$ and different lengths of lag phase determined by parameter $\lambda$.
-It has to be noted that the resource pool is normalized by its initial value, ie $R^* = R/R_0$.
-Moreover, the species $A$ is able to release a certain antimicrobial component $I$ that shows inhibitory effect on species 2 (amensalism).
+It has to be noted that the resource pool is normalized by its initial value, i. e., $R^* = R/R_0$.
+Moreover, the species $A$ is able to release a certain antimicrobial component $I$ that shows inhibitory effect on species 2 with any harmful effect on itself (amensalism).
 We assume that $L,G$ are measured in terms of overall volume and $R,I$ are measured as total amount.
 The \acp{ode} the bacterial population can be written as:
 \begin{equation}
