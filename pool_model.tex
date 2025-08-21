@@ -258,6 +258,7 @@ The suggested model can be cast in the following reactions:
     G &\stackrel{\alpha}{\longrightarrow} & 2G\\
     G &\stackrel{\mu'}{\longrightarrow} & D\\
     D &\stackrel{\beta}{\longrightarrow} & \emptyset
+\label{eq:reactions_3pools}
 \end{eqnarray}
 Then the \acp{ode} describing such a model can be written as
 \begin{equation}
@@ -277,6 +278,7 @@ We would not dive into the processes of quorum sensing and try to keep it as sim
 According to this, we aim to include a resource pool which is used by the growing bacteria using the second order kinetic reaction:
 \begin{equation}
     G + R_0  \stackrel{\alpha_0}{\longrightarrow} 2G.
+\label{eq:reactions_resource}
 \end{equation}
 Note that the pools $L$, $G$ and $D$ represent the number of bacteria (or number of bacteria per unit area/volume) while $R_0$ represents an abstract resource pool.
 Let say $G=N_B/V$ and $[G]=1/V$, where $N_B$ is the number of bacteria and $V$ is the volume.
@@ -300,6 +302,7 @@ In this case the growth term can be simply written as $\alpha G R$ and the model
 Such model can be simplified by exploiting that limitation of the resource pool also limits the total bacterial count of the system:
 \begin{equation}
     R = 1 - \frac{L+G+D}{N_t}
+\label{eq:resource}
 \end{equation}
 and, hence, the full system can be written as
 \begin{equation}
@@ -345,6 +348,7 @@ For $\mu'=0$ the equations for $L$ and $D$ can be readily integrated resulting i
         L(t) = N_0 e^{-(\mu+\lambda)t}\\
         D(t) = N_0 \mu e^{-\beta t}\frac{1-e^{-(\mu+\lambda-\beta)t}}{\mu+\lambda-\beta}
     \end{cases}.
+\label{eq:lagtime_deriv1}
 \end{equation}
 For constant parameters $\mu$, $\lambda$, and $\beta$ the integrals for $L$ and $D$ can be put into the differential equation for $G$.
 However, for time dependent parameters, e.g., for a dependence on a non-static, dynamic temperature, it appears to be not advantageous to use the analytical results for $L$ and $D$ and work instead with all three equations for $L$, $G$, and $D$.
@@ -354,6 +358,7 @@ It is interesting to see what type of equations result for the total bacterial p
         \dot{G} = \lambda L + \alpha G\left(1-\frac{N}{N_t}\right)\\
         \dot{N} = - \beta D + \alpha G\left(1-\frac{N}{N_t}\right)
     \end{cases}
+\label{eq:lagtime_deriv2}
 \end{equation}
 with the initial conditions $G(0)=0$ and $N(0)=N_0$. 
 These equations have a clear interpretation, are derived from simple principles, and are different from the popular Barayni-Roberts and modified-Gompertz models.
@@ -367,10 +372,12 @@ Assuming $L\ll N_t$ we can ignore the non-linear term in the equation for $G$, w
 \begin{eqnarray}
     1&=& 2\int_0^{t_L} \lambda L(t)e^{\alpha(t_L-t)}dt\\
     1  &=& 2\lambda e^{\alpha t_L}\frac{1-e^{-(\mu+\lambda+\alpha)t_L}}{\mu+\lambda+\alpha}.
+\label{eq:lagtime_deriv3}
 \end{eqnarray}
 For $\alpha > \mu+\lambda$ $t_L$ can be approximated by:
 \begin{eqnarray}
     t_L &\approx& -\frac{1}{\alpha}\ln\left(\frac{2\lambda}{\mu+\lambda+\alpha}\right).
+\label{eq:lagtime}
 \end{eqnarray}
 The lag time $t_L$ diverges very slowly, logarithmically with $\lambda\to 0$.
 %
@@ -391,6 +398,7 @@ We explore now the idea that under certain conditions, as sudden change in the e
     G &\stackrel{\alpha}{\longrightarrow} & 2G\\
     G &\stackrel{\gamma(t)}{\longrightarrow} & L\\
     D &\stackrel{\beta}{\longrightarrow} & \emptyset
+\label{eq:reactions_backlag}
 \end{eqnarray}
 The rate $\gamma(t)$ depends on the rate of change of the environment.
 Stronger and quicker changes will lead to a higher rate $\gamma$.
@@ -404,22 +412,25 @@ Moreover, the rapid shift in temperature is associated with the appearance of an
 To model it we propose a kind of viscoelastic Maxwell type of stress-strain relation and write down the ordinary differential equation for $\gamma$ to be:
 \begin{eqnarray}
     \dot{\gamma} &=& \Gamma \left |\dot{T}\right |-\delta \gamma.
+\label{eq:rate_backlag}
 \end{eqnarray}
 We assumed that the direction of the temperature change does not matter, i.e., a change from $T=2$ to $T=12$ has the same effect as a change from $T=14$ to $T=4$.
 $\Gamma$ is a scaling factor and $\delta$ is the relaxation time for the temperature disturbance.
 Integration of this equation yields (with $\gamma(0)=0$):
 \begin{eqnarray}
     \gamma(t) &=& \Gamma \int_0^t \left |\dot{T}(t^{\prime})\right |e^{-\delta (t-t^{\prime})}dt^{\prime}.
+\label{eq:rate_backlag2}
 \end{eqnarray}
 After some manipulation of this equation we find:
 \begin{eqnarray}
     \gamma(t) &=& \Gamma\delta\left |\left[T[t]-T[0]e^{-\delta t}-\delta \int_0^t T(t^{\prime})e^{-\delta (t-t^{\prime})}dt^{\prime}\right]\right |.
+\label{eq:rate_backlag3}
 \end{eqnarray}
 This representation of the rate $\gamma(t)$ has the advantage that it only involves $T(t)$ and does not require the calculation of the derivative of $T$.
 If $T$ exhibits $n$ temperature jumps, one finds:
 \begin{eqnarray}
     \gamma(t) &=& \Gamma\sum_{i=1}^n \left |\Delta T_i \right |\theta(t-t_i)e^{-\delta(t-t_i)}.
-    \label{eq:gamma_tempshift}
+\label{eq:gamma_tempshift}
 \end{eqnarray}
 %
 The ordinary differential equations for the pool model with environmental-shock based back-flow read:
@@ -428,14 +439,14 @@ The ordinary differential equations for the pool model with environmental-shock 
     \dot{L} =\gamma(t) G - (\mu + \lambda) L\\
     \dot{G} = \lambda L -\gamma(t) G + \alpha G\left(1-\frac{L+G+D}{N_t}\right)\\
     \dot{D} = \mu  L - \beta D
-    \label{eq:ODE_tempshift}
     \end{cases}
+\label{eq:ode_tempshift_backlag}
 \end{equation}
 \begin{figure}[t]
     \begin{center}
     \includegraphics[width=0.6\textwidth]{Figures/pool_model_3pools_resource_tempshift.pdf}
     \caption{
-        (a) The time dependence of the total bacterial count $N$ for the model including the back-flow to the lag phase due to temperature stress~(\ref{eq:ODE_tempshift}).
+        (a) The time dependence of the total bacterial count $N$ for the model including the back-flow to the lag phase due to temperature stress~(\ref{eq:ode_tempshift_backlag}).
         (b) The value of the corresponding back-flow rate $\gamma$ calculated according to (\ref{eq:gamma_tempshift}).
         The curves represent no temperature shift (green), one temperature jump $\Delta T = 10$ at time $t=4$ (orange)
         and the series of different temperature shifts of value 10, 5 and 15 at the time points 1, 3 and 7, respectively (rose).
@@ -599,31 +610,35 @@ For sake of simplicity we ignore the lag pool and write for a mutual inhibition:
 \begin{eqnarray}
     \dot{G}_A &=& \mathcal{B}_A(G_B)G_A\left(1 - \frac{G_A+G_B}{N_t}\right)\\
     \dot{G}_B &=& \mathcal{B}_B(G_A) G_B\left(1-\frac{G_A+G_B}{N_t}\right).
+\label{eq:ode_inhib1}
 \end{eqnarray}
 The function $\mathcal{B}_{A/B}$ captures the inhibiting effects effectively.
 It is straight forward to make the mechanism of inhibition more explicit by, e.g., introducing a toxin pool.
 One possible choice for $\mathcal{B}$ is:
 \begin{eqnarray}
     \mathcal{B}(G)&=&\frac{\alpha}{1+KI(G)},
+\label{eq:ode_inhib_B}
 \end{eqnarray}
 where $I$ is the concentration of the inhibiting metabolic byproduct producing during bacterial growth.
 \begin{eqnarray}
     \dot{G}_A &=& \frac{\alpha_A G_A}{1+K_BG_B}\left(1 - \frac{G_A+G_B}{N_t}\right)\\
-    \dot{G}_B &=& \frac{\alpha_B G_B}{1+K_AG_A}\left(1-\frac{G_A+G_B}{N_t}\right). 
+    \dot{G}_B &=& \frac{\alpha_B G_B}{1+K_AG_A}\left(1-\frac{G_A+G_B}{N_t}\right).
+\label{eq:ode_inhib2}
 \end{eqnarray}
 Note that if the toxin accumulates, i.e., $\dot I \sim G$,  one needs to replace $G$ by $\int G dt$.
 One can distinguish two limiting cases: {\it i}) $K_{A/B}\ll N_t$ and {\it ii}) $K_{A/B}\gg N_t$.
 In the first case the inhibition is of minor importance and could be ignored.
 In the latter case one can simplify the equations, given $N_A$ and $N_B$ are non-zero:
 \begin{eqnarray}
-\label{Mut_Inhib}
     \dot{G}_A &=&\tilde{\alpha}_A\frac{G_A}{G_B}\left(1 - G_A-G_B\right)\\
     \dot{G}_B &=& \tilde{\alpha}_B\frac{G_B}{G_A}\left(1-G_A-G_B\right).
+\label{eq:ode_inhib3}
 \end{eqnarray}
 We introduced the rescaled growth rates $\tilde{\alpha}_A=\alpha_A/(N_tK_B)$ and $\tilde{\alpha}_B=\alpha_B/(N_tK_A)$. Note that $[\tilde{\alpha}]=\mathrm{s}^{-1}$.
 Rescaling time with $\tilde{\alpha}_A$ and defining the dimensionless parameter
 \begin{equation}
     \psi = \tilde{\alpha}_B/\tilde{\alpha}_A = \frac{K_B\alpha_B}{K_A\alpha_A}
+\label{eq:ode_inhib_psi}
 \end{equation}
 results in: 
 \begin{equation}
@@ -631,7 +646,7 @@ results in:
     \dot{G}_A =\frac{G_A}{G_B}\left(1 - G_A-G_B\right)\\
     \dot{G}_B =\psi\frac{G_B}{G_A}\left(1-G_A-G_B\right). 
     \end{cases}
-    \label{eq:2sp_1pool_inhibit_unitless}
+\label{eq:2sp_1pool_inhibit_unitless}
 \end{equation}
 We can separate three cases (see Figure~\ref{fig:1pool_2sp_inhibit}):
 \begin{eqnarray}
@@ -1079,7 +1094,7 @@ Consider the system consisting of $N$ species in $M$ different states.
 In the general representation, the system can be described with the Ordinary Differential Equations (\acp{ode}) using a non-linear function $\mbF$:
 \begin{equation}
    \dot{\mbx} = \mbF(\mbx, \mbm, \mbp, \mbu),
-   \label{eq:model_ODE}
+\label{eq:model_ODE_x}
 \end{equation}
 where  $\mbx \in \mathbb{R}^{N}  \otimes \mathbb{R}^{M}$ is a vector describing bacterial count.
 In matrix form it can be written as
@@ -1107,10 +1122,12 @@ Moreover, opposite to the already known Predictive Microbiology like Baranyi and
 To calculate the bacterial count for one species $i$, we simply need to sum the tensor/vector $\mbx$ over all possible states:
 \begin{equation}
     N_i = \sum_k \mbx_i^k.
+\label{eq:N_pro_species}
 \end{equation}
 While the total bacterial count of all species of our system is
 \begin{equation}
     N = \sum_i \sum_k \mbx_i^k.
+\label{eq:N_total}
 \end{equation}
 %
 Using such matrix representation of the bacterial system, we can rewrite introduced above system in more compact form.
@@ -1155,6 +1172,7 @@ This system of equations defines the microenvironment $\mbm$ and bacteria state 
         L_A & L_B \\
         G_A & G_B 
     \end{pmatrix}.
+\label{eq:gLV_x_m}
 \end{equation}
 %
 
