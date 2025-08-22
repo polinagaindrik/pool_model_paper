@@ -24,6 +24,8 @@ clean:
 	rm -f *.pdf
 	rm -f *.toc
 	rm -f *.run.xml
+	rm -f *.bbl-SAVE-ERROR
+	rm -f *.bcf-SAVE-ERROR
 
 fresh: clean all
 
