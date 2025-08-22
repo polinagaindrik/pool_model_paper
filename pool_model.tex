@@ -225,7 +225,7 @@ Secondary models:
 Comprehensive reviews about competition/cooperation bacterial mechanisms: \cite{ghoul_ecology_2016, stubbendieck_bacterial_2016, hibbing_bacterial_2010, west_social_2007}\\
 %
 %
-
+%
 % ================================================================================================
 \section{One Species Modeling}
 % ------------------------------------------------------------------------------------------------
@@ -405,9 +405,7 @@ The rate $\gamma(t)$ depends on the rate of change of the environment.
 Stronger and quicker changes will lead to a higher rate $\gamma$.
 %
 %
-% ................................................................................................
 \paragraph{Maxwell type of stress - strain relation}
-
 One of the reasons of the dormant state appearance can be also the temperature shift~\cite{oliver_viable_1995}.
 Moreover, the rapid shift in temperature is associated with the appearance of an additional lag phase~\cite{zwietering_modeling_1994}.
 To model it we propose a kind of viscoelastic Maxwell type of stress-strain relation and write down the ordinary differential equation for $\gamma$ to be:
@@ -526,7 +524,6 @@ In order to get the commonly used form of the \ac{glv}, we need to simply elimin
     \end{cases}
 \end{equation}
 
-%
 Equations (\ref{eq:LV_simple}) are basically competitive Lotka-Volterra equations that are widely used in ecological studies and show the principle of competitive excursion.
 That principle claims that two species in competition for the same resource cannot coexist~\cite{wangersky_lotka-volterra_1978}.
 In previous studies it was shown that \ac{glv} equations with one bacterial state can be successfully applied to predict the microbial community dynamics, determine different types of the pairwise interspecies interactions~\cite{dedrick_when_2023, stein_ecological_2013, venturelli_deciphering_2018, hoffmann_power_2007}.
@@ -717,10 +714,7 @@ That indirectly leads to larger amount of $P_B$ produced by species $B$.
     \label{fig:1pool_2sp_cooper}
     \end{center}
 \end{figure}
-%
-%
-%
-%
+
 % ================================================================================================
 \section{Spatial Effects}
 As described above, the proposed model operates with the total number of the bacterial counts for different species and states in the system not accounting for their spatial distributions.
@@ -787,12 +781,11 @@ The microenvironment of our system contains the resource and the inhibitor molec
     \end{cases}.
     \label{eq:spatial_limit_H}
 \end{equation}
-%
-%
-%
+
 % ------------------------------------------------------------------------------------------------
 \subsection{Constructing an Agent-Based Pool Model}
 We use \texttt{cellular\_raza}~\cite{Pleyer2025} to implement an \ac{abm}.
+
 
 \subsubsection{Cellular Reactions}
 To construct an \ac{abm} which resembles the given \ac{ode} system of equations~\eqref{eq:spatial_limit_F} and \eqref{eq:spatial_limit_H}, we consider multiple cellular reactions.
@@ -1076,16 +1069,14 @@ Figure~\ref{fig:spatial-snapshots} shows individual snapshots of different
     }
     \label{tab:spatial_limit_init}
 \end{table}
-%
-%
+
 % ================================================================================================
 \section{Discussion}
 % ------------------------------------------------------------------------------------------------
 \section{Conclusion}
 \newpage
 \printbibliography
-%
-%
+
 % ================================================================================================
 \beginsupplement
 \section{Supplementary Material}
