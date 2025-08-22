@@ -112,6 +112,7 @@ pages = {},
 \numberwithin{equation}{section}
 
 \newcommand{\beginsupplement}{%
+  \renewcommand{\thesection}{}
   \setcounter{subsection}{0}
   \renewcommand{\thesubsection}{S\arabic{subsection}}
   \setcounter{table}{0}
@@ -1087,7 +1088,7 @@ Figure~\ref{fig:spatial-snapshots} shows individual snapshots of different
 %
 % ================================================================================================
 \beginsupplement
-\section*{Supplementary Material}
+\section{Supplementary Material}
 % ================================================================================================
 \subsection{General Mathematical Formalism}  \label{ssec:supplement1}
 Consider the system consisting of $N$ species in $M$ different states.
@@ -1232,7 +1233,7 @@ It is however straiforward, to setup these equations.
 %
 %
 % ................................................................................................
-\subsubsection*{Code Samples}
+\subsubsection{Code Samples}
 The code samples show sample code from the simulation that calculate cellular interactions and cell cycle.
 Since backend of the simulation is written in Rust, so is the implementation of cellular aspects.
 Additionally bindings are generated such that the full power of the simulation tool can be accessed.
@@ -1294,7 +1295,7 @@ c2.set_pos(&(old_pos - offset));
 %
 %
 % ................................................................................................
-\subsubsection*{Full List of Parameters}
+\subsubsection{Full List of Parameters}
 \label{sec:supplement-full-parameters}
 \begin{listing}
 \begin{lstlisting}[language=json]
@@ -1376,7 +1377,7 @@ c2.set_pos(&(old_pos - offset));
 %
 %
 % ................................................................................................
-\subsubsection*{Homogenous and Inhomogenous Initial Cell Distributions}
+\subsubsection{Homogenous and Inhomogenous Initial Cell Distributions}
 To clarify what we mean by homogenous and inhomogenous initial configurations, we include snapshots of the simulation.
 At this point, cells have already grown such that the sizes of cell-clumps are better visible by the naked eye.
 The snapshots were taken after $2.08$\unit{\day}.
