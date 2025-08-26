@@ -1083,7 +1083,7 @@ Figure~\ref{fig:spatial-snapshots} shows individual snapshots of different
 % ================================================================================================
 \subsection{General Mathematical Formalism}  \label{ssec:supplement1}
 Consider the system consisting of $N$ species in $M$ different states.
-In the general representation, the system can be described with the Ordinary Differential Equations (\acp{ode}) using a non-linear function $\mbF$:
+In the general representation, all discussed in the main part systems  can be described with the Ordinary Differential Equations (\acp{ode}) using a non-linear function $\mbF$:
 \begin{equation}
    \dot{\mbx} = \mbF(\mbx, \mbm, \mbp, \mbu),
 \label{eq:model_ODE_x}
@@ -1122,19 +1122,20 @@ While the total bacterial count of all species of our system is
 \label{eq:N_total}
 \end{equation}
 %
-Using such matrix representation of the bacterial system, we can rewrite introduced above system in more compact form.
-Here the concentrations of the pools are components of our variable vector $\mbx (t) = (L(t), G(t), D(t))^T$.
-The three pool system described with equations~\ref{eq:ode_3pools} will be written as
-\begin{equation}
-    \dot \mbx  = A \mbx, \hspace{3mm} A = \begin{pmatrix}
-        -(\mu + \lambda) & 0             & 0      \\
-        \lambda          & \alpha - \mu' & 0      \\
-        \mu              & \mu'          & -\beta 
-    \end{pmatrix}.
-\label{eq:x_repres_3pools}
-\end{equation}
 %
-With introduction of the limiting resource the system dynamics presented by the \acp{ode}~\ref{eq:ode_3pool_resource} will be rewritten in the following non-linear system:
+%The three pool system described with equations~\ref{eq:ode_3pools} will be written as
+%\begin{equation}
+%    \dot \mbx  = A \mbx, \hspace{3mm} A = \begin{pmatrix}
+%        -(\mu + \lambda) & 0             & 0      \\
+%        \lambda          & \alpha - \mu' & 0      \\
+%        \mu              & \mu'          & -\beta 
+%    \end{pmatrix}.
+%\label{eq:x_repres_3pools}
+%\end{equation}
+%
+Using such matrix representation of the bacterial system, we can rewrite, for example, the three-pool model with limiting resource described with equations~\ref{eq:ode_3pool_resource} in a more compact form.
+The concentrations of the pools are then the components of our variable vector $\mbx (t) = (L(t), G(t), D(t))^T$.
+%
 \begin{eqnarray}
     \dot \mbx  &=& \mbF(\mbx, \mbm, \mbp, \mbu) = \begin{pmatrix}
         -(\mu + \lambda) & 0               & 0      \\
@@ -1144,6 +1145,7 @@ With introduction of the limiting resource the system dynamics presented by the 
     \dot \mbm &=& \mbH (\mbx, \mbm, \mbp, \mbu) = -\frac{\alpha}{N_t} R G.
 \label{eq:x_repres_3pools_resource}
 \end{eqnarray}
+Separating linear and non-linear parts in two terms yields
 \begin{equation}
     \dot \mbx = \begin{pmatrix}
         -(\mu + \lambda) & 0       & 0 \\
@@ -1157,7 +1159,7 @@ Here the first term is the linear part and the second term define the quadratic 
 %
 \paragraph{Generalized Lotka-Volterra}
 
-This system of equations defines the microenvironment $\mbm$ and bacteria state matrix $\mbx$ as
+Likewise, the multispecies system with resource competition present described by equations~\ref{eq:model_2sp_resource_comp} can be represented in the same way by defining
 \begin{equation}
     \mbm = R, \hspace{1cm}
     \mbx = \begin{pmatrix}
@@ -1166,6 +1168,14 @@ This system of equations defines the microenvironment $\mbm$ and bacteria state 
     \end{pmatrix}.
 \label{eq:gLV_x_m}
 \end{equation}
+
+The simpler version of one state per species (Eq.~\ref{eq:LV_simple}) can be simply written in a general mathematical form as generalized Lotka-Volterra:
+\begin{equation}
+    \frac{d x_i}{d t} = x_i f_i (\mbx), \hspace{3mm} \mathbf{f} = \mathbf{r} + A \mbx.
+\label{eq:gLV}
+\end{equation}
+
+
 %
 
 \subsection{ABM Details} \label{ssec:supplement2}
