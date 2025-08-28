@@ -32,7 +32,7 @@
     - [x] Table 1: Move to supplement
     - [ ] Ensure that we are talking about pool model! (map everything on this new theoretical framework)
     - [ ] Use introductory part in main Introduction as well
-    - [ ] Discuss results in text form not only in figure
+    - [x] Discuss results in text form not only in figure
     - [ ] Redo plots; use pgf backend; do not use combined bacteria volume; use N/N_t or similar
 
 -  Discussion
