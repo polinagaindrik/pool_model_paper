@@ -720,7 +720,7 @@ That indirectly leads to larger amount of $P_B$ produced by species $B$.
 As described above, the proposed model operates with the total number of the bacterial counts for
 different species and states in the system, not accounting for their spatial distributions.
 Assuming that the bacterial system is uniformly distributed (sometimes also called 'well-stirred')
-we expect to be able to simplify the problem and map it to a system of \acp{ode}.
+we expect the \ac{ode} description to be valid.
 However, in reality spatial effects can play a significant role for population survival forcing some
 species to develop competitive mechanisms such as cell adhesion to surfaces in the areas rich with
 nutritients~\cite{htuson_bacteriasurface_2013}.
@@ -731,6 +731,19 @@ The bacterial social interactions such as releasing the toxins or public goods c
 significantly affect the spatial structure of the community~\cite{blanchard_bacterial_2015}.
 These effects can only be treated with a spatial model that is able to describe the observed
 effects.\\
+In order to construct a model which can encapsulate diffusion of nutrients and heterogeneity of
+the bacteria or nutrients, we have to take into consideration the spatial component of our setup.
+\acp{abm} force researchers to think in terms of cellular processes, thus bridging the gap from a
+collective (bulk) model to an individual-based (single-cell) description.
+We consider the system consisting from two bacterial species that can be described by two internal
+states: lag and growth states.
+Both of these species grow using the same resource pool $R$ but with different growth constants
+$\alpha$ and different lengths of lag phase $\lambda$.
+Moreover, the species $A$ is able to release a certain antimicrobial component $I$ that shows an
+inhibitory effect on species 2 (amensalism).
+We assume that $L,G$ are measured in terms of the overall volume and $R,I$ are measured as total
+amount.
+The \acp{ode} the bacterial population can be written as:
 %
 %
 % - \cite{emonet_agentcell_2005, gorochowski_bsim_2012, li_nufeb_2019, kreft_bacsim_1998}: examples of another toolboxes for bacterial communities modeling (ABM).\\
@@ -765,15 +778,6 @@ effects.\\
 %     Chemical interactions as releasing inhibitors are described using concentrations and solved using PDEs.
 % \end{itemize}
 %
-To test the spatial limitations of the described above approach consider the system consisting from
-two bacterial species that can be described by two internal states: lag and growth states.
-Both of these species grow using the same resource pool $R$ but with different growth constants
-$\alpha$ and different lengths of lag phase $\lambda$.
-Moreover, the species $A$ is able to release a certain antimicrobial component $I$ that shows an
-inhibitory effect on species 2 (amensalism).
-We assume that $L,G$ are measured in terms of the overall volume and $R,I$ are measured as total
-amount.
-The \acp{ode} the bacterial population can be written as:
 \begin{equation}
     \begin{cases}
         \dot{L_A} = -\lambda_A R L_A\\
@@ -795,15 +799,6 @@ The microenvironment of our system contains the resource and the inhibitor molec
 
 % ------------------------------------------------------------------------------------------------
 \subsection{Constructing an Agent-Based Pool Model}
-The previously considered \ac{ode} formulation makes extensive use of the assumption that the
-bacteria are evenly distributed and all communications and interactions between bacteria or
-nutrients occurr on time scales much faster than the remaining processes.
-However, for heterogenous systems or nutrients with low diffusability, this assumption might not be
-valid.\\
-In order to construct a model which can encapsulate diffusion of nutrients and heterogeneity of
-the bacteria or nutrients, we have to take into consideration the spatial component of our setup.
-\acp{abm} force researchers to think in terms of cellular processes, thus bridging the gap from a
-collective (bulk) model to an individual-based (single-cell) description.
 The following sections will demonstrate how a given \ac{ode} system can be translated into a
 custom-built \ac{abm} which has only a few more overall parameters.
 To construct our \ac{abm}, we use \texttt{cellular\_raza}~\cite{Pleyer2025} which was designed to
