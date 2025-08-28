@@ -8,31 +8,32 @@
 -  Introduction
 
 -  General Math
-    - [ ] Move to supplement
+    - [x] Move to supplement
 
 -  One-Species
     - [x] Remove matrix formulation
-    - [ ] Page 3: Remove bullet points in front of pools; mention "the fraction of the population" in
+    - [x] Page 3: Remove bullet points in front of pools; mention "the fraction of the population" in
       sentence before
     - [x] Page 4: remove matrix of system (put supplement)
     - [x] Back flow from Growth to Lag pool: make to paragraph "Maxwell type of stress ..."
 
 -  Interaction between Species
-    - [ ] Change in supplement too!
-    - [ ] Link to supplement for Lotka-Volterra discussion
-    - [ ] Mutual inhibition: Rename Toxin variable T to generalized inhibition I such that it matches
+    - [x] Change in supplement too!
+    - [x] Link to supplement for Lotka-Volterra discussion
+    - [x] Mutual inhibition: Rename Toxin variable T to generalized inhibition I such that it matches
       with spatial effects
 
 -  Spatial Effects
     - [x] Page 16: R* = R / R_0 probably remove it
     - [x] Rename variables: G_max -> N_t and R* -> R
-        - [ ] make sure that they match to previous sections
+        - [x] make sure that they match to previous sections
     - [ ] More Citations
     - [x] Figure 8: Do we need this?
-    - [ ] Table 1: Move to supplement
+    - [x] Table 1: Move to supplement
     - [ ] Ensure that we are talking about pool model! (map everything on this new theoretical framework)
     - [ ] Use introductory part in main Introduction as well
     - [ ] Discuss results in text form not only in figure
+    - [ ] Redo plots; use pgf backend; do not use combined bacteria volume; use N/N_t or similar
 
 -  Discussion
     - [ ] difference in lag phase between baranyi-roberts and pool model
@@ -52,11 +53,11 @@
     - [ ] showed spatial limitation of the model
 
 -  Supplement
-    - [ ] Formatting of Supplement subsections
-    - [ ] Bundle all existing subsections into "ABM Details"
-    - [ ] "General Mathematical Formalism"
-        - [ ] Move section 2 here
-        - [ ] Move all matrix equations here
+    - [x] Formatting of Supplement subsections
+    - [x] Bundle all existing subsections into "ABM Details"
+    - [x] "General Mathematical Formalism"
+        - [x] Move section 2 here
+        - [x] Move all matrix equations here
         - [ ] Discuss generalized Lotka-Volterra model here extensively!
             - [ ] Christian should probably write this text
 
