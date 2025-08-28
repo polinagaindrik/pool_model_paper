@@ -216,7 +216,7 @@ In the described simplified version of the real-life system three possible bacte
 Motivated by this we divide a bacterial population into three pools (states)~(\ref{fig:SchematicRep}) defining the fraction of the population in the lag phase $L(t)$, growing and dividing $G(t)$ and undergoing cell death $D(t)$.
 \begin{figure}[t]
     \begin{center}
-    \includegraphics[width=\columnwidth]{Figures/TPM_fig.pdf}
+    \includegraphics[width=0.9\columnwidth]{Figures/TPM_fig.pdf}
     \caption{Schematic representation of exchange between three states or pools.}
     \label{fig:SchematicRep}
     \end{center}
@@ -283,7 +283,7 @@ and, hence, the full system can be written as
 \end{align}
 \begin{figure}[h]
     \begin{center}
-    \includegraphics[width=\columnwidth]{Figures/pool_model_3pools_resource.pdf}
+    \includegraphics[width=0.9\columnwidth]{Figures/pool_model_3pools_resource.pdf}
     \caption{
         The time dependence of the total bacterial count $N(t) = L(t) + G(t) + D(t)$ is obtained as a sum of bacteria in all states.
         All curves were calculated using the model (\ref{eq:ode_3pool_resource2}) with parameters $\alpha=2.5$, $\mu'=0.5$ and $\beta=5$.
@@ -406,7 +406,7 @@ The ordinary differential equations for the pool model with environmental-shock 
 \end{align}
 \begin{figure}[t]
     \begin{center}
-    \includegraphics[width=\columnwidth]{Figures/pool_model_3pools_resource_tempshift.pdf}
+    \includegraphics[width=0.9\columnwidth]{Figures/pool_model_3pools_resource_tempshift.pdf}
     \caption{
         (a) The time dependence of the total bacterial count $N$ for the model including the back-flow to the lag phase due to temperature stress~(\ref{eq:ode_tempshift_backlag}).
         (b) The value of the corresponding back-flow rate $\gamma$ calculated according to (\ref{eq:gamma_tempshift}).
@@ -463,7 +463,7 @@ Here species $A$ has a longer lag-phase than $B$ but the exponential growth of $
 As a result, species $A$ was able to suppress species $B$ consuming the larger amount of nutrient and reaching larger bacterial count at the end.
 \begin{figure}[H]
     \begin{center}
-    \includegraphics[width=\columnwidth]{Figures/pool_model_2pools_resource_competition.pdf}
+    \includegraphics[width=0.9\columnwidth]{Figures/pool_model_2pools_resource_competition.pdf}
     \caption{
         The competition of the two bacterial species due to the common limiting resource calculated using Eq.~(\ref{eq:model_2sp_resource_comp}).
         The red curve describes the growth of the bacteria $A$ ($N_A = L_A+G_A$) with model parameters $\lambda_A=10^{-2}$, $\alpha_A=3.0$.
@@ -535,9 +535,9 @@ Here $\kappa$ is the toxin production rate.
 The difference between the two toxin production models for resulting solution of the \acp{ode} is presented in Figure~\ref{fig:2pool_2sp_toxin}.
 %
 %
-\begin{figure}[H]
+\begin{figure*}[t!]
     \begin{center}
-    \includegraphics[width=\columnwidth]{Figures/pool_model_2pools_toxin.pdf}
+    \includegraphics[width=2.0\columnwidth]{Figures/pool_model_2pools_toxin.pdf}
     \caption{
         The two species system competing for the common nutrient $R$ with production of the toxin $T_B$ (brown line) calculated using Eq.~(\ref{eq:model_2sp_toxin}).
         The growing bacteria $B$ produces toxin $T_B$ (a) constantly $\dot{T}_B^1 = \mathcal{F}^1 = \kappa G_B$ or (b) only during growth process $\dot{T}_B^2 = \mathcal{F}^2 = \kappa \alpha_B R G_B$ with 
@@ -549,7 +549,7 @@ The difference between the two toxin production models for resulting solution of
     }
     \label{fig:2pool_2sp_toxin}
     \end{center}
-\end{figure}
+\end{figure*}
 %
 Model $\mathcal{F}^1$ results in toxin concentration $T_B^1(t)=\kappa\int_{t_0}^tG(t')dt'$.
 That means that as long as there are bacteria in the growth phase $G_B>0$ toxin is produced, no matter whether the total bacterial count $N_B$ is still growing.
@@ -616,7 +616,7 @@ We can separate three cases (which are displayed in Figure~\ref{fig:1pool_2sp_in
 \begin{figure}[H]
     \begin{center}
     % TODO make this into 2x2 grid for plots and insert eqnarray from before as well
-    \includegraphics[width=\columnwidth]{Figures/pool_model_1pool_inhib.pdf}
+    \includegraphics[width=0.9\columnwidth]{Figures/pool_model_1pool_inhib.pdf}
     \caption{
         The two-species system mutually inhibiting each other is defined with equations~(\ref{eq:2sp_1pool_inhibit_unitless}).
         Here the red lines describes the evolution of the species $A$ and blue lines correspond to species $B$.
@@ -665,7 +665,7 @@ On the other hand, choosing $\psi=2$ (see Figure~\ref{fig:1pool_2sp_cooper}c), w
 That indirectly leads to larger amount of $P_B$ produced by species $B$.
 \begin{figure}[H]
     \begin{center}
-    \includegraphics[width=\columnwidth]{Figures/pool_model_2sp_1pool_coop.pdf}
+    \includegraphics[width=0.9\columnwidth]{Figures/pool_model_2sp_1pool_coop.pdf}
     \caption{
         The two-species system where each of the species release public goods $P$ is defined with equations~(\ref{eq:1pool_2sp_cooper}) and calculated for different parameters:
         (a) $\psi=1, \phi=1$, (b) $\psi=1, \phi=2$ and (b) $\psi=2, \phi=1$.
@@ -954,19 +954,19 @@ Figure~\ref{fig:spatial-snapshots} shows individual snapshots of different
 \begin{figure}
     \centering
     \begin{subfigure}[c]{0.5\columnwidth}
-        \includegraphics[width=\columnwidth]{Figures/abm-homogenous/abm_ode_comparison.png}
+        \includegraphics[width=0.9\columnwidth]{Figures/abm-homogenous/abm_ode_comparison.png}
         \subcaption{Homogenous initial cell distribution, $D=30.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}%
     \begin{subfigure}[c]{0.5\columnwidth}
-        \includegraphics[width=\columnwidth]{Figures/abm-homogenous-low-diffusion/abm_ode_comparison.png}
+        \includegraphics[width=0.9\columnwidth]{Figures/abm-homogenous-low-diffusion/abm_ode_comparison.png}
         \subcaption{Homogenous initial cell distribution, $D=5.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}\\
     \begin{subfigure}[c]{0.5\columnwidth}
-        \includegraphics[width=\columnwidth]{Figures/abm-inhomogenous/abm_ode_comparison.png}%
+        \includegraphics[width=0.9\columnwidth]{Figures/abm-inhomogenous/abm_ode_comparison.png}%
         \subcaption{Heterogeneous initial cell distribution, $D=30.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}%
     \begin{subfigure}[c]{0.5\columnwidth}
-        \includegraphics[width=\columnwidth]{Figures/abm-random/abm_ode_comparison.png}%
+        \includegraphics[width=0.9\columnwidth]{Figures/abm-random/abm_ode_comparison.png}%
         \subcaption{Randomized initial cell distribution, $D=5.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}
     \caption{
