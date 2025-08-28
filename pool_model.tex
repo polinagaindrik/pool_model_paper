@@ -1,114 +1,69 @@
 \documentclass[10pt,A4paper]{article}
-\usepackage[
-    a4paper,
-    inner=2.5cm,
-    outer=3cm
-]{geometry}
-
 \usepackage[utf8]{inputenc}
-\usepackage[a4paper,
-            inner=2.5cm,
-            outer=3cm
-            ]{geometry}
-\usepackage[aboveskip=1pt,labelfont=bf,labelsep=period,justification=raggedright,singlelinecheck=off, font=small]{caption}            
-\usepackage{acronym}
-\usepackage{graphicx}% Include figure files
-\usepackage{bm}% bold math
-\usepackage{color}
-\usepackage{hyperref}
-\usepackage[backend=biber,
-            sorting=none,
-%            citestyle=numeric-comp,
-%\            bibstyle=ieee, 
-            style=numeric-comp,
-            hyperref=true,
-            maxnames=2,
-            url=false,
-            isbn=false,
-            eprint=false,
-            date=year,
-            doi=false,
-            giveninits=true
-            ]{biblatex}
-\addbibresource{references.bib}
-\usepackage{xpatch}
-\xpatchbibmacro{journal+issuetitle}{%
-\usebibmacro{journal}%
-\setunit*{\addspace}%
-}{%
-\usebibmacro{journal}%
-\setunit*{\addcomma\space}%
-}{}{}
-
-\renewbibmacro*{name:andothers}{% Based on name:andothers from biblatex.def
-  \ifboolexpr{
-    test {\ifnumequal{\value{listcount}}{\value{liststop}}}
-    and
-    test \ifmorenames
-  }
-    {\ifnumgreater{\value{liststop}}{1}
-       {\finalandcomma}
-       {}%
-     \andothersdelim\bibstring[\emph]{andothers}}
-    {}}
-
-
-%\DeclareFieldFormat[article]{title}{#1}
-\DeclareFieldFormat[article]{volume}{\textbf{#1}}
-%\DeclareFieldFormat[book]{volume}{\textbf{#1}}
-
-\renewcommand\newunitpunct{\addcomma\space}
-\DefineBibliographyStrings{english}{%
-page = {},
-pages = {},
-}
-
-\renewbibmacro{in:}{\addcomma\addspace}
-
-\renewbibmacro*{volume+number+eid}{%
-\isdot
-\printfield{volume}%
-\setunit*{\addcomma\addspace}%
-\iffieldundef{number}{}{%
-\printtext{no\adddot\addnbthinspace}%
-}%
-\printfield{number}%
-\setunit{\addcomma\space}%
-\printfield{eid}}
-
 
 \setlength{\tabcolsep}{1.3pt}
-\usepackage{bm}
+\usepackage{acronym}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{mathtools}
-\usepackage{mathrsfs}
-\usepackage[T1]{fontenc}
-\usepackage{diagbox}
-\usepackage{here}
-\usepackage[dvipsnames]{xcolor}
-\usepackage{lipsum}
-\usepackage{multirow}
+\usepackage[
+    backend=biber,
+    sorting=none,
+    style=numeric-comp,
+    hyperref=true,
+    maxnames=2,
+    url=false,
+    isbn=false,
+    eprint=false,
+    date=year,
+    doi=false,
+    giveninits=true
+]{biblatex}
+\usepackage{array}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage[aboveskip=1pt,labelfont=bf,labelsep=period,justification=raggedright,singlelinecheck=off, font=small]{caption}
+\usepackage{color}
 \usepackage{ctable} % for \specialrule command
-\usepackage{array,booktabs}
-\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
-\usepackage{subcaption}
+\usepackage{diagbox}
 \usepackage{float}
-\usepackage{tabularx}
-\usepackage{siunitx}
+\usepackage[T1]{fontenc}
+\usepackage[a4paper,inner=2.5cm,outer=3cm]{geometry}
+\usepackage{graphicx}% Include figure files
+\usepackage{here}
+\usepackage{hyperref}
+\usepackage{lipsum}
 \usepackage{listings}
 \usepackage{listings-rust}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{multirow}
+\usepackage{newfloat}
+\usepackage{siunitx}
+\usepackage{subcaption}
+\usepackage{tabularx}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{xpatch}
+
+% Define new column type with multirow
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+
+% Add bibliography
+\addbibresource{references.bib}
+
+% Define Rust lisintgs
 \lstset{
     language=Rust,
     showstringspaces=false
 }
-\usepackage{newfloat}
 \DeclareFloatingEnvironment[
   name=Listing,
   listname=List of Listings,
   within=section,
 ]{listing}
+
 \restylefloat{table}
+
+% Define equation numbering
 \numberwithin{equation}{section}
 
 \newcommand{\beginsupplement}{%
