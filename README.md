@@ -1,5 +1,8 @@
 ## TODO
 
+- Formatting
+    - [ ] Use double Column layout?
+
 -  Abstract
 
 -  Introduction
