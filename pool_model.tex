@@ -1023,72 +1023,6 @@ Figure~\ref{fig:spatial-snapshots} shows individual snapshots of different
 \end{figure}
 %
 %
-\begin{table}[H]
-    \centering
-    \begin{tabularx}{\textwidth}{@{}l *2{>{\centering\arraybackslash}X} l *2{>{\centering\arraybackslash}X}@{}}
-        \multicolumn{3}{c}{\textbf{\acs{ode}}} & \multicolumn{3}{c}{\textbf{\acs{abm}}}\\
-        \toprule
-        \multicolumn{6}{c}{\textbf{Cellular Reactions}}\\
-        \toprule
-        Production $G_A$            & $\alpha_A$    & $0.002$\unit{\per\minute}
-        & Uptake                    & $u_A$         & $0.01$\unit{\per\minute}\\
-        Production $G_B$            & $\alpha_B$    & $0.002$\unit{\per\minute}
-        & Uptake                    & $u_B$         & $0.01$\unit{\per\minute}\\
-        Production $I$              & $\kappa$      & $0.1$\unit{\per\minute}
-        & Production $I$            & $b$           & $0.1$\unit{\per\minute}\\
-        Inhibition                  & $\mu_I$       & $1.0\cdot 10^{-7}$\unit{\per\micro\metre\cubed}
-        &                           & $\nu_I$       & $0.1$\unit{\micro\metre\cubed\per\mol}\\
-        &&
-        & Conversion                & $\sigma$      & $0.1$\unit{\micro\metre\cubed\per\mol}\\
-        Total volume                & $N_t$& $2.0\cdot 10^5$\unit{\micro\metre\cubed}
-        &&&\\
-        &&
-        & Diffusion $R$             & $D_R$         & $30.0$\unit{\micro\metre\squared\per\minute}\\
-        &&
-        & Diffusion $I$             & $D_I$         & $30.0$\unit{\micro\metre\squared\per\minute}\\
-        % Note: this diffusion roughly corresponds to the one of ethanol in water
-        % (see https://de.wikipedia.org/wiki/Diffusionskoeffizient#In_Fl%C3%BCssigkeiten)
-        % 15.0 µm^2/min = 0.9 m^2/s
-        % Ethanol: 0.84 m^2/s
-        \toprule
-        \multicolumn{6}{c}{\textbf{Physical Mechanics \& Interactions}}\\
-        \toprule
-        &&& Damping                 & $\eta$        & $0.5$\unit{\per\minute}\\
-        &&& Mass                    & $m$           & $7.70$\unit{\pico\gram}\\
-        &&& Potential               & $\epsilon$    & $0.5$\unit{\pico\gram\micro\metre\per\minute\squared}\\
-        \toprule
-        \multicolumn{6}{c}{\textbf{Cell Cycle}}\\
-        \toprule
-        Rate $L_A\rightarrow G_A$   & $\lambda_A$   & $0.0025$\unit{\per\minute}
-        &                           & $\lambda_A$   & $0.0025$\unit{\per\minute}\\
-        Rate $L_B\rightarrow G_B$   & $\lambda_B$   & $0.0005$\unit{\per\minute}
-        &                           & $\lambda_B$   & $0.0005$\unit{\per\minute}\\
-        &&& Division Vol.           & $V_t$         & $14.14$\unit{\micro\metre\cubed}\\
-        \toprule
-        \multicolumn{6}{c}{\textbf{Initial Values}}\\
-        \toprule
-        Volume of $L_A$             & $L_A$         & $127.2$\unit{\micro\metre\cubed}
-        & Cell Number               & $C_A$         & 18\\
-        Volume of $G_A$             & $G_A$         & $0.0$\unit{\micro\metre\cubed}
-        & Cell Volume               & $V_{c,A}$     & $7.07$\unit{\micro\metre\cubed}\\
-        Volume of $L_B$             & $L_B$         & $127.23$\unit{\micro\metre\cubed}
-        & Cell Number               & $C_B$         & 18\\
-        Volume of $G_B$             & $G_B$         & $0.0$\unit{\micro\metre\cubed}
-        & Cell Volume               & $V_{c,B}$     & $7.07$\unit{\micro\metre\cubed}\\
-        Relative Nutrients          & $R$         & $1.0$
-        & Nutrients                 & $[R_0]$       & $1.0$\unit{\mol\per\micro\metre\cubed}\\
-        Inhibitor                   & $I_0$         & $0.0$\unit{\mol}
-        & Inhibitor                 & $[I_0]$       & $0.0$\unit{\mol\per\micro\metre\cubed}\\
-        \bottomrule
-    \end{tabularx}
-    \caption{
-        Comparison of the parameters for the \ac{ode} model and \ac{abm}.
-        To view, how these parameters are stored inside a cell-agent, we refer to the supplementary
-        material~\ref{sec:supplement-full-parameters}.
-    }
-    \label{tab:spatial_limit_init}
-\end{table}
-
 % ================================================================================================
 \section{Discussion}
 
@@ -1351,6 +1285,74 @@ c2.set_pos(&(old_pos - offset));
 % ................................................................................................
 \subsubsection{Full List of Parameters}
 \label{sec:supplement-full-parameters}
+
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\textwidth}{@{}l *2{>{\centering\arraybackslash}X} l *2{>{\centering\arraybackslash}X}@{}}
+        \multicolumn{3}{c}{\textbf{\acs{ode}}} & \multicolumn{3}{c}{\textbf{\acs{abm}}}\\
+        \toprule
+        \multicolumn{6}{c}{\textbf{Cellular Reactions}}\\
+        \toprule
+        Production $G_A$            & $\alpha_A$    & $0.002$\unit{\per\minute}
+        & Uptake                    & $u_A$         & $0.01$\unit{\per\minute}\\
+        Production $G_B$            & $\alpha_B$    & $0.002$\unit{\per\minute}
+        & Uptake                    & $u_B$         & $0.01$\unit{\per\minute}\\
+        Production $I$              & $\kappa$      & $0.1$\unit{\per\minute}
+        & Production $I$            & $b$           & $0.1$\unit{\per\minute}\\
+        Inhibition                  & $\mu_I$       & $1.0\cdot 10^{-7}$\unit{\per\micro\metre\cubed}
+        &                           & $\nu_I$       & $0.1$\unit{\micro\metre\cubed\per\mol}\\
+        &&
+        & Conversion                & $\sigma$      & $0.1$\unit{\micro\metre\cubed\per\mol}\\
+        Total volume                & $N_t$& $2.0\cdot 10^5$\unit{\micro\metre\cubed}
+        &&&\\
+        &&
+        & Diffusion $R$             & $D_R$         & $30.0$\unit{\micro\metre\squared\per\minute}\\
+        &&
+        & Diffusion $I$             & $D_I$         & $30.0$\unit{\micro\metre\squared\per\minute}\\
+        % Note: this diffusion roughly corresponds to the one of ethanol in water
+        % (see https://de.wikipedia.org/wiki/Diffusionskoeffizient#In_Fl%C3%BCssigkeiten)
+        % 15.0 µm^2/min = 0.9 m^2/s
+        % Ethanol: 0.84 m^2/s
+        \toprule
+        \multicolumn{6}{c}{\textbf{Physical Mechanics \& Interactions}}\\
+        \toprule
+        &&& Damping                 & $\eta$        & $0.5$\unit{\per\minute}\\
+        &&& Mass                    & $m$           & $7.70$\unit{\pico\gram}\\
+        &&& Potential               & $\epsilon$    & $0.5$\unit{\pico\gram\micro\metre\per\minute\squared}\\
+        \toprule
+        \multicolumn{6}{c}{\textbf{Cell Cycle}}\\
+        \toprule
+        Rate $L_A\rightarrow G_A$   & $\lambda_A$   & $0.0025$\unit{\per\minute}
+        &                           & $\lambda_A$   & $0.0025$\unit{\per\minute}\\
+        Rate $L_B\rightarrow G_B$   & $\lambda_B$   & $0.0005$\unit{\per\minute}
+        &                           & $\lambda_B$   & $0.0005$\unit{\per\minute}\\
+        &&& Division Vol.           & $V_t$         & $14.14$\unit{\micro\metre\cubed}\\
+        \toprule
+        \multicolumn{6}{c}{\textbf{Initial Values}}\\
+        \toprule
+        Volume of $L_A$             & $L_A$         & $127.2$\unit{\micro\metre\cubed}
+        & Cell Number               & $C_A$         & 18\\
+        Volume of $G_A$             & $G_A$         & $0.0$\unit{\micro\metre\cubed}
+        & Cell Volume               & $V_{c,A}$     & $7.07$\unit{\micro\metre\cubed}\\
+        Volume of $L_B$             & $L_B$         & $127.23$\unit{\micro\metre\cubed}
+        & Cell Number               & $C_B$         & 18\\
+        Volume of $G_B$             & $G_B$         & $0.0$\unit{\micro\metre\cubed}
+        & Cell Volume               & $V_{c,B}$     & $7.07$\unit{\micro\metre\cubed}\\
+        Relative Nutrients          & $R$         & $1.0$
+        & Nutrients                 & $[R_0]$       & $1.0$\unit{\mol\per\micro\metre\cubed}\\
+        Inhibitor                   & $I_0$         & $0.0$\unit{\mol}
+        & Inhibitor                 & $[I_0]$       & $0.0$\unit{\mol\per\micro\metre\cubed}\\
+        \bottomrule
+    \end{tabularx}
+    \caption{
+        Comparison of the parameters for the \ac{ode} model and \ac{abm}.
+        % To view, how these parameters are stored inside a cell-agent, we refer to the supplementary
+        % material~\ref{sec:supplement-full-parameters}.
+    }
+    \label{tab:spatial_limit_init}
+\end{table}
+
+
 \begin{listing}
 \begin{lstlisting}[language=json]
 {
