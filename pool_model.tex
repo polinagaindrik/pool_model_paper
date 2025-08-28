@@ -1091,6 +1091,40 @@ Figure~\ref{fig:spatial-snapshots} shows individual snapshots of different
 
 % ================================================================================================
 \section{Discussion}
+
+How well does the pool model do to encapsulate all the different growth models
+\begin{itemize}
+    \item All 6 models can be represented by pool model
+    \item Baranyi-Roberts results can be reproduced, but not identical; requires some work
+    \item what are some general limitations within this framework? how can they be circumvented?
+\end{itemize}
+
+\noindent
+How justified was the construction of the \ac{abm}?
+\begin{itemize}
+    \item Discuss simplified physical interaction model
+    \item Heterogeneity plays a role; as we have shown
+    \item why did we not simply use a PDE?; because we have to think in terms of cellular processes
+        and this ensures that our model is actually realistic
+\end{itemize}
+
+\noindent
+How can we cover more effects of bacteria?
+\begin{itemize}
+    \item More states for metabolic processes
+    \item More states for more species
+    \item Other cooperiation/inhibition effects
+    \item external influences
+\end{itemize}
+
+\noindent
+What are limitations of our approach?
+\begin{itemize}
+    \item spatial stuff; heterogeneity (because \ac{ode})
+    \item larger models require more parameters, harder to estimate
+    \item only simple models have analytical solutions
+\end{itemize}
+
 % ------------------------------------------------------------------------------------------------
 \section{Conclusion}
 \newpage
