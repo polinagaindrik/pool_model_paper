@@ -939,42 +939,42 @@ Figure~\ref{fig:spatial-snapshots} shows individual snapshots of different
         Simulation snapshots at $1.04$\unit{\day},$2.08$\unit{\day},$3.13$\unit{\day} and $4.17$\unit{\day} corresponding to the parameters given in table~table~\ref{tab:spatial_limit_init}.
         Species $B$ is colored blue while species $A$ is colored in red.
         The background shows the resource concentration $[R]$.
-        Darker colours indicate less present nutrients.
+        Darker colours indicate that less nutrients are present.
     }
     \label{fig:spatial-snapshots}
 \end{figure}
 %
 %
+We see that in the highly-diffusive homogenous case of subfigure (a), the pool model is a good fit to the \ac{abm} model.
+Heterogeneity and slower diffusion cause larger differences between the two models as can be seen in subfigures (b) and (c).
+The combination of the two effects shows the largest difference between model predictions.
+In subfigure (c), due to the heterogenous cell distribution (see also~\ref{fig:supplement-spatial-initial-config-cells}), overall inhibition of species $B$ is significantly reduced.
+Subfigure (d) shows how a randomized homogenous initial distribution can lead to even more notable effects of inhibition.
+We furthermore note that the total bacteria volume of the \ac{abm} model is always smaller than the \ac{ode} model.
+This is expected, since processes such as diffusion and cells growing outward introduce another time component which is simply assumed to be instantanous in the \ac{ode} model.
+The chosen diffusion constants $D_I=D_R=30.0$\unit{\micro\metre\squared\per\minute} are in the order of small molecules such as $NaCl$ while the lower values $D_I=D_R=5.0$\unit{\micro\metre\squared\per\minute} are around values of Glucose in water.
 \begin{figure}
     \centering
     \begin{subfigure}[c]{0.5\columnwidth}
-        \includegraphics[width=0.9\columnwidth]{Figures/abm-homogenous/abm_ode_comparison.png}
-        \subcaption{Homogenous initial cell distribution, $D=30.0$\unit{\micro\metre\squared\per\minute}}
+        \includegraphics[width=\columnwidth]{Figures/abm-homogenous/abm_ode_comparison.png}
+        \subcaption{Homogenous distribution, $D=30.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}%
     \begin{subfigure}[c]{0.5\columnwidth}
-        \includegraphics[width=0.9\columnwidth]{Figures/abm-homogenous-low-diffusion/abm_ode_comparison.png}
-        \subcaption{Homogenous initial cell distribution, $D=5.0$\unit{\micro\metre\squared\per\minute}}
+        \includegraphics[width=\columnwidth]{Figures/abm-homogenous-low-diffusion/abm_ode_comparison.png}
+        \subcaption{Homogenous distribution, $D=5.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}\\
     \begin{subfigure}[c]{0.5\columnwidth}
-        \includegraphics[width=0.9\columnwidth]{Figures/abm-inhomogenous/abm_ode_comparison.png}%
-        \subcaption{Heterogeneous initial cell distribution, $D=30.0$\unit{\micro\metre\squared\per\minute}}
+        \includegraphics[width=\columnwidth]{Figures/abm-inhomogenous/abm_ode_comparison.png}%
+        \subcaption{Heterogeneous distribution, $D=30.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}%
     \begin{subfigure}[c]{0.5\columnwidth}
-        \includegraphics[width=0.9\columnwidth]{Figures/abm-random/abm_ode_comparison.png}%
-        \subcaption{Randomized initial cell distribution, $D=5.0$\unit{\micro\metre\squared\per\minute}}
+        \includegraphics[width=\columnwidth]{Figures/abm-random/abm_ode_comparison.png}%
+        \subcaption{Randomized distribution, $D=5.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}
     \caption{
         Comparison of the \ac{ode} and \ac{abm} model for different parameter configurations.
         Snapshots of the spatial configurations of cells are included in the appendix~\ref{fig:supplement-spatial-initial-config-cells}.
-        The diffusion constants are chosen $D_R=D_I=D$.
-        We see that in the highly-diffusive homogenous case of subfigure (a), the pool model is a good fit to the \ac{abm} model.
-        Heterogeneity and slower diffusion cause larger differences between the two models as can be seen in subfigures (b) and (c).
-        The combination of the two effects shows the largest difference between model predictions.
-        In subfigure (c), due to the heterogenous cell distribution (see also~\ref{fig:supplement-spatial-initial-config-cells}), overall inhibition of species $B$ is significantly reduced.
-        Subfigure (d) shows how a randomized homogenous initial distribution can lead to even more notable effects of inhibition.
-        We furthermore note that the total bacteria volume of the \ac{abm} model is always smaller than the \ac{ode} model.
-        This is expected, since processes such as diffusion and cells growing outward introduce another time component which is simply assumed to be instantanous in the \ac{ode} model.
-        The chosen diffusion constants $D_I=D_R=30.0$\unit{\micro\metre\squared\per\minute} are in the order of small molecules such as $NaCl$ while the lower values $D_I=D_R=5.0$\unit{\micro\metre\squared\per\minute} are around values of Glucose in water.
+        The diffusion constants are chosen such that $D_R=D_I=D$.
     }
     \label{fig:spatial-growth-curve}
 \end{figure}
