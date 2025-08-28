@@ -4,6 +4,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.integrate import solve_ivp
 
+import os, sys
+sys.path.append(os.getcwd())
+from digital_twin import *
+
 
 def model_solve(model, times, param, x0, const, obs_func=None):
     model_output = model_ODE_solution(model, times, param, x0, const)
@@ -50,11 +54,11 @@ if __name__ == "__main__":
     labels = ['Species 1', 'Species 2', 'Sp 1 + Sp 2']
     for j, obs in enumerate(observabl):
         ax.plot(times, obs, label=labels[j])#, color=colorsp[i+2])
-    ax.set_xlabel('Time, [days]', fontsize=15)
+    ax.set_xlabel('Time, [days]')
     ax.tick_params(labelsize=13)
-    ax.set_ylabel('Total Bacterial Count', fontsize=15)
+    ax.set_ylabel('Total Bacterial Count')
     #ax.set_yscale('log')
     ax.set_xlim(0., 10.)
-    ax.legend(fontsize=15)
+    ax.legend()
     plt.savefig(f'pool_model_spatial.pdf', bbox_inches='tight')
     plt.close(fig) 
