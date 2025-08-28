@@ -1,114 +1,69 @@
 \documentclass[10pt,A4paper]{article}
-\usepackage[
-    a4paper,
-    inner=2.5cm,
-    outer=3cm
-]{geometry}
-
 \usepackage[utf8]{inputenc}
-\usepackage[a4paper,
-            inner=2.5cm,
-            outer=3cm
-            ]{geometry}
-\usepackage[aboveskip=1pt,labelfont=bf,labelsep=period,justification=raggedright,singlelinecheck=off, font=small]{caption}            
-\usepackage{acronym}
-\usepackage{graphicx}% Include figure files
-\usepackage{bm}% bold math
-\usepackage{color}
-\usepackage{hyperref}
-\usepackage[backend=biber,
-            sorting=none,
-%            citestyle=numeric-comp,
-%\            bibstyle=ieee, 
-            style=numeric-comp,
-            hyperref=true,
-            maxnames=2,
-            url=false,
-            isbn=false,
-            eprint=false,
-            date=year,
-            doi=false,
-            giveninits=true
-            ]{biblatex}
-\addbibresource{references.bib}
-\usepackage{xpatch}
-\xpatchbibmacro{journal+issuetitle}{%
-\usebibmacro{journal}%
-\setunit*{\addspace}%
-}{%
-\usebibmacro{journal}%
-\setunit*{\addcomma\space}%
-}{}{}
-
-\renewbibmacro*{name:andothers}{% Based on name:andothers from biblatex.def
-  \ifboolexpr{
-    test {\ifnumequal{\value{listcount}}{\value{liststop}}}
-    and
-    test \ifmorenames
-  }
-    {\ifnumgreater{\value{liststop}}{1}
-       {\finalandcomma}
-       {}%
-     \andothersdelim\bibstring[\emph]{andothers}}
-    {}}
-
-
-%\DeclareFieldFormat[article]{title}{#1}
-\DeclareFieldFormat[article]{volume}{\textbf{#1}}
-%\DeclareFieldFormat[book]{volume}{\textbf{#1}}
-
-\renewcommand\newunitpunct{\addcomma\space}
-\DefineBibliographyStrings{english}{%
-page = {},
-pages = {},
-}
-
-\renewbibmacro{in:}{\addcomma\addspace}
-
-\renewbibmacro*{volume+number+eid}{%
-\isdot
-\printfield{volume}%
-\setunit*{\addcomma\addspace}%
-\iffieldundef{number}{}{%
-\printtext{no\adddot\addnbthinspace}%
-}%
-\printfield{number}%
-\setunit{\addcomma\space}%
-\printfield{eid}}
-
 
 \setlength{\tabcolsep}{1.3pt}
-\usepackage{bm}
+\usepackage{acronym}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{mathtools}
-\usepackage{mathrsfs}
-\usepackage[T1]{fontenc}
-\usepackage{diagbox}
-\usepackage{here}
-\usepackage[dvipsnames]{xcolor}
-\usepackage{lipsum}
-\usepackage{multirow}
+\usepackage[
+    backend=biber,
+    sorting=none,
+    style=numeric-comp,
+    hyperref=true,
+    maxnames=2,
+    url=false,
+    isbn=false,
+    eprint=false,
+    date=year,
+    doi=false,
+    giveninits=true
+]{biblatex}
+\usepackage{array}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage[aboveskip=1pt,labelfont=bf,labelsep=period,justification=raggedright,singlelinecheck=off, font=small]{caption}
+\usepackage{color}
 \usepackage{ctable} % for \specialrule command
-\usepackage{array,booktabs}
-\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
-\usepackage{subcaption}
+\usepackage{diagbox}
 \usepackage{float}
-\usepackage{tabularx}
-\usepackage{siunitx}
+\usepackage[T1]{fontenc}
+\usepackage[a4paper,inner=2cm,outer=2cm]{geometry}
+\usepackage{graphicx}% Include figure files
+\usepackage{here}
+\usepackage{hyperref}
+\usepackage{lipsum}
 \usepackage{listings}
 \usepackage{listings-rust}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{multirow}
+\usepackage{newfloat}
+\usepackage{siunitx}
+\usepackage{subcaption}
+\usepackage{tabularx}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{xpatch}
+
+% Define new column type with multirow
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+
+% Add bibliography
+\addbibresource{references.bib}
+
+% Define Rust lisintgs
 \lstset{
     language=Rust,
     showstringspaces=false
 }
-\usepackage{newfloat}
 \DeclareFloatingEnvironment[
   name=Listing,
   listname=List of Listings,
   within=section,
 ]{listing}
+
 \restylefloat{table}
+
+% Define equation numbering
 \numberwithin{equation}{section}
 
 \newcommand{\beginsupplement}{%
@@ -193,6 +148,8 @@ pages = {},
 
 \tableofcontents
 
+\twocolumn
+
 \newpage
 %
 %
@@ -259,7 +216,7 @@ In the described simplified version of the real-life system three possible bacte
 Motivated by this we divide a bacterial population into three pools (states)~(\ref{fig:SchematicRep}) defining the fraction of the population in the lag phase $L(t)$, growing and dividing $G(t)$ and undergoing cell death $D(t)$.
 \begin{figure}[t]
     \begin{center}
-    \includegraphics[width=0.6\textwidth]{Figures/TPM_fig.pdf}
+    \includegraphics[width=\columnwidth]{Figures/TPM_fig.pdf}
     \caption{Schematic representation of exchange between three states or pools.}
     \label{fig:SchematicRep}
     \end{center}
@@ -274,17 +231,13 @@ The suggested model can be cast in the following reactions:
     G &\stackrel{\alpha}{\longrightarrow} & 2G\\
     G &\stackrel{\mu'}{\longrightarrow} & D\\
     D &\stackrel{\beta}{\longrightarrow} & \emptyset
-\label{eq:reactions_3pools}
 \end{eqnarray}
 Then the \acp{ode} describing such a model can be written as
-\begin{equation}
-\begin{cases}
-    \dot{L} = -(\mu + \lambda) L\\
-    \dot{G} = \lambda L + \alpha G - \mu' G\\
-    \dot{D} = \mu  L + \mu' G- \beta D  
-\end{cases}.
-\label{eq:ode_3pools}
-\end{equation}
+\begin{align}\begin{split}
+    \dot{L} &= -(\mu + \lambda) L\\
+    \dot{G} &= \lambda L + \alpha G - \mu' G\\
+    \dot{D} &= \mu  L + \mu' G- \beta D  
+\end{split}\end{align}.
 %
 Based on experimental observations, it was shown that the bacterial growth is strongly influenced by the limiting resource.
 According to the works of Jacques Monod, in the system where all needed nutrients are in excess except for one the total growth is linear to the concentration of this limiting nutrient~\cite{monod_growth_1949}.
@@ -305,33 +258,32 @@ In this case $[L]=[G]=[N_t]=1$.
 For simplicity, we rather make a transition to the dimensionless constant $\alpha:=\alpha_0 N_t$ and dimensionless resource pool $R(t) = R_0 / N_t$ ($0 \leqslant R \leqslant 1$).
 Here the full capacity of the resource pool $N_t$ was used as a scaling constant.
 In this case the growth term can be simply written as $\alpha G R$ and the model is fully formulated in the following way:
-\begin{equation}
-    \begin{cases}
-        \dot{L} = -(\mu + \lambda) L\\
-        \dot{G} = \lambda L + \alpha R G-\mu' G\\
-        \dot{D} = \mu  L + \mu' G- \beta D\\
-        \dot{R} = - \frac{\alpha}{N_t} R G
-    \end{cases}.
+\begin{align}
+    \begin{split}
+        \dot{L} &= -(\mu + \lambda) L\\
+        \dot{G} &= \lambda L + \alpha R G-\mu' G\\
+        \dot{D} &= \mu  L + \mu' G- \beta D\\
+        \dot{R} &= - \frac{\alpha}{N_t} R G
+    \end{split}.
 \label{eq:ode_3pool_resource} 
-\end{equation}
+\end{align}
 %
 Such model can be simplified by exploiting that limitation of the resource pool also limits the total bacterial count of the system:
 \begin{equation}
     R = 1 - \frac{L+G+D}{N_t}
-\label{eq:resource}
 \end{equation}
 and, hence, the full system can be written as
-\begin{equation}
-    \begin{cases}
-        \dot{L} = -(\mu + \lambda) L\\
-        \dot{G} = \lambda L + \alpha G\left(1-\frac{L+G+D}{N_t}\right)-\mu' G\\
-        \dot{D} = \mu  L + \mu' G- \beta D 
-    \end{cases}.
+\begin{align}
+    \begin{split}
+        \dot{L} &= -(\mu + \lambda) L\\
+        \dot{G} &= \lambda L + \alpha G\left(1-\frac{L+G+D}{N_t}\right)-\mu' G\\
+        \dot{D} &= \mu  L + \mu' G- \beta D 
+    \end{split}.
 \label{eq:ode_3pool_resource2} 
-\end{equation}
+\end{align}
 \begin{figure}[h]
     \begin{center}
-    \includegraphics[width=0.6\textwidth]{Figures/pool_model_3pools_resource.pdf}
+    \includegraphics[width=\columnwidth]{Figures/pool_model_3pools_resource.pdf}
     \caption{
         The time dependence of the total bacterial count $N(t) = L(t) + G(t) + D(t)$ is obtained as a sum of bacteria in all states.
         All curves were calculated using the model (\ref{eq:ode_3pool_resource2}) with parameters $\alpha=2.5$, $\mu'=0.5$ and $\beta=5$.
@@ -359,23 +311,21 @@ The dynamics of the three pool model can be captures by the coupled system of or
 to be solved with the initial conditions $L(0)=N_0$, $G(0)=0$, and $D(0)=0$, where $N_0$ is the initial bacterial population.
 $N_t$ denotes the maximal size of the total bacterial population due to environmental limitations (Figure \ref{fig:3pool_resource_plots}).
 For $\mu'=0$ the equations for $L$ and $D$ can be readily integrated resulting in:
-\begin{equation}
-    \begin{cases}
-        L(t) = N_0 e^{-(\mu+\lambda)t}\\
-        D(t) = N_0 \mu e^{-\beta t}\frac{1-e^{-(\mu+\lambda-\beta)t}}{\mu+\lambda-\beta}
-    \end{cases}.
-\label{eq:lagtime_deriv1}
-\end{equation}
+\begin{align}
+    \begin{split}
+        L(t) &= N_0 e^{-(\mu+\lambda)t}\\
+        D(t) &= N_0 \mu e^{-\beta t}\frac{1-e^{-(\mu+\lambda-\beta)t}}{\mu+\lambda-\beta}
+    \end{split}.
+\end{align}
 For constant parameters $\mu$, $\lambda$, and $\beta$ the integrals for $L$ and $D$ can be put into the differential equation for $G$.
 However, for time dependent parameters, e.g., for a dependence on a non-static, dynamic temperature, it appears to be not advantageous to use the analytical results for $L$ and $D$ and work instead with all three equations for $L$, $G$, and $D$.
 It is interesting to see what type of equations result for the total bacterial population $N=L+G+D$:
-\begin{equation}
-    \begin{cases}
-        \dot{G} = \lambda L + \alpha G\left(1-\frac{N}{N_t}\right)\\
-        \dot{N} = - \beta D + \alpha G\left(1-\frac{N}{N_t}\right)
-    \end{cases}
-\label{eq:lagtime_deriv2}
-\end{equation}
+\begin{align}
+    \begin{split}
+        \dot{G} &= \lambda L + \alpha G\left(1-\frac{N}{N_t}\right)\\
+        \dot{N} &= - \beta D + \alpha G\left(1-\frac{N}{N_t}\right)
+    \end{split}
+\end{align}
 with the initial conditions $G(0)=0$ and $N(0)=N_0$. 
 These equations have a clear interpretation, are derived from simple principles, and are different from the popular Barayni-Roberts and modified-Gompertz models.
 A notable difference is that the growth rate $\alpha$ is time independent.
@@ -388,12 +338,10 @@ Assuming $L\ll N_t$ we can ignore the non-linear term in the equation for $G$, w
 \begin{eqnarray}
     1&=& 2\int_0^{t_L} \lambda L(t)e^{\alpha(t_L-t)}dt\\
     1  &=& 2\lambda e^{\alpha t_L}\frac{1-e^{-(\mu+\lambda+\alpha)t_L}}{\mu+\lambda+\alpha}.
-\label{eq:lagtime_deriv3}
 \end{eqnarray}
 For $\alpha > \mu+\lambda$ $t_L$ can be approximated by:
 \begin{eqnarray}
     t_L &\approx& -\frac{1}{\alpha}\ln\left(\frac{2\lambda}{\mu+\lambda+\alpha}\right).
-\label{eq:lagtime}
 \end{eqnarray}
 The lag time $t_L$ diverges very slowly, logarithmically with $\lambda\to 0$.
 %
@@ -448,17 +396,17 @@ If $T$ exhibits $n$ temperature jumps, one finds:
 \end{eqnarray}
 %
 The ordinary differential equations for the pool model with environmental-shock based back-flow read:
-\begin{equation}
-    \begin{cases}
+\begin{align}
+    \begin{split}
     \dot{L} =\gamma(t) G - (\mu + \lambda) L\\
     \dot{G} = \lambda L -\gamma(t) G + \alpha G\left(1-\frac{L+G+D}{N_t}\right)\\
     \dot{D} = \mu  L - \beta D
-    \end{cases}
+    \end{split}
 \label{eq:ode_tempshift_backlag}
-\end{equation}
+\end{align}
 \begin{figure}[t]
     \begin{center}
-    \includegraphics[width=0.6\textwidth]{Figures/pool_model_3pools_resource_tempshift.pdf}
+    \includegraphics[width=\columnwidth]{Figures/pool_model_3pools_resource_tempshift.pdf}
     \caption{
         (a) The time dependence of the total bacterial count $N$ for the model including the back-flow to the lag phase due to temperature stress~(\ref{eq:ode_tempshift_backlag}).
         (b) The value of the corresponding back-flow rate $\gamma$ calculated according to (\ref{eq:gamma_tempshift}).
@@ -475,31 +423,27 @@ After the rapid temperature increase, the growth slows down till the bacteria th
 If the shift happened rather early in time, when most of the bacteria were in lag-phase, the effect is not noticeable.
 \newpage
 %
-%
-%
 % ================================================================================================
 \section{Interaction between species}
 As it was mentioned above, bacteria usually coexist in large multispecies interacting communities whose growth is vastly determined by the developed survival mechanisms.
 These survival mechanisms mostly aim to secure as much available nutrition which lead to competitive strategies or, if it is advantageous, cooperative ones~\cite{hibbing_bacterial_2010, stubbendieck_bacterial_2016}.
 Further we show that the model can be readily extended to the systems with more than one bacterium and describe more complex relationships between species. 
 %
-%
-%
 % ------------------------------------------------------------------------------------------------
 \subsection{Resource Competition}
 One on the ways to describe competition between bacteria populations is as a function of limiting resource ratio~\cite{tilman_resource_1977, smith_effects_2002}.
 To describe such a situation we consider for simplicity only one common limiting resource pool.
 The simplest pool model for bacterial species $A$ and $B$ encompassing lag-phases, growth-phases and a common resource pool is given by (no back-flow to the lag-pool):
-\begin{equation}
-    \begin{cases}
+\begin{align}
+    \begin{split}
         \dot{L}_A = - \lambda_A R L_A\\
         \dot{L}_B = - \lambda_B R L_B \\
         \dot{G}_A = \lambda_A R L_A +\alpha_A R G_A\\
         \dot{G}_B = \lambda_B R L_B +\alpha_B R G_B\\
         \dot{R} =-\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{N_t} R G_B
-    \end{cases}
+    \end{split}
     \label{eq:model_2sp_resource_comp}
-\end{equation}
+\end{align}
 We again rescaled the resource pool with $N_t$ and find
 \begin{eqnarray}
 \label{eq:Resource}
@@ -507,18 +451,19 @@ R &=&1-\frac{L_A+G_A+L_B+G_B}{N_t}
 \end{eqnarray}
 Inserting Eq.~\ref{eq:Resource} into Eqs.~\ref{eq:model_2sp_resource_comp} yields:
 \begin{eqnarray*}
-    \dot{L}_A &=& - \lambda_A  L_A + \frac{\lambda_A}{N_t}\left(L_A+G_A+L_B+G_B\right)L_A\\
-    \dot{L}_B &=& - \lambda_B L_B + \frac{\lambda_B}{N_t}\left(L_A+G_A+L_B+G_B\right)L_B \\
-    \dot{G}_A &=&  \lambda_A  L_A - \frac{\lambda_A}{N_t}\left(L_A+G_A+L_B+G_B\right)L_A +\alpha_A G_A - \frac{\alpha_A}{N_t}\left(L_A+G_A+L_B+G_B\right)G_A\\
-    \dot{G}_B &=&  \lambda_B L_B - \frac{\lambda_B}{N_t}\left(L_A+G_A+L_B+G_B\right)L_B  +\alpha_B G_B -\frac{\alpha_B}{N_t}\left(L_A+G_A+L_B+G_B\right)G_B
+    \dot{L}_A &=& - \lambda_A  L_A + \frac{\lambda_A}{N_t}L_A\left<LG\right>\\
+    \dot{L}_B &=& - \lambda_B L_B + \frac{\lambda_B}{N_t}L_B \left<LG\right>\\
+    \dot{G}_A &=&  \lambda_A  L_A + \alpha_A G_A - \frac{\lambda_A L_A + \alpha_A G_A}{N_t} \left<LG\right>\\
+    \dot{G}_B &=&  \lambda_B L_B - \alpha_B G_B \frac{\lambda_B L_B + \alpha_B G_B}{N_t}\left<LG\right>
 \end{eqnarray*}
-which has the structure of a \ac{glv} expanded with different internal states for one species.
+where we used the short notation $\left<LG\right>=(L_A+G_A+L_B+G_B)$.
+These equations have the structure of a \ac{glv} expanded with different internal states for one species.
 As one can see in Figure~\ref{fig:2pool_resource_2sp} even without direct interaction between species the bacterial growth was inhibited due to the limitation of the resource.
 Here species $A$ has a longer lag-phase than $B$ but the exponential growth of $A$ is stronger than the one that bacteria $B$ experiences.
 As a result, species $A$ was able to suppress species $B$ consuming the larger amount of nutrient and reaching larger bacterial count at the end.
 \begin{figure}[H]
     \begin{center}
-    \includegraphics[width=0.6\textwidth]{Figures/pool_model_2pools_resource_competition.pdf}
+    \includegraphics[width=\columnwidth]{Figures/pool_model_2pools_resource_competition.pdf}
     \caption{
         The competition of the two bacterial species due to the common limiting resource calculated using Eq.~(\ref{eq:model_2sp_resource_comp}).
         The red curve describes the growth of the bacteria $A$ ($N_A = L_A+G_A$) with model parameters $\lambda_A=10^{-2}$, $\alpha_A=3.0$.
@@ -531,13 +476,13 @@ As a result, species $A$ was able to suppress species $B$ consuming the larger a
 \end{figure}
 %
 In order to get the commonly used form of the \ac{glv}, we need to simply eliminate of the bacterial states by setting $L_A=L_B=0$:
-\begin{equation}
-    \begin{cases}
-    \dot{G}_A = \alpha_A G_A\left(1 - \frac{G_A}{N_t}\right) - \frac{\alpha_A}{N_t}G_AG_B\\
-    \dot{G}_B = \alpha_B G_B\left(1-\frac{G_B}{N_t}\right) -\frac{\alpha_B}{N_t}G_AG_B. 
+\begin{align}
+    \begin{split}
+        \dot{G}_A &= \alpha_A G_A\left(1 - \frac{G_A}{N_t}\right) - \frac{\alpha_A}{N_t}G_AG_B\\
+        \dot{G}_B &= \alpha_B G_B\left(1-\frac{G_B}{N_t}\right) -\frac{\alpha_B}{N_t}G_AG_B. 
     \label{eq:LV_simple}
-    \end{cases}
-\end{equation}
+    \end{split}
+\end{align}
 
 Equations (\ref{eq:LV_simple}) are basically competitive Lotka-Volterra equations that are widely used in ecological studies and show the principle of competitive excursion.
 That principle claims that two species in competition for the same resource cannot coexist~\cite{wangersky_lotka-volterra_1978}.
@@ -561,38 +506,38 @@ In this way, can suppress the non-preferred species by helping their competitors
 % ................................................................................................
 \subsubsection{Toxins Production}
 To introduce active competitive mechanisms, we extend our model with one of the species producing the toxic compounds $T$ during its growth:
-\begin{eqnarray}
-    \dot{T} &=& \mathcal{F}(R,G).
-\end{eqnarray}
+\begin{equation}
+    \dot{T} = \mathcal{F}(R,G).
+\end{equation}
 The function $\mathcal{F}$ denotes the model for the toxin production rate.
 It can be, for example, the accumulation of the bacteria waste which is responsible for the spoilage of food products and affecting another species in negative way.
 Consider the system for two species competing for resource $R$ with the production of the toxin $T$ by species $B$.
 Assume that the toxin causes the death of the species $A$ with rate $\mu$.
 Then the full \ac{ode} system is
-\begin{equation}
-    \begin{cases}
-        \dot{L}_A = - \lambda_A R L_A\\
-        \dot{L}_B = - \lambda_B R L_B \\
-        \dot{G}_A = \lambda_A R L_A + \alpha_A R G_A - \frac{\mu}{\kappa N_t} T G_A\\
-        \dot{G}_B = \lambda_B R L_B + \alpha_B R G_B\\ 
-        \dot{R} = -\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{N_t} R G_B\\
-        \dot{T}_{B}^{1,2} = \mathcal{F}^{1,2} (R, G_B) \\
-    \end{cases}.
+\begin{align}
+    \begin{split}
+        \dot{L}_A &= - \lambda_A R L_A\\
+        \dot{L}_B &= - \lambda_B R L_B \\
+        \dot{G}_A &= \lambda_A R L_A + \alpha_A R G_A - \frac{\mu}{\kappa N_t} T G_A\\
+        \dot{G}_B &= \lambda_B R L_B + \alpha_B R G_B\\ 
+        \dot{R} &= -\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{N_t} R G_B\\
+        \dot{T}_{B}^{1,2} &= \mathcal{F}^{1,2} (R, G_B) \\
+    \end{split}.
     \label{eq:model_2sp_toxin}
-\end{equation}
+\end{align}
 %
 Where we consider two possible models of the toxin production:
-\begin{eqnarray}
-    \mathcal{F}^1(R,G)&=&\kappa G_B\\
-    \mathcal{F}^2(R,G)&=&\kappa\alpha_B R G_B.
-\end{eqnarray}
+\begin{align}
+    \mathcal{F}^1(R,G)&=\kappa G_B\\
+    \mathcal{F}^2(R,G)&=\kappa\alpha_B R G_B.
+\end{align}
 Here $\kappa$ is the toxin production rate.
 The difference between the two toxin production models for resulting solution of the \acp{ode} is presented in Figure~\ref{fig:2pool_2sp_toxin}.
 %
 %
 \begin{figure}[H]
     \begin{center}
-    \includegraphics[width=1.\textwidth]{Figures/pool_model_2pools_toxin.pdf}
+    \includegraphics[width=\columnwidth]{Figures/pool_model_2pools_toxin.pdf}
     \caption{
         The two species system competing for the common nutrient $R$ with production of the toxin $T_B$ (brown line) calculated using Eq.~(\ref{eq:model_2sp_toxin}).
         The growing bacteria $B$ produces toxin $T_B$ (a) constantly $\dot{T}_B^1 = \mathcal{F}^1 = \kappa G_B$ or (b) only during growth process $\dot{T}_B^2 = \mathcal{F}^2 = \kappa \alpha_B R G_B$ with 
@@ -654,23 +599,24 @@ Rescaling time with $\tilde{\alpha}_A$ and defining the dimensionless parameter
 \label{eq:ode_inhib_psi}
 \end{equation}
 results in: 
-\begin{equation}
-    \begin{cases}
-    \dot{G}_A =\frac{G_A}{G_B}\left(1 - G_A-G_B\right)\\
-    \dot{G}_B =\psi\frac{G_B}{G_A}\left(1-G_A-G_B\right). 
-    \end{cases}
+\begin{align}
+    \begin{split}
+        \dot{G}_A &=\frac{G_A}{G_B}\left(1 - G_A-G_B\right)\\
+        \dot{G}_B &=\psi\frac{G_B}{G_A}\left(1-G_A-G_B\right). 
+    \end{split}
 \label{eq:2sp_1pool_inhibit_unitless}
-\end{equation}
-We can separate three cases (see Figure~\ref{fig:1pool_2sp_inhibit}):
+\end{align}
+We can separate three cases (which are displayed in Figure~\ref{fig:1pool_2sp_inhibit}):
 \begin{eqnarray}
     \psi&=&1:\quad\text{A and B are equivalent}\\
-    \psi&>&1:\quad\text{Species B growth faster and/or inhibits A stronger}\\
-    \psi&<&1:\quad\text{Species A growth faster and/or inhibits B stronger}
+    \psi&>&1:\quad\text{B grows faster/inhibits A}\\
+    \psi&<&1:\quad\text{A grows faster/inhibits B}
 \end{eqnarray}
 %
 \begin{figure}[H]
     \begin{center}
-    \includegraphics[width=0.5\textwidth]{Figures/pool_model_1pool_inhib.pdf}
+    % TODO make this into 2x2 grid for plots and insert eqnarray from before as well
+    \includegraphics[width=\columnwidth]{Figures/pool_model_1pool_inhib.pdf}
     \caption{
         The two-species system mutually inhibiting each other is defined with equations~(\ref{eq:2sp_1pool_inhibit_unitless}).
         Here the red lines describes the evolution of the species $A$ and blue lines correspond to species $B$.
@@ -719,7 +665,7 @@ On the other hand, choosing $\psi=2$ (see Figure~\ref{fig:1pool_2sp_cooper}c), w
 That indirectly leads to larger amount of $P_B$ produced by species $B$.
 \begin{figure}[H]
     \begin{center}
-    \includegraphics[width=0.5\textwidth]{Figures/pool_model_2sp_1pool_coop.pdf}
+    \includegraphics[width=\columnwidth]{Figures/pool_model_2sp_1pool_coop.pdf}
     \caption{
         The two-species system where each of the species release public goods $P$ is defined with equations~(\ref{eq:1pool_2sp_cooper}) and calculated for different parameters:
         (a) $\psi=1, \phi=1$, (b) $\psi=1, \phi=2$ and (b) $\psi=2, \phi=1$.
@@ -916,8 +862,9 @@ Thus we introduce an additional rule that splits apart the cell whenever a certa
 The volume of the cell is divided equally between the new and old cell and both are assigned new random positions close to each other such that their radii do touch but not overlap.
 \begin{figure}
     \begin{center}
-    \includegraphics[width=0.4\textwidth]{Figures/snapshot-2-cells-before-division.png}
-    \includegraphics[width=0.4\textwidth]{Figures/snapshot-2-cells-after-division.png}
+    \includegraphics[width=0.49\columnwidth]{Figures/snapshot-2-cells-before-division.png}%
+    \hspace{0.01\columnwidth}%
+    \includegraphics[width=0.49\columnwidth]{Figures/snapshot-2-cells-after-division.png}
     \caption{
         (A) A cell right before and (B) after a division event.
         The volume is equally distributed between each new cell and the new positions are picked random but at opposing sides on a circle around the original center of the single cell.
@@ -956,10 +903,10 @@ and the \ac{ode} equations are
     \dot{I} &= \kappa G_A
 \end{align}
 We compare the most general version and thus omit species $A$ for the moment.
-\begin{table}[h]
+\begin{table*}[h]
     \centering
     \renewcommand{\arraystretch}{1.5}
-    \begin{tabularx}{\textwidth}{@{}l *3{>{\centering\arraybackslash}X}@{}}
+    \begin{tabularx}{\columnwidth}{@{}l *3{>{\centering\arraybackslash}X}@{}}
         & \textbf{\acs{ode}}
         & \textbf{\acs{abm}}
         & \textbf{Mappings}\\
@@ -984,16 +931,16 @@ We compare the most general version and thus omit species $A$ for the moment.
         & $\displaystyle \kappa = b$\\
         \bottomrule
     \end{tabularx}
-\end{table}
+\end{table*}
 We can use these mappings to numerically compare both approaches.
 Table~\ref{tab:spatial_limit_init} shows a comparison of paramters of two simulations for the \ac{ode} and \ac{abm} model which have been mapped onto each other.
 Figure~\ref{fig:spatial-snapshots} shows individual snapshots of different 
 %
 \begin{figure}
-    \includegraphics[width=0.49\textwidth]{Figures/abm-homogenous/snapshot_00006000.png}\hspace{0.02\textwidth}%
-    \includegraphics[width=0.49\textwidth]{Figures/abm-homogenous/snapshot_00012000.png}\vspace{0.02\textwidth}\\
-    \includegraphics[width=0.49\textwidth]{Figures/abm-homogenous/snapshot_00018000.png}\hspace{0.02\textwidth}%
-    \includegraphics[width=0.49\textwidth]{Figures/abm-homogenous/snapshot_00024000.png}%
+    \includegraphics[width=0.49\columnwidth]{Figures/abm-homogenous/snapshot_00006000.png}\hspace{0.01\columnwidth}%
+    \includegraphics[width=0.49\columnwidth]{Figures/abm-homogenous/snapshot_00012000.png}\vspace{0.01\columnwidth}\\
+    \includegraphics[width=0.49\columnwidth]{Figures/abm-homogenous/snapshot_00018000.png}\hspace{0.01\columnwidth}%
+    \includegraphics[width=0.49\columnwidth]{Figures/abm-homogenous/snapshot_00024000.png}%
     \caption{
         Simulation snapshots at $1.04$\unit{\day},$2.08$\unit{\day},$3.13$\unit{\day} and $4.17$\unit{\day} corresponding to the parameters given in table~table~\ref{tab:spatial_limit_init}.
         Species $B$ is colored blue while species $A$ is colored in red.
@@ -1006,25 +953,26 @@ Figure~\ref{fig:spatial-snapshots} shows individual snapshots of different
 %
 \begin{figure}
     \centering
-    \begin{subfigure}[c]{0.5\textwidth}
-        \includegraphics[width=\textwidth]{Figures/abm-homogenous/abm_ode_comparison.png}
-        \subcaption{Homogenous initial cell distribution, $D_R=D_I=30.0$\unit{\micro\metre\squared\per\minute}}
+    \begin{subfigure}[c]{0.5\columnwidth}
+        \includegraphics[width=\columnwidth]{Figures/abm-homogenous/abm_ode_comparison.png}
+        \subcaption{Homogenous initial cell distribution, $D=30.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}%
-    \begin{subfigure}[c]{0.5\textwidth}
-        \includegraphics[width=\textwidth]{Figures/abm-homogenous-low-diffusion/abm_ode_comparison.png}
-        \subcaption{Homogenous initial cell distribution, $D_R=D_I=5.0$\unit{\micro\metre\squared\per\minute}}
+    \begin{subfigure}[c]{0.5\columnwidth}
+        \includegraphics[width=\columnwidth]{Figures/abm-homogenous-low-diffusion/abm_ode_comparison.png}
+        \subcaption{Homogenous initial cell distribution, $D=5.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}\\
-    \begin{subfigure}[c]{0.5\textwidth}
-        \includegraphics[width=\textwidth]{Figures/abm-inhomogenous/abm_ode_comparison.png}%
-        \subcaption{Heterogeneous initial cell distribution, $D_R=D_I=30.0$\unit{\micro\metre\squared\per\minute}}
+    \begin{subfigure}[c]{0.5\columnwidth}
+        \includegraphics[width=\columnwidth]{Figures/abm-inhomogenous/abm_ode_comparison.png}%
+        \subcaption{Heterogeneous initial cell distribution, $D=30.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}%
-    \begin{subfigure}[c]{0.5\textwidth}
-        \includegraphics[width=\textwidth]{Figures/abm-random/abm_ode_comparison.png}%
-        \subcaption{Randomized initial cell distribution, $D_R=D_I=5.0$\unit{\micro\metre\squared\per\minute}}
+    \begin{subfigure}[c]{0.5\columnwidth}
+        \includegraphics[width=\columnwidth]{Figures/abm-random/abm_ode_comparison.png}%
+        \subcaption{Randomized initial cell distribution, $D=5.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}
     \caption{
         Comparison of the \ac{ode} and \ac{abm} model for different parameter configurations.
         Snapshots of the spatial configurations of cells are included in the appendix~\ref{fig:supplement-spatial-initial-config-cells}.
+        The diffusion constants are chosen $D_R=D_I=D$.
         We see that in the highly-diffusive homogenous case of subfigure (a), the pool model is a good fit to the \ac{abm} model.
         Heterogeneity and slower diffusion cause larger differences between the two models as can be seen in subfigures (b) and (c).
         The combination of the two effects shows the largest difference between model predictions.
@@ -1092,6 +1040,8 @@ What are limitations of our approach?
     \item outlook: generalized mathematical formulation; extend inhibition model (because it is a
         dimensional reduction of existing models)
 \end{itemize}
+
+\onecolumn
 
 \newpage
 \printbibliography
