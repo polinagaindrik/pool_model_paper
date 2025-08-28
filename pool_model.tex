@@ -776,10 +776,10 @@ amount.
 The \acp{ode} the bacterial population can be written as:
 \begin{equation}
     \begin{cases}
-        \dot{L_A} = -\lambda_A R^* L_A\\
-        \dot{G_A} = \lambda_A R^* L_A + \alpha_A R^* G_A\\
-        \dot{L_B} = -\lambda_B R^* L_B\\
-        \dot{G_B} = \lambda_B R^* L_B + \frac{\alpha_B}{1 + \mu_I I} R^* G_B\\
+        \dot{L_A} = -\lambda_A R L_A\\
+        \dot{G_A} = \lambda_A R L_A + \alpha_A R G_A\\
+        \dot{L_B} = -\lambda_B R L_B\\
+        \dot{G_B} = \lambda_B R L_B + \frac{\alpha_B}{1 + \mu_I I} R G_B\\
     \end{cases}.
     \label{eq:spatial_limit_F}
 \end{equation}
@@ -787,7 +787,7 @@ The \acp{ode} the bacterial population can be written as:
 The microenvironment of our system contains the resource and the inhibitor molecules:
 \begin{equation}
     \begin{cases}
-        \dot{R^*} = -\frac{\alpha_A}{G_\text{max}} R^* G_A-\frac{\alpha_B}{(1 + \mu_I I) G_\text{max}} R^* G_B \\
+        \dot{R} = -\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{(1 + \mu_I I) N_t} R G_B \\
         \dot{I} = \kappa G_A
     \end{cases}.
     \label{eq:spatial_limit_H}
@@ -926,11 +926,11 @@ The derived equations read
 \end{align}
 and the \ac{ode} equations are
 \begin{align}
-    \dot{L_A} &= -\lambda_A R^* L_A\\
-    \dot{G_A} &= \lambda_A R^* L_A + \alpha_A R^* G_A\\
-    \dot{L_B} &= -\lambda_B R^* L_B\\
-    \dot{G_B} &= \lambda_B R^* L_B + \frac{\alpha_B}{1 + \mu_I I} R^* G_B\\
-    \dot{R^*} &= -\frac{\alpha_A}{G_\text{max}} R^* G_A-\frac{\alpha_B}{(1 + \mu_I I) G_\text{max}} R^* G_B \\
+    \dot{L_A} &= -\lambda_A R L_A\\
+    \dot{G_A} &= \lambda_A R L_A + \alpha_A R G_A\\
+    \dot{L_B} &= -\lambda_B R L_B\\
+    \dot{G_B} &= \lambda_B R L_B + \frac{\alpha_B}{1 + \mu_I I} R G_B\\
+    \dot{R} &= -\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{(1 + \mu_I I) N_t} R G_B \\
     \dot{I} &= \kappa G_A
 \end{align}
 We compare the most general version and thus omit species $A$ for the moment.
@@ -945,14 +945,14 @@ We compare the most general version and thus omit species $A$ for the moment.
         \toprule
 
         \multirow{2}{*}{Resource}
-        & \multirow{2}{*}{$\displaystyle \dot{R^*} = - \frac{\alpha}{(1 + \mu_I I) G_\text{max}} R^* G$}
+        & \multirow{2}{*}{$\displaystyle \dot{R} = - \frac{\alpha}{(1 + \mu_I I) N_t} R G$}
         & \multirow{2}{*}{$\displaystyle \dot{R} = -\frac{u}{1+\nu_I V_D^{-1}I} \frac{1}{V_D} R V$}
-        & $\displaystyle G_\text{max} = [R_0] V_D \sigma$\\
+        & $\displaystyle N_t = [R_0] V_D \sigma$\\
 
         &&& $\displaystyle \mu_I = \frac{\nu_I}{V_D}$\\
 
         Volume
-        & $\displaystyle \dot{G} = \frac{\alpha}{1 + \mu_I I} R^* G$
+        & $\displaystyle \dot{G} = \frac{\alpha}{1 + \mu_I I} R G$
         & $\displaystyle \dot{V} = \frac{u}{1+\nu_I V_D^{-1} I} \frac{1}{V_D}\sigma R V$
         & $\displaystyle \alpha = u[R_0]\sigma$\\
 
@@ -1033,7 +1033,7 @@ Figure~\ref{fig:spatial-snapshots} shows individual snapshots of different
         &                           & $\nu_I$       & $0.1$\unit{\micro\metre\cubed\per\mol}\\
         &&
         & Conversion                & $\sigma$      & $0.1$\unit{\micro\metre\cubed\per\mol}\\
-        Total volume                & $G_\text{max}$& $2.0\cdot 10^5$\unit{\micro\metre\cubed}
+        Total volume                & $N_t$& $2.0\cdot 10^5$\unit{\micro\metre\cubed}
         &&&\\
         &&
         & Diffusion $R$             & $D_R$         & $30.0$\unit{\micro\metre\squared\per\minute}\\
@@ -1068,7 +1068,7 @@ Figure~\ref{fig:spatial-snapshots} shows individual snapshots of different
         & Cell Number               & $C_B$         & 18\\
         Volume of $G_B$             & $G_B$         & $0.0$\unit{\micro\metre\cubed}
         & Cell Volume               & $V_{c,B}$     & $7.07$\unit{\micro\metre\cubed}\\
-        Relative Nutrients          & $R^*$         & $1.0$
+        Relative Nutrients          & $R$         & $1.0$
         & Nutrients                 & $[R_0]$       & $1.0$\unit{\mol\per\micro\metre\cubed}\\
         Inhibitor                   & $I_0$         & $0.0$\unit{\mol}
         & Inhibitor                 & $[I_0]$       & $0.0$\unit{\mol\per\micro\metre\cubed}\\
