@@ -362,7 +362,6 @@ We explore now the idea that under certain conditions, as sudden change in the e
     G &\stackrel{\alpha}{\longrightarrow} & 2G\\
     G &\stackrel{\gamma(t)}{\longrightarrow} & L\\
     D &\stackrel{\beta}{\longrightarrow} & \emptyset
-\label{eq:reactions_backlag}
 \end{eqnarray}
 The rate $\gamma(t)$ depends on the rate of change of the environment.
 Stronger and quicker changes will lead to a higher rate $\gamma$.
@@ -372,22 +371,20 @@ Stronger and quicker changes will lead to a higher rate $\gamma$.
 One of the reasons of the dormant state appearance can be also the temperature shift~\cite{oliver_viable_1995}.
 Moreover, the rapid shift in temperature is associated with the appearance of an additional lag phase~\cite{zwietering_modeling_1994}.
 To model it we propose a kind of viscoelastic Maxwell type of stress-strain relation and write down the ordinary differential equation for $\gamma$ to be:
-\begin{eqnarray}
-    \dot{\gamma} &=& \Gamma \left |\dot{T}\right |-\delta \gamma.
-\label{eq:rate_backlag}
-\end{eqnarray}
+\begin{equation}
+    \dot{\gamma} = \Gamma |\dot{T}|-\delta \gamma.
+\end{equation}
 We assumed that the direction of the temperature change does not matter, i.e., a change from $T=2$ to $T=12$ has the same effect as a change from $T=14$ to $T=4$.
 $\Gamma$ is a scaling factor and $\delta$ is the relaxation time for the temperature disturbance.
 Integration of this equation yields (with $\gamma(0)=0$):
-\begin{eqnarray}
-    \gamma(t) &=& \Gamma \int_0^t \left |\dot{T}(t^{\prime})\right |e^{-\delta (t-t^{\prime})}dt^{\prime}.
-\label{eq:rate_backlag2}
-\end{eqnarray}
+\begin{equation}
+    \gamma(t) = \Gamma \int_0^t |\dot{T}(t^{\prime})|e^{-\delta (t-t^{\prime})}dt^{\prime}.
+\end{equation}
 After some manipulation of this equation we find:
-\begin{eqnarray}
-    \gamma(t) &=& \Gamma\delta\left |\left[T[t]-T[0]e^{-\delta t}-\delta \int_0^t T(t^{\prime})e^{-\delta (t-t^{\prime})}dt^{\prime}\right]\right |.
-\label{eq:rate_backlag3}
-\end{eqnarray}
+\begin{equation}
+    \gamma(t) = \Gamma\delta\left |T[t]-T[0]e^{-\delta t}-\delta
+        \int\limits_0^t T(t^{\prime})e^{-\delta (t-t^{\prime})}dt^{\prime}\right |.
+\end{equation}
 This representation of the rate $\gamma(t)$ has the advantage that it only involves $T(t)$ and does not require the calculation of the derivative of $T$.
 If $T$ exhibits $n$ temperature jumps, one finds:
 \begin{eqnarray}
@@ -398,9 +395,9 @@ If $T$ exhibits $n$ temperature jumps, one finds:
 The ordinary differential equations for the pool model with environmental-shock based back-flow read:
 \begin{align}
     \begin{split}
-    \dot{L} =\gamma(t) G - (\mu + \lambda) L\\
-    \dot{G} = \lambda L -\gamma(t) G + \alpha G\left(1-\frac{L+G+D}{N_t}\right)\\
-    \dot{D} = \mu  L - \beta D
+        \dot{L} &=\gamma(t) G - (\mu + \lambda) L\\
+        \dot{G} &= \lambda L -\gamma(t) G + \alpha G\left(1-\frac{L+G+D}{N_t}\right)\\
+        \dot{D} &= \mu  L - \beta D
     \end{split}
 \label{eq:ode_tempshift_backlag}
 \end{align}
@@ -421,7 +418,6 @@ The ordinary differential equations for the pool model with environmental-shock 
 The effect of the temperature shift on the total bacterial count can be shown in Figure~\ref{fig:TempJump}.
 After the rapid temperature increase, the growth slows down till the bacteria that transitioned back to lag-phase go again to growth pool.
 If the shift happened rather early in time, when most of the bacteria were in lag-phase, the effect is not noticeable.
-\newpage
 %
 % ================================================================================================
 \section{Interaction between species}
@@ -436,26 +432,26 @@ To describe such a situation we consider for simplicity only one common limiting
 The simplest pool model for bacterial species $A$ and $B$ encompassing lag-phases, growth-phases and a common resource pool is given by (no back-flow to the lag-pool):
 \begin{align}
     \begin{split}
-        \dot{L}_A = - \lambda_A R L_A\\
-        \dot{L}_B = - \lambda_B R L_B \\
-        \dot{G}_A = \lambda_A R L_A +\alpha_A R G_A\\
-        \dot{G}_B = \lambda_B R L_B +\alpha_B R G_B\\
-        \dot{R} =-\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{N_t} R G_B
+        \dot{L}_A &= - \lambda_A R L_A\\
+        \dot{L}_B &= - \lambda_B R L_B \\
+        \dot{G}_A &= \lambda_A R L_A +\alpha_A R G_A\\
+        \dot{G}_B &= \lambda_B R L_B +\alpha_B R G_B\\
+        \dot{R} &=-\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{N_t} R G_B
     \end{split}
     \label{eq:model_2sp_resource_comp}
 \end{align}
 We again rescaled the resource pool with $N_t$ and find
-\begin{eqnarray}
-\label{eq:Resource}
-R &=&1-\frac{L_A+G_A+L_B+G_B}{N_t}
-\end{eqnarray}
+\begin{equation}
+    R =1-\frac{L_A+G_A+L_B+G_B}{N_t}
+    \label{eq:Resource}
+\end{equation}
 Inserting Eq.~\ref{eq:Resource} into Eqs.~\ref{eq:model_2sp_resource_comp} yields:
-\begin{eqnarray*}
-    \dot{L}_A &=& - \lambda_A  L_A + \frac{\lambda_A}{N_t}L_A\left<LG\right>\\
-    \dot{L}_B &=& - \lambda_B L_B + \frac{\lambda_B}{N_t}L_B \left<LG\right>\\
-    \dot{G}_A &=&  \lambda_A  L_A + \alpha_A G_A - \frac{\lambda_A L_A + \alpha_A G_A}{N_t} \left<LG\right>\\
-    \dot{G}_B &=&  \lambda_B L_B - \alpha_B G_B \frac{\lambda_B L_B + \alpha_B G_B}{N_t}\left<LG\right>
-\end{eqnarray*}
+\begin{align}
+    \dot{L}_A &= -\lambda_A  L_A + \frac{\lambda_A}{N_t}L_A\left<LG\right>\\
+    \dot{L}_B &= -\lambda_B L_B + \frac{\lambda_B}{N_t}L_B \left<LG\right>\\
+    \dot{G}_A &=  \lambda_A  L_A + \alpha_A G_A - \frac{\lambda_A L_A + \alpha_A G_A}{N_t} \left<LG\right>\\
+    \dot{G}_B &=  \lambda_B L_B - \alpha_B G_B \frac{\lambda_B L_B + \alpha_B G_B}{N_t}\left<LG\right>
+\end{align}
 where we used the short notation $\left<LG\right>=(L_A+G_A+L_B+G_B)$.
 These equations have the structure of a \ac{glv} expanded with different internal states for one species.
 As one can see in Figure~\ref{fig:2pool_resource_2sp} even without direct interaction between species the bacterial growth was inhibited due to the limitation of the resource.
