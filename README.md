@@ -22,10 +22,10 @@
 
 -  Spatial Effects
     - [x] Page 16: R* = R / R_0 probably remove it
-    - [ ] Rename variables: G_max -> N_t and R* -> R
+    - [x] Rename variables: G_max -> N_t and R* -> R
         - [ ] make sure that they match to previous sections
     - [ ] More Citations
-    - [ ] Figure 8: Do we need this?
+    - [x] Figure 8: Do we need this?
     - [ ] Table 1: Move to supplement
     - [ ] Ensure that we are talking about pool model! (map everything on this new theoretical framework)
     - [ ] Use introductory part in main Introduction as well
