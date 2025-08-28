@@ -904,10 +904,9 @@ The volume of the cell is divided equally between the new and old cell and both 
     \includegraphics[width=0.4\textwidth]{Figures/snapshot-2-cells-before-division.png}
     \includegraphics[width=0.4\textwidth]{Figures/snapshot-2-cells-after-division.png}
     \caption{
-        A cell right before and after a division event.
+        (A) A cell right before and (B) after a division event.
         The volume is equally distributed between each new cell and the new positions are picked random but at opposing sides on a circle around the original center of the single cell.
     }
-    \label{fig:spatial-cell-division-example}
     \end{center}
 \end{figure}
 In addition to modeling division events, the cells have are subject to the lag-phase which delays their ability to proliferate.
@@ -942,7 +941,7 @@ and the \ac{ode} equations are
     \dot{I} &= \kappa G_A
 \end{align}
 We compare the most general version and thus omit species $A$ for the moment.
-\begin{table}
+\begin{table}[h]
     \centering
     \renewcommand{\arraystretch}{1.5}
     \begin{tabularx}{\textwidth}{@{}l *3{>{\centering\arraybackslash}X}@{}}
