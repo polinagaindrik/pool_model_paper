@@ -1,7 +1,7 @@
 ## TODO
 
 - Formatting
-    - [ ] Use double Column layout?
+    - [x] Use double Column layout?
 
 -  Abstract
 
