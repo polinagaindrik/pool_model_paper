@@ -8,11 +8,11 @@
     - [ ] Move to supplement
 
 -  One-Species
-    - [ ] Remove matrix formulation
+    - [x] Remove matrix formulation
     - [ ] Page 3: Remove bullet points in front of pools; mention "the fraction of the population" in
       sentence before
-    - [ ] Page 4: remove matrix of system (put supplement)
-    - [ ] Back flow from Growth to Lag pool: make to paragraph "Maxwell type of stress ..."
+    - [x] Page 4: remove matrix of system (put supplement)
+    - [x] Back flow from Growth to Lag pool: make to paragraph "Maxwell type of stress ..."
 
 -  Interaction between Species
     - [ ] Change in supplement too!
@@ -21,7 +21,7 @@
       with spatial effects
 
 -  Spatial Effects
-    - [ ] Page 16: R* = R / R_0 probably remove it
+    - [x] Page 16: R* = R / R_0 probably remove it
     - [ ] Rename variables: G_max -> N_t and R* -> R
         - [ ] make sure that they match to previous sections
     - [ ] More Citations
