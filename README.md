@@ -61,18 +61,21 @@
         - [ ] Discuss generalized Lotka-Volterra model here extensively!
             - [ ] Christian should probably write this text
 
+- Move ABM simulation Code to repository
+
 ## Order of TODO
 1. Content
-    - [ ] One-Species
-    - [ ] Interaction between Species
+    - [x] One-Species
+    - [x] Interaction between Species
     - [ ] Spatial Effects
-    - [ ] Supplement
+    - [x] Supplement
 2. Discussion
 3. Formal stuff
     - [ ] Abstract
     - [ ] Introduction
+    - [ ] Discussion
     - [ ] Conclusion
 4. Review of whole manuscript
     - [ ] Formulations
-    - [ ] Notation
+    - [x] Notation
     - [ ] Formatting
