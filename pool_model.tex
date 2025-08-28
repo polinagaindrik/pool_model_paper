@@ -253,7 +253,6 @@ We would not dive into the processes of quorum sensing and try to keep it as sim
 According to this, we aim to include a resource pool which is used by the growing bacteria using the second order kinetic reaction:
 \begin{equation}
     G + R_0  \stackrel{\alpha_0}{\longrightarrow} 2G.
-\label{eq:reactions_resource}
 \end{equation}
 Note that the pools $L$, $G$ and $D$ represent the number of bacteria (or number of bacteria per unit area/volume) while $R_0$ represents an abstract resource pool.
 Let say $G=N_B/V$ and $[G]=1/V$, where $N_B$ is the number of bacteria and $V$ is the volume.
@@ -287,7 +286,9 @@ and, hence, the full system can be written as
     \end{split}.
 \label{eq:ode_3pool_resource2} 
 \end{align}
-\begin{figure}[h]
+%
+%
+\begin{figure}
     \begin{center}
     \includegraphics[width=0.9\columnwidth]{Figures/pool_model_3pools_resource.pdf}
     \caption{
@@ -341,14 +342,14 @@ The equation exhibit a lag phase and an initial drop due to cell death.
 To find a substantial initial drop one needs $\beta \mu \gg \alpha \lambda$.
 The lag time $t_L$ can be approximated by the time at which half of the initial population is in the growth phase, i.e., $N_0=2G(t_L)$.
 Assuming $L\ll N_t$ we can ignore the non-linear term in the equation for $G$, which gives rise to:
-\begin{eqnarray}
-    1&=& 2\int_0^{t_L} \lambda L(t)e^{\alpha(t_L-t)}dt\\
-    1  &=& 2\lambda e^{\alpha t_L}\frac{1-e^{-(\mu+\lambda+\alpha)t_L}}{\mu+\lambda+\alpha}.
-\end{eqnarray}
+\begin{align}
+    1&= 2\int_0^{t_L} \lambda L(t)e^{\alpha(t_L-t)}dt\\
+    1  &= 2\lambda e^{\alpha t_L}\frac{1-e^{-(\mu+\lambda+\alpha)t_L}}{\mu+\lambda+\alpha}.
+\end{align}
 For $\alpha > \mu+\lambda$ $t_L$ can be approximated by:
-\begin{eqnarray}
-    t_L &\approx& -\frac{1}{\alpha}\ln\left(\frac{2\lambda}{\mu+\lambda+\alpha}\right).
-\end{eqnarray}
+\begin{align}
+    t_L &\approx -\frac{1}{\alpha}\ln\left(\frac{2\lambda}{\mu+\lambda+\alpha}\right).
+\end{align}
 The lag time $t_L$ diverges very slowly, logarithmically with $\lambda\to 0$.
 %
 %
@@ -463,7 +464,7 @@ These equations have the structure of a \ac{glv} expanded with different interna
 As one can see in Figure~\ref{fig:2pool_resource_2sp} even without direct interaction between species the bacterial growth was inhibited due to the limitation of the resource.
 Here species $A$ has a longer lag-phase than $B$ but the exponential growth of $A$ is stronger than the one that bacteria $B$ experiences.
 As a result, species $A$ was able to suppress species $B$ consuming the larger amount of nutrient and reaching larger bacterial count at the end.
-\begin{figure}[H]
+\begin{figure}
     \begin{center}
     \includegraphics[width=0.9\columnwidth]{Figures/pool_model_2pools_resource_competition.pdf}
     \caption{
@@ -537,7 +538,7 @@ Here $\kappa$ is the toxin production rate.
 The difference between the two toxin production models for resulting solution of the \acp{ode} is presented in Figure~\ref{fig:2pool_2sp_toxin}.
 %
 %
-\begin{figure*}[t!]
+\begin{figure}
     \begin{center}
     \includegraphics[width=2.0\columnwidth]{Figures/pool_model_2pools_toxin.pdf}
     \caption{
@@ -567,38 +568,33 @@ Such situation with 2 bacteria species, limiting resource and produced inhibitor
 In our case, we would like to look at rather simplified case reducing the number of variables of the system.
 The easiest way to introduce inhibition of species $A$ by species $B$ is via a growth rate of species $A$ depending on the abundance of species $B$.
 For sake of simplicity we ignore the lag pool and write for a mutual inhibition:
-\begin{eqnarray}
-    \dot{G}_A &=& \mathcal{B}_A(G_B)G_A\left(1 - \frac{G_A+G_B}{N_t}\right)\\
-    \dot{G}_B &=& \mathcal{B}_B(G_A) G_B\left(1-\frac{G_A+G_B}{N_t}\right).
-\label{eq:ode_inhib1}
-\end{eqnarray}
+\begin{align}
+    \dot{G}_A &= \mathcal{B}_A(G_B)G_A\left(1 - \frac{G_A+G_B}{N_t}\right)\\
+    \dot{G}_B &= \mathcal{B}_B(G_A) G_B\left(1-\frac{G_A+G_B}{N_t}\right).
+\end{align}
 The function $\mathcal{B}_{A/B}$ captures the inhibiting effects effectively.
 It is straight forward to make the mechanism of inhibition more explicit by, e.g., introducing a toxin pool.
 One possible choice for $\mathcal{B}$ is:
-\begin{eqnarray}
-    \mathcal{B}(G)&=&\frac{\alpha}{1+KI(G)},
-\label{eq:ode_inhib_B}
-\end{eqnarray}
+\begin{equation}
+    \mathcal{B}(G) = \frac{\alpha}{1+KI(G)},
+\end{equation}
 where $I$ is the concentration of the inhibiting metabolic byproduct producing during bacterial growth.
-\begin{eqnarray}
-    \dot{G}_A &=& \frac{\alpha_A G_A}{1+K_BG_B}\left(1 - \frac{G_A+G_B}{N_t}\right)\\
-    \dot{G}_B &=& \frac{\alpha_B G_B}{1+K_AG_A}\left(1-\frac{G_A+G_B}{N_t}\right).
-\label{eq:ode_inhib2}
-\end{eqnarray}
+\begin{align}\begin{split}
+    \dot{G}_A &= \frac{\alpha_A G_A}{1+K_BG_B}\left(1 - \frac{G_A+G_B}{N_t}\right)\\
+    \dot{G}_B &= \frac{\alpha_B G_B}{1+K_AG_A}\left(1-\frac{G_A+G_B}{N_t}\right).
+\end{split}\end{align}
 Note that if the toxin accumulates, i.e., $\dot I \sim G$,  one needs to replace $G$ by $\int G dt$.
 One can distinguish two limiting cases: {\it i}) $K_{A/B}\ll N_t$ and {\it ii}) $K_{A/B}\gg N_t$.
 In the first case the inhibition is of minor importance and could be ignored.
 In the latter case one can simplify the equations, given $N_A$ and $N_B$ are non-zero:
-\begin{eqnarray}
-    \dot{G}_A &=&\tilde{\alpha}_A\frac{G_A}{G_B}\left(1 - G_A-G_B\right)\\
-    \dot{G}_B &=& \tilde{\alpha}_B\frac{G_B}{G_A}\left(1-G_A-G_B\right).
-\label{eq:ode_inhib3}
-\end{eqnarray}
+\begin{align}\begin{split}
+    \dot{G}_A &=\tilde{\alpha}_A\frac{G_A}{G_B}\left(1 - G_A-G_B\right)\\
+    \dot{G}_B &= \tilde{\alpha}_B\frac{G_B}{G_A}\left(1 - G_A-G_B\right).
+\end{split}\end{align}
 We introduced the rescaled growth rates $\tilde{\alpha}_A=\alpha_A/(N_tK_B)$ and $\tilde{\alpha}_B=\alpha_B/(N_tK_A)$. Note that $[\tilde{\alpha}]=\mathrm{s}^{-1}$.
 Rescaling time with $\tilde{\alpha}_A$ and defining the dimensionless parameter
 \begin{equation}
     \psi = \tilde{\alpha}_B/\tilde{\alpha}_A = \frac{K_B\alpha_B}{K_A\alpha_A}
-\label{eq:ode_inhib_psi}
 \end{equation}
 results in: 
 \begin{align}
@@ -609,16 +605,16 @@ results in:
 \label{eq:2sp_1pool_inhibit_unitless}
 \end{align}
 We can separate three cases (which are displayed in Figure~\ref{fig:1pool_2sp_inhibit}):
-\begin{eqnarray}
-    \psi&=&1:\quad\text{A and B are equivalent}\\
-    \psi&>&1:\quad\text{B grows faster/inhibits A}\\
-    \psi&<&1:\quad\text{A grows faster/inhibits B}
-\end{eqnarray}
+\begin{align}
+    \psi&=1:\quad\text{A and B are equivalent}\\
+    \psi&>1:\quad\text{B grows faster/inhibits A}\\
+    \psi&<1:\quad\text{A grows faster/inhibits B}
+\end{align}
 %
-\begin{figure}[H]
+\begin{figure}
     \begin{center}
-    % TODO make this into 2x2 grid for plots and insert eqnarray from before as well
-    \includegraphics[width=0.9\columnwidth]{Figures/pool_model_1pool_inhib.pdf}
+    % TODO make this into 2x2 grid for plots and insert cases for psi from before as well
+    \includegraphics[width=\columnwidth]{Figures/pool_model_1pool_inhib.pdf}
     \caption{
         The two-species system mutually inhibiting each other is defined with equations~(\ref{eq:2sp_1pool_inhibit_unitless}).
         Here the red lines describes the evolution of the species $A$ and blue lines correspond to species $B$.
@@ -640,32 +636,30 @@ Furthermore, neighbors can also benefit from a certain behavior without expressi
 %
 The benefit, or mutual activation, of the two species from the presence of the other can be simply introduced by mathematical functions.
 For sake of clarity we omit again the lag pool and write:
-\begin{eqnarray}
-    \dot{G}_A &=& \mathcal{B}_A(P_B,R)G_A\\
-    \dot{G}_B &=& \mathcal{B}_B(P_A,R)G_B\\
-    \dot{R} &=&-\mathcal{B}_A(P_B,R)G_A-\mathcal{B}_B(P_A,R)G_B\\
-    \dot{P}_A &=& \mathcal{F}_A(R,G_A)\\
-    \dot{P}_B &=& \mathcal{F}_B(R,G_B).
-\end{eqnarray}
+\begin{align}
+    \dot{G}_A &= \mathcal{B}_A(P_B,R)G_A\\
+    \dot{G}_B &= \mathcal{B}_B(P_A,R)G_B\\
+    \dot{R} &=-\mathcal{B}_A(P_B,R)G_A-\mathcal{B}_B(P_A,R)G_B\\
+    \dot{P}_A &= \mathcal{F}_A(R,G_A)\\
+    \dot{P}_B &= \mathcal{F}_B(R,G_B).
+\end{align}
 $P_A$ and $P_B$ denote the substance produced by species A and B, respectively.
 The functions $\mathcal{B}_A(P_B,R)$ and $\mathcal{B}_B(P_A,R)$ capture the resource dependent growth.
 Setting $\mathcal{B}_A(P_B,R)=\alpha_A P_BR$, $\mathcal{B}_B(P_A,R)=\alpha_B P_A R$, $\mathcal{F}_A(R,G_A)=\kappa_A RG_A$, $\mathcal{F}_B(R,G_B)=\kappa_B RG_B$, rescaling $G_A$, $G_B$, and $P_B$ with $N_t$, $P_A$ with $\kappa_A/\alpha_A$, time with $\alpha_AN_t^2$, defining $\psi=\kappa_A\alpha_B/(\alpha_A^2N_t)$, and $\phi=\kappa_B/(\alpha_A N_t)$ results in:
-\begin{equation}
-    \begin{cases}
-    \dot{G}_A = P_B G_A\left(1 - G_A-G_B\right)\\
-    \dot{G}_B = \psi P_A G_B\left(1 - G_A-G_B\right)\\
-    \dot{P}_A = G_A\left(1 - G_A-G_B\right)\\
-    \dot{P}_B =\phi G_B\left(1 - G_A-G_B\right)
-    \end{cases}.
+\begin{align}
+    \dot{G}_A &= P_B G_A\left(1 - G_A-G_B\right)\\
+    \dot{G}_B &= \psi P_A G_B\left(1 - G_A-G_B\right)\\
+    \dot{P}_A &= G_A\left(1 - G_A-G_B\right)\\
+    \dot{P}_B &=\phi G_B\left(1 - G_A-G_B\right).
     \label{eq:1pool_2sp_cooper}
-\end{equation}
+\end{align}
 %
 The solution of the system~\ref{eq:1pool_2sp_cooper} is presented in Figure~\ref{fig:1pool_2sp_cooper}.
 Here we can see that if $\psi=1$ and $\phi=1$ (see Figure~\ref{fig:1pool_2sp_cooper}a) the production of the public goods of the two species is happening with the same rate as well as the growth of bacteria.
 Increasing the production rate of the public good produced by species $B$ (see Figure~\ref{fig:1pool_2sp_cooper}b) causes increasing the growth of species $A$ that profit from the presence of $B$.
 On the other hand, choosing $\psi=2$ (see Figure~\ref{fig:1pool_2sp_cooper}c), we increase the profit that species $B$ has from public goods $P_A$.
 That indirectly leads to larger amount of $P_B$ produced by species $B$.
-\begin{figure}[H]
+\begin{figure}
     \begin{center}
     \includegraphics[width=0.9\columnwidth]{Figures/pool_model_2sp_1pool_coop.pdf}
     \caption{
@@ -741,24 +735,20 @@ The \acp{ode} the bacterial population can be written as:
 %     Chemical interactions as releasing inhibitors are described using concentrations and solved using PDEs.
 % \end{itemize}
 %
-\begin{equation}
-    \begin{cases}
-        \dot{L_A} = -\lambda_A R L_A\\
-        \dot{G_A} = \lambda_A R L_A + \alpha_A R G_A\\
-        \dot{L_B} = -\lambda_B R L_B\\
-        \dot{G_B} = \lambda_B R L_B + \frac{\alpha_B}{1 + \mu_I I} R G_B\\
-    \end{cases}.
+\begin{align}
+    \dot{L_A} &= -\lambda_A R L_A\\
+    \dot{G_A} = \lambda_A R L_A + \alpha_A R G_A\\
+    \dot{L_B} = -\lambda_B R L_B\\
+    \dot{G_B} = \lambda_B R L_B + \frac{\alpha_B}{1 + \mu_I I} R G_B
     \label{eq:spatial_limit_F}
-\end{equation}
+\end{align}
 %
 The microenvironment of our system contains the resource and the inhibitor molecules:
-\begin{equation}
-    \begin{cases}
-        \dot{R} = -\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{(1 + \mu_I I) N_t} R G_B \\
-        \dot{I} = \kappa G_A
-    \end{cases}.
+\begin{align}
+    \dot{R} &= -\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{(1 + \mu_I I) N_t} R G_B \\
+    \dot{I} &= \kappa G_A
     \label{eq:spatial_limit_H}
-\end{equation}
+\end{align}
 
 % ------------------------------------------------------------------------------------------------
 \subsection{Constructing an Agent-Based Pool Model}
@@ -869,7 +859,8 @@ The volume of the cell is divided equally between the new and old cell and both 
     \includegraphics[width=0.49\columnwidth]{Figures/snapshot-2-cells-after-division.png}
     \caption{
         (A) A cell right before and (B) after a division event.
-        The volume is equally distributed between each new cell and the new positions are picked random but at opposing sides on a circle around the original center of the single cell.
+        The volume is equally distributed between the two cells and the new positions are picked
+        random but at opposing sides on a circle around the original center of the single cell.
     }
     \end{center}
 \end{figure}
@@ -905,10 +896,10 @@ and the \ac{ode} equations are
     \dot{I} &= \kappa G_A
 \end{align}
 We compare the most general version and thus omit species $A$ for the moment.
-\begin{table*}[h]
+\begin{table*}
     \centering
     \renewcommand{\arraystretch}{1.5}
-    \begin{tabularx}{\columnwidth}{@{}l *3{>{\centering\arraybackslash}X}@{}}
+    \begin{tabularx}{0.8\textwidth}{@{}l *3{>{\centering\arraybackslash}X}@{}}
         & \textbf{\acs{ode}}
         & \textbf{\acs{abm}}
         & \textbf{Mappings}\\
@@ -1049,6 +1040,7 @@ What are limitations of our approach?
 \printbibliography
 
 % ================================================================================================
+\newpage
 \beginsupplement
 \section{Supplementary Material}
 % ================================================================================================
@@ -1107,15 +1099,14 @@ While the total bacterial count of all species of our system is
 Using such matrix representation of the bacterial system, we can rewrite, for example, the three-pool model with limiting resource described with equations~\ref{eq:ode_3pool_resource} in a more compact form.
 The concentrations of the pools are then the components of our variable vector $\mbx (t) = (L(t), G(t), D(t))^T$.
 %
-\begin{eqnarray}
-    \dot \mbx  &=& \mbF(\mbx, \mbm, \mbp, \mbu) = \begin{pmatrix}
+\begin{align}
+    \dot \mbx  &= \mbF(\mbx, \mbm, \mbp, \mbu) = \begin{pmatrix}
         -(\mu + \lambda) & 0               & 0      \\
         \lambda          & \alpha R - \mu' & 0      \\
         \mu              & \mu'            & -\beta 
     \end{pmatrix} \mbx\\
-    \dot \mbm &=& \mbH (\mbx, \mbm, \mbp, \mbu) = -\frac{\alpha}{N_t} R G.
-\label{eq:x_repres_3pools_resource}
-\end{eqnarray}
+    \dot \mbm &= \mbH (\mbx, \mbm, \mbp, \mbu) = -\frac{\alpha}{N_t} R G.
+\end{align}
 Separating linear and non-linear parts in two terms yields
 \begin{equation}
     \dot \mbx = \begin{pmatrix}
@@ -1271,7 +1262,7 @@ c2.set_pos(&(old_pos - offset));
 \subsubsection{Full List of Parameters}
 \label{sec:supplement-full-parameters}
 
-\begin{table}[H]
+\begin{table}
     \centering
     \begin{tabularx}{\textwidth}{@{}l *2{>{\centering\arraybackslash}X} l *2{>{\centering\arraybackslash}X}@{}}
         \multicolumn{3}{c}{\textbf{\acs{ode}}} & \multicolumn{3}{c}{\textbf{\acs{abm}}}\\
