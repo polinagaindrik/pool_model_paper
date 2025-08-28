@@ -795,8 +795,21 @@ The microenvironment of our system contains the resource and the inhibitor molec
 
 % ------------------------------------------------------------------------------------------------
 \subsection{Constructing an Agent-Based Pool Model}
-We use \texttt{cellular\_raza}~\cite{Pleyer2025} to implement an \ac{abm}.
-
+The previously considered \ac{ode} formulation makes extensive use of the assumption that the
+bacteria are evenly distributed and all communications and interactions between bacteria or
+nutrients occurr on time scales much faster than the remaining processes.
+However, for heterogenous systems or nutrients with low diffusability, this assumption might not be
+valid.\\
+In order to construct a model which can encapsulate diffusion of nutrients and heterogeneity of
+the bacteria or nutrients, we have to take into consideration the spatial component of our setup.
+\acp{abm} force researchers to think in terms of cellular processes, thus bridging the gap from a
+collective (bulk) model to an individual-based (single-cell) description.
+The following sections will demonstrate how a given \ac{ode} system can be translated into a
+custom-built \ac{abm} which has only a few more overall parameters.
+To construct our \ac{abm}, we use \texttt{cellular\_raza}~\cite{Pleyer2025} which was designed to
+provide maximal flexibility for researchers in order to construct minimalist models.
+Without the ability to define and control the precise behavior of our cell-agents, the following
+approaches would not be possible.
 
 \subsubsection{Cellular Reactions}
 To construct an \ac{abm} which resembles the given \ac{ode} system of equations~\eqref{eq:spatial_limit_F} and \eqref{eq:spatial_limit_H}, we consider multiple cellular reactions.
