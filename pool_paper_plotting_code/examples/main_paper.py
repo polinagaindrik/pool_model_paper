@@ -220,7 +220,7 @@ if __name__ == "__main__":
     const6 = [1e-2, 0., 2.5, .5, 5., Nt, Gamma, delta, ((1, 10), (3, 5), (7, 15))] # (lambd, mu1, alpha, mu2, beta, N_t, Gamma, delta, shift_cnd)
     consts_Tempshift = [const1, const5, const6]
     data_Tempshift = [data_3pool_res[0]] + [generate_insilico_data(pool_model_tempstress, [t], [], [[]], x01,
-                                            const=const, obs_func=observable_3pool, n_traj=1) for const in consts_Tempshift]
+                                            const=const, obs_func=observable_3pool, n_traj=1) for const in consts_Tempshift[1:]]
 
     labels = [r'$\Delta T = 0$', r'$\Delta T = 10$',  r'$\Delta T = 10, 5, 15$']
     color_palette_1sp_tempshift = [colors_all['N_wo_tempshift'], colors_all['N_tempshift_10'], colors_all['N_tempshift_10_5_15']]
@@ -244,6 +244,29 @@ if __name__ == "__main__":
     plt.savefig(f'out/pdfs/pool_model_3pools_resource_tempshift.pdf', bbox_inches='tight')
     plt.close(fig)
 
+    fig, ax = plt.subplots(1, 1, figsize=figsize_default)
+    for i, data in enumerate(data_Tempshift):
+        for d in data:
+            ax.plot(d['times'], d['obs_mean'][0], color=color_palette_1sp_tempshift[i], label=labels[i])
+    fig, ax = set_labels(fig, ax, r'', r'Bacterial Count, $N$')
+    ax.set_yscale('log')
+    ax.set_xlim(0.7, 8.5)
+    ax.set_ylim(6e0, 1.1e4)
+    ax.legend()
+    ax.text(8., 9.9, r'(a)')
+    plt.savefig(f'out/pdfs/pool_model_3pools_resource_tempshift1.pdf', bbox_inches='tight')
+    plt.close(fig)
+
+    fig, ax = plt.subplots(1, 1, figsize=figsize_default_small)
+    ax.plot(t, y, color=color_palette_1sp_tempshift[i-1])
+    y2 = [temp_stress(tt, *const6[-3:]) for tt in t]
+    ax.plot(t, y2, color=color_palette_1sp_tempshift[i])
+    fig, ax = set_labels(fig, ax, r'Time, $t$', r'Rate, $\gamma$')
+    ax.set_xlim(0.7, 8.5)
+    ax.text(8., 1.5, r'(b)')
+    plt.savefig(f'out/pdfs/pool_model_3pools_resource_tempshift2.pdf', bbox_inches='tight')
+    plt.close(fig)
+
 #################################### Resource competition ################################################3
     x0_gLV = [[10.], [0.], [10.], [0.], [1.]]
     const_gLV = [.01, 3., .05, 2.5, Nt] # (lambd1, lambd2, alph1, alph2, Nt, )
@@ -252,6 +275,7 @@ if __name__ == "__main__":
     labels = [r'$N_A=L_A+G_A$', r'$N_B=L_B+G_B$', r'$N=N_A+N_B$', r'$R N_t$']
     color_palette_2sp = [colors_all['N_A'], colors_all['N_B'], colors_all['N'], colors_all['R']]
     lnst = ['solid', 'solid', 'dashed', 'solid']
+
     fig, ax = plt.subplots(1, 1, figsize=figsize_default)
     fig, ax = set_labels(fig, ax, r'Time, $t$', r'Bacterial Count, $N$')
     for d in data_gLV:
@@ -300,6 +324,34 @@ if __name__ == "__main__":
     plt.savefig(f'out/pdfs/pool_model_2pools_toxin.pdf', bbox_inches='tight')
     plt.close(fig)
 
+    fig, ax = plt.subplots(1, 1, figsize=figsize_default)
+    for d in data_tox1:
+        for i, obs in enumerate(d['obs_mean']):
+            if i == 2:
+                obs = Nt*obs
+            ax.plot(d['times'], obs, color=color_palette_2sp_toxin[i], label=labels1[i])#, linestyle=lnst[i])
+    ax.set_xlim(2., 9.0)
+    ax.set_ylim(-100, 1.01e4)
+    ax.legend()
+    fig, ax = set_labels(fig, ax, r'Time, $t$', r'Bacterial Count, $N$')
+    ax.text(2.1, 800, r'(a) $\mathcal{F}^1$')
+    plt.savefig(f'out/pdfs/pool_model_2pools_toxin1.pdf', bbox_inches='tight')
+    plt.close(fig)
+
+    fig, ax = plt.subplots(1, 1, figsize=figsize_default)
+    for d in data_tox2:
+        for i, obs in enumerate(d['obs_mean']):
+            if i == 2:
+                obs = Nt*obs
+            ax.plot(d['times'], obs, color=color_palette_2sp_toxin[i], label=labels2[i])#, linestyle=lnst[i])
+    ax.set_xlim(2., 9.0)
+    ax.set_ylim(-100, 1.01e4)
+    ax.legend()
+    fig, ax = set_labels(fig, ax, r'Time, $t$', r'Bacterial Count, $N$')
+    ax.text(2.1, 800, r'(b) $\mathcal{F}^2$')
+    plt.savefig(f'out/pdfs/pool_model_2pools_toxin2.pdf', bbox_inches='tight')
+    plt.close(fig)
+
 ############################# Inhibition ######################################
     x0_inhib = [[0.1], [0.1]]
     const_inhib = [1., 0.5, 2] # (lambd1, lambd2, alph1, alph2, Nt, k, mu)
@@ -319,19 +371,35 @@ if __name__ == "__main__":
         ax[j].set_xlim(-0.001, 1.)
         ax[j].legend(loc='center right')
         fig, ax[j] = set_labels(fig, ax[j], r'Time, $t$', r'$N / N_t$')
-    ax[1].text(0.035, 0.71, r'(a) $\psi$ = 0.5')
-    ax[0].text(0.035, 0.415, r'(b) $\psi$ = 1')
+    ax[0].text(0.035, 0.415, r'(a) $\psi$ = 1')
+    ax[1].text(0.035, 0.71, r'(b) $\psi$ = 0.5')
     ax[2].text(0.035, 0.74, r'(c) $\psi$ = 2')
-    ax[1].set_ylim(0.1, 0.83)
     ax[0].set_ylim(0.1, 0.48)
+    ax[1].set_ylim(0.1, 0.83)
     ax[2].set_ylim(0.1, 0.87)
     plt.savefig(f'out/pdfs/pool_model_1pool_inhib.pdf', bbox_inches='tight')
     plt.close(fig)
+
+    text = [r'(a) $\psi$ = 1', r'(b) $\psi$ = 0.5', r'(c) $\psi$ = 2']
+    text_coord = [(0.035, 0.435), (0.035, 0.74), (0.035, 0.78)]
+    y_max_lim = [0.48, 0.83,  0.87]
+    for j, d in enumerate(data_inhib):
+        fig, ax = plt.subplots(1, 1, figsize=(6., 3.5))#figsize_default)
+        for i, obs in enumerate(d['obs_mean']):
+            ax.plot(d['times'], obs, linewidth=3-i, color=color_palette_2sp_only[i], label=labels[i], linestyle='dashed')
+        ax.set_xlim(-0.001, 1.)
+        ax.legend(loc='center right')
+        fig, ax = set_labels(fig, ax, r'Time, $t$', r'$N / N_t$')
+        ax.text(*text_coord[j], text[j])
+        ax.set_ylim(0.1, y_max_lim[j])
+        plt.savefig(f'out/pdfs/pool_model_1pool_inhib{j+1}.pdf', bbox_inches='tight')
+        plt.close(fig)
 
 
 ################33 Interspecies Cooperation (Activation) ##############################3333
     lwdth = [3., 2., 2., 2.]
     x0_coop = [[0.1], [0.1], [0.01], [0.01]]
+
     fig, ax = plt.subplots(3, 1, figsize=(4, 6.7), sharex=True)
     fig.subplots_adjust(hspace=0.25)
     lnst = ['dashed', 'dashed', 'solid', 'solid']
@@ -340,8 +408,7 @@ if __name__ == "__main__":
     const_coop = [
         [1., 1.], # (psi, phi)
         [1., 2.],
-        [2., 1.]
-    ]
+        [2., 1.]]
     for k, c in enumerate(const_coop):
         data_coop = generate_insilico_data(pool_model_2sp_cooper, [np.linspace(0, 10.5, 100)], [], [[]], x0_coop,
                                            const=c, n_traj=1)
@@ -361,6 +428,25 @@ if __name__ == "__main__":
     ax[0].legend(loc='upper left', ncols=2)
     plt.savefig(f'out/pdfs/pool_model_2sp_1pool_coop.pdf', bbox_inches='tight')
     plt.close(fig)
+
+    ymax_lim = [0.9, 1.22, 0.9]
+    text = [r'(a)', r'(b)', r'(c)']
+    text_coord = [(9.5, 0.06), (9.5, 0.075), (9.5, 0.06)]
+    for k, c in enumerate(const_coop):
+        fig, ax = plt.subplots(1, 1, figsize=(6., 3.5))#figsize_default)
+        data_coop = generate_insilico_data(pool_model_2sp_cooper, [np.linspace(0, 10.5, 100)], [], [[]], x0_coop,
+                                           const=c, n_traj=1)
+        for j, d in enumerate(data_coop):
+            for i, obs in enumerate(d['obs_mean']):
+                ax.plot(d['times'], obs, color=color_palette_2sp_coop[i], label=labels[i], linestyle=lnst[i],
+                           linewidth=lwdth[i])
+        fig, ax = set_labels(fig, ax, r'Time, $t$', r'$N / N_t$')
+        ax.set_xlim(-0.001, 10.5)
+        ax.set_ylim(0.0, ymax_lim[k])
+        ax.text(*text_coord[k], text[k])
+        ax.legend(loc='upper left')
+        plt.savefig(f'out/pdfs/pool_model_2sp_1pool_coop{k+1}.pdf', bbox_inches='tight')
+        plt.close(fig)
 
 
 ###############################3 Spatial Limitation ###############################################3

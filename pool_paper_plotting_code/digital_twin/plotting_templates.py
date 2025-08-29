@@ -19,8 +19,10 @@ colors_all = {
     }
 
 figsize_default = (6.5, 4.0)
+figsize_default_small = (6.5, 2.0)
 figsize_default2subpl = (13, 4.0)
 
+plt.rcParams['figure.dpi'] = 400
 plt.rcParams["font.family"] = "serif"
 plt.rc('text', usetex=True)
 plt.rcParams['text.latex.preamble'] = r"\usepackage{bm} \usepackage{amsmath}"
