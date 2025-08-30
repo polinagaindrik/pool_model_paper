@@ -1,0 +1,26 @@
+[package]
+name = "cr_pool"
+version = "0.6.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "cr_pool"
+crate-type = ["cdylib", "rlib"]
+
+# Due to python docstrings
+doctest = false
+
+[dependencies]
+cellular_raza = { version="0.3.0", features = ["pyo3", "approx", "cpu_os_threads"] }
+approx = { package = "approxim", version = "0.6.6", features = ["tuple_impl"] }
+nalgebra = { version = "0.34", features = ["serde", "serde-serialize"] }
+num = { version = "0.4.3", features = ["rand", "serde"] }
+pyo3 = { version = "0.25", features = ["serde", "py-clone", "multiple-pymethods"] }
+rand = { version = "0.9", features = ["serde"] }
+rand_chacha = { version = "0.9", features = ["serde"] }
+rayon = "1.11.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0.143", features = ["arbitrary_precision", "float_roundtrip", "preserve_order", "std"] }
+rand_distr = "0.5.1"
+short_default = "0.1.1"

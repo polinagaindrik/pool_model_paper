@@ -15,3 +15,8 @@
 *.bbl-SAVE-ERROR
 *.bcf-SAVE-ERROR
 release.zip
+
+# Cargo
+Cargo.lock
+target
+cr_pool/*.so
