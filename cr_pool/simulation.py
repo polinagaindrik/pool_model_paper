@@ -1,3 +1,30 @@
+"""
+
+.. list-table:: Recurring Arguments
+    :header-rows: 1
+    :widths: 15 10 75
+
+    * - Name
+      - Type
+      - Description
+    * - **output_path**
+      - :class:`Path`
+      - Path of the stored results.
+    * - **iteration**
+      - :class:`int`
+      - Iteration count at which to obtain results.
+    * - **element_path**
+      - :class:`str`
+      - Identifier which should be \"cell_storage\" or \"voxel_storage\"
+    * - **threads**
+      - :class:`int`
+      - Number of threads to use simultaneously.
+    * - **iteration**
+      - :class:`int`
+      - Iteration count at which to obtain results.
+
+"""
+
 import os
 import json
 from typing import Any
@@ -15,10 +42,27 @@ import gc
 
 
 def get_last_output_path(name="pool_model") -> Path:
+    """
+    Returns the path of the last numerical result.
+
+    Args:
+        name(str): Name of the subfolder in which to look for.
+    Returns:
+        Path: Storage Path of the last simulation result
+    """
     return Path("out") / name / sorted(os.listdir(Path("out") / name))[-1]
 
 
 def get_simulation_settings(output_path) -> tuple[Any, Any, Any]:
+    """
+    Obtain simulation settings for a given output path.
+
+    Args:
+        output_path(Path): Path of the stored results.
+    Returns:
+        (Any, Any, Any): A tuple containing json results of the domain, initial cells and meta
+        parameters.
+    """
     f_domain = open(output_path / "domain.json")
     f_initial_cells = open(output_path / "initial_cells.json")
     f_meta_params = open(output_path / "meta_params.json")
@@ -101,6 +145,16 @@ def _convert_entries(df, element_path):
 def get_elements_at_iter(
     output_path: Path, iteration, element_path="cell_storage"
 ) -> pd.DataFrame:
+    """
+    Helper function to obtain information about cells or the domain at a given iteration point.
+
+    Args:
+        output_path(Path): Path of the stored results.
+        iteration(int): Iteration count at which to obtain results.
+        element_path(str): Identifier which should be \"cell_storage\" or \"voxel_storage\"
+    Returns:
+        pd.DataFrame: DataFrame containing all information
+    """
     dir = Path(output_path) / element_path / "json"
     run_directory = None
     for x in os.listdir(dir):
@@ -116,6 +170,15 @@ def get_elements_at_iter(
 
 
 def get_all_iterations(output_path, element_path="cell_storage"):
+    """
+    Obtain a sorted list of all saved iteration counts.
+
+    Args:
+        output_path(Path): Path of the stored results.
+        element_path(str): Identifier which should be \"cell_storage\" or \"voxel_storage\"
+    Returns:
+        list[int]: Sorted list of iteration counts.
+    """
     return sorted(
         [int(x) for x in os.listdir(Path(output_path) / element_path / "json")]
     )
@@ -130,6 +193,13 @@ def __iter_to_elements(args):
 def get_elements_at_all_iterations(
     output_path: Path, element_path="cell_storage", threads=1
 ):
+    """
+    Args:
+        output_path(Path): Path of the stored results.
+        element_path(str): Identifier which should be \"cell_storage\" or \"voxel_storage\"
+        threads(int): Number of threads to use simultaneously.
+    Returns:
+    """
     if threads <= 0:
         threads = os.cpu_count()
     dir = Path(output_path) / element_path / "json"
@@ -312,6 +382,16 @@ def _plot_bacteria(df_cells, ax):
 
 
 def save_snapshot(output_path, iteration, overwrite=False, formats=["png"]):
+    """
+    Save an individual snapshots.
+
+    Args:
+        output_path(Path): Path of the stored results.
+        iteration(int): Iteration count at which to obtain results.
+        overwrite(bool): Enable to overwrite existing results. Disabling might speed up runtime when
+        creating missing images.
+        formats(list[str]): List of formats to store in. Only use formats supported by matplotlib.
+    """
     quit = True
     for format in formats:
         save_path = _determine_image_save_path(output_path, iteration, fmt=format)
@@ -366,6 +446,16 @@ def __save_snapshot_helper(all_args):
 
 
 def save_all_snapshots(output_path: Path, threads=1, show_bar=True, **kwargs):
+    """
+    Saves all snapshots using multiple threads.
+    See :func:`save_snapshot` to store individual snapshots.
+
+    Args:
+        output_path(Path): Path of the stored results.
+        threads(int): Number of threads to use simultaneously.
+        show_bar(bool): Show or hide a progress bar.
+        **kwargs: Any arguments for :func:`save_snapshot`
+    """
     if threads <= 0:
         threads = os.cpu_count()
     all_args = [
@@ -384,6 +474,15 @@ def save_all_snapshots(output_path: Path, threads=1, show_bar=True, **kwargs):
 
 
 def calculate_spatial_density(data, domain, weights=None):
+    """
+    Calculates the spatial entry given data for cells and domain.
+
+    Args:
+        data(pd.DataFrame): DataFrame containing cellular properties.
+        domain(pd.DataFrame): DataFrame containing domain properties.
+        weights(list): List of weightings to use for calculating the entropy. Will be filled
+        automatically by the volume of the individual cells if not provided.
+    """
     positions = np.array([x for x in data["element.cell.mechanics.pos"]])
 
     if weights is None:
@@ -411,6 +510,15 @@ def _calculate_spatial_density_from_positions(positions, domain, weights=None):
 
 
 def calculate_entropy(output_path, iteration) -> np.ndarray:
+    """
+    Obtain entropies for both species.
+
+    Args:
+        output_path(Path): Path of the stored results.
+        iteration(int): Iteration count at which to obtain results.
+    Returns:
+        np.ndarray: Array containing entropy values for both species.
+    """
     domain, _, _ = get_simulation_settings(output_path)
     data = get_elements_at_iter(output_path, iteration)
 
