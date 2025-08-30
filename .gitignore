@@ -20,3 +20,5 @@ release.zip
 Cargo.lock
 target
 cr_pool/*.so
+
+docs/build
