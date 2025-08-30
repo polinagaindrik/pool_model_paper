@@ -6,7 +6,7 @@
 We recommend to use the [`uv`](https://github.com/astral-sh/uv) package manager for installing all
 python dependencies.
 The following instructions will work for unix-based operating systems.
-We use [`maturin`]() as a build tool.
+We use [`maturin`](https://github.com/PyO3/maturin) as a build tool.
 
 ```
 # Create a new virtual environment and activate it
