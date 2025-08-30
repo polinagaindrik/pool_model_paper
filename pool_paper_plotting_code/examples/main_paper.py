@@ -1,8 +1,11 @@
+# fmt: off
 #!/usr/bin/env python3
-
 import numpy as np
-import os, sys
-sys.path.append(os.getcwd())
+import os
+import sys
+import matplotlib.pyplot as plt
+sys.path.append(f"{os.getcwd()}")
+sys.path.append(f"{os.getcwd()}/pool_paper_plotting_code")
 from digital_twin import *
 
 
