@@ -211,7 +211,7 @@ if __name__ == "__main__":
     ax.set_xlim(0., 9.0)
     ax.set_ylim(3.3e0, 1.1e4)
     ax.legend()
-    plt.savefig(f'out/pdfs/pool_model_3pools_resource.pdf', bbox_inches='tight')
+    plt.savefig('out/pdfs/pool_model_3pools_resource.pdf', bbox_inches='tight')
     plt.close(fig)
 
 #################################### Temperature shift ##########################################
@@ -244,7 +244,7 @@ if __name__ == "__main__":
     ax[0].legend()
     ax[0].text(8., 9.9, r'(a)')
     ax[1].text(8., 1.5, r'(b)')
-    plt.savefig(f'out/pdfs/pool_model_3pools_resource_tempshift.pdf', bbox_inches='tight')
+    plt.savefig('out/pdfs/pool_model_3pools_resource_tempshift.pdf', bbox_inches='tight')
     plt.close(fig)
 
     fig, ax = plt.subplots(1, 1, figsize=figsize_default)
@@ -257,7 +257,7 @@ if __name__ == "__main__":
     ax.set_ylim(6e0, 1.1e4)
     ax.legend()
     ax.text(8., 9.9, r'(a)')
-    plt.savefig(f'out/pdfs/pool_model_3pools_resource_tempshift1.pdf', bbox_inches='tight')
+    plt.savefig('out/pdfs/pool_model_3pools_resource_tempshift1.pdf', bbox_inches='tight')
     plt.close(fig)
 
     fig, ax = plt.subplots(1, 1, figsize=figsize_default_small)
@@ -267,7 +267,7 @@ if __name__ == "__main__":
     fig, ax = set_labels(fig, ax, r'Time, $t$', r'Rate, $\gamma$')
     ax.set_xlim(0.7, 8.5)
     ax.text(8., 1.5, r'(b)')
-    plt.savefig(f'out/pdfs/pool_model_3pools_resource_tempshift2.pdf', bbox_inches='tight')
+    plt.savefig('out/pdfs/pool_model_3pools_resource_tempshift2.pdf', bbox_inches='tight')
     plt.close(fig)
 
 #################################### Resource competition ################################################3
@@ -290,7 +290,7 @@ if __name__ == "__main__":
     ax.set_xlim(0., 8.0)
     ax.set_ylim(-100, 1.05e4)
     ax.legend()
-    plt.savefig(f'out/pdfs/pool_model_2pools_resource_competition.pdf', bbox_inches='tight')
+    plt.savefig('out/pdfs/pool_model_2pools_resource_competition.pdf', bbox_inches='tight')
     plt.close(fig)
 
 ######################## Interspecies competition (Waste/inhibitor production) #############################
@@ -324,7 +324,7 @@ if __name__ == "__main__":
         fig, ax[i] = set_labels(fig, ax[i], r'Time, $t$', r'Bacterial Count, $N$')
     ax[0].text(2.1, 800, r'(a) $\mathcal{F}^1$')
     ax[1].text(2.1, 800, r'(b) $\mathcal{F}^2$')
-    plt.savefig(f'out/pdfs/pool_model_2pools_toxin.pdf', bbox_inches='tight')
+    plt.savefig('out/pdfs/pool_model_2pools_toxin.pdf', bbox_inches='tight')
     plt.close(fig)
 
     fig, ax = plt.subplots(1, 1, figsize=figsize_default)
@@ -338,7 +338,7 @@ if __name__ == "__main__":
     ax.legend()
     fig, ax = set_labels(fig, ax, r'Time, $t$', r'Bacterial Count, $N$')
     ax.text(2.1, 800, r'(a) $\mathcal{F}^1$')
-    plt.savefig(f'out/pdfs/pool_model_2pools_toxin1.pdf', bbox_inches='tight')
+    plt.savefig('out/pdfs/pool_model_2pools_toxin1.pdf', bbox_inches='tight')
     plt.close(fig)
 
     fig, ax = plt.subplots(1, 1, figsize=figsize_default)
@@ -352,7 +352,7 @@ if __name__ == "__main__":
     ax.legend()
     fig, ax = set_labels(fig, ax, r'Time, $t$', r'Bacterial Count, $N$')
     ax.text(2.1, 800, r'(b) $\mathcal{F}^2$')
-    plt.savefig(f'out/pdfs/pool_model_2pools_toxin2.pdf', bbox_inches='tight')
+    plt.savefig('out/pdfs/pool_model_2pools_toxin2.pdf', bbox_inches='tight')
     plt.close(fig)
 
 ############################# Inhibition ######################################
@@ -380,7 +380,7 @@ if __name__ == "__main__":
     ax[0].set_ylim(0.1, 0.48)
     ax[1].set_ylim(0.1, 0.83)
     ax[2].set_ylim(0.1, 0.87)
-    plt.savefig(f'out/pdfs/pool_model_1pool_inhib.pdf', bbox_inches='tight')
+    plt.savefig('out/pdfs/pool_model_1pool_inhib.pdf', bbox_inches='tight')
     plt.close(fig)
 
     text = [r'(a) $\psi$ = 1', r'(b) $\psi$ = 0.5', r'(c) $\psi$ = 2']
@@ -395,7 +395,7 @@ if __name__ == "__main__":
         fig, ax = set_labels(fig, ax, r'Time, $t$', r'$N / N_t$')
         ax.text(*text_coord[j], text[j])
         ax.set_ylim(0.1, y_max_lim[j])
-        plt.savefig(f'out/pdfs/pool_model_1pool_inhib{j+1}.pdf', bbox_inches='tight')
+        plt.savefig('out/pdfs/pool_model_1pool_inhib{j+1}.pdf', bbox_inches='tight')
         plt.close(fig)
 
 
@@ -429,7 +429,7 @@ if __name__ == "__main__":
     ax[1].text(9.5, 0.075, r'(b)')
     ax[2].text(9.5, 0.06, r'(c)')
     ax[0].legend(loc='upper left', ncols=2)
-    plt.savefig(f'out/pdfs/pool_model_2sp_1pool_coop.pdf', bbox_inches='tight')
+    plt.savefig('out/pdfs/pool_model_2sp_1pool_coop.pdf', bbox_inches='tight')
     plt.close(fig)
 
     ymax_lim = [0.9, 1.22, 0.9]
@@ -448,7 +448,7 @@ if __name__ == "__main__":
         ax.set_ylim(0.0, ymax_lim[k])
         ax.text(*text_coord[k], text[k])
         ax.legend(loc='upper left')
-        plt.savefig(f'out/pdfs/pool_model_2sp_1pool_coop{k+1}.pdf', bbox_inches='tight')
+        plt.savefig('out/pdfs/pool_model_2sp_1pool_coop{k+1}.pdf', bbox_inches='tight')
         plt.close(fig)
 
 
@@ -466,5 +466,6 @@ if __name__ == "__main__":
     #ax.set_yscale('log')
     ax.set_xlim(0., 10.)
     ax.legend()
-    plt.savefig(f'out/pdfs/pool_model_spatial.pdf', bbox_inches='tight')
+    plt.savefig('out/pdfs/pool_model_spatial.pdf', bbox_inches='tight')
     plt.close(fig)
+
