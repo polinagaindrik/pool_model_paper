@@ -13,7 +13,7 @@ def pool_model_3pools(t, x, param, x0, const):
     (lambd, mu1, alpha, mu2, beta, ) = const
     (L0, G0, D0, ) = x0
     (L, G, D, ) = x
-        
+
     return [
         - (mu1 + lambd) * L,
                   lambd * L + (alpha - mu2) * G,
@@ -24,7 +24,7 @@ def pool_model_3pools_resource(t, x, param, x0, const):
     (lambd, mu1, alpha, mu2, beta, N_t, ) = const
     (L0, G0, D0, ) = x0
     (L, G, D, ) = x
-        
+
     return [
         - (mu1 + lambd) * L,
                   lambd * L + (alpha - alpha * ((L + G + D)/N_t) - mu2) * G,
@@ -35,7 +35,7 @@ def pool_model_2pools_resource_lag(t, x, param, x0, const):
     (lambd, alpha, N_t, ) = const
     (L0, G0, R0, ) = x0
     (L, G, R ) = x
-        
+
     return [
         - lambd * R * L,
           lambd * R * L + alpha * R * G,
@@ -59,7 +59,7 @@ def pool_model_tempstress(t, x, param, x0, const):
     (lambd, mu1, alpha, mu2, beta, N_t, Gamma, delta, shift_cnd,) = const
     (L0, G0, D0, ) = x0
     (L, G, D, ) = x
-    
+
     gamma = temp_stress(t, Gamma, delta, shift_cnd)
     return [
         - (mu1 + lambd) * L +                                             gamma * G,
@@ -79,7 +79,7 @@ def pool_model_resource_comp(t, x, param, x0, const):
     (lambd_A, alpha_A, lambd_B, alpha_B, N_t, ) = const
     (L_A0, G_A0, L_B0, G_B0, R0, ) = x0
     (L_A, G_A, L_B, G_B, R, ) = x
-        
+
     return [
         - lambd_A * R * L_A,
           lambd_A * R * L_A + alpha_A * R * G_A,
@@ -92,7 +92,7 @@ def pool_model_2sp_comp_toxin1(t, x, param, x0, const):
     (lambd_A, alpha_A, lambd_B, alpha_B, N_t, k, mu,) = const
     (L_A0, G_A0, L_B0, G_B0, R0, T0) = x0
     (L_A, G_A, L_B, G_B, R, T) = x
-        
+
     return [
         - lambd_A * R * L_A,
           lambd_A * R * L_A + (alpha_A * R - mu/(k*N_t) * T) * G_A,
@@ -106,7 +106,7 @@ def pool_model_2sp_comp_toxin2(t, x, param, x0, const):
     (lambd_A, alpha_A, lambd_B, alpha_B, N_t, k, mu,) = const
     (L_A0, G_A0, L_B0, G_B0, R0, T0) = x0
     (L_A, G_A, L_B, G_B, R, T) = x
-        
+
     return [
         - lambd_A * R * L_A,
           lambd_A * R * L_A + (alpha_A * R - mu/(k*N_t) * T) * G_A,
@@ -119,7 +119,7 @@ def pool_model_2sp_comp_toxin2(t, x, param, x0, const):
 def pool_model_2sp_comp_inhib(t, x, param, x0, const):
     (psi, ) = const
     (G_A, G_B, ) = x
-        
+
     return [
         G_A * (1 - G_A - G_B) / G_B,
         G_B * psi * (1 - G_A - G_B) / G_A
@@ -301,7 +301,7 @@ if __name__ == "__main__":
                                        const=const_tox, n_traj=1, obs_func=observable_2pool_2species_resource_toxin)
     data_tox2 = generate_insilico_data(pool_model_2sp_comp_toxin2, [np.linspace(0, 10, 100)], [], [[]], x0_tox,
                                        const=const_tox, n_traj=1, obs_func=observable_2pool_2species_resource_toxin)
-    
+
     fig, ax = plt.subplots(1, 2, figsize=figsize_default2subpl)
     fig.subplots_adjust(wspace=0.25)
     labels1 = [r'$N_A=L_A+G_A$', r'$N_B=L_B+G_B$', r'$R N_t$', r'$T_B^1$']
@@ -364,7 +364,7 @@ if __name__ == "__main__":
     for psi in const_inhib:
         data_inhib += generate_insilico_data(pool_model_2sp_comp_inhib, [np.linspace(0, 1, 100)], [], [[]], x0_inhib,
                                              const=[psi], n_traj=1)
-    
+
     fig, ax = plt.subplots(3, 1, figsize=(4, 6.7), sharex=True)
     fig.subplots_adjust(hspace=0.25)
     labels = [r'$G_A$', r'$G_B$']
@@ -468,4 +468,3 @@ if __name__ == "__main__":
     ax.legend()
     plt.savefig('out/pdfs/pool_model_spatial.pdf', bbox_inches='tight')
     plt.close(fig)
-
