@@ -1,11 +1,14 @@
+# fmt: off
 #!/usr/bin/env python3
 
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.integrate import solve_ivp
 
-import os, sys
+import os
+import sys
 sys.path.append(os.getcwd())
+sys.path.append(f"{os.getcwd()}/pool_paper_plotting_code")
 from digital_twin import *
 
 

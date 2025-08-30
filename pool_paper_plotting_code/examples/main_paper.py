@@ -4,7 +4,7 @@ import numpy as np
 import os
 import sys
 import matplotlib.pyplot as plt
-sys.path.append(f"{os.getcwd()}")
+sys.path.append(os.getcwd())
 sys.path.append(f"{os.getcwd()}/pool_paper_plotting_code")
 from digital_twin import *
 
