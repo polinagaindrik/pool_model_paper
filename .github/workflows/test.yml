@@ -16,8 +16,6 @@ jobs:
         with:
           python-version: 3.12
           nogil: false
-      - name: Setup headless display for pyvista
-        uses: pyvista/setup-headless-display-action@v3
       - name: Install packages and run pytest
         run: |
           python -m venv .venv
