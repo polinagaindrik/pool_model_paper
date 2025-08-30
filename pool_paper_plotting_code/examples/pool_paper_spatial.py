@@ -52,7 +52,7 @@ if __name__ == "__main__":
     constsp = [.008, .005, 4., 5., .1, .1, Nt] # (lambd1, lambd2, alph1, alph2, chi, muI, Nt, )
     times, observabl = model_solve(pool_model_spatial_limit, np.linspace(0, 10, 100), [], x0sp, constsp,
                              obs_func=observable_2pool_2species) 
-    
+
     fig, ax = plt.subplots()
     labels = ['Species 1', 'Species 2', 'Sp 1 + Sp 2']
     for j, obs in enumerate(observabl):
@@ -63,5 +63,5 @@ if __name__ == "__main__":
     #ax.set_yscale('log')
     ax.set_xlim(0., 10.)
     ax.legend()
-    plt.savefig(f'pool_model_spatial.pdf', bbox_inches='tight')
-    plt.close(fig) 
+    plt.savefig('pool_model_spatial.pdf', bbox_inches='tight')
+    plt.close(fig)
