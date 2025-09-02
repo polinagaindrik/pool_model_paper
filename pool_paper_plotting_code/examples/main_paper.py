@@ -395,7 +395,7 @@ if __name__ == "__main__":
         fig, ax = set_labels(fig, ax, r'Time, $t$', r'$N / N_t$')
         ax.text(*text_coord[j], text[j])
         ax.set_ylim(0.1, y_max_lim[j])
-        plt.savefig('paper/Figures/pool_model_1pool_inhib{j+1}.pdf', bbox_inches='tight')
+        plt.savefig(f'paper/Figures/pool_model_1pool_inhib{j+1}.pdf', bbox_inches='tight')
         plt.close(fig)
 
 
@@ -448,7 +448,7 @@ if __name__ == "__main__":
         ax.set_ylim(0.0, ymax_lim[k])
         ax.text(*text_coord[k], text[k])
         ax.legend(loc='upper left')
-        plt.savefig('paper/Figures/pool_model_2sp_1pool_coop{k+1}.pdf', bbox_inches='tight')
+        plt.savefig(f'paper/Figures/pool_model_2sp_1pool_coop{k+1}.pdf', bbox_inches='tight')
         plt.close(fig)
 
 
