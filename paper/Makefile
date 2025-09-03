@@ -1,8 +1,8 @@
 ZIP_TARGETS:= README.md\
-	Bacteria\ Modelling.bib\
-	listings-rust.sty\
-	pool_model.tex\
-	pool_model.pdf\
+	$(wildcard *.pdf)\
+	$(wildcard *.tex)\
+	$(wildcard *.bib)\
+	$(wildcard *.sty)\
 	$(wildcard Figures/abm-homogenous/*)\
 	$(wildcard Figures/abm-homogenous-low-diffusion/*)\
 	$(wildcard Figures/abm-inhomogenous/*)\
@@ -11,7 +11,7 @@ ZIP_TARGETS:= README.md\
 all:
 	latexmk -pdf -shell-escape pool_model.tex
 
-clean:
+clean_partial:
 	rm -f *.aux
 	rm -f *.bbl
 	rm -f *.bcf
@@ -21,13 +21,15 @@ clean:
 	rm -f *.fls
 	rm -f *.log
 	rm -f *.out
-	rm -f *.pdf
 	rm -f *.toc
 	rm -f *.run.xml
 	rm -f *.bbl-SAVE-ERROR
 	rm -f *.bcf-SAVE-ERROR
 
+clean: clean_partial
+	rm -f *.pdf
+
 fresh: clean all
 
-zip: fresh
+zip: fresh clean_partial
 	zip release.zip $(ZIP_TARGETS)
