@@ -48,7 +48,7 @@ def print_domain_properties(output_path):
         )
 
 
-def analyze_voxel_data(output_path, iteration, meta_params):
+def analyze_voxel_data(output_path, iteration, meta_params, get_entropy):
     # Calculate total extracellular concentrations
     entry = get_elements_at_iter(
         output_path,
@@ -74,7 +74,7 @@ def _analyze_voxel_data_helper(args):
     return analyze_voxel_data(*args)
 
 
-def analyze_cell_data(output_path, iteration, meta_params, get_entropy=False):
+def analyze_cell_data(output_path, iteration, meta_params, get_entropy):
     entry = get_elements_at_iter(output_path, iteration)
 
     # Calculate number of cells for species
@@ -124,14 +124,17 @@ def _analyze_cell_data_helper(args):
     return analyze_cell_data(*args)
 
 
-def analyze_all_cell_voxel_data(output_path, meta_params, n_threads=None):
+def analyze_all_cell_voxel_data(output_path, meta_params, n_threads=None, get_entropy=False):
     # Construct pool to process results in parallel
     if n_threads is None:
         n_threads = mp.cpu_count()
     pool = mp.Pool(n_threads)
 
     # Gather args and use pool to get already pre-processed results
-    args = [(output_path, iteration, meta_params) for iteration in get_all_iterations(output_path)]
+    args = [
+        (output_path, iteration, meta_params, get_entropy)
+        for iteration in get_all_iterations(output_path)
+    ]
     print("Loading Cell Data")
     data_cells = (
         pd.DataFrame(
