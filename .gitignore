@@ -22,3 +22,5 @@ target
 cr_pool/*.so
 
 docs/build
+
+out
