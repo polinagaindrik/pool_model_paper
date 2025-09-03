@@ -122,7 +122,7 @@ impl MetaParams {
 }
 
 fn save_initial_state(
-    path: &std::path::PathBuf,
+    path: std::path::PathBuf,
     cells: &Vec<BacteriaTemplate>,
     domain: &Domain,
     meta_params: &MetaParams,
@@ -143,19 +143,19 @@ fn save_initial_state(
     let writer_domain = std::io::BufWriter::new(f_domain);
     let writer_meta_params = std::io::BufWriter::new(f_meta_params);
 
-    serde_json::to_writer_pretty(writer_cells, &cells).or_else(|e| {
-        Err(pyo3::PyErr::new::<pyo3::exceptions::PyValueError, _>(
-            format!("serde_json error in writing simulation settings to file: {e}"),
+    serde_json::to_writer_pretty(writer_cells, &cells).map_err(|e| {
+        pyo3::PyErr::new::<pyo3::exceptions::PyValueError, _>(format!(
+            "serde_json error in writing simulation settings to file: {e}"
         ))
     })?;
-    serde_json::to_writer_pretty(writer_domain, &domain).or_else(|e| {
-        Err(pyo3::PyErr::new::<pyo3::exceptions::PyValueError, _>(
-            format!("serde_json error in writing simulation settings to file: {e}"),
+    serde_json::to_writer_pretty(writer_domain, &domain).map_err(|e| {
+        pyo3::PyErr::new::<pyo3::exceptions::PyValueError, _>(format!(
+            "serde_json error in writing simulation settings to file: {e}"
         ))
     })?;
-    serde_json::to_writer_pretty(writer_meta_params, &meta_params).or_else(|e| {
-        Err(pyo3::PyErr::new::<pyo3::exceptions::PyValueError, _>(
-            format!("serde_json error in writing simulation settings to file: {e}"),
+    serde_json::to_writer_pretty(writer_meta_params, &meta_params).map_err(|e| {
+        pyo3::PyErr::new::<pyo3::exceptions::PyValueError, _>(format!(
+            "serde_json error in writing simulation settings to file: {e}"
         ))
     })?;
 
@@ -235,9 +235,9 @@ pub fn run_simulation(
             )
         }
     }
-    .or_else(|e| {
-        Err(pyo3::PyErr::new::<pyo3::exceptions::PyValueError, _>(
-            format!("Rust error in construction of simulation domain: {e}"),
+    .map_err(|e| {
+        pyo3::PyErr::new::<pyo3::exceptions::PyValueError, _>(format!(
+            "Rust error in construction of simulation domain: {e}"
         ))
     })?;
 
@@ -296,7 +296,7 @@ pub fn run_simulation(
     supervisor.config.show_progressbar = meta_params.show_progressbar;
 
     save_initial_state(
-        &supervisor.storage.get_full_path(),
+        supervisor.storage.get_full_path(),
         &cells,
         &domain,
         &meta_params,
