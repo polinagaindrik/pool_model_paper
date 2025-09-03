@@ -35,10 +35,7 @@ import multiprocessing as mp
 import numpy as np
 import scipy as sp
 from types import SimpleNamespace
-import matplotlib.pyplot as plt
 import tqdm
-import matplotlib
-import gc
 
 
 def get_last_output_path(name="pool_model", prefix="out") -> Path:
