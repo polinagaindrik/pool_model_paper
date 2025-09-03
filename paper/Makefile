@@ -29,5 +29,5 @@ clean:
 
 fresh: clean all
 
-zip: all
+zip: fresh
 	zip release.zip $(ZIP_TARGETS)
