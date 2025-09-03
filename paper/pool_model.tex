@@ -174,12 +174,27 @@
 %
 % ================================================================================================
 \section{Introduction}
+
+\paragraph{General Introduction to Bacterial Consortia}
+\begin{itemize}
+    \item Complex system; many players (cell-types, interactions)
+    \item processes on different scales (population, cellular, molecular, gene-level)
+    \item Food Safety, Production
+    \item Healthcare: Drug development
+    \item Environmental Sustainabiliy
+\end{itemize}
 Motivation: general, flexible approach for bacterial systems that allows easily modify the system depending on processes on different scales.
 Allows us to describe the processes within populations using different bacterial states as well as interactions between different populations using ODEs.
 
-\paragraph{Bacteria Consortia and processes (growth, lag phase, inhibition, etc.)}
+
+\noindent
+\paragraph{Experimental/Biological evidence/phenomena}
 \begin{itemize}
-    \item 
+    \item Lag Phase, Competition, Cooperation, Limiting Resource
+    \item Comprehensive reviews about competition/cooperation bacterial mechanisms: \cite{ghoul_ecology_2016, stubbendieck_bacterial_2016, hibbing_bacterial_2010, west_social_2007}
+    \item Spatial Effects: adhesion, migration, chemotaxis, diffusion
+    \item Quorum-sensing
+    \item Biofilm formation \cite{Jin2020}
 \end{itemize}
 
 \noindent
@@ -188,7 +203,7 @@ Existing models in Predictive Microbiology (Primary Models)~\cite{perez-rodrigue
 \begin{itemize}
     \item An overview of primary models used in food science can be found in~\cite{van_boekel_kinetic_2008}.
     \item Baranyi-Roberts Model~\cite{baranyi_modeling_1993, baranyi_dynamic_1994}
-    \item modified Gompertz
+    \item modified Gompertz~\cite{Gompertz1825-wi,Gibson1987}
     \item Buchanan et al.: three-phase linear model for lag phase, exponential growth phase, and stationary phase~\cite{buchanan_when_1997}
     \item McKellar two-compartment model with bacteria in growing and non-growing state~\cite{mckellar_heterogeneous_1997}
     \item Inactivation models
@@ -200,18 +215,17 @@ Secondary models:
     \item Square Root-Type Models, e.g., Ratkowski for temperature~\cite{ratkowsky_relationship_1982}
     \item The Cardinal Parameter Model~\cite{zwietering_decision_1992}
 \end{itemize}
-%
-%
-Comprehensive reviews about competition/cooperation bacterial mechanisms: \cite{ghoul_ecology_2016, stubbendieck_bacterial_2016, hibbing_bacterial_2010, west_social_2007}\\
-
-\noindent
-\paragraph{Spatial effects in cosortia (adhesion, migration, chemotaxis)}
-\begin{itemize}
-    \item 
-\end{itemize}
 
 \noindent
 \paragraph{Models for spatial effects; PDEs, \acp{abm}, others}
+\begin{itemize}
+    \item BSim \cite{Gorochowski2012,Dang2020}
+    \item Bacterial Branching patterns \cite{Kawasaki1997,Matsushita1998}
+\end{itemize}
+
+\noindent
+\paragraph{What is the problem/what is the question? How do we address this?}
+
 %
 %
 %
