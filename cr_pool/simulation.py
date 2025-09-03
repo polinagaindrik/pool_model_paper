@@ -41,7 +41,7 @@ import matplotlib
 import gc
 
 
-def get_last_output_path(name="pool_model") -> Path:
+def get_last_output_path(name="pool_model", prefix="out") -> Path:
     """
     Returns the path of the last numerical result.
 
@@ -50,7 +50,7 @@ def get_last_output_path(name="pool_model") -> Path:
     Returns:
         Path: Storage Path of the last simulation result
     """
-    return Path("out") / name / sorted(os.listdir(Path("out") / name))[-1]
+    return Path(prefix) / name / sorted(os.listdir(Path(prefix) / name))[-1]
 
 
 def get_simulation_settings(output_path) -> tuple[Any, Any, Any]:
