@@ -92,6 +92,7 @@
 \newcommand{\etal}{{\textit{et al. }}}
 
 \newacro{ode}[ODE]{Ordinary Differential Equation}
+\newacro{pde}[PDE]{Partial Differential Equation}
 \newacro{glv}[gLV]{generalized Lotka-Volterra}
 \newacro{abm}[ABM]{Agent-Based Model}
 
@@ -263,26 +264,48 @@ The advantage of the \ac{ode} formulation lies in the predictive power and simpl
 However due to their coarse-grained nature, they lack the ability to describe heterogeneity and
 other spatial effects.
 
-
-
-
-
-
-
-
-\noindent
-\paragraph{Models for spatial effects; PDEs, \acp{abm}, others}
-\begin{itemize}
-    \item BSim \cite{Gorochowski2012,Dang2020}
-    \item Bacterial Branching patterns \cite{Kawasaki1997,Matsushita1998}
-\end{itemize}
+% \paragraph{Models for spatial effects; PDEs, \acp{abm}, others}
+% \begin{itemize}
+%     \item BSim \cite{Gorochowski2012,Dang2020}
+%     \item Bacterial Branching patterns \cite{Kawasaki1997,Matsushita1998}
+% \end{itemize}
 
 \noindent
-\paragraph{What is the problem/what is the question? How do we address this?}
+% To incorporate spatial heterogeneity or other effects other modeling approaches have been devised.
+% \acp{pde} follow a similar pattern as \acp{ode} but also distribute the described variables through
+% space.
+When dealing with spatial effects such as heterogeneity, we are required to use more extensive
+modeling formulations such as \acp{pde} or \acp{abm}.
+The former represent an intermediate step between the population-based \ac{ode} models and the
+individually-based \acp{abm} and can be effective, especially when dealing with large crowds of
+cells that can be approximated as a continuum.
+On the other hand, \acp{abm} excel at describing the individual behaviour of cells which can then
+lead to more complex collective phenomena.
+Tools such as BSim~\cite{Gorochowski2012,Dang2020} or \texttt{cellular\_raza}~\cite{Pleyer2025} are
+capable to describe large amounts of cells, performing various intracellular and extracellular
+processes.
+The latter has been used to adapt \ac{pde}-based models into an \ac{abm} formulation which describe
+bacterial branching patterns~\cite{Kawasaki1997,Matsushita1998}.
 
-%
-%
-%
+% \paragraph{What is the problem/what is the question? How do we address this?}
+
+\noindent
+In this work, we introduce a new \ac{ode}-based modeling framework which describes different
+bacterial species, their metabolic states and external quantities such as nutrients as individual
+pools.
+The dynamics of bacterial growth can be understood in terms of transitions between the different
+bacterial states i.e. pools.
+Our model also allows us to capture interactions between these bacterials states and the external
+microenvironment.
+Compared against the aforementioned methods, this approach turns out to be less complex with general
+applicability, low number of parameters and greater explainability for the underlying biological
+reality.
+To illustrate the generality of the model, multiple examples are reported.
+We analyze the spacial limitations of an interacting two-species model and show that it can be fully
+understood on an individual-based level in terms of single-cell processes.
+Furthermore, we asses how spatial heterogeneity can impact the shape of the growth curves.
+
+
 % ================================================================================================
 \section{One Species Modeling}
 % ------------------------------------------------------------------------------------------------
