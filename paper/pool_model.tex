@@ -200,34 +200,75 @@ The natural bacetrial processes are a crucial part of our planets ecosystem, bei
 tasks such as nutrient cycling, decomposition of organic matter and oxygen production.
 It is of great interest to understand the dynamics of these various processes.
 
-\noindent
-\paragraph{Experimental/Biological evidence/phenomena}
-\begin{itemize}
-    \item Lag Phase, Competition, Cooperation, Limiting Resource
-    \item Comprehensive reviews about competition/cooperation bacterial mechanisms: \cite{ghoul_ecology_2016, stubbendieck_bacterial_2016, hibbing_bacterial_2010, west_social_2007}
-    \item Spatial Effects: adhesion, migration, chemotaxis, diffusion
-    \item Quorum-sensing
-    \item Biofilm formation \cite{Jin2020}
-\end{itemize}
+% \noindent
+% \paragraph{Experimental/Biological evidence/phenomena}
+% \begin{itemize}
+%     \item Lag Phase, Competition, Cooperation, Limiting Resource
+%     \item Comprehensive reviews about competition/cooperation bacterial mechanisms: \cite{ghoul_ecology_2016, stubbendieck_bacterial_2016, hibbing_bacterial_2010, west_social_2007}
+%     \item Spatial Effects: adhesion, migration, chemotaxis, diffusion
+%     \item Quorum-sensing
+%     \item Biofilm formation \cite{Jin2020}
+% \end{itemize}
 
 \noindent
-\paragraph{ODE models (predictive microbiology, existing, overview, most popular)}
-Existing models in Predictive Microbiology (Primary Models)~\cite{perez-rodriguez_predictive_2012}:
-\begin{itemize}
-    \item An overview of primary models used in food science can be found in~\cite{van_boekel_kinetic_2008}.
-    \item Baranyi-Roberts Model~\cite{baranyi_modeling_1993, baranyi_dynamic_1994}
-    \item modified Gompertz~\cite{Gompertz1825-wi,Gibson1987}
-    \item Buchanan et al.: three-phase linear model for lag phase, exponential growth phase, and stationary phase~\cite{buchanan_when_1997}
-    \item McKellar two-compartment model with bacteria in growing and non-growing state~\cite{mckellar_heterogeneous_1997}
-    \item Inactivation models
-\end{itemize}
-%
-Secondary models:
-\begin{itemize}
-    \item Polynomial models 
-    \item Square Root-Type Models, e.g., Ratkowski for temperature~\cite{ratkowsky_relationship_1982}
-    \item The Cardinal Parameter Model~\cite{zwietering_decision_1992}
-\end{itemize}
+In order to achieve a comprehensive description of the target system, it is important to incorporate
+all relevant biologial phenomena arising in these bacterial systems.
+During their reproductive process, bacteria undergo multiple phases, starting in a lag phase which
+is necessary to adapt to new environments and initially impedes the overall growth.
+Additionally, bacteria are able to cooperate e.g. via complementary metabolic processes or inhibit
+each other e.g. by means of waste production as a metabilic byproduct.
+A limited supply of nutrients will also affect the overall reproductive capacity of the colony.
+Bacteria have thus devised various survival strategies to ensure a sufficient access to nutrients.
+Effects on a single-cell level such as adhesion, migration and chemotaxis can lead to complex
+phenomena on a population-based level which can aid in the goal of survival.
+Cell signaling e.g. in the form of quorum-sensing can lead to collective emergent phenomena such as
+biofilm formation which play an important role for many mature microbial community.
+
+% \noindent
+% \paragraph{ODE models (predictive microbiology, existing, overview, most popular)}
+% Existing models in Predictive Microbiology (Primary Models)~\cite{perez-rodriguez_predictive_2012}:
+% \begin{itemize}
+%     \item An overview of primary models used in food science can be found in~\cite{van_boekel_kinetic_2008}.
+%     \item Baranyi-Roberts Model~\cite{baranyi_modeling_1993, baranyi_dynamic_1994}
+%     \item modified Gompertz~\cite{Gompertz1825-wi,Gibson1987}
+%     \item Buchanan et al.: three-phase linear model for lag phase, exponential growth phase, and stationary phase~\cite{buchanan_when_1997}
+%     \item McKellar two-compartment model with bacteria in growing and non-growing state~\cite{mckellar_heterogeneous_1997}
+%     \item Inactivation models
+% \end{itemize}
+% %
+% Secondary models:
+% \begin{itemize}
+%     \item Polynomial models 
+%     \item Square Root-Type Models, e.g., Ratkowski for temperature~\cite{ratkowsky_relationship_1982}
+%     \item The Cardinal Parameter Model~\cite{zwietering_decision_1992}
+% \end{itemize}
+
+\noindent
+The first step in the construction of any mathematical model is to determine the required level of
+detail with respect to the description scale and consequently which effects to include.
+The bacterial growth curves let us describe the dynamics of the overall abundance of various
+species.
+The field of predictive microbiology has developed a variety of ODE-based models to capture
+bacterial growth dynamics.
+Various \acp{ode} \textit{primary models} describe the bacterial growth curve under contant
+environmental conditions.
+Widely used examples include the modified Gompertz model~\cite{Gompertz1825-wi}, Baranyi-Roberts
+model~\cite{baranyi_modeling_1993, baranyi_dynamic_1994} and MCKellar two-compartment model~\cite{buchanan_when_1997} which distinguishes between growing and non-growing bacteria.
+To take into account changing environmental conditions, so called \textit{secondary models}
+formulate the model parameters as a function of external quantities such as temperature, pH or
+humidity.
+These can be simple polynomial models, square root-type models~\cite{ratkowsky_relationship_1982} or
+more complex relations such as the cardinal parameter model~\cite{zwietering_decision_1992}.
+The advantage of the \ac{ode} formulation lies in the predictive power and simplicitiy of usage.
+However due to their coarse-grained nature, they lack the ability to describe heterogeneity and
+other spatial effects.
+
+
+
+
+
+
+
 
 \noindent
 \paragraph{Models for spatial effects; PDEs, \acp{abm}, others}
