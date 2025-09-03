@@ -56,8 +56,8 @@ def plot_nutrients(data_voxels, output_path):
     )
     ax.set_ylabel("Total Nutrients")
     ax.set_xlabel("Time [days]")
-    fig.savefig(f"{output_path}/cell_growth.png")
-    fig.savefig(f"{output_path}/cell_growth.pdf")
+    fig.savefig(f"{output_path}/nutrients.png")
+    fig.savefig(f"{output_path}/nutrients.pdf")
 
 
 def abm_to_ode(
