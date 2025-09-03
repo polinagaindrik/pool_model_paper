@@ -30,6 +30,7 @@ python -m maturin develop -r --uv
 -  Abstract
 
 -  Introduction
+    - [ ] Include citations
 
 -  General Math
     - [x] Move to supplement
