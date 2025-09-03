@@ -45,7 +45,7 @@ def plot_growth_curve(data_cells, output_path):
     fig.tight_layout()
     fig.savefig(f"{output_path}/cell_growth.png")
     fig.savefig(f"{output_path}/cell_growth.pdf")
-    plt.show(fig)
+    plt.close(fig)
 
 
 def plot_nutrients(data_voxels, output_path):
@@ -150,7 +150,6 @@ def plot_comparisons(data_cells, output_path):
     settings = get_simulation_settings(output_path)
 
     model = abm_to_ode(*settings)
-    print(model)
     res = model.solve_ode_raw()
     obs = observable_2pool_2species(res)
 
@@ -177,7 +176,7 @@ def plot_comparisons(data_cells, output_path):
     fig.savefig(output_path / "abm_ode_comparison.png")
     fig.savefig(output_path / "abm_ode_comparison.pdf")
     fig.savefig(output_path / "abm_ode_comparison.eps")
-    plt.show(fig)
+    plt.close(fig)
 
 
 def plot_lag_phase(data_cells, res, output_path):
@@ -228,7 +227,7 @@ def plot_lag_phase(data_cells, res, output_path):
     fig.tight_layout()
     fig.savefig(f"{output_path}/lag_phase.png")
     fig.savefig(f"{output_path}/lag_phase.pdf")
-    plt.show(fig)
+    plt.close(fig)
 
 
 def plot_entropy(data_cells, output_path):
@@ -245,7 +244,7 @@ def plot_entropy(data_cells, output_path):
     fig.tight_layout()
     fig.savefig(output_path / "entropy.png")
     fig.savefig(output_path / "entropy.pdf")
-    plt.show(fig)
+    plt.close(fig)
 
 
 def _determine_image_save_path(output_path, iteration, fmt="png"):
