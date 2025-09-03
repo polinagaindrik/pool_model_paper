@@ -74,7 +74,7 @@ def _analyze_voxel_data_helper(args):
     return analyze_voxel_data(*args)
 
 
-def analyze_cell_data(output_path, iteration, meta_params):
+def analyze_cell_data(output_path, iteration, meta_params, get_entropy=False):
     entry = get_elements_at_iter(output_path, iteration)
 
     # Calculate number of cells for species
@@ -98,11 +98,8 @@ def analyze_cell_data(output_path, iteration, meta_params):
     volume_2 = np.sum(volume[entry["element.cell.cellular_reactions.species"] == "S2"])
     total_cell_volume = np.sum(volume)
 
-    # Calculate the entropy at this step
-    entropy = calculate_entropy(output_path, iteration)
-
     # Return combined results
-    return {
+    res = {
         "iteration": iteration,
         "time": iteration * meta_params.dt / UNIT_DAY,
         "bacteria_count_1": bacteria_count_1,
@@ -114,8 +111,13 @@ def analyze_cell_data(output_path, iteration, meta_params):
         "bacteria_volume_1": volume_1,
         "bacteria_volume_2": volume_2,
         "bacteria_volume_total": total_cell_volume,
-        "entropy": entropy,
     }
+
+    # Calculate the entropy at this step
+    if get_entropy:
+        res["entropy"] = calculate_entropy(output_path, iteration)
+
+    return res
 
 
 def _analyze_cell_data_helper(args):
