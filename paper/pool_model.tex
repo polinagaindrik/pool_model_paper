@@ -195,9 +195,9 @@ Bacterial communities are ubiquitous and even able to survive under extreme cond
 virtually omnipresent around any living system.
 They play an especially important role within the context of food safety and production
 being a key contributor to the spoilage of food products as well as fermentation processes.
-Furthermore effects such as biofilm formation can hinder drug treatment by shielding the bacterial
+Furthermore, effects such as biofilm formation can hinder drug treatment by shielding the bacterial
 colony from antibiotic substances or immune response of the organism.
-The natural bacetrial processes are a crucial part of our planets ecosystem, being responsible for
+The natural bacterial processes are a crucial part of our planet's ecosystem, being responsible for
 tasks such as nutrient cycling, decomposition of organic matter and oxygen production.
 It is of great interest to understand the dynamics of these various processes.
 
@@ -213,17 +213,17 @@ It is of great interest to understand the dynamics of these various processes.
 
 \noindent
 In order to achieve a comprehensive description of the target system, it is important to incorporate
-all relevant biologial phenomena arising in these bacterial systems.
-During their reproductive process, bacteria undergo multiple phases, starting in a lag phase which
-is necessary to adapt to new environments and initially impedes the overall growth.
+all relevant biological phenomena arising in these bacterial systems.
+During their reproductive process, bacteria undergo multiple phases~\cite{buchanan_when_1997}, starting in a lag phase which
+is necessary to adapt to new environments and initially impedes the overall growth~\cite{rolfe_lag_2012, monod_growth_1949}.
 Additionally, bacteria are able to cooperate e.g. via complementary metabolic processes or inhibit
-each other e.g. by means of waste production as a metabilic byproduct.
-A limited supply of nutrients will also affect the overall reproductive capacity of the colony.
-Bacteria have thus devised various survival strategies to ensure a sufficient access to nutrients.
-Effects on a single-cell level such as adhesion, migration and chemotaxis can lead to complex
+each other e.g. by means of waste production as a metabolic byproduct~\cite{west_social_2007, rainey_evolution_2003, hibbing_bacterial_2010, stubbendieck_bacterial_2016}.
+A limited supply of nutrients will also affect the overall reproductive capacity of the colony~\cite{monod_growth_1949}.
+Bacteria have thus devised various survival strategies to ensure sufficient access to nutrients.
+Effects on a single-cell level such as adhesion~\cite{htuson_bacteriasurface_2013}, migration~\cite{decoene_microscopic_2011} and chemotaxis can lead to complex
 phenomena on a population-based level which can aid in the goal of survival.
 Cell signaling e.g. in the form of quorum-sensing can lead to collective emergent phenomena such as
-biofilm formation which play an important role for many mature microbial community.
+biofilm formation which play an important role for many mature microbial communities~\cite{ng_bacterial_2009}.
 
 % \noindent
 % \paragraph{ODE models (predictive microbiology, existing, overview, most popular)}
@@ -250,18 +250,18 @@ detail with respect to the description scale and consequently which effects to i
 The bacterial growth curves let us describe the dynamics of the overall abundance of various
 species.
 The field of predictive microbiology has developed a variety of ODE-based models to capture
-bacterial growth dynamics.
-Various \acp{ode} \textit{primary models} describe the bacterial growth curve under contant
+bacterial growth dynamics~\cite{perez-rodriguez_predictive_2012}.
+Various \acp{ode} \textit{primary models} describe the bacterial growth curve under constant
 environmental conditions.
 Widely used examples include the modified Gompertz model~\cite{Gompertz1825-wi}, Baranyi-Roberts
-model~\cite{baranyi_modeling_1993, baranyi_dynamic_1994} and MCKellar two-compartment model~\cite{buchanan_when_1997} which distinguishes between growing and non-growing bacteria.
-To take into account changing environmental conditions, so called \textit{secondary models}
+model~\cite{baranyi_modeling_1993, baranyi_dynamic_1994} and McKellar two-compartment model~\cite{buchanan_when_1997} which distinguishes between growing and non-growing bacteria.
+To take into account changing environmental conditions, so-called \textit{secondary models}
 formulate the model parameters as a function of external quantities such as temperature, pH or
 humidity.
 These can be simple polynomial models, square root-type models~\cite{ratkowsky_relationship_1982} or
 more complex relations such as the cardinal parameter model~\cite{zwietering_decision_1992}.
-The advantage of the \ac{ode} formulation lies in the predictive power and simplicitiy of usage.
-However due to their coarse-grained nature, they lack the ability to describe heterogeneity and
+The advantage of the \ac{ode} formulation lies in the predictive power and simplicity of usage.
+However, due to their coarse-grained nature, they lack the ability to describe heterogeneity and
 other spatial effects.
 
 % \paragraph{Models for spatial effects; PDEs, \acp{abm}, others}
@@ -295,15 +295,15 @@ bacterial species, their metabolic states and external quantities such as nutrie
 pools.
 The dynamics of bacterial growth can be understood in terms of transitions between the different
 bacterial states i.e. pools.
-Our model also allows us to capture interactions between these bacterials states and the external
+Our model also allows us to capture interactions between these bacterial states and the external
 microenvironment.
 Compared against the aforementioned methods, this approach turns out to be less complex with general
 applicability, low number of parameters and greater explainability for the underlying biological
 reality.
 To illustrate the generality of the model, multiple examples are reported.
-We analyze the spacial limitations of an interacting two-species model and show that it can be fully
+We analyze the spatial limitations of an interacting two-species model and show that it can be fully
 understood on an individual-based level in terms of single-cell processes.
-Furthermore, we asses how spatial heterogeneity can impact the shape of the growth curves.
+Furthermore, we assess how spatial heterogeneity can impact the shape of the growth curves.
 
 
 % ================================================================================================
@@ -360,7 +360,7 @@ Note that the pools $L$, $G$ and $D$ represent the number of bacteria (or number
 Let say $G=N_B/V$ and $[G]=1/V$, where $N_B$ is the number of bacteria and $V$ is the volume.
 Then $R_0=N_R/V$ and $[R_0]=1/V$, where $N_R$ is the number of resource molecules (or any appropriate unit, e.g., mol).
 Then $[\alpha_0]=V/s$, $[N_t]=1/V$, and $[\alpha]=1/s$.
-For homogeneous densities it is equivalent to consider the total amount, i.e., multiplying $L$ and $G$ by the volume.
+For homogenous densities it is equivalent to consider the total amount, i.e., multiplying $L$ and $G$ by the volume.
 In this case $[L]=[G]=[N_t]=1$.
 For simplicity, we rather make a transition to the dimensionless constant $\alpha:=\alpha_0 N_t$ and dimensionless resource pool $R(t) = R_0 / N_t$ ($0 \leqslant R \leqslant 1$).
 Here the full capacity of the resource pool $N_t$ was used as a scaling constant.
@@ -849,9 +849,9 @@ The \acp{ode} the bacterial population can be written as:
 %
 \begin{align}
     \dot{L_A} &= -\lambda_A R L_A\\
-    \dot{G_A} = \lambda_A R L_A + \alpha_A R G_A\\
-    \dot{L_B} = -\lambda_B R L_B\\
-    \dot{G_B} = \lambda_B R L_B + \frac{\alpha_B}{1 + \mu_I I} R G_B
+    \dot{G_A} &= \lambda_A R L_A + \alpha_A R G_A\\
+    \dot{L_B} &= -\lambda_B R L_B\\
+    \dot{G_B} &= \lambda_B R L_B + \frac{\alpha_B}{1 + \mu_I I} R G_B
     \label{eq:spatial_limit_F}
 \end{align}
 %
@@ -879,7 +879,7 @@ Nutrients are only taken up at the position of the cell $x_c$
     \dot{[R_i]} &= u [R_e](x_c)\\
     \dot{[R_e]}(x) &= -u \frac{V_c}{V_D} [R_e] \delta(x-x_c)
 \end{align}
-where $\delta(x-x_\text{cell})$ is the dirac delta-distribution.
+where $\delta(x-x_\text{cell})$ is the Dirac delta-distribution.
 Note that $[R_e]=[R_e](x)$ explicitly depends on the spatial coordinate but we choose to omit its notation.
 In the second equation, we need to account for the ratio of cellular $V_c$ and domain volume $V_D$ to calculate the correct change.
 Further, we want to modify the cellular volume by growing it increasingly with rate $a$.
@@ -890,7 +890,7 @@ With a rate $a$ and conversion $\sigma$, the cell turns these resource molecules
     \dot{V_c} &= a\sigma [R_i] V_c\\
     \dot{[R_i]} &= - a[R_i]
 \end{align}
-Furthermore, we let cells produce an inhibitor with production rate $b$ which inhibits the cells ability to uptake and thus use the resource by a factor of $1+\nu_I [I]$
+Furthermore, we let cells produce an inhibitor with production rate $b$ which inhibits the cell ability to uptake and thus use the resource by a factor of $1+\nu_I [I]$
 \begin{align}
     \dot{[I]} &= b\frac{V_c}{V_D}\delta(x-x_c)\\
     u &\longrightarrow \frac{u}{1+\nu_I [I]}.
@@ -962,7 +962,7 @@ This means that colonies are expanding as individual cells grow and push each ot
 Typically, cell cycles consist of multiple phases.
 Since our goal is to include only the necessary details of the underlying biological problem, we drastically simplify the description of the cell cycle.
 Cell growth is already being described the system of coupled \acp{ode} given in equations~\eqref{eq:spatial-full-system-simplified}.
-Thus we introduce an additional rule that splits apart the cell whenever a certain volume threshold is reached.
+Thus, we introduce an additional rule that splits apart the cell whenever a certain volume threshold is reached.
 The volume of the cell is divided equally between the new and old cell and both are assigned new random positions close to each other such that their radii do touch but not overlap.
 \begin{figure}
     \begin{center}
@@ -976,7 +976,7 @@ The volume of the cell is divided equally between the new and old cell and both 
     }
     \end{center}
 \end{figure}
-In addition to modeling division events, the cells have are subject to the lag-phase which delays their ability to proliferate.
+In addition to modeling division events, the cells are subject to the lag-phase which delays their ability to proliferate.
 We model this by assigning a transition rate to each cell.
 For each time point of the simulation, we generate a boolean value from a random number generator with probability
 \begin{equation}
@@ -990,7 +990,7 @@ It is clear that this is exactly identical to the \ac{ode} model.
 % ------------------------------------------------------------------------------------------------
 \subsection{Comparing \acs{abm} and \acs{ode} Models}
 The \ac{abm} model is more fundamental than the \ac{ode} model in the sense that it incorporates more biological aspects and maps them closer to realistic biological mechanisms.
-We are thus able to derive the \ac{ode} pool model from its \ac{abm} version in the homogenenous case (see supplementary material~\ref{subsec:supplement-deriving-pool-odes}).
+We are thus able to derive the \ac{ode} pool model from its \ac{abm} version in the homogenous case (see supplementary material~\ref{subsec:supplement-deriving-pool-odes}).
 By doing so, we find a mapping between parameters from the \ac{abm} to parameters used in the \ac{ode} description.
 The derived equations read
 \begin{align}
@@ -1039,7 +1039,7 @@ We compare the most general version and thus omit species $A$ for the moment.
     \caption{Mappings between \ac{ode} and \ac{abm} parameters.}
 \end{table*}
 We can use these mappings to numerically compare both approaches.
-Table~\ref{tab:spatial_limit_init} shows a comparison of paramters of two simulations for the \ac{ode} and \ac{abm} model which have been mapped onto each other.
+Table~\ref{tab:spatial_limit_init} shows a comparison of parameters of two simulations for the \ac{ode} and \ac{abm} model which have been mapped onto each other.
 Figure~\ref{fig:spatial-snapshots} shows individual snapshots of different 
 %
 \begin{figure}
@@ -1051,7 +1051,7 @@ Figure~\ref{fig:spatial-snapshots} shows individual snapshots of different
         Simulation snapshots at $1.04$\unit{\day},$2.08$\unit{\day},$3.13$\unit{\day} and $4.17$\unit{\day} corresponding to the parameters given in table~table~\ref{tab:spatial_limit_init}.
         Species $B$ is colored blue while species $A$ is colored in red.
         The background shows the resource concentration $[R]$.
-        Darker colours indicate that less nutrients are present.
+        Darker colors indicate that less nutrients are present.
     }
     \label{fig:spatial-snapshots}
 \end{figure}
