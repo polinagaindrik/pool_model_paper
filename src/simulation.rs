@@ -8,7 +8,7 @@ use rand_chacha::ChaCha8Rng;
 
 use serde::{Deserialize, Serialize};
 
-use pyo3::prelude::*;
+use pyo3::{exceptions::PyValueError, prelude::*};
 
 use crate::bacterial_properties::*;
 
@@ -301,4 +301,66 @@ pub fn run_simulation(
     let simulation_result = supervisor.run_full_sim().unwrap();
 
     Ok(simulation_result.storage.get_full_path())
+}
+
+fn try_compare_settings(
+    py: Python,
+    path: &std::path::Path,
+    cells: &[BacteriaTemplate],
+    domain: &Domain,
+    meta_params: &MetaParams,
+) -> PyResult<bool> {
+    let save_path_cells = path.join("initial_cells.json");
+    let save_path_domain = path.join("domain.json");
+    let save_path_meta_params = path.join("meta_params.json");
+
+    let cells_read: Vec<BacteriaTemplate> = {
+        let f = std::fs::File::open(save_path_cells)?;
+        serde_json::from_reader(f).map_err(|e| PyValueError::new_err(format!("{e}")))?
+    };
+    let domain_read: Domain = {
+        let f = std::fs::File::open(save_path_domain)?;
+        serde_json::from_reader(f).map_err(|e| PyValueError::new_err(format!("{e}")))?
+    };
+    let meta_params_read: MetaParams = {
+        let f = std::fs::File::open(save_path_meta_params)?;
+        serde_json::from_reader(f).map_err(|e| PyValueError::new_err(format!("{e}")))?
+    };
+
+    // Compare all cells
+    let cell_comps = cells
+        .iter()
+        .zip(cells_read.iter())
+        .map(|(c1, c2)| c1.py_eq(py, c2))
+        .collect::<PyResult<Vec<_>>>()?
+        .into_iter()
+        .all(|x| x);
+
+    let e1 = cells.len() == cells_read.len() && cell_comps;
+    let e2 = &domain_read == domain;
+    let e3 = &meta_params_read == meta_params;
+
+    Ok(e1 && e2 && e3)
+}
+
+#[pyfunction]
+pub fn run_or_load_simulation(
+    py: Python,
+    cells: Vec<BacteriaTemplate>,
+    domain: Domain,
+    meta_params: MetaParams,
+) -> PyResult<std::path::PathBuf> {
+    let paths = glob::glob(&format!("{}/*", meta_params.save_path))
+        .map_err(|e| PyValueError::new_err(format!("{e}")))?;
+
+    for path in paths {
+        let path = path.map_err(|e| PyValueError::new_err(format!("{e}")))?;
+
+        if let Ok(true) = try_compare_settings(py, &path, &cells, &domain, &meta_params) {
+            return Ok(path);
+        }
+    }
+
+    todo!();
+    run_simulation(py, cells, domain, meta_params)
 }
