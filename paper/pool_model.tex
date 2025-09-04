@@ -24,7 +24,6 @@
 \usepackage{booktabs}
 \usepackage[aboveskip=1pt,labelfont=bf,labelsep=period,justification=raggedright,singlelinecheck=off, font=small]{caption}
 \usepackage{color}
-\usepackage{ctable} % for \specialrule command
 \usepackage{diagbox}
 \usepackage{float}
 \usepackage[T1]{fontenc}
@@ -39,11 +38,16 @@
 \usepackage{mathrsfs}
 \usepackage{multirow}
 \usepackage{newfloat}
+\usepackage{onimage}
 \usepackage{siunitx}
 \usepackage{subcaption}
 \usepackage{tabularx}
+\usepackage{tikz}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{xpatch}
+
+% Must be loaded after tikz
+\usepackage{ctable}
 
 % Define new column type with multirow
 \newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
