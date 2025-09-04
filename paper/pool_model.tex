@@ -68,6 +68,9 @@
 
 \restylefloat{table}
 
+% Remove indent across the whole document
+\setlength\parindent{0pt}
+
 % Define equation numbering
 \numberwithin{equation}{section}
 
@@ -152,7 +155,7 @@
 \begin{document}
 \maketitle
 
-\begin{abstract}\noindent
+\begin{abstract}
     Bacterial consortia are complex systems which are often comprised of multiple distinct species.
     Their dynamics on a population-based level often result from interactions that lead to
     inter-species cooperation or competition.
@@ -184,7 +187,6 @@
     % of the model, three different examples are reported.
 \end{abstract}
 
-\noindent
 \textbf{Keywords:}
 Bacterial Consortia, Competition and Cooperation, Mechanistic Modeling, Spatial Effects
 
@@ -226,7 +228,6 @@ The natural bacterial processes are a crucial part of our planet's ecosystem, be
 tasks such as nutrient cycling, decomposition of organic matter and oxygen production.
 It is of great interest to understand the dynamics of these various processes.
 
-% \noindent
 % \paragraph{Experimental/Biological evidence/phenomena}
 % \begin{itemize}
 %     \item Lag Phase, Competition, Cooperation, Limiting Resource
@@ -236,7 +237,6 @@ It is of great interest to understand the dynamics of these various processes.
 %     \item Biofilm formation \cite{Jin2020}
 % \end{itemize}
 
-\noindent
 In order to achieve a comprehensive description of the target system, it is important to incorporate
 all relevant biological phenomena arising in these bacterial systems.
 During their reproductive process, bacteria undergo multiple phases~\cite{buchanan_when_1997}, starting in a lag phase which
@@ -250,7 +250,6 @@ phenomena on a population-based level which can aid in the goal of survival.
 Cell signaling e.g. in the form of quorum-sensing can lead to collective emergent phenomena such as
 biofilm formation which play an important role for many mature microbial communities~\cite{ng_bacterial_2009}.
 
-% \noindent
 % \paragraph{ODE models (predictive microbiology, existing, overview, most popular)}
 % Existing models in Predictive Microbiology (Primary Models)~\cite{perez-rodriguez_predictive_2012}:
 % \begin{itemize}
@@ -269,7 +268,6 @@ biofilm formation which play an important role for many mature microbial communi
 %     \item The Cardinal Parameter Model~\cite{zwietering_decision_1992}
 % \end{itemize}
 
-\noindent
 The first step in the construction of any mathematical model is to determine the required level of
 detail with respect to the description scale and consequently which effects to include.
 The bacterial growth curves let us describe the dynamics of the overall abundance of various
@@ -295,7 +293,6 @@ other spatial effects.
 %     \item Bacterial Branching patterns \cite{Kawasaki1997,Matsushita1998}
 % \end{itemize}
 
-\noindent
 % To incorporate spatial heterogeneity or other effects other modeling approaches have been devised.
 % \acp{pde} follow a similar pattern as \acp{ode} but also distribute the described variables through
 % space.
@@ -314,7 +311,6 @@ bacterial branching patterns~\cite{Kawasaki1997,Matsushita1998}.
 
 % \paragraph{What is the problem/what is the question? How do we address this?}
 
-\noindent
 In this work, we introduce a new \ac{ode}-based modeling framework which describes different
 bacterial species, their metabolic states and external quantities such as nutrients as individual
 pools.
@@ -1131,7 +1127,6 @@ How well does the pool model do to encapsulate all the different growth models
         generalized model; this allows us to discuss many cases at once
 \end{itemize}
 
-\noindent
 How justified was the construction of the \ac{abm}?
 \begin{itemize}
     \item Discuss simplified physical interaction model
@@ -1140,7 +1135,6 @@ How justified was the construction of the \ac{abm}?
         and this ensures that our model is actually realistic
 \end{itemize}
 
-\noindent
 How can we cover more effects of bacteria?
 \begin{itemize}
     \item More states for metabolic processes
@@ -1149,7 +1143,6 @@ How can we cover more effects of bacteria?
     \item external influences
 \end{itemize}
 
-\noindent
 What are limitations of our approach?
 \begin{itemize}
     \item spatial stuff; heterogeneity (because \ac{ode})
@@ -1159,7 +1152,6 @@ What are limitations of our approach?
 
 % ------------------------------------------------------------------------------------------------
 \section{Conclusion}
-\noindent
 \begin{itemize}
     \item New theoretical framework
     \item consistent with \ac{ode} models (Baranyi-Roberts)
