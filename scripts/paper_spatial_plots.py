@@ -34,7 +34,7 @@ def calcualte_results(diffusion_constant, randomness, homogenous):
 
     cells = crp.generate_cells(18, 18, domain, randomness, homogenous=homogenous)
 
-    output_path = crp.run_simulation(
+    output_path = crp.run_or_load_simulation(
         cells,
         domain,
         meta_params,

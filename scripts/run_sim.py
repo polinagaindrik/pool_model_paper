@@ -19,7 +19,7 @@ if __name__ == "__main__":
 
     cells = crp.generate_cells(18, 18, domain, randomness=0.0)
 
-    output_path = crp.run_simulation(
+    output_path = crp.run_or_load_simulation(
         cells,
         domain,
         meta_params,
