@@ -248,7 +248,7 @@ Bacteria have thus devised various survival strategies to ensure sufficient acce
 Effects on a single-cell level such as adhesion~\cite{htuson_bacteriasurface_2013}, migration~\cite{decoene_microscopic_2011} and chemotaxis can lead to complex
 phenomena on a population-based level which can aid in the goal of survival.
 Cell signaling e.g. in the form of quorum-sensing can lead to collective emergent phenomena such as
-biofilm formation which play an important role for many mature microbial communities~\cite{ng_bacterial_2009}.
+biofilm formation which play an important role for many mature microbial communities~\cite{Jin2020,ng_bacterial_2009}.
 
 % \paragraph{ODE models (predictive microbiology, existing, overview, most popular)}
 % Existing models in Predictive Microbiology (Primary Models)~\cite{perez-rodriguez_predictive_2012}:
@@ -276,7 +276,7 @@ The field of predictive microbiology has developed a variety of ODE-based models
 bacterial growth dynamics~\cite{perez-rodriguez_predictive_2012}.
 Various \acp{ode} \textit{primary models} describe the bacterial growth curve under constant
 environmental conditions.
-Widely used examples include the modified Gompertz model~\cite{Gompertz1825-wi}, Baranyi-Roberts
+Widely used examples include the modified Gompertz model~\cite{Gompertz1825-wi,Gibson1987}, Baranyi-Roberts
 model~\cite{baranyi_modeling_1993, baranyi_dynamic_1994} and McKellar two-compartment model~\cite{buchanan_when_1997} which distinguishes between growing and non-growing bacteria.
 To take into account changing environmental conditions, so-called \textit{secondary models}
 formulate the model parameters as a function of external quantities such as temperature, pH or
@@ -303,8 +303,8 @@ individually-based \acp{abm} and can be effective, especially when dealing with 
 cells that can be approximated as a continuum.
 On the other hand, \acp{abm} excel at describing the individual behaviour of cells which can then
 lead to more complex collective phenomena.
-Tools such as BSim~\cite{Gorochowski2012,Dang2020} or \texttt{cellular\_raza}~\cite{Pleyer2025} are
-capable to describe large amounts of cells, performing various intracellular and extracellular
+Tools such as BSim~\cite{Gorochowski2012,Dang2020}, AgentCell~\cite{emonet_agentcell_2005}, BacSim~\cite{kreft_bacsim_1998} or \texttt{cellular\_raza}~\cite{Pleyer2025} are
+capable to describe large amounts of bacteria, performing various intracellular and extracellular
 processes.
 The latter has been used to adapt \ac{pde}-based models into an \ac{abm} formulation which describe
 bacterial branching patterns~\cite{Kawasaki1997,Matsushita1998}.
@@ -324,7 +324,7 @@ reality.
 To illustrate the generality of the model, multiple examples are reported.
 We analyze the spatial limitations of an interacting two-species model and show that it can be fully
 understood on an individual-based level in terms of single-cell processes.
-Furthermore, we assess how spatial heterogeneity can impact the shape of the growth curves.
+Furthermore, we assess how spatial heterogeneity~\cite{mckellar_heterogeneous_1997} can impact the shape of the growth curves.
 
 
 % ================================================================================================
@@ -558,7 +558,7 @@ Further we show that the model can be readily extended to the systems with more 
 %
 % ------------------------------------------------------------------------------------------------
 \subsection{Resource Competition}
-One of the ways to describe competition between bacterial populations is as a function of the limiting resource ratio~\cite{tilman_resource_1977, smith_effects_2002}.
+One of the ways to describe competition between bacterial populations is as a function of the limiting resource ratio~\cite{tilman_resource_1977, smith_effects_2002,ghoul_ecology_2016}.
 To this end we consider for simplicity only one common limiting resource pool.
 The simplest pool model for bacterial species $A$ and $B$ encompassing lag-phases, growth-phases and a common resource pool is given by (no back-flow to the lag-pool):
 \begin{align}
@@ -812,19 +812,21 @@ we expect the \ac{ode} description to be valid.
 However, in reality spatial effects can play a significant role for population survival forcing some
 species to develop competitive mechanisms such as cell adhesion to surfaces in the areas rich with
 nutritients~\cite{htuson_bacteriasurface_2013}.
-Another mechanism is the motility of bacteria, e.g., the flagellates bacteria as \textit{E. coli} or
-\textit{B. subtilis} can experience the chemotactic motion of driven by oxygen
+Another mechanism is the motility of bacteria, e.g., the flagellates \textit{E. coli} or
+\textit{B. subtilis} which are capable of chemotactic motion of driven by oxygen
 concentrations~\cite{decoene_microscopic_2011}.
-The bacterial social interactions such as releasing the toxins or public goods can also
+The bacterial social interactions such as releas of toxins or public goods can also
 significantly affect the spatial structure of the community~\cite{blanchard_bacterial_2015}.
 These effects can only be treated with a spatial model that is able to describe the observed
 effects.\\
-In order to construct a model which can encapsulate diffusion of nutrients and heterogeneity of
-the bacteria or nutrients, we have to take into consideration the spatial component of our setup.
-\acp{abm} force researchers to think in terms of cellular processes, thus bridging the gap from a
+Compared to other modeling techniques such as \acp{pde}, \acp{abm}~\cite{nagarajan_agent-based_2022-1} force researchers to think in
+terms of cellular processes, thus bridging the gap from a
 collective (bulk) model to an individual-based (single-cell) description.
-We consider the system consisting from two bacterial species that can be described by two internal
-states: lag and growth states.
+Our goal is to provide an \ac{abm} which can be used to derive the given \ac{ode} model as a
+coarse-grained case.
+In this way, we can show that the bulk-based \ac{ode} model is directly related to the mechanistic
+single-cell behaviour of the bacteria.
+To this end, we consider the system consisting from two bacterial species that can be described by two internal states: lag and growth states.
 Both of these species grow using the same resource pool $R$ but with different growth constants
 $\alpha$ and different lengths of lag phase $\lambda$.
 Moreover, the species $A$ is able to release a certain antimicrobial component $I$ that shows an
@@ -885,10 +887,13 @@ The microenvironment of our system contains the resource and the inhibitor molec
 \subsection{Constructing an Agent-Based Pool Model}
 The following sections will demonstrate how a given \ac{ode} system can be translated into a
 custom-built \ac{abm} which has only a few more overall parameters.
-To construct our \ac{abm}, we use \texttt{cellular\_raza}~\cite{Pleyer2025} which was designed to
-provide maximal flexibility for researchers in order to construct minimalist models.
-Without the ability to define and control the precise behavior of our cell-agents, the following
-approaches would not be possible.
+This procedure is a blueprint which can be followed to construct \acp{abm} for similar
+\ac{ode}-based systems.\\
+To construct our \ac{abm}, we use \texttt{cellular\_raza}~\cite{Pleyer2025}.
+It allows us to define our bacterial agents from a clean slate, without having to rely and inherit
+existing work.
+With this flexibility, researchers are able to construct minimal models using only as many parameters which are necessary.
+This ability, to precisely define and control the exact behavior of our cell-agents, enables the following parts.
 
 \subsubsection{Cellular Reactions}
 To construct an \ac{abm} which resembles the given \ac{ode} system of equations~\eqref{eq:spatial_limit_F} and \eqref{eq:spatial_limit_H}, we consider multiple cellular reactions.
@@ -902,20 +907,21 @@ where $\delta(x-x_\text{cell})$ is the Dirac delta-distribution.
 Note that $[R_e]=[R_e](x)$ explicitly depends on the spatial coordinate but we choose to omit its notation.
 In the second equation, we need to account for the ratio of cellular $V_c$ and domain volume $V_D$ to calculate the correct change.
 Further, we want to modify the cellular volume by growing it increasingly with rate $a$.
-Therefore, we need to specify how many resource molecules are turned into one volumetric units $\sigma$ in \unit{\micro\metre\cubed\per\mole}.
+Therefore, we need to specify how many resource molecules are turned into volumetric units $\sigma$ in \unit{\micro\metre\cubed\per\mole}.
 The total amount of resource molecules present inside the cell is given by the current concentration multiplied by the cell-volume $V_c [R_i]$.
 With a rate $a$ and conversion $\sigma$, the cell turns these resource molecules into volume.
 \begin{align}
     \dot{V_c} &= a\sigma [R_i] V_c\\
     \dot{[R_i]} &= - a[R_i]
 \end{align}
-Furthermore, we let cells produce an inhibitor with production rate $b$ which inhibits the cell ability to uptake and thus use the resource by a factor of $1+\nu_I [I]$
+Furthermore, we let cells produce an inhibitor with production rate $b$ which inhibits the cell's ability to uptake and thus use the resource by a factor of $1+\nu_I [I]$
 \begin{align}
     \dot{[I]} &= b\frac{V_c}{V_D}\delta(x-x_c)\\
     u &\longrightarrow \frac{u}{1+\nu_I [I]}.
 \end{align}
-Note that we do not need to distinguish between the two species because we can set parameters individually on agent-level.
-This means, we can implement the most general version of the equations and by choosing appropriate parameters, set the species of the respective cell-agent.
+% Note that we do not need to distinguish between the two species because we can set parameters individually on agent-level.
+To distinguish between the two species, it suffices to set parameters for every individual agent accordingly.
+This means, we can implement the most general version of the equations and by choosing appropriate parameters, this defines the species of the respective cell-agent.
 If we combine all equations and consider multiple cells, we obtain the system
 \begin{align}
     \dot{V_c} &= a\sigma [R_i] V_c\\
@@ -942,10 +948,7 @@ Since, we will not explicitly model intracellular concentrations $[R_i]$, we wil
 % ................................................................................................
 \subsubsection{Physical Mechanics \& Interactions}
 We represent cells as spherical objects in 2D space.
-They can be represented by their position $x_c$ and radius $r_c$ which is of course related to their (2D) volume
-\begin{equation}
-    V_c = \pi r_c^2
-\end{equation}
+They can be represented by their position $x_c$ and radius $r_c$ which is of course related to their (2D) volume $V_c = \pi r_c^2$.
 As the coupled reactions from equations~\eqref{eq:spatial-full-system-simplified} change $V_c$, we also automatically adapt the cell radius accordingly.
 Notice however, that how the radius is updated does not correspond to the cellular reactions defined previously but is a purely mechanical consideration.
 The dimensionality of the problem does not find its way into the cellular reactions but only manifests itself in these mechanical considerations.
@@ -960,9 +963,8 @@ We can calculate the interaction strength via
     \sigma &= \frac{r}{r_1+r_2} && q=0.2\\
     \vec{F} &= \epsilon \frac{1+q}{q+\sigma} \theta(\sigma - 1) \frac{1}{r}\vec{z}
 \end{alignat}
-Cells are not sticky and thus only pushing on each other.
-No attractive force is present.
-This means that colonies are expanding as individual cells grow and push each other further apart.
+We assume that the cells are not sticky and consider only a repulsive interaction potential, leaving out any possible attractive forces~\cite{Garrett2008}.
+These mechanisms will result in the overall expansion of the colony as individual cells push each further other apart.
 %
 % \begin{figure}
 %     \centering
@@ -978,16 +980,22 @@ This means that colonies are expanding as individual cells grow and push each ot
 %
 % ................................................................................................
 \subsubsection{Cell Cycle}
-Typically, cell cycles consist of multiple phases.
+Typically the cycle of a cell consist of multiple phases~\cite{Cooper2000_fn}.
 Since our goal is to include only the necessary details of the underlying biological problem, we drastically simplify the description of the cell cycle.
 Cell growth is already being described the system of coupled \acp{ode} given in equations~\eqref{eq:spatial-full-system-simplified}.
-Thus, we introduce an additional rule that splits apart the cell whenever a certain volume threshold is reached.
-The volume of the cell is divided equally between the new and old cell and both are assigned new random positions close to each other such that their radii do touch but not overlap.
+Thus, we introduce an additional rule that performs the division process when a certain volume threshold is reached.
+The volume of the cell is divided equally between the new and old cell and both are assigned new random positions close to each other such that their radii do touch but without any overlap.
 \begin{figure}
     \begin{center}
-    \includegraphics[width=0.49\columnwidth]{Figures/snapshot-2-cells-before-division.png}%
+    \begin{tikzonimage}[width=0.49\columnwidth]
+        {Figures/snapshot-2-cells-before-division.png}%
+        \node at (0.01, 0.99)[anchor=north west]{\textbf{A}};
+    \end{tikzonimage}%
     \hspace{0.01\columnwidth}%
-    \includegraphics[width=0.49\columnwidth]{Figures/snapshot-2-cells-after-division.png}
+    \begin{tikzonimage}[width=0.49\columnwidth]
+        {Figures/snapshot-2-cells-after-division.png}
+        \node at (0.01, 0.99)[anchor=north west]{\textbf{B}};
+    \end{tikzonimage}
     \caption{
         (A) A cell right before and (B) after a division event.
         The volume is equally distributed between the two cells and the new positions are picked
@@ -1002,14 +1010,13 @@ For each time point of the simulation, we generate a boolean value from a random
     P(\text{transition}) = \Delta t \lambda \frac{[R]}{[R_0]}.
 \end{equation}
 If this boolean is true, we move the cell from the inactive state to the active state where it starts to consume nutrients and grow.
-It is clear that this is exactly identical to the \ac{ode} model.
-%
+The concatenation of many such stochastic processes on a population-based level converges identically to the lag-phase behaviour of the \ac{ode} model.
 %
 %
 % ------------------------------------------------------------------------------------------------
 \subsection{Comparing \acs{abm} and \acs{ode} Models}
-The \ac{abm} model is more fundamental than the \ac{ode} model in the sense that it incorporates more biological aspects and maps them closer to realistic biological mechanisms.
-We are thus able to derive the \ac{ode} pool model from its \ac{abm} version in the homogenous case (see supplementary material~\ref{subsec:supplement-deriving-pool-odes}).
+The \ac{abm} model should be considered to be the more fundamental model compared to the \ac{ode} model in the sense that it incorporates more biological aspects and maps them closer to the actual behaviour of the bacteria.
+We are thus able to derive the \ac{ode} pool model from its \ac{abm} version via a process of homogenization (see supplementary material~\ref{subsec:supplement-deriving-pool-odes}).
 By doing so, we find a mapping between parameters from the \ac{abm} to parameters used in the \ac{ode} description.
 The derived equations read
 \begin{align}
@@ -1059,13 +1066,28 @@ We compare the most general version and thus omit species $A$ for the moment.
 \end{table*}
 We can use these mappings to numerically compare both approaches.
 Table~\ref{tab:spatial_limit_init} shows a comparison of parameters of two simulations for the \ac{ode} and \ac{abm} model which have been mapped onto each other.
-Figure~\ref{fig:spatial-snapshots} shows individual snapshots of different 
+Figure~\ref{fig:spatial-snapshots} shows snapshots of a numerical simulation of the described system.
+The intial bacteria have been ordered on a grid such that only every diagonal neighbor is of the same species, thus resulting in a more homogenous initial distribution.
 %
 \begin{figure}
-    \includegraphics[width=0.49\columnwidth]{Figures/abm-homogenous/snapshot_00006000.png}\hspace{0.01\columnwidth}%
-    \includegraphics[width=0.49\columnwidth]{Figures/abm-homogenous/snapshot_00012000.png}\vspace{0.01\columnwidth}\\
-    \includegraphics[width=0.49\columnwidth]{Figures/abm-homogenous/snapshot_00018000.png}\hspace{0.01\columnwidth}%
-    \includegraphics[width=0.49\columnwidth]{Figures/abm-homogenous/snapshot_00024000.png}%
+    \begin{tikzonimage}[width=0.49\columnwidth]
+        {Figures/abm-homogenous/snapshot_00006000.png}
+        \node at (0.01, 0.99)[anchor=north west]{\textbf{A}};
+    \end{tikzonimage}%
+    \hspace{0.01\columnwidth}%
+    \begin{tikzonimage}[width=0.49\columnwidth]
+        {Figures/abm-homogenous/snapshot_00012000.png}
+        \node at (0.01, 0.99)[anchor=north west]{\textbf{B}};
+    \end{tikzonimage}\\
+    \begin{tikzonimage}[width=0.49\columnwidth]
+        {Figures/abm-homogenous/snapshot_00018000.png}
+        \node at (0.01, 0.99)[anchor=north west, white]{\textbf{C}};
+    \end{tikzonimage}%
+    \hspace{0.01\columnwidth}%
+    \begin{tikzonimage}[width=0.49\columnwidth]
+        {Figures/abm-homogenous/snapshot_00024000.png}
+        \node at (0.01, 0.99)[anchor=north west, white]{\textbf{D}};
+    \end{tikzonimage}%
     \caption{
         Simulation snapshots at $1.04$\unit{\day},$2.08$\unit{\day},$3.13$\unit{\day} and $4.17$\unit{\day} corresponding to the parameters given in table~table~\ref{tab:spatial_limit_init}.
         Species $B$ is colored blue while species $A$ is colored in red.
@@ -1076,39 +1098,43 @@ Figure~\ref{fig:spatial-snapshots} shows individual snapshots of different
 \end{figure}
 %
 %
+Figure~\ref{fig:spatial-growth-curve} shows multiple results for various configurations of the \ac{abm}, differing only in their initial spatial configuration and diffusivity.
 We see that in the highly-diffusive homogenous case of subfigure (a), the pool model is a good fit to the \ac{abm} model.
 Heterogeneity and slower diffusion cause larger differences between the two models as can be seen in subfigures (b) and (c).
 The combination of the two effects shows the largest difference between model predictions.
 In subfigure (c), due to the heterogenous cell distribution (see also~\ref{fig:supplement-spatial-initial-config-cells}), overall inhibition of species $B$ is significantly reduced.
 Subfigure (d) shows how a randomized homogenous initial distribution can lead to even more notable effects of inhibition.
-We furthermore note that the total bacteria volume of the \ac{abm} model is always smaller than the \ac{ode} model.
+We furthermore note that the total bacteria volume of the \ac{abm} model is always smaller or equal compared to the \ac{ode} model.
 This is expected, since processes such as diffusion and cells growing outward introduce another time component which is simply assumed to be instantanous in the \ac{ode} model.
 The chosen diffusion constants $D_I=D_R=30.0$\unit{\micro\metre\squared\per\minute} are in the order of small molecules such as $NaCl$ while the lower values $D_I=D_R=5.0$\unit{\micro\metre\squared\per\minute} are around values of Glucose in water.
 \begin{figure}
     \centering
     \begin{subfigure}[c]{0.5\columnwidth}
         \includegraphics[width=\columnwidth]{Figures/abm-homogenous/abm_ode_comparison.png}
-        \subcaption{Homogenous distribution, $D=30.0$\unit{\micro\metre\squared\per\minute}}
+        \subcaption{Hom. $D=30.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}%
     \begin{subfigure}[c]{0.5\columnwidth}
         \includegraphics[width=\columnwidth]{Figures/abm-homogenous-low-diffusion/abm_ode_comparison.png}
-        \subcaption{Homogenous distribution, $D=5.0$\unit{\micro\metre\squared\per\minute}}
+        \subcaption{Hom. $D=5.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}\\
     \begin{subfigure}[c]{0.5\columnwidth}
         \includegraphics[width=\columnwidth]{Figures/abm-inhomogenous/abm_ode_comparison.png}%
-        \subcaption{Heterogeneous distribution, $D=30.0$\unit{\micro\metre\squared\per\minute}}
+        \subcaption{Het. $D=30.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}%
     \begin{subfigure}[c]{0.5\columnwidth}
         \includegraphics[width=\columnwidth]{Figures/abm-random/abm_ode_comparison.png}%
-        \subcaption{Randomized distribution, $D=5.0$\unit{\micro\metre\squared\per\minute}}
+        \subcaption{Rand. $D=5.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}
     \caption{
-        Comparison of the \ac{ode} and \ac{abm} model for different parameter configurations.
-        Snapshots of the spatial configurations of cells are included in the appendix~\ref{fig:supplement-spatial-initial-config-cells}.
+        Comparison of the \ac{ode} and \ac{abm} model for different configurations, showing
+        homogenous (Hom.), heterogenous (Het.) or randomized (Rand.) initial configurations.
         The diffusion constants are chosen such that $D_R=D_I=D$.
+        Snapshots of the spatial configurations of cells are included in the appendix~\ref{fig:supplement-spatial-initial-config-cells}.
     }
     \label{fig:spatial-growth-curve}
 \end{figure}
+These results show how variations in properties that can not be described by simple \ac{ode} models can lead to large deviations in the growth curves of the species.
+Furthermore, it was shown that the utilized pool model can be derived from first principles by performing a homogenization of the mechanistic bacterial properties.
 %
 %
 % ================================================================================================
