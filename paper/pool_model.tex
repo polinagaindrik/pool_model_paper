@@ -331,18 +331,17 @@ Furthermore, we assess how spatial heterogeneity can impact the shape of the gro
 \section{One Species Modeling}
 % ------------------------------------------------------------------------------------------------
 \subsection{Three-Pool Model}
-Consider for simplicity the system where only one bacteria species is present $N=1$.
-The bacterial growth curves usually consist of different consecutive phases~\cite{buchanan_when_1997}.
-At the beginning no increase in bacterial count is present and so-called lag-phase is observed.
-This phenomenon appears due to adaptation of the microbial community, for example, to the new environmental conditions.
-This so-called preparation to the exponential growth includes synthesis of the needed compounds, initiation of the transcription~\cite{rolfe_lag_2012} and poorly studied physiological and regulatory mechanisms~\cite{monod_growth_1949}.
-After this, the succeeded in adaptation bacteria enter the exponential growth phase, where the process of cell division is directly happening.
-When the nutrition is exhausted by the growing bacteria, the stationary state of the growth curve occurs.
-In this state the cultures accumulate waste products of metabolic activity that leads to cell death of the bacteria.
+We begin our discussion by considering a simplistic system where only one bacteria species is present $N=1$.
+Bacterial growth undergoes different consecutive phases~\cite{buchanan_when_1997}, starting with the so called lag-phase, during which no increase in the bacterial count occurs.
+This phenomenon appears due to adaptations of the microbial community, for example, to the new environmental conditions.
+This so-called preparation before the exponential growth includes synthesis of the needed compounds, initiation of the transcription~\cite{rolfe_lag_2012} and poorly studied physiological and regulatory mechanisms~\cite{monod_growth_1949}.
+After this, the bacteria which have succeeded in this adaptation stage enter the exponential growth phase, where the process of cell division is predominant.
+When the levels of nutrition are exhausted by the growing bacteria, the stationary state of the growth curve occurs.
+In this state the cultures accumulate waste products of metabolic activity that lead to cell death in the bacterial colony.
 At the same time dying cells release the nutrients for survivors to continue growing.
-As a result the balance between the growing and dying processes leads to the constant with time bacterial count~\cite{navarro_llorens_stationary_2010}.
-In the described simplified version of the real-life system three possible bacteria states are mentioned corresponding to which process is happening: adaptation, growth or death.
-Motivated by this we divide a bacterial population into three pools (states)~(\ref{fig:SchematicRep}) defining the fraction of the population in the lag phase $L(t)$, growing and dividing $G(t)$ and undergoing cell death $D(t)$.
+As a result the balance between the growing and dying processes leads to a constant bacterial count~\cite{navarro_llorens_stationary_2010}.
+In the described simplified version of the real-life system three possible bacterial states are mentioned, corresponding to the underlying process: adaptation, growth or death.
+Motivated by this we divide a bacterial population into three pools (states)~(\ref{fig:SchematicRep}), defining the fraction of the population in the lag phase $L(t)$, growing and dividing $G(t)$ and undergoing cell death $D(t)$.
 \begin{figure}[t]
     \begin{center}
     \includegraphics[width=0.9\columnwidth]{Figures/TPM_fig.pdf}
@@ -350,9 +349,9 @@ Motivated by this we divide a bacterial population into three pools (states)~(\r
     \label{fig:SchematicRep}
     \end{center}
 \end{figure}
-To determine the system of equations describing the system dynamics consider the flows between different states.
+To determine the system of equations which describe the systems dynamics, we consider the flows between the different states.
 The pools $G$ and $D$ are unidirectionally connected with the pool $L$.
-For now, we assume for simplicity that there is no back flow between growth state $G$ and lag-state $L$.
+For now, we assume for that there is no back flow between growth state $G$ and lag-state $L$.
 The suggested model can be cast in the following reactions:
 \begin{eqnarray}
     L &\stackrel{\lambda}{\longrightarrow} & G\\
@@ -366,14 +365,15 @@ Then the \acp{ode} describing such a model can be written as
     \dot{L} &= -(\mu + \lambda) L\\
     \dot{G} &= \lambda L + \alpha G - \mu' G\\
     \dot{D} &= \mu  L + \mu' G- \beta D  
-\end{split}\end{align}.
+\end{split}\end{align}
+with the initial conditions $L(0)=N_0$, $G(0)=0$, and $D(0)=0$, where $N_0$ is the initial bacterial population.
 %
 Based on experimental observations, it was shown that the bacterial growth is strongly influenced by the limiting resource.
-According to the works of Jacques Monod, in the system where all needed nutrients are in excess except for one the total growth is linear to the concentration of this limiting nutrient~\cite{monod_growth_1949}.
-The control of the population density with respect to the available nutrition is implemented using cell communication process called quorum sensing.
-Using release of the extracellular signalling molecules (autoinducer molecules) it is possible to synchronize the gene expression of the whole group~\cite{ng_bacterial_2009}.
-We would not dive into the processes of quorum sensing and try to keep it as simple as possible.
-According to this, we aim to include a resource pool which is used by the growing bacteria using the second order kinetic reaction:
+According to the works of Jacques Monod, in the system where all needed nutrients are in excess except for one, the total growth is linear to the concentration of this limiting nutrient resource~\cite{monod_growth_1949}.
+The control of the population density with respect to the available nutrition is implemented using cell communication processes called quorum sensing.
+By releasing extracellular signalling molecules (autoinducer molecules) it is possible for the bacteria to synchronize the gene expression of the whole group~\cite{ng_bacterial_2009}.
+We will not dive into the processes of quorum sensing and try to keep it as simple as possible.
+We aim to include a resource pool which is consumed by the growing bacteria using the second order kinetic reaction:
 \begin{equation}
     G + R_0  \stackrel{\alpha_0}{\longrightarrow} 2G.
 \end{equation}
@@ -381,9 +381,10 @@ Note that the pools $L$, $G$ and $D$ represent the number of bacteria (or number
 Let say $G=N_B/V$ and $[G]=1/V$, where $N_B$ is the number of bacteria and $V$ is the volume.
 Then $R_0=N_R/V$ and $[R_0]=1/V$, where $N_R$ is the number of resource molecules (or any appropriate unit, e.g., mol).
 Then $[\alpha_0]=V/s$, $[N_t]=1/V$, and $[\alpha]=1/s$.
+$N_t$ denotes the maximal size of the total bacterial population due to environmental limitations (Figure \ref{fig:3pool_resource_plots}).
 For homogenous densities it is equivalent to consider the total amount, i.e., multiplying $L$ and $G$ by the volume.
 In this case $[L]=[G]=[N_t]=1$.
-For simplicity, we rather make a transition to the dimensionless constant $\alpha:=\alpha_0 N_t$ and dimensionless resource pool $R(t) = R_0 / N_t$ ($0 \leqslant R \leqslant 1$).
+For simplicity, we make a transition to the dimensionless constant $\alpha:=\alpha_0 N_t$ and dimensionless resource pool $R(t) = R_0 / N_t$ ($0 \leqslant R \leqslant 1$).
 Here the full capacity of the resource pool $N_t$ was used as a scaling constant.
 In this case the growth term can be simply written as $\alpha G R$ and the model is fully formulated in the following way:
 \begin{align}
@@ -393,10 +394,10 @@ In this case the growth term can be simply written as $\alpha G R$ and the model
         \dot{D} &= \mu  L + \mu' G- \beta D\\
         \dot{R} &= - \frac{\alpha}{N_t} R G
     \end{split}.
-\label{eq:ode_3pool_resource} 
+\label{eq:ode_3pool_resource}
 \end{align}
 %
-Such model can be simplified by exploiting that limitation of the resource pool also limits the total bacterial count of the system:
+Such a model can be simplified by exploiting that any limitation of the resource pool also leads to a limit of the total bacterial count
 \begin{equation}
     R = 1 - \frac{L+G+D}{N_t}
 \end{equation}
@@ -407,7 +408,7 @@ and, hence, the full system can be written as
         \dot{G} &= \lambda L + \alpha G\left(1-\frac{L+G+D}{N_t}\right)-\mu' G\\
         \dot{D} &= \mu  L + \mu' G- \beta D 
     \end{split}.
-\label{eq:ode_3pool_resource2} 
+\label{eq:ode_3pool_resource2}
 \end{align}
 %
 %
@@ -417,29 +418,26 @@ and, hence, the full system can be written as
     \caption{
         The time dependence of the total bacterial count $N(t) = L(t) + G(t) + D(t)$ is obtained as a sum of bacteria in all states.
         All curves were calculated using the model (\ref{eq:ode_3pool_resource2}) with parameters $\alpha=2.5$, $\mu'=0.5$ and $\beta=5$.
-        The blue curve shows significant dip in behavior of the system where the death of the bacteria is present $\mu = 0.5$.
-        Other curves show the case of no bacteria dying $\mu=0$ and represent different length of lag phases:
-        short $\lambda=10^{-2}$ (dark green), intermediate $\lambda=10^{-3}$ (light green) and long one $\lambda=10^{-4}$ (yellow).
+        The blue curve shows a significant dip in the behavior of the system where the death of the bacteria is present $\mu = 0.5$.
+        Other curves show the case of no bacteria dying $\mu=0$ and represent different lengths of lag phases: short $\lambda=10^{-2}$ (dark green), intermediate $\lambda=10^{-3}$ (light green) and long one $\lambda=10^{-4}$ (yellow).
     }
     \label{fig:3pool_resource_plots}
     \end{center}
 \end{figure}
 The resulting growth curves for the three pool case are presented in Figure~\ref{fig:3pool_resource_plots}.
-Here we can see that the value of the transition constant $\lambda$ determines how long the bacteria is in lag-phase.
-The larger is the rate the shorter is the lag-time.
-Moreover, by including the bacteria flow to the death pool we can diversify the shape of the growth curve allowing the decrease of the bacterial count.
-%
+Here we can see that the value of the transition constant $\lambda$ determines how long the bacteria stays in its lag-phase.
+The larger this rate, the shorter is the lag-time.
+Moreover, by including the flow of living bacteria to the death pool, we can model a greater variety of effects by allowing a decrease in the bacterial count.
 %
 %
 % ------------------------------------------------------------------------------------------------
 \subsection{Lag-time Estimation}
-Note that one could further simplify this model to a two pool or state model by omitting the pool $D$ and removing cells with rate $\beta$ directly from pool $L$.
+Note that the previously introduced model could be further simplified to a two pool or state model by omitting the pool $D$ and removing cells with rate $\beta$ directly from pool $L$.
 The relevant question here is whether cells in the pool $D$ still contribute to the limitation of the resources by, e.g., occupying space or consuming important nutrients.
 If yes, the three pool model would be advantageous, if not the two pool model is sufficient with the advantages of having one parameter less.\\
 %
-The dynamics of the three pool model can be captures by the coupled system of ordinary differential equations (the two pool model can be achieved by setting $D\equiv 0$ and replacing $\mu$ with $\beta$):
-to be solved with the initial conditions $L(0)=N_0$, $G(0)=0$, and $D(0)=0$, where $N_0$ is the initial bacterial population.
-$N_t$ denotes the maximal size of the total bacterial population due to environmental limitations (Figure \ref{fig:3pool_resource_plots}).
+% The dynamics of the three pool model can be captured by the coupled system of ordinary differential
+The dynamics of the three pool model is captured by equations~\ref{eq:ode_3pool_resource2} which can be used to derive the two pool model by setting $D\equiv 0$ and replacing $\mu$ with $\beta$).
 For $\mu'=0$ the equations for $L$ and $D$ can be readily integrated resulting in:
 \begin{align}
     \begin{split}
@@ -447,8 +445,8 @@ For $\mu'=0$ the equations for $L$ and $D$ can be readily integrated resulting i
         D(t) &= N_0 \mu e^{-\beta t}\frac{1-e^{-(\mu+\lambda-\beta)t}}{\mu+\lambda-\beta}
     \end{split}.
 \end{align}
-For constant parameters $\mu$, $\lambda$, and $\beta$ the integrals for $L$ and $D$ can be put into the differential equation for $G$.
-However, for time dependent parameters, e.g., for a dependence on a non-static, dynamic temperature, it appears to be not advantageous to use the analytical results for $L$ and $D$ and work instead with all three equations for $L$, $G$, and $D$.
+For constant parameters $\mu$, $\lambda$, and $\beta$ the integrals for $L$ and $D$ can be inserted into the differential equation for $G$.
+However, in the case of time dependent parameters, e.g., for a dependence on a non-static, dynamic temperature, it appears to be not advantageous to use the analytical results for $L$ and $D$ and work instead with all three equations for $L$, $G$, and $D$.
 It is interesting to see what type of equations result for the total bacterial population $N=L+G+D$:
 \begin{align}
     \begin{split}
@@ -456,20 +454,20 @@ It is interesting to see what type of equations result for the total bacterial p
         \dot{N} &= - \beta D + \alpha G\left(1-\frac{N}{N_t}\right)
     \end{split}
 \end{align}
-with the initial conditions $G(0)=0$ and $N(0)=N_0$. 
-These equations have a clear interpretation, are derived from simple principles, and are different from the popular Barayni-Roberts and modified-Gompertz models.
+with initial conditions $G(0)=0$ and $N(0)=N_0$.
+These equations have a clear interpretation, are derived from first principles, and are not identical to the popular Barayni-Roberts and modified-Gompertz models.
 A notable difference is that the growth rate $\alpha$ is time independent.
 For the functions $L$ and $D$ it holds: $\lim_{t\to\infty} L(t) = \lim_{t\to\infty} D(t) = 0$.
 It follows immediately that $\lim_{t\to\infty} G(t) = N_t$.
-The equation exhibit a lag phase and an initial drop due to cell death.
+The equation exhibits a lag phase and an initial drop due to cell death.
 To find a substantial initial drop one needs $\beta \mu \gg \alpha \lambda$.
 The lag time $t_L$ can be approximated by the time at which half of the initial population is in the growth phase, i.e., $N_0=2G(t_L)$.
-Assuming $L\ll N_t$ we can ignore the non-linear term in the equation for $G$, which gives rise to:
+Assuming $L\ll N_t$, we can ignore the non-linear term in the equation for $G$, which gives rise to:
 \begin{align}
     1&= 2\int_0^{t_L} \lambda L(t)e^{\alpha(t_L-t)}dt\\
     1  &= 2\lambda e^{\alpha t_L}\frac{1-e^{-(\mu+\lambda+\alpha)t_L}}{\mu+\lambda+\alpha}.
 \end{align}
-For $\alpha > \mu+\lambda$ $t_L$ can be approximated by:
+For $\alpha > \mu+\lambda$  we can approximate $t_L$ by:
 \begin{align}
     t_L &\approx -\frac{1}{\alpha}\ln\left(\frac{2\lambda}{\mu+\lambda+\alpha}\right).
 \end{align}
@@ -479,13 +477,14 @@ The lag time $t_L$ diverges very slowly, logarithmically with $\lambda\to 0$.
 %
 % ------------------------------------------------------------------------------------------------
 \subsection{Back flow from Growth to Lag pool}
-Due to its life in rather unfavorable conditions bacteria developed different surviving mechanisms, one of which is adapting their metabolism and transitioning into dormant state.
-By definition dormancy in bacteria is a reversible state where cell continue living with low metabolic activity while the cell division stops~\cite{kaprelyants_dormancy_1993}.
+Bacteria which have lived under rather unfavorable conditions have developed different surviving mechanisms, one of which is adapting their metabolism and transitioning into dormant state.
+Dormancy in bacteria is a reversible state where cell continue living with low metabolic activity while the cell division stops~\cite{kaprelyants_dormancy_1993}.
 This survival strategy can appear in response to different external stresses, e.g., nutrient deficiency, temperature stress or extreme fluctuations of environment parameters.
 And after "difficult times" bacteria, also called viable but non-culturable (VBNC), can continue cell division~\cite{kell_viability_1998}.
-The models including transition of bacteria to the dormant state were proposed and studied by Bär \etal~\cite{bar_modelling_2002} and Jones and Lennon~\cite{jones_dormancy_2010}.
+Multiple models which include transitions of bacteria to the dormant state were proposed by Bär \etal~\cite{bar_modelling_2002} and Jones with Lennon~\cite{jones_dormancy_2010}.
 %
-We explore now the idea that under certain conditions, as sudden change in the environment, part of the population $G$ will enter a lag-phase, i.e., there is a back-flow from $G$ to $L$.
+We explore now the idea that under certain conditions, a sudden change in the environment can lead to parts of the population $G$ entering a lag-phase.
+Within the framework of our pool model this means, that there is a back-flow from $G$ to $L$.
 \begin{eqnarray}
     L &\stackrel{\lambda}{\longrightarrow} & G\\
     L &\stackrel{\mu}{\longrightarrow} & D\\
@@ -498,8 +497,8 @@ Stronger and quicker changes will lead to a higher rate $\gamma$.
 %
 %
 \paragraph{Maxwell type of stress - strain relation}
-One of the reasons of the dormant state appearance can be also the temperature shift~\cite{oliver_viable_1995}.
-Moreover, the rapid shift in temperature is associated with the appearance of an additional lag phase~\cite{zwietering_modeling_1994}.
+One of the reasons that bacteria enter the dormant state can be due to a shift in temperature~\cite{oliver_viable_1995}.
+Moreover, a rapid shift in temperature is associated with the appearance of an additional lag phase~\cite{zwietering_modeling_1994}.
 To model it we propose a kind of viscoelastic Maxwell type of stress-strain relation and write down the ordinary differential equation for $\gamma$ to be:
 \begin{equation}
     \dot{\gamma} = \Gamma |\dot{T}|-\delta \gamma.
@@ -553,9 +552,9 @@ If the shift happened rather early in time, when most of the bacteria were in la
 %
 % ================================================================================================
 \section{Interaction between species}
-As it was mentioned above, bacteria usually coexist in large multispecies interacting communities whose growth is vastly determined by the developed survival mechanisms.
-These survival mechanisms mostly aim to secure as much available nutrition which lead to competitive strategies or, if it is advantageous, cooperative ones~\cite{hibbing_bacterial_2010, stubbendieck_bacterial_2016}.
-Further we show that the model can be readily extended to the systems with more than one bacterium and describe more complex relationships between species. 
+As mentioned above, bacteria usually coexist in large interacting communities of multiple species whose growth is vastly determined by the developed survival mechanisms.
+These mechanisms mostly aim to secure as much available nutrition which lead to competitive strategies or, if it is advantageous, cooperative ones~\cite{hibbing_bacterial_2010, stubbendieck_bacterial_2016}.
+Further we show that the model can be readily extended to the systems with more than one bacterium and describe more complex relationships between species.
 %
 % ------------------------------------------------------------------------------------------------
 \subsection{Resource Competition}
