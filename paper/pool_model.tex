@@ -558,8 +558,8 @@ Further we show that the model can be readily extended to the systems with more 
 %
 % ------------------------------------------------------------------------------------------------
 \subsection{Resource Competition}
-One on the ways to describe competition between bacteria populations is as a function of limiting resource ratio~\cite{tilman_resource_1977, smith_effects_2002}.
-To describe such a situation we consider for simplicity only one common limiting resource pool.
+One of the ways to describe competition between bacterial populations is as a function of the limiting resource ratio~\cite{tilman_resource_1977, smith_effects_2002}.
+To this end we consider for simplicity only one common limiting resource pool.
 The simplest pool model for bacterial species $A$ and $B$ encompassing lag-phases, growth-phases and a common resource pool is given by (no back-flow to the lag-pool):
 \begin{align}
     \begin{split}
@@ -584,10 +584,10 @@ Inserting Eq.~\ref{eq:Resource} into Eqs.~\ref{eq:model_2sp_resource_comp} yield
     \dot{G}_B &=  \lambda_B L_B - \alpha_B G_B \frac{\lambda_B L_B + \alpha_B G_B}{N_t}\left<LG\right>
 \end{align}
 where we used the short notation $\left<LG\right>=(L_A+G_A+L_B+G_B)$.
-These equations have the structure of a \ac{glv} expanded with different internal states for one species.
+These equations have the structure of a \ac{glv} model expanded with different internal states for one species.
 As one can see in Figure~\ref{fig:2pool_resource_2sp} even without direct interaction between species the bacterial growth was inhibited due to the limitation of the resource.
-Here species $A$ has a longer lag-phase than $B$ but the exponential growth of $A$ is stronger than the one that bacteria $B$ experiences.
-As a result, species $A$ was able to suppress species $B$ consuming the larger amount of nutrient and reaching larger bacterial count at the end.
+Here species $A$ has a longer lag-phase than $B$ but the exponential growth of $A$ is stronger compared to which is experienced by bacteria $B$.
+As a result, species $A$ was able to suppress species $B$, consuminl the larger amount of nutrients and reaching a larger bacterial count at the end.
 \begin{figure}
     \begin{center}
     \includegraphics[width=0.9\columnwidth]{Figures/pool_model_2pools_resource_competition.pdf}
@@ -610,9 +610,9 @@ In order to get the commonly used form of the \ac{glv}, we need to simply elimin
     \label{eq:LV_simple}
     \end{split}
 \end{align}
-
-Equations (\ref{eq:LV_simple}) are basically competitive Lotka-Volterra equations that are widely used in ecological studies and show the principle of competitive excursion.
-That principle claims that two species in competition for the same resource cannot coexist~\cite{wangersky_lotka-volterra_1978}.
+%
+Equations (\ref{eq:LV_simple}) can be understood as competitive Lotka-Volterra equations that are widely used in ecological studies and show the principle of competitive excursion.
+That principle claims that two species which compete for the same resource cannot coexist~\cite{wangersky_lotka-volterra_1978}.
 In previous studies it was shown that \ac{glv} equations with one bacterial state can be successfully applied to predict the microbial community dynamics, determine different types of the pairwise interspecies interactions~\cite{dedrick_when_2023, stein_ecological_2013, venturelli_deciphering_2018, hoffmann_power_2007}.
 In food studies the \ac{glv} was applied by Mounier \etal~\cite{mounier_microbial_2008} to study interactions of six bacteria species influenced by yeast omissions in cheese.
 Cauchie \etal~\cite{cauchie_modeling_2020} applied Lotka-Volterra model to study the three-species system of the bacteria majorly present in minced pork meat.\\
@@ -624,15 +624,16 @@ For further comparison of the derived model with the matrix formulation of the \
 %
 % ------------------------------------------------------------------------------------------------
 \subsection{Interspecies Competition}
-However, except the inhibition due to resource competition, bacteria developed different others active competition mechanisms.
-One of the examples of such mechanisms is a production of the antimicrobial compounds, inhibitors or toxins~\cite{wloch-salamon_effect_2008, chao_structured_1981}.
+Mutual inhibition between different species can not only result from competition for a shared resource for which bacteria have developed various other active competition mechanisms.
+One of the examples of such a mechanisms is the production of antimicrobial compounds, inhibitors or toxins~\cite{wloch-salamon_effect_2008, chao_structured_1981}.
 On the other hand, some bacteria can produce public goods, the compounds that benefit growth of other species.
-In this way, can suppress the non-preferred species by helping their competitors~\cite{hibbing_bacterial_2010}.
+In this way, they can suppress the non-preferred species by helping their competitors~\cite{hibbing_bacterial_2010}.
 %
 %
 % ................................................................................................
 \subsubsection{Toxins Production}
-To introduce active competitive mechanisms, we extend our model with one of the species producing the toxic compounds $T$ during its growth:
+One direct form of inhibition is the production of toxins.
+To introduce active competitive mechanisms, we extend our model with one of the species, producing the toxic compounds $T$ during its growth:
 \begin{equation}
     \dot{T} = \mathcal{F}(R,G).
 \end{equation}
@@ -653,13 +654,13 @@ Then the full \ac{ode} system is
     \label{eq:model_2sp_toxin}
 \end{align}
 %
-Where we consider two possible models of the toxin production:
+where we consider two possible models of the toxin production
 \begin{align}
     \mathcal{F}^1(R,G)&=\kappa G_B\\
     \mathcal{F}^2(R,G)&=\kappa\alpha_B R G_B.
 \end{align}
 Here $\kappa$ is the toxin production rate.
-The difference between the two toxin production models for resulting solution of the \acp{ode} is presented in Figure~\ref{fig:2pool_2sp_toxin}.
+The difference in the solutions of the given \acp{ode} between the two toxin production models is presented in Figure~\ref{fig:2pool_2sp_toxin}.
 %
 %
 \begin{figure}
@@ -681,7 +682,7 @@ The difference between the two toxin production models for resulting solution of
 \end{figure}
 %
 Model $\mathcal{F}^1$ results in toxin concentration $T_B^1(t)=\kappa\int_{t_0}^tG(t')dt'$.
-That means that as long as there are bacteria in the growth phase $G_B>0$ toxin is produced, no matter whether the total bacterial count $N_B$ is still growing.
+That means that as long as there are bacteria in the growth phase $G_B>0$, toxin is produced, no matter whether the total bacterial count $N_B$ is still growing.
 On the other hand, model $\mathcal{F}^2$ results in toxin accumulation in steady state $T_B^{2s}=\lim_{t\to\infty}T_B^2(t)=\kappa(N_t-N_0)$.
 To see this we note $\dot{T}_B^2=\kappa(\dot{L_B}+\dot{G_B})$, which yields: $T_B^2(t)=\kappa(L_B(t)+G_B(t)-N_{B0})$ where we used $T_B^2(0)=G_B(0)=0$, $L_B(0)=N_{B0}$.
 This model assumes that toxin is only produced when the total bacterial grow and divide, hence, the total bacterial count $N_B$ increases.
@@ -690,8 +691,8 @@ This model assumes that toxin is only produced when the total bacterial grow and
 % ................................................................................................
 \subsubsection{Mutual Inhibition}
 Another special case of the species competition is when the produced toxin does not cause the death of the bacteria but rather inhibit its growth.
-Such situation with 2 bacteria species, limiting resource and produced inhibitor was modeled, e.g., by Lenski and Hattingh~\cite{lenski_coexistence_1986}.
-In our case, we would like to look at rather simplified case reducing the number of variables of the system.
+Such situation with 2 bacteria species, a shared resource and produced inhibitor was modeled, e.g., by Lenski and Hattingh~\cite{lenski_coexistence_1986}.
+In our case, we would like to look at a rather simplified case reducing the number of variables of the system.
 The easiest way to introduce inhibition of species $A$ by species $B$ is via a growth rate of species $A$ depending on the abundance of species $B$.
 For sake of simplicity we ignore the lag pool and write for a mutual inhibition:
 \begin{align}
@@ -711,18 +712,18 @@ where $I$ is the concentration of the inhibiting metabolic byproduct producing d
 \end{split}\end{align}
 Note that if the toxin accumulates, i.e., $\dot I \sim G$,  one needs to replace $G$ by $\int G dt$.
 One can distinguish two limiting cases: {\it i}) $K_{A/B}\ll N_t$ and {\it ii}) $K_{A/B}\gg N_t$.
-In the first case the inhibition is of minor importance and could be ignored.
-In the latter case one can simplify the equations, given $N_A$ and $N_B$ are non-zero:
+In the first case the inhibition is of minor importance and could be ignored while in the latter case one can simplify the equations, given $N_A$ and $N_B$ are non-zero:
 \begin{align}\begin{split}
     \dot{G}_A &=\tilde{\alpha}_A\frac{G_A}{G_B}\left(1 - G_A-G_B\right)\\
     \dot{G}_B &= \tilde{\alpha}_B\frac{G_B}{G_A}\left(1 - G_A-G_B\right).
 \end{split}\end{align}
-We introduced the rescaled growth rates $\tilde{\alpha}_A=\alpha_A/(N_tK_B)$ and $\tilde{\alpha}_B=\alpha_B/(N_tK_A)$. Note that $[\tilde{\alpha}]=\mathrm{s}^{-1}$.
-Rescaling time with $\tilde{\alpha}_A$ and defining the dimensionless parameter
+We introduced the rescaled growth rates $\tilde{\alpha}_A=\alpha_A/(N_tK_B)$ and $\tilde{\alpha}_B=\alpha_B/(N_tK_A)$.
+Note that $[\tilde{\alpha}]=\mathrm{s}^{-1}$.
+We rescale the time with $\tilde{\alpha}_A$ and define the dimensionless parameter
 \begin{equation}
     \psi = \tilde{\alpha}_B/\tilde{\alpha}_A = \frac{K_B\alpha_B}{K_A\alpha_A}
 \end{equation}
-results in: 
+which results in
 \begin{align}
     \begin{split}
         \dot{G}_A &=\frac{G_A}{G_B}\left(1 - G_A-G_B\right)\\
@@ -730,12 +731,13 @@ results in:
     \end{split}
 \label{eq:2sp_1pool_inhibit_unitless}
 \end{align}
-We can separate three cases (which are displayed in Figure~\ref{fig:1pool_2sp_inhibit}):
+We can further separate three cases
 \begin{align}
     \psi&=1:\quad\text{A and B are equivalent}\\
     \psi&>1:\quad\text{B grows faster/inhibits A}\\
     \psi&<1:\quad\text{A grows faster/inhibits B}
 \end{align}
+which are displayed in Figure~\ref{fig:1pool_2sp_inhibit}.
 %
 \begin{figure}
     \begin{center}
@@ -755,24 +757,23 @@ We can separate three cases (which are displayed in Figure~\ref{fig:1pool_2sp_in
 %
 % ------------------------------------------------------------------------------------------------
 \subsection{Interspecies Cooperation}
-On the other hand, one can also observe some cooperative behaviors between species in case when it facilitates the competition with others.
-It happens if bacteria species as a result of their metabolism produce the compounds that are beneficial for the growth of each other, so-called public goods.
-Quite often it happens between the species that are close relatives or clonal populations and such process is called kin selection \cite{west_social_2007}.
-Furthermore, neighbors can also benefit from a certain behavior without expressing it by itself, so-called 'social cheaters'~\cite{rainey_evolution_2003}.
-%
-%
-The benefit, or mutual activation, of the two species from the presence of the other can be simply introduced by mathematical functions.
-For sake of clarity we omit again the lag pool and write:
+On the other hand, one can also observe some cooperative behaviors between species in cases when it facilitates the competition with others.
+This phenomenon occurs when bacterial metabolism produces compounds that are beneficial for the growth of each other, so-called public goods.
+It is most often observed between species which are close relatives or clonal populations.
+This process is called kin selection~\cite{west_social_2007}.
+Furthermore, neighbors can also benefit from a behavior which does not require any action on an expression level, so-called 'social cheaters'~\cite{rainey_evolution_2003}.
+This mutual activation benefits all involved species and can by easily included in our mathematical framework.
+For the sake of clarity we omit again the lag pool and write
 \begin{align}
     \dot{G}_A &= \mathcal{B}_A(P_B,R)G_A\\
     \dot{G}_B &= \mathcal{B}_B(P_A,R)G_B\\
     \dot{R} &=-\mathcal{B}_A(P_B,R)G_A-\mathcal{B}_B(P_A,R)G_B\\
     \dot{P}_A &= \mathcal{F}_A(R,G_A)\\
-    \dot{P}_B &= \mathcal{F}_B(R,G_B).
+    \dot{P}_B &= \mathcal{F}_B(R,G_B)
 \end{align}
-$P_A$ and $P_B$ denote the substance produced by species A and B, respectively.
+where $P_A$ and $P_B$ denote the substance produced by species A and B, respectively.
 The functions $\mathcal{B}_A(P_B,R)$ and $\mathcal{B}_B(P_A,R)$ capture the resource dependent growth.
-Setting $\mathcal{B}_A(P_B,R)=\alpha_A P_BR$, $\mathcal{B}_B(P_A,R)=\alpha_B P_A R$, $\mathcal{F}_A(R,G_A)=\kappa_A RG_A$, $\mathcal{F}_B(R,G_B)=\kappa_B RG_B$, rescaling $G_A$, $G_B$, and $P_B$ with $N_t$, $P_A$ with $\kappa_A/\alpha_A$, time with $\alpha_AN_t^2$, defining $\psi=\kappa_A\alpha_B/(\alpha_A^2N_t)$, and $\phi=\kappa_B/(\alpha_A N_t)$ results in:
+Setting $\mathcal{B}_A(P_B,R)=\alpha_A P_BR$, $\mathcal{B}_B(P_A,R)=\alpha_B P_A R$, $\mathcal{F}_A(R,G_A)=\kappa_A RG_A$, $\mathcal{F}_B(R,G_B)=\kappa_B RG_B$, rescaling $G_A$, $G_B$, and $P_B$ with $N_t$, $P_A$ with $\kappa_A/\alpha_A$, time with $\alpha_AN_t^2$, defining $\psi=\kappa_A\alpha_B/(\alpha_A^2N_t)$, and $\phi=\kappa_B/(\alpha_A N_t)$ results in
 \begin{align}
     \dot{G}_A &= P_B G_A\left(1 - G_A-G_B\right)\\
     \dot{G}_B &= \psi P_A G_B\left(1 - G_A-G_B\right)\\
@@ -782,8 +783,8 @@ Setting $\mathcal{B}_A(P_B,R)=\alpha_A P_BR$, $\mathcal{B}_B(P_A,R)=\alpha_B P_A
 \end{align}
 %
 The solution of the system~\ref{eq:1pool_2sp_cooper} is presented in Figure~\ref{fig:1pool_2sp_cooper}.
-Here we can see that if $\psi=1$ and $\phi=1$ (see Figure~\ref{fig:1pool_2sp_cooper}a) the production of the public goods of the two species is happening with the same rate as well as the growth of bacteria.
-Increasing the production rate of the public good produced by species $B$ (see Figure~\ref{fig:1pool_2sp_cooper}b) causes increasing the growth of species $A$ that profit from the presence of $B$.
+Here we can see that if $\psi=1$ and $\phi=1$ (see Figure~\ref{fig:1pool_2sp_cooper}a) the production of the public goods of the two species is happening with the same rate as the growth of bacteria.
+Increasing the production rate of the public good (see Figure~\ref{fig:1pool_2sp_cooper}b), leads to an increase in the growth of species $A$ that profit from the presence of $B$.
 On the other hand, choosing $\psi=2$ (see Figure~\ref{fig:1pool_2sp_cooper}c), we increase the profit that species $B$ has from public goods $P_A$.
 That indirectly leads to larger amount of $P_B$ produced by species $B$.
 \begin{figure}
