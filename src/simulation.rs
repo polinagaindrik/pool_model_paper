@@ -128,12 +128,9 @@ fn save_initial_state(
     meta_params: &MetaParams,
 ) -> PyResult<()> {
     // Also save the SimulationSettings into the same folder
-    let mut save_path_cells = path.clone();
-    let mut save_path_domain = path.clone();
-    let mut save_path_meta_params = path.clone();
-    save_path_cells.push("initial_cells.json");
-    save_path_domain.push("domain.json");
-    save_path_meta_params.push("meta_params.json");
+    let save_path_cells = path.join("initial_cells.json");
+    let save_path_domain = path.join("domain.json");
+    let save_path_meta_params = path.join("meta_params.json");
 
     let f_cells = std::fs::File::create(save_path_cells)?;
     let f_domain = std::fs::File::create(save_path_domain)?;
@@ -269,7 +266,6 @@ pub fn run_simulation(
         .location(&meta_params.save_path)
         .add_date(meta_params.save_add_date)
         .init();
-    // storage.export_formats = vec![ExportOptions::Vtk];
 
     let simulation_setup = create_simulation_setup!(
         Domain: simulation_domain,
