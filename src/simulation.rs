@@ -12,7 +12,7 @@ use pyo3::prelude::*;
 
 use crate::bacterial_properties::*;
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
 #[pyclass(get_all, set_all)]
 pub struct Domain {
     pub diffusion_constants: [f64; NUMBER_OF_REACTION_COMPONENTS],
@@ -61,7 +61,7 @@ impl Domain {
     }*/
 }
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
 #[pyclass(get_all, set_all)]
 pub struct MetaParams {
     // General Settings

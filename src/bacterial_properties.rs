@@ -10,7 +10,7 @@ use pyo3::prelude::*;
 pub const NUMBER_OF_REACTION_COMPONENTS: usize = 2;
 pub type ReactionVector = nalgebra::SVector<f64, NUMBER_OF_REACTION_COMPONENTS>;
 
-#[derive(CellAgent, Clone, Debug, Deserialize, Serialize)]
+#[derive(CellAgent, Clone, Debug, Deserialize, Serialize, PartialEq)]
 #[pyclass(get_all, set_all)]
 pub struct Bacteria {
     #[Mechanics]
@@ -179,7 +179,7 @@ impl Interaction<Vector2<f64>, Vector2<f64>, Vector2<f64>, f64> for BacteriaReac
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[pyclass(get_all, set_all)]
 pub struct BacteriaCycle {
     /// Threshold for the volume when the cell should divide
@@ -276,14 +276,14 @@ impl Cycle<Bacteria> for BacteriaCycle {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
 #[pyclass]
 pub enum Species {
     S1,
     S2,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[pyclass(get_all, set_all)]
 pub struct BacteriaReactions {
     pub potential_strength: f64,
@@ -400,7 +400,7 @@ impl Volume for Bacteria {
     }
 }
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
 #[pyclass]
 pub struct GradientSensing;
 
