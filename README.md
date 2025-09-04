@@ -52,11 +52,11 @@ python -m maturin develop -r --uv
     - [x] Page 16: R* = R / R_0 probably remove it
     - [x] Rename variables: G_max -> N_t and R* -> R
         - [x] make sure that they match to previous sections
-    - [ ] More Citations
+    - [x] More Citations
     - [x] Figure 8: Do we need this?
     - [x] Table 1: Move to supplement
-    - [ ] Ensure that we are talking about pool model! (map everything on this new theoretical framework)
-    - [ ] Use introductory part in main Introduction as well
+    - [x] Ensure that we are talking about pool model! (map everything on this new theoretical framework)
+    - [x] Use introductory part in main Introduction as well
     - [x] Discuss results in text form not only in figure
     - [ ] Redo plots; use pgf backend; do not use combined bacteria volume; use N/N_t or similar
 
@@ -92,15 +92,15 @@ python -m maturin develop -r --uv
 1. Content
     - [x] One-Species
     - [x] Interaction between Species
-    - [ ] Spatial Effects
+    - [x] Spatial Effects
     - [x] Supplement
 2. Discussion
 3. Formal stuff
-    - [ ] Abstract
-    - [ ] Introduction
+    - [x] Abstract
+    - [x] Introduction
     - [ ] Discussion
     - [ ] Conclusion
 4. Review of whole manuscript
-    - [ ] Formulations
+    - [x] Formulations
     - [x] Notation
     - [ ] Formatting
