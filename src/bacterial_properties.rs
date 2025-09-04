@@ -55,6 +55,25 @@ pub struct BacteriaTemplate {
     pub interactionextracellulargradient: Py<GradientSensing>,
 }
 
+impl BacteriaTemplate {
+    pub(crate) fn py_eq(&self, py: Python, other: &Self) -> PyResult<bool> {
+        let BacteriaTemplate {
+            mechanics,
+            cycle,
+            cellular_reactions,
+            interactionextracellulargradient,
+        } = self;
+        let e1 = mechanics.extract::<NewtonDamped2D>(py)? == other.mechanics.extract(py)?;
+        let e2 = cycle.extract::<BacteriaCycle>(py)? == other.cycle.extract(py)?;
+        let e3 = cellular_reactions.extract::<BacteriaReactions>(py)?
+            == other.cellular_reactions.extract(py)?;
+        let e4 = interactionextracellulargradient.extract::<GradientSensing>(py)?
+            == other.interactionextracellulargradient.extract(py)?;
+
+        Ok(e1 && e2 && e3 && e4)
+    }
+}
+
 fn bacteria_default_volume() -> f64 {
     std::f64::consts::PI * 1.5_f64.powi(2)
 }
