@@ -361,6 +361,5 @@ pub fn run_or_load_simulation(
         }
     }
 
-    todo!();
     run_simulation(py, cells, domain, meta_params)
 }
