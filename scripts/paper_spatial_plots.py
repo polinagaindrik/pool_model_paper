@@ -56,10 +56,11 @@ if __name__ == "__main__":
 
     if args.save_snapshots:
         for output_path in paths:
-            picked_iter = crp.get_all_iterations(output_path)[20]
-            crp.save_snapshot(output_path, picked_iter)
-        # for output_path in paths:
-        #     crp.save_all_snapshots(Path(output_path))
+            iters = crp.get_all_iterations(output_path)
+            crp.save_snapshot(output_path, iters[6])
+            crp.save_snapshot(output_path, iters[12])
+            crp.save_snapshot(output_path, iters[18])
+            crp.save_snapshot(output_path, iters[24])
 
     crp.load_style()
     for output_path in paths:
