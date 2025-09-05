@@ -1140,39 +1140,50 @@ Furthermore, it was shown that the utilized pool model can be derived from first
 % ================================================================================================
 \section{Discussion}
 
-How well does the pool model do to encapsulate all the different growth models
-\begin{itemize}
-    \item All 6 models can be represented by pool model
-    \item Baranyi-Roberts results can be reproduced, but not identical; requires some work
-    \item what are some general limitations within this framework? how can they be circumvented?
-    \item why is the pool model "better" than the other \ac{ode} models? (why did we do this?);
-        generalization of many models; better explainability;
-    \item link to supplement; we can generalize this and prove theorems for the abstract,
-        generalized model; this allows us to discuss many cases at once
-\end{itemize}
+% How well does the pool model do to encapsulate all the different growth models
+% \begin{itemize}
+%     \item All 6 models can be represented by pool model
+%     \item Baranyi-Roberts results can be reproduced, but not identical; requires some work
+%     \item what are some general limitations within this framework? how can they be circumvented?
+%     \item why is the pool model "better" than the other \ac{ode} models? (why did we do this?);
+%         generalization of many models; better explainability;
+%     \item link to supplement; we can generalize this and prove theorems for the abstract,
+%         generalized model; this allows us to discuss many cases at once
+% \end{itemize}
+%
+% How can we cover more effects of bacteria?
+% \begin{itemize}
+%     \item More states for metabolic processes
+%     \item More states for more species
+%     \item Other cooperiation/inhibition effects
+%     \item external influences
+% \end{itemize}
+%
+% How justified was the construction of the \ac{abm}?
+% \begin{itemize}
+%     \item Discuss simplified physical interaction model
+%     \item Heterogeneity plays a role; as we have shown
+%     \item why did we not simply use a PDE?; because we have to think in terms of cellular processes
+%         and this ensures that our model is actually realistic
+% \end{itemize}
+%
+% What are limitations of our approach?
+% \begin{itemize}
+%     \item spatial stuff; heterogeneity (because \ac{ode})
+%     \item larger models require more parameters, harder to estimate
+%     \item only simple models have analytical solutions
+% \end{itemize}
 
-How justified was the construction of the \ac{abm}?
-\begin{itemize}
-    \item Discuss simplified physical interaction model
-    \item Heterogeneity plays a role; as we have shown
-    \item why did we not simply use a PDE?; because we have to think in terms of cellular processes
-        and this ensures that our model is actually realistic
-\end{itemize}
-
-How can we cover more effects of bacteria?
-\begin{itemize}
-    \item More states for metabolic processes
-    \item More states for more species
-    \item Other cooperiation/inhibition effects
-    \item external influences
-\end{itemize}
-
-What are limitations of our approach?
-\begin{itemize}
-    \item spatial stuff; heterogeneity (because \ac{ode})
-    \item larger models require more parameters, harder to estimate
-    \item only simple models have analytical solutions
-\end{itemize}
+The pool model presented here was used to describe the dynamics of 6 systems containing established models of bacterial growth.
+Comparing our approach with the Baranyi-Roberts model which is widely used in food science, it is possible to obtain results which provide growth curves of very similar shape.
+However, their analytical form is not completely identical.
+The inclusion of additional metabolic processes or larger number of cell-species can be achieved by extending the list of possible states and defining transitions between them.
+In addition we have shown how to treat interspecies interactions in the form of cooperation and competition.
+This framework provides a starting point for a mathematically more abstract formulation which is thus able to cover a much wider class of systems.
+By constructing an \ac{abm}, we have exemplified how close the devised model is to the individual biological processes that occur within the bacteria.
+We have investigated the effect of spatial effects in the form of varying diffusion parameters and different initial spatial distributions of bacteria.
+Our findings reinforce that the \ac{ode} model is a good simplification in the highly-diffusive regime within a mostly homogenous spatial bacterial distribution.
+However, deviations to these assumptions can lead to non-negligible effects, influencing the growth of the colony.
 
 % ------------------------------------------------------------------------------------------------
 \section{Conclusion}
