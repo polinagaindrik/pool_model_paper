@@ -4,17 +4,10 @@ import argparse
 
 # Diffusion constants, randomness, homogenous
 CONFIGS = [
-    # (30, 0, True),
-    # (5, 0, True),
-    # (30, 0, False),
-    (30, 0.25, True),
-    (30, 0.20, True),
-    (30, 0.15, True),
-    (30, 0.10, True),
-    (5, 0.25, True),
-    (5, 0.20, True),
-    (5, 0.15, True),
-    (5, 0.10, True),
+    (30, 0, True),
+    (5, 0, True),
+    (30, 0, False),
+    (30, 0.30, True),
 ]
 
 
