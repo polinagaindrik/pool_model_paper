@@ -1179,31 +1179,32 @@ Comparing our approach with the Baranyi-Roberts model which is widely used in fo
 However, their analytical form is not completely identical.
 The inclusion of additional metabolic processes or larger number of cell-species can be achieved by extending the list of possible states and defining transitions between them.
 In addition we have shown how to treat interspecies interactions in the form of cooperation and competition.
-This framework provides a starting point for a mathematically more abstract formulation which is thus able to cover a much wider class of systems.
 By constructing an \ac{abm}, we have exemplified how close the devised model is to the individual biological processes that occur within the bacteria.
+This mechanistic single-cell level of understanding of our \ac{abm} is a perspective which can not be easily replicated by other spatial models such as \acp{pde}.
 We have investigated the effect of spatial effects in the form of varying diffusion parameters and different initial spatial distributions of bacteria.
 Our findings reinforce that the \ac{ode} model is a good simplification in the highly-diffusive regime within a mostly homogenous spatial bacterial distribution.
 However, deviations to these assumptions can lead to non-negligible effects, influencing the growth of the colony.
 
 % ------------------------------------------------------------------------------------------------
 \section{Conclusion}
-\begin{itemize}
-    \item New theoretical framework
-    \item consistent with \ac{ode} models (Baranyi-Roberts)
-    \item Better explainability
-    \item Include effects such as inhibition, toxins in understandable manner
-    \item showed spatial limitations of \ac{ode} model
-    \item \ac{abm} model allowed modeling of cellular processes; ensure that pool model is derivable
-        from the individual behvaiour of cellular processes
-    \item outlook: generalized mathematical formulation; extend inhibition model (because it is a
-        dimensional reduction of existing models)
-    \item Provide code in a pypi package as well (TODO)
-\end{itemize}
+% \begin{itemize}
+%     \item New theoretical framework
+%     \item consistent with \ac{ode} models (Baranyi-Roberts)
+%     \item Better explainability
+%     \item Include effects such as inhibition, toxins in understandable manner
+%     \item showed spatial limitations of \ac{ode} model
+%     \item \ac{abm} model allowed modeling of cellular processes; ensure that pool model is derivable
+%         from the individual behvaiour of cellular processes
+%     \item outlook: generalized mathematical formulation; extend inhibition model (because it is a
+%         dimensional reduction of existing models)
+%     \item Provide code in a pypi package as well (TODO)
+% \end{itemize}
 
 We introduced the pool model as a novel framework to unify existing approaches and allows researchers to follow a mechanistic approach during model development.
 It is able to capture the effects of many established models and provides a lens which is useful to generalize existing systems and results in better overall explainability.
-
-\textbf{CHRISTIAN HELP!}
+By modeling effects such as mutual inhibition on a single-cell level within an \ac{abm}, we have exemplified that the pool model directly builds on these more fundamental concepts.
+It can thus aid in the mechanistic understanding of the underlying processes, allowing researchers to deepen their konwledge about microbial growth within food science.
+Going forward, this framework can provide a starting point for a more abstract mathematical formulation which should be able to cover a much wider class of systems.
 
 \onecolumn
 
