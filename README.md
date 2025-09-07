@@ -30,7 +30,7 @@ python -m maturin develop -r --uv
 -  Abstract
 
 -  Introduction
-    - [ ] Include citations
+    - [x] Include citations
 
 -  General Math
     - [x] Move to supplement
@@ -58,24 +58,24 @@ python -m maturin develop -r --uv
     - [x] Ensure that we are talking about pool model! (map everything on this new theoretical framework)
     - [x] Use introductory part in main Introduction as well
     - [x] Discuss results in text form not only in figure
-    - [ ] Redo plots; use pgf backend; do not use combined bacteria volume; use N/N_t or similar
+    - [x] Redo plots; use pgf backend; do not use combined bacteria volume; use N/N_t or similar
 
 -  Discussion
-    - [ ] difference in lag phase between baranyi-roberts and pool model
-    - [ ] mathematical generalization has only linear effects: is this justified? (do we include this?)
-    - [ ] how can we describe other effects
-        - [ ] more states for different metabolic processes
-        - [ ] more pools for more species
-        - [ ] other cooperation/inhibition effects
-        - [ ] external influences (i.e. put drug into system)
-    - [ ] assumptions in setting up ABM model; which details do we include?
+    - [x] difference in lag phase between baranyi-roberts and pool model
+    - [x] mathematical generalization has only linear effects: is this justified? (do we include this?)
+    - [x] how can we describe other effects
+        - [x] more states for different metabolic processes
+        - [x] more pools for more species
+        - [x] other cooperation/inhibition effects
+        - [x] external influences (i.e. put drug into system)
+    - [x] assumptions in setting up ABM model; which details do we include?
 
 -  Conclusion
-    - [ ] new theoretical framework: pool model
-    - [ ] consistent with ODE models (Baranyi Roberts)
-    - [ ] pool model can explain better than known models
-    - [ ] account + understand for many other effects such as inhibition and toxins
-    - [ ] showed spatial limitation of the model
+    - [x] new theoretical framework: pool model
+    - [x] consistent with ODE models (Baranyi Roberts)
+    - [x] pool model can explain better than known models
+    - [x] account + understand for many other effects such as inhibition and toxins
+    - [x] showed spatial limitation of the model
 
 -  Supplement
     - [x] Formatting of Supplement subsections
@@ -83,8 +83,8 @@ python -m maturin develop -r --uv
     - [x] "General Mathematical Formalism"
         - [x] Move section 2 here
         - [x] Move all matrix equations here
-        - [ ] Discuss generalized Lotka-Volterra model here extensively!
-            - [ ] Christian should probably write this text
+        - [x] Discuss generalized Lotka-Volterra model here extensively!
+            - [x] Christian should probably write this text
 
 - Move ABM simulation Code to repository
 
@@ -98,9 +98,9 @@ python -m maturin develop -r --uv
 3. Formal stuff
     - [x] Abstract
     - [x] Introduction
-    - [ ] Discussion
-    - [ ] Conclusion
+    - [x] Discussion
+    - [x] Conclusion
 4. Review of whole manuscript
     - [x] Formulations
     - [x] Notation
-    - [ ] Formatting
+    - [x] Formatting
