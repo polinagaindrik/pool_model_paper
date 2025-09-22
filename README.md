@@ -22,6 +22,9 @@ uv pip install maturin
 python -m maturin develop -r --uv
 ```
 
+Some parts have been documented under
+[polinagaindrik.github.io/pool_model_paper/](https://polinagaindrik.github.io/pool_model_paper/).
+
 ## TODO
 
 - Formatting
