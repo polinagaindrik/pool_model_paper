@@ -3,10 +3,7 @@ ZIP_TARGETS:= README.md\
 	$(wildcard *.tex)\
 	$(wildcard *.bib)\
 	$(wildcard *.sty)\
-	$(wildcard Figures/abm-homogenous/*)\
-	$(wildcard Figures/abm-homogenous-low-diffusion/*)\
-	$(wildcard Figures/abm-inhomogenous/*)\
-	$(wildcard Figures/abm-random/*)\
+	$(wildcard Figures/*)\
 
 all:
 	latexmk -pdf -shell-escape pool_model.tex
