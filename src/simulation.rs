@@ -289,7 +289,7 @@ pub fn run_simulation(
     // let simulation_result = run_full_simulation!(setup, settings, [Mechanics, Interaction, Cycle])?;
     let mut supervisor =
         SimulationSupervisor::initialize_with_strategies(simulation_setup, strategies);
-    supervisor.config.show_progressbar = meta_params.show_progressbar;
+    supervisor.config.progressbar = meta_params.show_progressbar.then_some("".to_string());
 
     save_initial_state(
         supervisor.storage.get_full_path(),
