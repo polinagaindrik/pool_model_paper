@@ -138,8 +138,8 @@ def pool_model_2sp_cooper(t, x, param, x0, const):
 def observable_3pool(output):
     # Output (n_variables x n_times)
     # Variables: (L, G, D,) = x
-    # => Output [n = L+G+D]
-    return [output[0]+output[1]+output[2]]
+    # => Output [n = L+G]
+    return [output[0]+output[1]]#+output[2]]
 
 def observable_2pool(output):
     # Output (n_variables x n_times)
@@ -190,10 +190,10 @@ if __name__ == "__main__":
 
 ###############33############### 3 pool models with resource pool ##############################3########333
     # Generate model data
-    const1 = [1e-2, 0., 2.5, .5, 5., Nt] # (lambd, mu1, alpha, mu2, beta, N_t, )
-    const2 = [1e-3, 0., 2.5, .5, 5., Nt] # (lambd, mu1, alpha, mu2, beta, N_t, )
-    const3 = [5e-5, 0., 2.5, .5, 5., Nt] # (lambd, mu1, alpha, mu2, beta, N_t, )
-    const4 = [1e-3, .5, 2.5, .5, 5., Nt] # (lambd, mu1, alpha, mu2, beta, N_t, )
+    const1 = [1e-2, 0., 2.5, .5, 0., Nt] # (lambd, mu1, alpha, mu2, beta, N_t, )
+    const2 = [1e-3, 0., 2.5, .5, 0., Nt] # (lambd, mu1, alpha, mu2, beta, N_t, )
+    const3 = [5e-5, 0., 2.5, .5, 0., Nt] # (lambd, mu1, alpha, mu2, beta, N_t, )
+    const4 = [1e-3, .5, 2.5, .5, 0., Nt] # (lambd, mu1, alpha, mu2, beta, N_t, )
     const_3pool_res = [const1, const2, const3, const4]
     data_3pool_res = [generate_insilico_data(pool_model_3pools_resource, [t], [], [[]], x01,
                 const=const, obs_func=observable_3pool, n_traj=1) for const in const_3pool_res]
@@ -208,8 +208,8 @@ if __name__ == "__main__":
             ax.plot(d['times'], d['obs_mean'][0], linewidth=2.5, color=color_palette_1sp[i], label=labels[i])
     fig, ax = set_labels(fig, ax, r'Time, $t$', r'Total Bacterial Count, $N$')
     ax.set_yscale('log')
-    ax.set_xlim(0., 9.0)
-    ax.set_ylim(3.3e0, 1.1e4)
+    ax.set_xlim(0., 12.0)
+    ax.set_ylim(3.0e0, 0.6e4)
     ax.legend()
     plt.savefig('paper/Figures/pool_model_3pools_resource.pdf', bbox_inches='tight')
     plt.close(fig)
@@ -219,8 +219,8 @@ if __name__ == "__main__":
     Gamma, delta= 1., 5.
     shift_cnd = [(4, 10)] #((1, 10), (3, 5), (5, 5), (7, 15))
     y = [temp_stress(tt, Gamma, delta, shift_cnd) for tt in t]
-    const5 = [1e-2, 0., 2.5, .5, 5., Nt, Gamma, delta, shift_cnd] # (lambd, mu1, alpha, mu2, beta, N_t, Gamma, delta, shift_cnd)
-    const6 = [1e-2, 0., 2.5, .5, 5., Nt, Gamma, delta, ((1, 10), (3, 5), (7, 15))] # (lambd, mu1, alpha, mu2, beta, N_t, Gamma, delta, shift_cnd)
+    const5 = [1e-2, 0., 2.5, .5, 0., Nt, Gamma, delta, shift_cnd] # (lambd, mu1, alpha, mu2, beta, N_t, Gamma, delta, shift_cnd)
+    const6 = [1e-2, 0., 2.5, .5, 0., Nt, Gamma, delta, ((1, 10), (3, 5), (7, 15))] # (lambd, mu1, alpha, mu2, beta, N_t, Gamma, delta, shift_cnd)
     consts_Tempshift = [const1, const5, const6]
     data_Tempshift = [data_3pool_res[0]] + [generate_insilico_data(pool_model_tempstress, [t], [], [[]], x01,
                                             const=const, obs_func=observable_3pool, n_traj=1) for const in consts_Tempshift[1:]]
