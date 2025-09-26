@@ -139,7 +139,7 @@
       {]}{{{\color{delim}{]}}}}{1},
 }
 
-\title{Pool Model - A unified Mathematical\\ Modelling Framework for Food Science}
+\title{Pool Model - A Mathematical Framework\\ for Modelling Bacterial Consortia in Food Science}
 \author{
     Polina Gaindrik\textsuperscript{1},
     Jonas Pleyer\textsuperscript{1}
@@ -148,7 +148,7 @@
 
 \date{
     \footnotesize
-    \textsuperscript{\textbf{1}}Freiburg Center for Data Analysis and Modeling
+    \textsuperscript{\textbf{1}}Freiburg Center for Data Analysis and Modeling and AI
 }
 
 \begin{document}
@@ -160,7 +160,7 @@
     inter-species cooperation or competition.
     Various empirical and inactivation models have been conceived and applied to problems related to
     food microbiology.
-    However, the utilized models live on the popluation level, omitting any spatial effects such as
+    However, the utilized models live on the population level, omitting any spatial effects such as
     heterogeneity or diffusion.
     In this work we present a novel generalized framework, called "pool model" which uses multiple
     distinct pools that can hold bacterial states of distinct species or extracellular nutrient
@@ -356,14 +356,13 @@ The suggested model can be cast in the following reactions:
     L &\stackrel{\lambda}{\longrightarrow} & G\\
     L &\stackrel{\mu}{\longrightarrow} & D\\
     G &\stackrel{\alpha}{\longrightarrow} & 2G\\
-    G &\stackrel{\mu'}{\longrightarrow} & D\\
-    D &\stackrel{\beta}{\longrightarrow} & \emptyset
-\end{eqnarray}
+    G &\stackrel{\mu'}{\longrightarrow} & D
+ \end{eqnarray}
 Then the \acp{ode} describing such a model can be written as
 \begin{align}\begin{split}
     \dot{L} &= -(\mu + \lambda) L\\
     \dot{G} &= \lambda L + \alpha G - \mu' G\\
-    \dot{D} &= \mu  L + \mu' G- \beta D  
+    \dot{D} &= \mu  L + \mu' G 
 \end{split}\end{align}
 with the initial conditions $L(0)=N_0$, $G(0)=0$, and $D(0)=0$, where $N_0$ is the initial bacterial population.
 %
@@ -374,38 +373,38 @@ By releasing extracellular signalling molecules (autoinducer molecules) it is po
 We will not dive into the processes of quorum sensing and try to keep it as simple as possible.
 We aim to include a resource pool which is consumed by the growing bacteria using the second order kinetic reaction:
 \begin{equation}
-    G + R_0  \stackrel{\alpha_0}{\longrightarrow} 2G.
+    G + R  \stackrel{\alpha_0}{\longrightarrow} 2G.
 \end{equation}
-Note that the pools $L$, $G$ and $D$ represent the number of bacteria (or number of bacteria per unit area/volume) while $R_0$ represents an abstract resource pool.
+Note that the pools $L$, $G$ and $D$ represent the number of bacteria (or number of bacteria per unit area/volume) while $R$ represents an abstract resource pool.
 Let say $G=N_B/V$ and $[G]=1/V$, where $N_B$ is the number of bacteria and $V$ is the volume.
-Then $R_0=N_R/V$ and $[R_0]=1/V$, where $N_R$ is the number of resource molecules (or any appropriate unit, e.g., mol).
+Then $R=N_R/V$ and $[R]=1/V$, where $N_R$ is the number of resource molecules (or any appropriate unit, e.g., mol).
 Then $[\alpha_0]=V/s$, $[N_t]=1/V$, and $[\alpha]=1/s$.
 $N_t$ denotes the maximal size of the total bacterial population due to environmental limitations (Figure \ref{fig:3pool_resource_plots}).
 For homogenous densities it is equivalent to consider the total amount, i.e., multiplying $L$ and $G$ by the volume.
 In this case $[L]=[G]=[N_t]=1$.
-For simplicity, we make a transition to the dimensionless constant $\alpha:=\alpha_0 N_t$ and dimensionless resource pool $R(t) = R_0 / N_t$ ($0 \leqslant R \leqslant 1$).
+For simplicity, we make a transition to the dimensionless constant $\alpha:=\alpha_0 N_t$ and dimensionless resource pool $\tilde{R}(t) = R/ N_t$ ($0 \leqslant \tilde{R} \leqslant 1$).
 Here the full capacity of the resource pool $N_t$ was used as a scaling constant.
-In this case the growth term can be simply written as $\alpha G R$ and the model is fully formulated in the following way:
+In this case the growth term can be simply written as $\alpha G \tilde{R}$ and the model is fully formulated in the following way:
 \begin{align}
     \begin{split}
         \dot{L} &= -(\mu + \lambda) L\\
-        \dot{G} &= \lambda L + \alpha R G-\mu' G\\
-        \dot{D} &= \mu  L + \mu' G- \beta D\\
-        \dot{R} &= - \frac{\alpha}{N_t} R G
+        \dot{G} &= \lambda L + \alpha \tilde{R} G-\mu' G\\
+        \dot{D} &= \mu  L + \mu' G\\
+        \dot{\tilde{R}} &= - \frac{\alpha}{N_t} \tilde{R} G
     \end{split}.
 \label{eq:ode_3pool_resource}
 \end{align}
 %
-Such a model can be simplified by exploiting that any limitation of the resource pool also leads to a limit of the total bacterial count
+This can be simplified by exploiting the conservation of the resource pool:
 \begin{equation}
-    R = 1 - \frac{L+G+D}{N_t}
+    \tilde{R} = 1 - \frac{L+G+D}{N_t}
 \end{equation}
 and, hence, the full system can be written as
 \begin{align}
     \begin{split}
         \dot{L} &= -(\mu + \lambda) L\\
         \dot{G} &= \lambda L + \alpha G\left(1-\frac{L+G+D}{N_t}\right)-\mu' G\\
-        \dot{D} &= \mu  L + \mu' G- \beta D 
+        \dot{D} &= \mu  L + \mu' G
     \end{split}.
 \label{eq:ode_3pool_resource2}
 \end{align}
@@ -415,10 +414,10 @@ and, hence, the full system can be written as
     \begin{center}
     \includegraphics[width=0.9\columnwidth]{Figures/pool_model_3pools_resource.pdf}
     \caption{
-        The time dependence of the total bacterial count $N(t) = L(t) + G(t) + D(t)$ is obtained as a sum of bacteria in all states.
-        All curves were calculated using the model (\ref{eq:ode_3pool_resource2}) with parameters $\alpha=2.5$, $\mu'=0.5$ and $\beta=5$.
+        The time dependence of the bacterial count $N(t) = L(t) + G(t) $ is shown.
+        All curves were calculated using the model (\ref{eq:ode_3pool_resource2}) with parameters $\alpha=2.5$, $\mu'=0.5$.
         The blue curve shows a significant dip in the behavior of the system where the death of the bacteria is present $\mu = 0.5$.
-        Other curves show the case of no bacteria dying $\mu=0$ and represent different lengths of lag phases: short $\lambda=10^{-2}$ (dark green), intermediate $\lambda=10^{-3}$ (light green) and long one $\lambda=10^{-4}$ (yellow).
+        Other curves show the case of no bacteria dying $\mu=0$ and represent different lengths of lag phases: short $\lambda=10^{-2}$ (dark green), intermediate $\lambda=10^{-3}$ (light green) and long one $\lambda=10^{-4}$ (yellow). Note that the steady state for $N(t)$ and $D(t)$ is for this model $\lim_{t\to\infty} N(t)=0$ and $\lim_{t\to\infty} D(t)=N_t$, because of the depletion of the resource pool. 
     }
     \label{fig:3pool_resource_plots}
     \end{center}
@@ -436,34 +435,32 @@ The relevant question here is whether cells in the pool $D$ still contribute to 
 If yes, the three pool model would be advantageous, if not the two pool model is sufficient with the advantages of having one parameter less.\\
 %
 % The dynamics of the three pool model can be captured by the coupled system of ordinary differential
-The dynamics of the three pool model is captured by equations~\ref{eq:ode_3pool_resource2} which can be used to derive the two pool model by setting $D\equiv 0$ and replacing $\mu$ with $\beta$).
-For $\mu'=0$ the equations for $L$ and $D$ can be readily integrated resulting in:
+The dynamics of the three pool model is captured by equations~\ref{eq:ode_3pool_resource2} which can be used to derive the two pool model simply by omitting $D$.
+Moreover, for $\mu'=0$ the equations for $L$ and $D$ can be readily integrated resulting in:
 \begin{align}
     \begin{split}
         L(t) &= N_0 e^{-(\mu+\lambda)t}\\
-        D(t) &= N_0 \mu e^{-\beta t}\frac{1-e^{-(\mu+\lambda-\beta)t}}{\mu+\lambda-\beta}
+        D(t) &= N_0 \mu \frac{1-e^{-(\mu+\lambda)t}}{\mu+\lambda
+       }
     \end{split}.
 \end{align}
-For constant parameters $\mu$, $\lambda$, and $\beta$ the integrals for $L$ and $D$ can be inserted into the differential equation for $G$.
+For constant parameters $\mu$ and $\lambda$ the integrals for $L$ and $D$ can be inserted into the differential equation for $G$.
 However, in the case of time dependent parameters, e.g., for a dependence on a non-static, dynamic temperature, it appears to be not advantageous to use the analytical results for $L$ and $D$ and work instead with all three equations for $L$, $G$, and $D$.
 It is interesting to see what type of equations result for the total bacterial population $N=L+G+D$:
 \begin{align}
     \begin{split}
         \dot{G} &= \lambda L + \alpha G\left(1-\frac{N}{N_t}\right)\\
-        \dot{N} &= - \beta D + \alpha G\left(1-\frac{N}{N_t}\right)
+        \dot{N} &= \alpha G\left(1-\frac{N}{N_t}\right)
     \end{split}
 \end{align}
 with initial conditions $G(0)=0$ and $N(0)=N_0$.
 These equations have a clear interpretation, are derived from first principles, and are not identical to the popular Barayni-Roberts and modified-Gompertz models.
 A notable difference is that the growth rate $\alpha$ is time independent.
-For the functions $L$ and $D$ it holds: $\lim_{t\to\infty} L(t) = \lim_{t\to\infty} D(t) = 0$.
-It follows immediately that $\lim_{t\to\infty} G(t) = N_t$.
-The equation exhibits a lag phase and an initial drop due to cell death.
-To find a substantial initial drop one needs $\beta \mu \gg \alpha \lambda$.
-The lag time $t_L$ can be approximated by the time at which half of the initial population is in the growth phase, i.e., $N_0=2G(t_L)$.
+For the functions $L$ and $D$ it holds: $\lim_{t\to\infty} L(t) = 0$ and  $\lim_{t\to\infty} D(t) =  N_0\frac{\mu}{\mu+\lambda} $.
+It follows immediately that $\lim_{t\to\infty} G(t) = N_t-N_0\frac{\mu}{\mu+\lambda} $. The lag time $t_L$ can be approximated by the time at which half of the initial population is in the growth phase, i.e., $N_0=2G(t_L)$.
 Assuming $L\ll N_t$, we can ignore the non-linear term in the equation for $G$, which gives rise to:
 \begin{align}
-    1&= 2\int_0^{t_L} \lambda L(t)e^{\alpha(t_L-t)}dt\\
+    N_0&= 2\int_0^{t_L} \lambda L(t)e^{\alpha(t_L-t)}dt\\
     1  &= 2\lambda e^{\alpha t_L}\frac{1-e^{-(\mu+\lambda+\alpha)t_L}}{\mu+\lambda+\alpha}.
 \end{align}
 For $\alpha > \mu+\lambda$  we can approximate $t_L$ by:
@@ -471,7 +468,6 @@ For $\alpha > \mu+\lambda$  we can approximate $t_L$ by:
     t_L &\approx -\frac{1}{\alpha}\ln\left(\frac{2\lambda}{\mu+\lambda+\alpha}\right).
 \end{align}
 The lag time $t_L$ diverges very slowly, logarithmically with $\lambda\to 0$.
-%
 %
 %
 % ------------------------------------------------------------------------------------------------
@@ -488,8 +484,7 @@ Within the framework of our pool model this means, that there is a back-flow fro
     L &\stackrel{\lambda}{\longrightarrow} & G\\
     L &\stackrel{\mu}{\longrightarrow} & D\\
     G &\stackrel{\alpha}{\longrightarrow} & 2G\\
-    G &\stackrel{\gamma(t)}{\longrightarrow} & L\\
-    D &\stackrel{\beta}{\longrightarrow} & \emptyset
+    G &\stackrel{\gamma(t)}{\longrightarrow} & L
 \end{eqnarray}
 The rate $\gamma(t)$ depends on the rate of change of the environment.
 Stronger and quicker changes will lead to a higher rate $\gamma$.
@@ -525,8 +520,8 @@ The ordinary differential equations for the pool model with environmental-shock 
     \begin{split}
         \dot{L} &=\gamma(t) G - (\mu + \lambda) L\\
         \dot{G} &= \lambda L -\gamma(t) G + \alpha G\left(1-\frac{L+G+D}{N_t}\right)\\
-        \dot{D} &= \mu  L - \beta D
-    \end{split}
+        \dot{D} &= \mu  L 
+\end{split}
 \label{eq:ode_tempshift_backlag}
 \end{align}
 \begin{figure}[t]
