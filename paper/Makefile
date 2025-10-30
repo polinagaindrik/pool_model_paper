@@ -24,7 +24,7 @@ clean_partial:
 	rm -f *.bcf-SAVE-ERROR
 
 clean: clean_partial
-	rm -f *.pdf
+	rm -f pool_model.pdf
 
 fresh: clean all
 
