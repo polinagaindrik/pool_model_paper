@@ -1,4 +1,5 @@
-\documentclass[10pt,A4paper]{article}
+% \documentclass[10pt,A4paper]{article}
+\documentclass[10pt,twocolumn,5p]{elsarticle}
 \usepackage[utf8]{inputenc}
 
 \setlength{\tabcolsep}{1.3pt}
@@ -6,19 +7,6 @@
 \usepackage{acronym}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage[
-    backend=biber,
-    sorting=none,
-    style=numeric-comp,
-    hyperref=true,
-    maxnames=2,
-    url=false,
-    isbn=false,
-    eprint=false,
-    date=year,
-    doi=false,
-    giveninits=true
-]{biblatex}
 \usepackage{array}
 \usepackage{bm}
 \usepackage{booktabs}
@@ -26,7 +14,7 @@
 \usepackage{diagbox}
 \usepackage{float}
 \usepackage[T1]{fontenc}
-\usepackage[a4paper,inner=2cm,outer=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+% \usepackage[a4paper,inner=2cm,outer=2cm,top=2.5cm,bottom=2.5cm]{geometry}
 \usepackage{graphicx}% Include figure files
 \usepackage{here}
 \usepackage{hyperref}
@@ -51,8 +39,7 @@
 % Define new column type with multirow
 \newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
 
-% Add bibliography
-\addbibresource{references.bib}
+\bibliographystyle{abbrvnat}
 
 % Define Rust lisintgs
 \lstset{
@@ -139,20 +126,32 @@
       {]}{{{\color{delim}{]}}}}{1},
 }
 
-\title{Pool Model - A Mathematical Framework\\ for Modelling Bacterial Consortia in Food Science}
-\author{
-    Polina Gaindrik\textsuperscript{1},
-    Jonas Pleyer\textsuperscript{1}
-    and Christian Fleck\textsuperscript{1}
+\tnotetext[t1]{TODO}
+\tnotetext[t2]{TODO}
+
+\title{Pool Model - A unified Mathematical\\ Modelling Framework for Food Science}
+\author[1]{Polina Gaindrik}
+\author[1]{Jonas Pleyer\fnref{fn1}}
+\author[1]{Christian Fleck\corref{cor1}}
+\ead{christian.fleck@fdm.uni-freiburg.de}
+
+\cortext[cor1]{Corresponding Author}
+\fntext[fn1]{jonas.pleyer.org}
+\affiliation[1]{
+    organization={Freiburg Center for Data Analysis and Modeling},
+    addressline={Ernst-Zermelo Str. 1},
+    city={Freiburg im Breisgau},
+    citysep={},
+    postcode={79104},
+    country={Germany},
 }
 
 \date{
     \footnotesize
-    \textsuperscript{\textbf{1}}Freiburg Center for Data Analysis and Modeling and AI
+    \textsuperscript{\textbf{1}}
 }
 
 \begin{document}
-\maketitle
 
 \begin{abstract}
     Bacterial consortia are complex systems which are often comprised of multiple distinct species.
@@ -172,32 +171,17 @@
     arises naturally from the individual behaviour of many cellular agents.
     We further apply this \ac{abm} to study the role of spatial effects on the dynamcis of bacterial
     growth.
-    % \textbf{Notes from Christian}
-    % Different empirical and inactivation models applied in the estimation
-    % of parameters and modelling of phenomena in food microbiology, gen-
-    % eralized Lotka Voltera approach used to describe the interaction of mi-
-    % croorganisms, mechanistic models utilized to provide more insight into
-    % the underlying dynamic can all be unified as variations of a new model
-    % known as three pool model. Compared against the aforementioned
-    % methods which are applicable in specific applications with some limi-
-    % tations, the present model turns out to be less complex with general
-    % applicability, low number of parameters and preferably to explain the
-    % mechanism of the phenomenon of interest. To illustrate the generality
-    % of the model, three different examples are reported.
 \end{abstract}
 
-\textbf{Keywords:}
-Bacterial Consortia, Competition and Cooperation, Mechanistic Modeling, Spatial Effects
+\maketitle
 
-\newpage
-\tableofcontents
+\begin{graphicalabstract}
+% TODO
+\end{graphicalabstract}
 
-\twocolumn
-
-\newpage
-%
-%
-%
+\begin{keyword}
+Bacterial Consortia \sep Competition and Cooperation \sep Mechanistic Modeling \sep Spatial Effects
+\end{keyword}
 %
 % ================================================================================================
 \section{Introduction}
@@ -426,6 +410,7 @@ The resulting growth curves for the three pool case are presented in Figure~\ref
 Here we can see that the value of the transition constant $\lambda$ determines how long the bacteria stays in its lag-phase.
 The larger this rate, the shorter is the lag-time.
 Moreover, by including the flow of living bacteria to the death pool, we can model a greater variety of effects by allowing a decrease in the bacterial count.
+% TODO change the name "death pool"?
 %
 %
 % ------------------------------------------------------------------------------------------------
@@ -1210,7 +1195,8 @@ Going forward, this framework can provide a starting point for a more abstract m
 The data and simulation code which are presented in this study are publicly available in
 \url{https://github.com/polinagaindrik/pool_model_paper}.
 
-\printbibliography
+% \printbibliography
+\bibliography{references.bib}
 
 % ================================================================================================
 \newpage
