@@ -324,7 +324,7 @@ In the described simplified version of the real-life system three possible bacte
 Motivated by this we divide a bacterial population into three pools (states)~(\ref{fig:SchematicRep}), defining the fraction of the population in the lag phase $L(t)$, growing and dividing $G(t)$ and undergoing cell death $D(t)$.
 \begin{figure}[t]
     \begin{center}
-    \includegraphics[width=0.9\columnwidth]{Figures/TPM_fig.pdf}
+    \includegraphics[width=0.9\columnwidth]{Figures-TPM_fig.pdf}
     \caption{Schematic representation of exchange between three states or pools.}
     \label{fig:SchematicRep}
     \end{center}
@@ -393,7 +393,7 @@ and, hence, the full system can be written as
 %
 \begin{figure}
     \begin{center}
-    \includegraphics[width=0.9\columnwidth]{Figures/pool_model_3pools_resource.pdf}
+    \includegraphics[width=0.9\columnwidth]{Figures-pool_model_3pools_resource.pdf}
     \caption{
         The time dependence of the bacterial count $N(t) = L(t) + G(t) $ is shown.
         All curves were calculated using the model (\ref{eq:ode_3pool_resource2}) with parameters $\alpha=2.5$, $\mu'=0.5$.
@@ -508,9 +508,9 @@ The ordinary differential equations for the pool model with environmental-shock 
 \end{align}
 \begin{figure}[t]
     \begin{center}
-    %\includegraphics[width=0.9\columnwidth]{Figures/pool_model_3pools_resource_tempshift.pdf}
-    \includegraphics[width=0.9\columnwidth]{Figures/pool_model_3pools_resource_tempshift1.pdf}\\
-    \includegraphics[width=0.9\columnwidth]{Figures/pool_model_3pools_resource_tempshift2.pdf}
+    %\includegraphics[width=0.9\columnwidth]{Figures-pool_model_3pools_resource_tempshift.pdf}
+    \includegraphics[width=0.9\columnwidth]{Figures-pool_model_3pools_resource_tempshift1.pdf}\\
+    \includegraphics[width=0.9\columnwidth]{Figures-pool_model_3pools_resource_tempshift2.pdf}
     \caption{
         (a) The time dependence of the total bacterial count $N$ for the model including the back-flow to the lag phase due to temperature stress~(\ref{eq:ode_tempshift_backlag}).
         (b) The value of the corresponding back-flow rate $\gamma$ calculated according to (\ref{eq:gamma_tempshift}).
@@ -566,7 +566,7 @@ Here species $A$ has a longer lag-phase than $B$ but the exponential growth of $
 As a result, species $A$ was able to suppress species $B$, consuminl the larger amount of nutrients and reaching a larger bacterial count at the end.
 \begin{figure}
     \begin{center}
-    \includegraphics[width=0.9\columnwidth]{Figures/pool_model_2pools_resource_competition.pdf}
+    \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2pools_resource_competition.pdf}
     \caption{
         The competition of the two bacterial species due to the common limiting resource calculated using Eq.~(\ref{eq:model_2sp_resource_comp}).
         The red curve describes the growth of the bacteria $A$ ($N_A = L_A+G_A$) with model parameters $\lambda_A=10^{-2}$, $\alpha_A=3.0$.
@@ -641,9 +641,9 @@ The difference in the solutions of the given \acp{ode} between the two toxin pro
 %
 \begin{figure}
     \begin{center}
-    %\includegraphics[width=\columnwidth]{Figures/pool_model_2pools_toxin.pdf}
-    \includegraphics[width=0.9\columnwidth]{Figures/pool_model_2pools_toxin1.pdf}\\
-    \includegraphics[width=0.9\columnwidth]{Figures/pool_model_2pools_toxin2.pdf}
+    %\includegraphics[width=\columnwidth]{Figures-pool_model_2pools_toxin.pdf}
+    \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2pools_toxin1.pdf}\\
+    \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2pools_toxin2.pdf}
     \caption{
         The two species system competing for the common nutrient $R$ with production of the toxin $T_B$ (brown line) calculated using Eq.~(\ref{eq:model_2sp_toxin}).
         The growing bacteria $B$ produces toxin $T_B$ (a) constantly $\dot{T}_B^1 = \mathcal{F}^1 = \kappa G_B$ or (b) only during growth process $\dot{T}_B^2 = \mathcal{F}^2 = \kappa \alpha_B R G_B$ with 
@@ -717,9 +717,9 @@ which are displayed in Figure~\ref{fig:1pool_2sp_inhibit}.
 %
 \begin{figure}
     \begin{center}
-    \includegraphics[width=0.9\columnwidth]{Figures/pool_model_1pool_inhib1.pdf}\\
-    \includegraphics[width=0.9\columnwidth]{Figures/pool_model_1pool_inhib2.pdf}\\
-    \includegraphics[width=0.9\columnwidth]{Figures/pool_model_1pool_inhib3.pdf}
+    \includegraphics[width=0.9\columnwidth]{Figures-pool_model_1pool_inhib1.pdf}\\
+    \includegraphics[width=0.9\columnwidth]{Figures-pool_model_1pool_inhib2.pdf}\\
+    \includegraphics[width=0.9\columnwidth]{Figures-pool_model_1pool_inhib3.pdf}
     \caption{
         The two-species system mutually inhibiting each other is defined with equations~(\ref{eq:2sp_1pool_inhibit_unitless}).
         Here the red lines describes the evolution of the species $A$ and blue lines correspond to species $B$.
@@ -765,10 +765,10 @@ On the other hand, choosing $\psi=2$ (see Figure~\ref{fig:1pool_2sp_cooper}c), w
 That indirectly leads to larger amount of $P_B$ produced by species $B$.
 \begin{figure}
     \begin{center}
-    %\includegraphics[width=0.9\columnwidth]{Figures/pool_model_2sp_1pool_coop.pdf}
-    \includegraphics[width=0.9\columnwidth]{Figures/pool_model_2sp_1pool_coop1.pdf}
-    \includegraphics[width=0.9\columnwidth]{Figures/pool_model_2sp_1pool_coop2.pdf}
-    \includegraphics[width=0.9\columnwidth]{Figures/pool_model_2sp_1pool_coop3.pdf}
+    %\includegraphics[width=0.9\columnwidth]{Figures-pool_model_2sp_1pool_coop.pdf}
+    \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2sp_1pool_coop1.pdf}
+    \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2sp_1pool_coop2.pdf}
+    \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2sp_1pool_coop3.pdf}
     \caption{
         The two-species system where each of the species release public goods $P$ is defined with equations~(\ref{eq:1pool_2sp_cooper}) and calculated for different parameters:
         (a) $\psi=1, \phi=1$, (b) $\psi=1, \phi=2$ and (b) $\psi=2, \phi=1$.
@@ -944,7 +944,7 @@ These mechanisms will result in the overall expansion of the colony as individua
 %
 % \begin{figure}
 %     \centering
-%     \includegraphics[width=0.6\textwidth]{Figures/interaciton_potential.png}
+%     \includegraphics[width=0.6\textwidth]{Figures-interaciton_potential.png}
 %     \caption{
 %         Overall form of the interaction force between two cells.
 %         A value $\sigma<1$ indicates that cells are overlapping which results in a positive force outwards.
@@ -964,12 +964,12 @@ The volume of the cell is divided equally between the new and old cell and both 
 \begin{figure}
     \begin{center}
     \begin{tikzonimage}[width=0.49\columnwidth]
-        {Figures/snapshot-2-cells-before-division.png}%
+        {Figures-snapshot-2-cells-before-division.png}%
         \node at (0.01, 0.99)[anchor=north west]{\textbf{A}};
     \end{tikzonimage}%
     \hspace{0.01\columnwidth}%
     \begin{tikzonimage}[width=0.49\columnwidth]
-        {Figures/snapshot-2-cells-after-division.png}
+        {Figures-snapshot-2-cells-after-division.png}
         \node at (0.01, 0.99)[anchor=north west]{\textbf{B}};
     \end{tikzonimage}
     \caption{
@@ -1047,21 +1047,21 @@ The intial bacteria have been ordered on a grid such that only every diagonal ne
 %
 \begin{figure}
     \begin{tikzonimage}[width=0.49\columnwidth]
-        {Figures/abm-homogenous/images/snapshot_00006000.png}
+        {Figures-abm-homogenous-images-snapshot_00006000.png}
         \node at (0.01, 0.99)[anchor=north west]{\textbf{A}};
     \end{tikzonimage}%
     \hspace{0.01\columnwidth}%
     \begin{tikzonimage}[width=0.49\columnwidth]
-        {Figures/abm-homogenous/images/snapshot_00012000.png}
+        {Figures-abm-homogenous-images-snapshot_00012000.png}
         \node at (0.01, 0.99)[anchor=north west]{\textbf{B}};
     \end{tikzonimage}\\
     \begin{tikzonimage}[width=0.49\columnwidth]
-        {Figures/abm-homogenous/images/snapshot_00018000.png}
+        {Figures-abm-homogenous-images-snapshot_00018000.png}
         \node at (0.01, 0.99)[anchor=north west, white]{\textbf{C}};
     \end{tikzonimage}%
     \hspace{0.01\columnwidth}%
     \begin{tikzonimage}[width=0.49\columnwidth]
-        {Figures/abm-homogenous/images/snapshot_00024000.png}
+        {Figures-abm-homogenous-images-snapshot_00024000.png}
         \node at (0.01, 0.99)[anchor=north west, white]{\textbf{D}};
     \end{tikzonimage}%
     \caption{
@@ -1088,19 +1088,19 @@ The chosen diffusion constants $D_I=D_R=30.0$\unit{\micro\metre\squared\per\minu
 \begin{figure}
     \centering
     \begin{subfigure}[c]{0.5\columnwidth}
-        \includegraphics[width=\columnwidth]{Figures/abm-homogenous/abm_ode_comparison.png}
+        \includegraphics[width=\columnwidth]{Figures-abm-homogenous-abm_ode_comparison.png}
         \subcaption{Hom. $D=30.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}%
     \begin{subfigure}[c]{0.5\columnwidth}
-        \includegraphics[width=\columnwidth]{Figures/abm-homogenous-low-diffusion/abm_ode_comparison.png}
+        \includegraphics[width=\columnwidth]{Figures-abm-homogenous-low-diffusion-abm_ode_comparison.png}
         \subcaption{Hom. $D=5.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}\\
     \begin{subfigure}[c]{0.5\columnwidth}
-        \includegraphics[width=\columnwidth]{Figures/abm-inhomogenous/abm_ode_comparison.png}%
+        \includegraphics[width=\columnwidth]{Figures-abm-inhomogenous-abm_ode_comparison.png}%
         \subcaption{Het. $D=30.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}%
     \begin{subfigure}[c]{0.5\columnwidth}
-        \includegraphics[width=\columnwidth]{Figures/abm-random/abm_ode_comparison.png}%
+        \includegraphics[width=\columnwidth]{Figures-abm-random-abm_ode_comparison.png}%
         \subcaption{Rand. $D=30.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}
     \caption{
@@ -1487,19 +1487,19 @@ The snapshots were taken after $2.08$\unit{\day}.
 \begin{figure}
     \centering
     \begin{subfigure}[c]{0.5\textwidth}
-        \includegraphics[width=\textwidth]{Figures/abm-homogenous/images/snapshot_00012000.png}
+        \includegraphics[width=\textwidth]{Figures-abm-homogenous-images-snapshot_00012000.png}
         \subcaption{Homogenous initial cell distribution, $D_R=D_I=30.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}%
     \begin{subfigure}[c]{0.5\textwidth}
-        \includegraphics[width=\textwidth]{Figures/abm-homogenous-low-diffusion/images/snapshot_00012000.png}
+        \includegraphics[width=\textwidth]{Figures-abm-homogenous-low-diffusion-images-snapshot_00012000.png}
         \subcaption{Homogenous initial cell distribution, $D_R=D_I=5.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}\\
     \begin{subfigure}[c]{0.5\textwidth}
-        \includegraphics[width=\textwidth]{Figures/abm-inhomogenous/images/snapshot_00012000.png}%
+        \includegraphics[width=\textwidth]{Figures-abm-inhomogenous-images-snapshot_00012000.png}%
         \subcaption{Heterogeneous initial cell distribution, $D_R=D_I=30.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}%
     \begin{subfigure}[c]{0.5\textwidth}
-        \includegraphics[width=\textwidth]{Figures/abm-random/images/snapshot_00012000.png}%
+        \includegraphics[width=\textwidth]{Figures-abm-random-images-snapshot_00012000.png}%
         \subcaption{Random initial cell distribution, $D_R=D_I=30.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}
     \caption{
