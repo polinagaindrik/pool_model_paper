@@ -30,7 +30,7 @@
 \usepackage{subcaption}
 \usepackage{tabularx}
 \usepackage{tikz}
-\usepackage[dvipsnames]{xcolor}
+%\usepackage[dvipsnames]{xcolor}
 \usepackage{xpatch}
 
 % Must be loaded after tikz
@@ -71,16 +71,12 @@
   \setcounter{listing}{0}
   \renewcommand{\thelisting}{S\arabic{listing}}
 }
-
-\newcommand{\mbP}{\textbf{P: }}
-\newcommand{\mbC}{\textbf{C: }}
 \newcommand{\mbx}{\mathbf{x}}
 \newcommand{\mbm}{\mathbf{m}}
 \newcommand{\mbp}{\mathbf{p}}
 \newcommand{\mbu}{\mathbf{u}}
 \newcommand{\mbF}{\mathbf{F}}
 \newcommand{\mbH}{\mathbf{H}}
-\newcommand{\cmtb}[1]{\textcolor{blue} {#1}}
 \newcommand{\cmt}[1]{\textcolor{red} {[#1]}}
 \newcommand{\etal}{{\textit{et al. }}}
 
@@ -138,7 +134,6 @@
     organization={Freiburg Center for Data Analysis and Modeling},
     addressline={Ernst-Zermelo Str. 1},
     city={Freiburg im Breisgau},
-    citysep={},
     postcode={79104},
     country={Germany},
 }
@@ -153,7 +148,7 @@
 \begin{abstract}
     Bacterial consortia are complex systems which are often comprised of multiple distinct species.
     Their dynamics on a population-based level often result from interactions that lead to
-    inter-species cooperation or competition.
+    interspecies cooperation or competition.
     Various empirical and inactivation models have been conceived and applied to problems related to
     food microbiology.
     However, the utilized models live on the population level, omitting any spatial effects such as
@@ -166,7 +161,7 @@
     To illustrate the usefulness of the model, multiple different examples are reported.
     Finally, we construct an \acl{abm} for a given pool model, showcasing that the resulting model
     arises naturally from the individual behaviour of many cellular agents.
-    We further apply this \ac{abm} to study the role of spatial effects on the dynamcis of bacterial
+    We further apply this \ac{abm} to study the role of spatial effects on the dynamics of bacterial
     growth.
 \end{abstract}
 
@@ -329,7 +324,7 @@ Motivated by this we divide a bacterial population into three pools (states)~(\r
     \label{fig:SchematicRep}
     \end{center}
 \end{figure}
-To determine the system of equations which describe the systems dynamics, we consider the flows between the different states.
+To determine the system of equations which describe the system's dynamics, we consider the flows between the different states.
 The pools $G$ and $D$ are unidirectionally connected with the pool $L$.
 For now, we assume for that there is no back flow between growth state $G$ and lag-state $L$.
 The suggested model can be cast in the following reactions:
@@ -563,7 +558,7 @@ where we used the short notation $\left<LG\right>=(L_A+G_A+L_B+G_B)$.
 These equations have the structure of a \ac{glv} model expanded with different internal states for one species.
 As one can see in Figure~\ref{fig:2pool_resource_2sp} even without direct interaction between species the bacterial growth was inhibited due to the limitation of the resource.
 Here species $A$ has a longer lag-phase than $B$ but the exponential growth of $A$ is stronger compared to which is experienced by bacteria $B$.
-As a result, species $A$ was able to suppress species $B$, consuminl the larger amount of nutrients and reaching a larger bacterial count at the end.
+As a result, species $A$ was able to suppress species $B$, consuming the larger amount of nutrients and reaching a larger bacterial count at the end.
 \begin{figure}
     \begin{center}
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2pools_resource_competition.pdf}
@@ -601,7 +596,7 @@ For further comparison of the derived model with the matrix formulation of the \
 % ------------------------------------------------------------------------------------------------
 \subsection{Interspecies Competition}
 Mutual inhibition between different species can not only result from competition for a shared resource for which bacteria have developed various other active competition mechanisms.
-One of the examples of such a mechanisms is the production of antimicrobial compounds, inhibitors or toxins~\cite{wloch-salamon_effect_2008, chao_structured_1981}.
+One of the examples of such mechanisms is the production of antimicrobial compounds, inhibitors or toxins~\cite{wloch-salamon_effect_2008, chao_structured_1981}.
 On the other hand, some bacteria can produce public goods, the compounds that benefit growth of other species.
 In this way, they can suppress the non-preferred species by helping their competitors~\cite{hibbing_bacterial_2010}.
 %
@@ -738,7 +733,7 @@ This phenomenon occurs when bacterial metabolism produces compounds that are ben
 It is most often observed between species which are close relatives or clonal populations.
 This process is called kin selection~\cite{west_social_2007}.
 Furthermore, neighbors can also benefit from a behavior which does not require any action on an expression level, so-called 'social cheaters'~\cite{rainey_evolution_2003}.
-This mutual activation benefits all involved species and can by easily included in our mathematical framework.
+This mutual activation benefits all involved species and can be easily included in our mathematical framework.
 For the sake of clarity we omit again the lag pool and write
 \begin{align}
     \dot{G}_A &= \mathcal{B}_A(P_B,R)G_A\\
@@ -787,11 +782,11 @@ Assuming that the bacterial system is uniformly distributed (sometimes also call
 we expect the \ac{ode} description to be valid.
 However, in reality spatial effects can play a significant role for population survival forcing some
 species to develop competitive mechanisms such as cell adhesion to surfaces in the areas rich with
-nutritients~\cite{htuson_bacteriasurface_2013}.
+nutrients~\cite{htuson_bacteriasurface_2013}.
 Another mechanism is the motility of bacteria, e.g., the flagellates \textit{E. coli} or
-\textit{B. subtilis} which are capable of chemotactic motion of driven by oxygen
+\textit{B. subtilis} which are capable of chemotactic motion driven by oxygen
 concentrations~\cite{decoene_microscopic_2011}.
-The bacterial social interactions such as releas of toxins or public goods can also
+The bacterial social interactions such as release of toxins or public goods can also
 significantly affect the spatial structure of the community~\cite{blanchard_bacterial_2015}.
 These effects can only be treated with a spatial model that is able to describe the observed
 effects.\\
@@ -866,7 +861,7 @@ custom-built \ac{abm} which has only a few more overall parameters.
 This procedure is a blueprint which can be followed to construct \acp{abm} for similar
 \ac{ode}-based systems.\\
 To construct our \ac{abm}, we use \texttt{cellular\_raza}~\cite{Pleyer2025}.
-It allows us to define our bacterial agents from a clean slate, without having to rely and inherit
+It allows us to define our bacterial agents from a clean slate, without having to rely on and inherit
 existing work.
 With this flexibility, researchers are able to construct minimal models using only as many parameters which are necessary.
 This ability, to precisely define and control the exact behavior of our cell-agents, enables the following parts.
@@ -909,7 +904,7 @@ If we combine all equations and consider multiple cells, we obtain the system
 In order to simplify this system, we can assume that the internal resources are constantly being depleted by the growth and the limiting process is the uptake of the resource.
 This means, we can effectively set $\dot{[R_i]}=0$.
 Therefore, we obtain the relation $\frac{u}{1+\nu_I [I]}[R_e] = a[R_i]$ which we can use to eliminate the variable monitoring internal resource concentrations $[R_i]$.
-Additionally, we require our external components to be freely diffusable with constants $D_R,D_I$.
+Additionally, we require our external components to be freely diffusible with constants $D_R,D_I$.
 Plugging this into equation~\eqref{eq:spatial-full-system-non-simplified} yields.
 \begin{align}
     \dot{V_c} &= \frac{u}{1+\nu_I [I]} \sigma [R]V_c\\
@@ -1078,12 +1073,12 @@ Figure~\ref{fig:spatial-growth-curve} shows multiple results for various configu
 We see that in the highly-diffusive homogenous case of subfigure (a), the pool model is a good fit to the \ac{abm} model.
 Heterogeneity and slower diffusion cause larger differences between the two models as can be seen in subfigures (b) and (c).
 The combination of the two effects shows the largest difference between model predictions.
-In subfigure (c), due to the heterogenous cell distribution (see also~\ref{fig:supplement-spatial-initial-config-cells}), overall inhibition of species $B$ is significantly reduced.
+In subfigure (c), due to the heterogeneous cell distribution (see also~\ref{fig:supplement-spatial-initial-config-cells}), overall inhibition of species $B$ is significantly reduced.
 Subfigure (d) shows how a randomized homogenous initial distribution can lead to even more notable effects of inhibition.
 In contrast to the other results, here the final values of species $A$ and $B$ have larger/smaller counts respectively.
 This illustrates that spatial effects can shift the final results of growth curves towards both directions, leading to an overall increase/decrease of one species.
 We furthermore note that the total bacteria volume of the \ac{abm} model is always smaller or equal compared to the \ac{ode} model.
-This is expected, since processes such as diffusion and cells growing outward introduce another time component which is simply assumed to be instantanous in the \ac{ode} model.
+This is expected, since processes such as diffusion and cells growing outward introduce another time component which is simply assumed to be instantaneous in the \ac{ode} model.
 The chosen diffusion constants $D_I=D_R=30.0$\unit{\micro\metre\squared\per\minute} are in the order of small molecules such as $NaCl$ while the lower values $D_I=D_R=5.0$\unit{\micro\metre\squared\per\minute} are around values of Glucose in water.
 \begin{figure}
     \centering
@@ -1105,7 +1100,7 @@ The chosen diffusion constants $D_I=D_R=30.0$\unit{\micro\metre\squared\per\minu
     \end{subfigure}
     \caption{
         Comparison of the \ac{ode} and \ac{abm} model for different configurations, showing
-        homogenous (Hom.), heterogenous (Het.) or randomized (Rand.) initial configurations.
+        homogenous (Hom.), heterogeneous (Het.) or randomized (Rand.) initial configurations.
         The diffusion constants are chosen such that $D_R=D_I=D$.
         Snapshots of the spatial configurations of cells are included in the appendix~\ref{fig:supplement-spatial-initial-config-cells}.
     }
@@ -1156,7 +1151,7 @@ The pool model presented here was used to describe the dynamics of 6 systems con
 Comparing our approach with the Baranyi-Roberts model which is widely used in food science, it is possible to obtain results which provide growth curves of very similar shape.
 However, their analytical form is not completely identical.
 The inclusion of additional metabolic processes or larger number of cell-species can be achieved by extending the list of possible states and defining transitions between them.
-In addition we have shown how to treat interspecies interactions in the form of cooperation and competition.
+In addition, we have shown how to treat interspecies interactions in the form of cooperation and competition.
 By constructing an \ac{abm}, we have exemplified how close the devised model is to the individual biological processes that occur within the bacteria.
 This mechanistic single-cell level of understanding of our \ac{abm} is a perspective which can not be easily replicated by other spatial models such as \acp{pde}.
 We have investigated the effect of spatial effects in the form of varying diffusion parameters and different initial spatial distributions of bacteria.
@@ -1181,7 +1176,7 @@ However, deviations to these assumptions can lead to non-negligible effects, inf
 We introduced the pool model as a novel framework to unify existing approaches and allows researchers to follow a mechanistic approach during model development.
 It is able to capture the effects of many established models and provides a lens which is useful to generalize existing systems and results in better overall explainability.
 By modeling effects such as mutual inhibition on a single-cell level within an \ac{abm}, we have exemplified that the pool model directly builds on these more fundamental concepts.
-It can thus aid in the mechanistic understanding of the underlying processes, allowing researchers to deepen their konwledge about microbial growth within food science.
+It can thus aid in the mechanistic understanding of the underlying processes, allowing researchers to deepen their knowledge about microbial growth within food science.
 Going forward, this framework can provide a starting point for a more abstract mathematical formulation which should be able to cover a much wider class of systems.
 
 \onecolumn
@@ -1318,7 +1313,7 @@ Afterwards, the first part can be evaluated by using the delta-distribution.
 Note that we additionally need to consume a $V_D^{-1}$ term since our volume is finite.
 We evaluate the resource concentration $[R]$ at the position of the individual cells and sum over all contributions.
 Now we assume homogeneity in the sense, that we can reduce $[R]$ to only a single variable instead of considering its spatial distribution.
-This means that every contribution does not depend on the position at which it was evaluated, ie. $[R]_{x=x_c}=[R]$.
+This means that every contribution does not depend on the position at which it was evaluated, i.e. $[R]_{x=x_c}=[R]$.
 Finally, we can perform the sum to gain the total volume of all cells $V=\sum\limits_c V_c$.
 \begin{alignat}{7}
     \int\limits_D\dot{[I]} &= \int\limits_D \bigg[&&\sum\limits_c b\frac{V_c}{V_D}&&\delta(x-x_c) &&+ D_I\Delta [I]\bigg]\text{dVol}\\
@@ -1344,14 +1339,14 @@ We can thus summarize the equations obtained
 It is clear that the original model is recovered this way.
 To obtain the full equations, we additionally need to consider transition between states of lag-phase and growth phase not depicted here.
 The preceding equations all assume that cells are in growth phase.
-It is however straiforward, to setup these equations.
+It is however straightforward, to set up these equations.
 %
 %
 % ................................................................................................
 \subsubsection{Code Samples}
 The code samples show sample code from the simulation that calculate cellular interactions and cell cycle.
 Since backend of the simulation is written in Rust, so is the implementation of cellular aspects.
-Additionally bindings are generated such that the full power of the simulation tool can be accessed.
+Additionally, bindings are generated such that the full power of the simulation tool can be accessed.
 This significantly improves handling and development time of new models.
 \begin{listing}
 \begin{lstlisting}[language=rust]
@@ -1480,19 +1475,19 @@ c2.set_pos(&(old_pos - offset));
 \end{table}
 %
 % ................................................................................................
-\subsubsection{Homogenous and Inhomogenous Initial Cell Distributions}
-To clarify what we mean by homogenous and inhomogenous initial configurations, we include snapshots of the simulation.
+\subsubsection{Homogeneous and Inhomogeneous Initial Cell Distributions}
+To clarify what we mean by homogeneous and inhomogeneous initial configurations, we include snapshots of the simulation.
 At this point, cells have already grown such that the sizes of cell-clumps are better visible by the naked eye.
 The snapshots were taken after $2.08$\unit{\day}.
 \begin{figure}
     \centering
     \begin{subfigure}[c]{0.5\textwidth}
-        \includegraphics[width=\textwidth]{Figures-abm-homogenous-images-snapshot_00012000.png}
-        \subcaption{Homogenous initial cell distribution, $D_R=D_I=30.0$\unit{\micro\metre\squared\per\minute}}
+        \includegraphics[width=\textwidth]{Figures-abm-homogeneous-images-snapshot_00012000.png}
+        \subcaption{Homogeneous initial cell distribution, $D_R=D_I=30.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}%
     \begin{subfigure}[c]{0.5\textwidth}
-        \includegraphics[width=\textwidth]{Figures-abm-homogenous-low-diffusion-images-snapshot_00012000.png}
-        \subcaption{Homogenous initial cell distribution, $D_R=D_I=5.0$\unit{\micro\metre\squared\per\minute}}
+        \includegraphics[width=\textwidth]{Figures-abm-homogeneous-low-diffusion-images-snapshot_00012000.png}
+        \subcaption{Homogeneous initial cell distribution, $D_R=D_I=5.0$\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}\\
     \begin{subfigure}[c]{0.5\textwidth}
         \includegraphics[width=\textwidth]{Figures-abm-inhomogenous-images-snapshot_00012000.png}%
