@@ -211,10 +211,11 @@ if __name__ == "__main__":
     ax.set_xlim(0., 12.0)
     ax.set_ylim(3.0e0, 0.6e4)
     ax.legend()
-    plt.savefig('paper/Figures/pool_model_3pools_resource.pdf', bbox_inches='tight')
+    plt.savefig('paper/Figures-pool_model_3pools_resource.pdf', bbox_inches='tight')
     plt.close(fig)
 
 #################################### Temperature shift ##########################################
+    coord_text = (0.04, 0.88)
     x01 = [[1e1], [0.], [0.]]
     Gamma, delta= 1., 5.
     shift_cnd = [(4, 10)] #((1, 10), (3, 5), (5, 5), (7, 15))
@@ -242,9 +243,9 @@ if __name__ == "__main__":
     ax[0].set_xlim(0.7, 8.5)
     ax[0].set_ylim(6e0, 1.1e4)
     ax[0].legend()
-    ax[0].text(8., 9.9, r'(a)')
-    ax[1].text(8., 1.5, r'(b)')
-    plt.savefig('paper/Figures/pool_model_3pools_resource_tempshift.pdf', bbox_inches='tight')
+    ax[0].text(8., 9.9, r'\textbf{A}')
+    ax[1].text(8., 1.5,  r'\textbf{B}')
+    plt.savefig('paper/Figures-pool_model_3pools_resource_tempshift.pdf', bbox_inches='tight')
     plt.close(fig)
 
     fig, ax = plt.subplots(1, 1, figsize=figsize_default)
@@ -256,8 +257,8 @@ if __name__ == "__main__":
     ax.set_xlim(0.7, 8.5)
     ax.set_ylim(6e0, 1.1e4)
     ax.legend()
-    ax.text(8., 9.9, r'(a)')
-    plt.savefig('paper/Figures/pool_model_3pools_resource_tempshift1.pdf', bbox_inches='tight')
+    ax.text(0.04, 0.9, r'\textbf{A}', transform = ax.transAxes)
+    plt.savefig('paper/Figures-pool_model_3pools_resource_tempshift1.pdf', bbox_inches='tight')
     plt.close(fig)
 
     fig, ax = plt.subplots(1, 1, figsize=figsize_default_small)
@@ -266,8 +267,8 @@ if __name__ == "__main__":
     ax.plot(t, y2, color=color_palette_1sp_tempshift[i])
     fig, ax = set_labels(fig, ax, r'Time, $t$', r'Rate, $\gamma$')
     ax.set_xlim(0.7, 8.5)
-    ax.text(8., 1.5, r'(b)')
-    plt.savefig('paper/Figures/pool_model_3pools_resource_tempshift2.pdf', bbox_inches='tight')
+    ax.text(0.04, 0.8, r'\textbf{B}', transform = ax.transAxes)
+    plt.savefig('paper/Figures-pool_model_3pools_resource_tempshift2.pdf', bbox_inches='tight')
     plt.close(fig)
 
 #################################### Resource competition ################################################3
@@ -290,7 +291,7 @@ if __name__ == "__main__":
     ax.set_xlim(0., 8.0)
     ax.set_ylim(-100, 1.05e4)
     ax.legend()
-    plt.savefig('paper/Figures/pool_model_2pools_resource_competition.pdf', bbox_inches='tight')
+    plt.savefig('paper/Figures-pool_model_2pools_resource_competition.pdf', bbox_inches='tight')
     plt.close(fig)
 
 ######################## Interspecies competition (Waste/inhibitor production) #############################
@@ -322,9 +323,9 @@ if __name__ == "__main__":
         ax[i].set_ylim(-100, 1.01e4)
         ax[i].legend()
         fig, ax[i] = set_labels(fig, ax[i], r'Time, $t$', r'Bacterial Count, $N$')
-    ax[0].text(2.1, 800, r'(a) $\mathcal{F}^1$')
-    ax[1].text(2.1, 800, r'(b) $\mathcal{F}^2$')
-    plt.savefig('paper/Figures/pool_model_2pools_toxin.pdf', bbox_inches='tight')
+    ax[0].text(2.1, 800, r'\textbf{A}')#r'(a) $\mathcal{F}^1$')
+    ax[1].text(2.1, 800, r'\textbf{B}')#r'(b) $\mathcal{F}^2$')
+    #plt.savefig('paper/Figures-pool_model_2pools_toxin.pdf', bbox_inches='tight')
     plt.close(fig)
 
     fig, ax = plt.subplots(1, 1, figsize=figsize_default)
@@ -337,8 +338,8 @@ if __name__ == "__main__":
     ax.set_ylim(-100, 1.01e4)
     ax.legend()
     fig, ax = set_labels(fig, ax, r'Time, $t$', r'Bacterial Count, $N$')
-    ax.text(2.1, 800, r'(a) $\mathcal{F}^1$')
-    plt.savefig('paper/Figures/pool_model_2pools_toxin1.pdf', bbox_inches='tight')
+    ax.text(*coord_text, r'\textbf{A}', transform = ax.transAxes)
+    plt.savefig('paper/Figures-pool_model_2pools_toxin1.pdf', bbox_inches='tight')
     plt.close(fig)
 
     fig, ax = plt.subplots(1, 1, figsize=figsize_default)
@@ -351,8 +352,8 @@ if __name__ == "__main__":
     ax.set_ylim(-100, 1.01e4)
     ax.legend()
     fig, ax = set_labels(fig, ax, r'Time, $t$', r'Bacterial Count, $N$')
-    ax.text(2.1, 800, r'(b) $\mathcal{F}^2$')
-    plt.savefig('paper/Figures/pool_model_2pools_toxin2.pdf', bbox_inches='tight')
+    ax.text(*coord_text, r'\textbf{B}', transform = ax.transAxes)
+    plt.savefig('paper/Figures-pool_model_2pools_toxin2.pdf', bbox_inches='tight')
     plt.close(fig)
 
 ############################# Inhibition ######################################
@@ -374,16 +375,17 @@ if __name__ == "__main__":
         ax[j].set_xlim(-0.001, 1.)
         ax[j].legend(loc='center right')
         fig, ax[j] = set_labels(fig, ax[j], r'Time, $t$', r'$N / N_t$')
-    ax[0].text(0.035, 0.415, r'(a) $\psi$ = 1')
-    ax[1].text(0.035, 0.71, r'(b) $\psi$ = 0.5')
-    ax[2].text(0.035, 0.74, r'(c) $\psi$ = 2')
+    ax[0].text(*coord_text, r'\textbf{A}', transform = ax[0].transAxes)#r'(a) $\psi$ = 1')
+    ax[1].text(*coord_text, r'\textbf{B}', transform = ax[1].transAxes)#r'(b) $\psi$ = 0.5')
+    ax[2].text(*coord_text, r'\textbf{C}', transform = ax[2].transAxes)#r'(c) $\psi$ = 2')
     ax[0].set_ylim(0.1, 0.48)
     ax[1].set_ylim(0.1, 0.83)
     ax[2].set_ylim(0.1, 0.87)
-    plt.savefig('paper/Figures/pool_model_1pool_inhib.pdf', bbox_inches='tight')
+    #plt.savefig('paper/Figures-pool_model_1pool_inhib.pdf', bbox_inches='tight')
     plt.close(fig)
 
-    text = [r'(a) $\psi$ = 1', r'(b) $\psi$ = 0.5', r'(c) $\psi$ = 2']
+    #text = [r'(a) $\psi$ = 1', r'(b) $\psi$ = 0.5', r'(c) $\psi$ = 2']
+    text = [r'\textbf{A}', r'\textbf{B}', r'\textbf{C}']
     text_coord = [(0.035, 0.435), (0.035, 0.74), (0.035, 0.78)]
     y_max_lim = [0.48, 0.83,  0.87]
     for j, d in enumerate(data_inhib):
@@ -393,13 +395,14 @@ if __name__ == "__main__":
         ax.set_xlim(-0.001, 1.)
         ax.legend(loc='center right')
         fig, ax = set_labels(fig, ax, r'Time, $t$', r'$N / N_t$')
-        ax.text(*text_coord[j], text[j])
+        ax.text(*coord_text, text[j], transform = ax.transAxes)
         ax.set_ylim(0.1, y_max_lim[j])
-        plt.savefig(f'paper/Figures/pool_model_1pool_inhib{j+1}.pdf', bbox_inches='tight')
+        plt.savefig(f'paper/Figures-pool_model_1pool_inhib{j+1}.pdf', bbox_inches='tight')
         plt.close(fig)
 
 
 ################33 Interspecies Cooperation (Activation) ##############################3333
+    
     lwdth = [3., 2., 2., 2.]
     x0_coop = [[0.1], [0.1], [0.01], [0.01]]
 
@@ -424,17 +427,16 @@ if __name__ == "__main__":
     ax[0].set_ylim(0.0, 1.47)
     ax[1].set_ylim(0.0, 1.22)
     ax[2].set_ylim(0.0, 0.9)
-
-    ax[0].text(9.5, 0.1, r'(a)')
-    ax[1].text(9.5, 0.075, r'(b)')
-    ax[2].text(9.5, 0.06, r'(c)')
+    ax[0].text(0.05, 0.85, r'\textbf{A}', transform = ax[0].transAxes)
+    ax[1].text(0.05, 0.85, r'\textbf{B}', transform = ax[1].transAxes)
+    ax[2].text(0.05, 0.85, r'\textbf{C}', transform = ax[2].transAxes)
     ax[0].legend(loc='upper left', ncols=2)
-    plt.savefig('paper/Figures/pool_model_2sp_1pool_coop.pdf', bbox_inches='tight')
+    #plt.savefig('paper/Figures-pool_model_2sp_1pool_coop.pdf', bbox_inches='tight')
     plt.close(fig)
 
-    ymax_lim = [0.9, 1.22, 0.9]
-    text = [r'(a)', r'(b)', r'(c)']
-    text_coord = [(9.5, 0.06), (9.5, 0.075), (9.5, 0.06)]
+    ymax_lim = [0.9, 1.3, 0.9]
+    text = [r'\textbf{A}', r'\textbf{B}', r'\textbf{C}']
+
     for k, c in enumerate(const_coop):
         fig, ax = plt.subplots(1, 1, figsize=(6., 3.5))#figsize_default)
         data_coop = generate_insilico_data(pool_model_2sp_cooper, [np.linspace(0, 10.5, 100)], [], [[]], x0_coop,
@@ -446,13 +448,14 @@ if __name__ == "__main__":
         fig, ax = set_labels(fig, ax, r'Time, $t$', r'$N / N_t$')
         ax.set_xlim(-0.001, 10.5)
         ax.set_ylim(0.0, ymax_lim[k])
-        ax.text(*text_coord[k], text[k])
-        ax.legend(loc='upper left')
-        plt.savefig(f'paper/Figures/pool_model_2sp_1pool_coop{k+1}.pdf', bbox_inches='tight')
+        ax.text(*coord_text, text[k], transform = ax.transAxes)
+        ax.legend( loc='center left')#ncol=2, loc='lower right')
+        plt.savefig(f'paper/Figures-pool_model_2sp_1pool_coop{k+1}.pdf', bbox_inches='tight')
         plt.close(fig)
 
 
 ###############################3 Spatial Limitation ###############################################3
+    '''
     x0sp = [[5.], [0.], [5.], [0.], [1.], [0.]]
     constsp = [.008, .005, 4., 5., .1, .1, Nt] # (lambd1, lambd2, alph1, alph2, chi, muI, Nt, )
     data = generate_insilico_data(pool_model_spatial_limit, [np.linspace(0, 10, 100)], [], [[]], x0sp,
@@ -466,5 +469,6 @@ if __name__ == "__main__":
     #ax.set_yscale('log')
     ax.set_xlim(0., 10.)
     ax.legend()
-    plt.savefig('paper/Figures/pool_model_spatial.pdf', bbox_inches='tight')
+    plt.savefig('paper/Figures-pool_model_spatial.pdf', bbox_inches='tight')
     plt.close(fig)
+    '''
