@@ -463,17 +463,17 @@ The lag time $t_L$ diverges very slowly, logarithmically with $\lambda\to 0$.
 Bacteria which have lived under rather unfavorable conditions have developed different surviving mechanisms, one of which is adapting their metabolism and transitioning into dormant state.
 Dormancy in bacteria is a reversible state where cell continue living with low metabolic activity while the cell division stops~\citep{kaprelyants_dormancy_1993}.
 This survival strategy can appear in response to different external stresses, e.g.,, nutrient deficiency, temperature stress or extreme fluctuations of environment parameters.
-And after "difficult times" bacteria, also called viable but non-culturable (VBNC), can continue cell division~\citep{kell_viability_1998}.
+And after "difficult times" bacteria can continue cell division~\citep{kell_viability_1998}.
 Multiple models which include transitions of bacteria to the dormant state were proposed by \citet{bar_modelling_2002} and \citet{jones_dormancy_2010}.
 %
 We explore now the idea that under certain conditions, a sudden change in the environment can lead to parts of the population $G$ entering a lag-phase.
 Within the framework of our pool model this means, that there is a back-flow from $G$ to $L$.
-\begin{eqnarray}
-    L &\stackrel{\lambda}{\longrightarrow} & G\\
-    L &\stackrel{\mu}{\longrightarrow} & D\\
-    G &\stackrel{\alpha}{\longrightarrow} & 2G\\
-    G &\stackrel{\gamma(t)}{\longrightarrow} & L
-\end{eqnarray}
+\begin{align}
+    L &\stackrel{\lambda}{\longrightarrow} G\\
+    L &\stackrel{\mu}{\longrightarrow} D\\
+    G &\stackrel{\alpha}{\longrightarrow} 2G\\
+    G &\stackrel{\gamma(t)}{\longrightarrow} L
+\end{align}
 The rate $\gamma(t)$ depends on the rate of change of the environment.
 Stronger and quicker changes will lead to a higher rate $\gamma$.
 %
@@ -503,14 +503,14 @@ If $T$ exhibits $n$ temperature jumps, one finds:
 \label{eq:gamma_tempshift}
 \end{eqnarray}
 %
-The ordinary differential equations for the pool model with environmental-shock based back-flow read:
+The ordinary differential equations for the pool model with back-flow then read:
 \begin{align}
     \begin{split}
         \dot{L} &=\gamma(t) G - (\mu + \lambda) L\\
         \dot{G} &= \lambda L -\gamma(t) G + \alpha G\left(1-\frac{L+G+D}{N_t}\right)\\
-        \dot{D} &= \mu  L 
-\end{split}
-\label{eq:ode_tempshift_backlag}
+        \dot{D} &= \mu  L
+    \end{split}
+    \label{eq:ode_tempshift_backlag}
 \end{align}
 \begin{figure}[t]
     \begin{center}
@@ -529,7 +529,7 @@ The ordinary differential equations for the pool model with environmental-shock 
     \end{center}
 \end{figure}
 The effect of the temperature shift on the total bacterial count can be shown in Figure~\ref{fig:TempJump}.
-After the rapid temperature increase, the growth slows down till the bacteria that transitioned back to lag-phase go again to growth pool.
+After the rapid temperature increase, the growth slows down till the bacteria that transitioned back to lag-phase migrate back to the growth pool.
 If the shift happened rather early in time, when most of the bacteria were in lag-phase, the effect is not noticeable.
 %
 % ================================================================================================
