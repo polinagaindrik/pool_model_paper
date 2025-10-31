@@ -313,7 +313,7 @@ Furthermore, we assess how spatial heterogeneity~\citep{mckellar_heterogeneous_1
 
 
 % ================================================================================================
-\section{One Species Modeling}
+\section{One species modeling}
 % ------------------------------------------------------------------------------------------------
 \subsection{Three-Pool Model}
 We begin our discussion by considering a simplistic system where only one bacteria species is present $N=1$.
@@ -416,7 +416,7 @@ Moreover, by including the flow of living bacteria to the death pool, we can mod
 %
 %
 % ------------------------------------------------------------------------------------------------
-\subsection{Lag-time Estimation}
+\subsection{Lag-time estimation}
 Note that the previously introduced model could be further simplified to a two pool or state model by omitting the pool $D$ and removing cells with rate $\beta$ directly from pool $L$.
 The relevant question here is whether cells in the pool $D$ still contribute to the limitation of the resources by, e.g.,, occupying space or consuming important nutrients.
 If yes, the three pool model would be advantageous, if not the two pool model is sufficient with the advantages of having one parameter less.\\
@@ -458,7 +458,7 @@ The lag time $t_L$ diverges very slowly, logarithmically with $\lambda\to 0$.
 %
 %
 % ------------------------------------------------------------------------------------------------
-\subsection{Back flow from Growth to Lag pool}
+\subsection{Back flow from growth to lag pool}
 Bacteria which have lived under rather unfavorable conditions have developed different surviving mechanisms, one of which is adapting their metabolism and transitioning into dormant state.
 Dormancy in bacteria is a reversible state where cell continue living with low metabolic activity while the cell division stops~\citep{kaprelyants_dormancy_1993}.
 This survival strategy can appear in response to different external stresses, e.g.,, nutrient deficiency, temperature stress or extreme fluctuations of environment parameters.
@@ -538,7 +538,7 @@ These mechanisms mostly aim to secure as much available nutrition which lead to 
 Further we show that the model can be readily extended to the systems with more than one bacterium and describe more complex relationships between species.
 %
 % ------------------------------------------------------------------------------------------------
-\subsection{Resource Competition}
+\subsection{Resource competition}
 One of the ways to describe competition between bacterial populations is as a function of the limiting resource ratio~\citep{tilman_resource_1977, smith_effects_2002,ghoul_ecology_2016}.
 To this end we consider for simplicity only one common limiting resource pool.
 The simplest pool model for bacterial species $A$ and $B$ encompassing lag-phases, growth-phases and a common resource pool is given by (no back-flow to the lag-pool):
@@ -604,7 +604,7 @@ For further comparison of the derived model with the matrix formulation of the \
 %
 %
 % ------------------------------------------------------------------------------------------------
-\subsection{Interspecies Competition}
+\subsection{Interspecies competition}
 Mutual inhibition between different species can not only result from competition for a shared resource for which bacteria have developed various other active competition mechanisms.
 One of the examples of such mechanisms is the production of antimicrobial compounds, inhibitors or toxins~\citep{wloch-salamon_effect_2008, chao_structured_1981}.
 On the other hand, some bacteria can produce public goods, the compounds that benefit growth of other species.
@@ -612,7 +612,7 @@ In this way, they can suppress the non-preferred species by helping their compet
 %
 %
 % ................................................................................................
-\subsubsection{Toxins Production}
+\subsubsection{Toxin production}
 One direct form of inhibition is the production of toxins.
 To introduce active competitive mechanisms, we extend our model with one of the species, producing the toxic compounds $T$ during its growth:
 \begin{equation}
@@ -670,7 +670,7 @@ This model assumes that toxin is only produced when the total bacterial grow and
 %
 %
 % ................................................................................................
-\subsubsection{Mutual Inhibition}
+\subsubsection{Mutual inhibition}
 Another special case of the species competition is when the produced toxin does not cause the death of the bacteria but rather inhibit its growth.
 Such situation with 2 bacteria species, a shared resource and produced inhibitor was modeled, e.g.,, by \citet{lenski_coexistence_1986}.
 In our case, we would like to look at a rather simplified case reducing the number of variables of the system.
@@ -737,7 +737,7 @@ which are displayed in Figure~\ref{fig:1pool_2sp_inhibit}.
 %
 %
 % ------------------------------------------------------------------------------------------------
-\subsection{Interspecies Cooperation}
+\subsection{Interspecies cooperation}
 On the other hand, one can also observe some cooperative behaviors between species in cases when it facilitates the competition with others.
 This phenomenon occurs when bacterial metabolism produces compounds that are beneficial for the growth of each other, so-called public goods.
 It is most often observed between species which are close relatives or clonal populations.
@@ -785,7 +785,7 @@ That indirectly leads to larger amount of $P_B$ produced by species $B$.
 \end{figure}
 
 % ================================================================================================
-\section{Spatial Effects}
+\section{Spatial effects}
 As described above, the proposed model operates with the total number of the bacterial counts for
 different species and states in the system, not accounting for their spatial distributions.
 Assuming that the bacterial system is uniformly distributed (sometimes also called 'well-stirred')
@@ -865,7 +865,7 @@ The microenvironment of our system contains the resource and the inhibitor molec
 \end{align}
 
 % ------------------------------------------------------------------------------------------------
-\subsection{Constructing an Agent-Based Pool Model}
+\subsection{Constructing an agent-based pool model}
 The following sections will demonstrate how a given \ac{ode} system can be translated into a
 custom-built \ac{abm} which has only a few more overall parameters.
 This procedure is a blueprint which can be followed to construct \acp{abm} for similar
@@ -876,7 +876,7 @@ existing work.
 With this flexibility, researchers are able to construct minimal models using only as many parameters which are necessary.
 This ability, to precisely define and control the exact behavior of our cell-agents, enables the following parts.
 
-\subsubsection{Cellular Reactions}
+\subsubsection{Cellular reactions}
 To construct an \ac{abm} which resembles the given \ac{ode} system of equations~\eqref{eq:spatial_limit_F} and \eqref{eq:spatial_limit_H}, we consider multiple cellular reactions.
 The first is uptake of an extracellular resource $[R_e]$ into the cell $[R_i]$ with rate $u$ in \unit{\per\minute}.
 Nutrients are only taken up at the position of the cell $x_c$
@@ -927,7 +927,7 @@ Since, we will not explicitly model intracellular concentrations $[R_i]$, we wil
 %
 %
 % ................................................................................................
-\subsubsection{Physical Mechanics \& Interactions}
+\subsubsection{Physical mechanics \& interactions}
 We represent cells as spherical objects in 2D space.
 They can be represented by their position $x_c$ and radius $r_c$ which is of course related to their (2D) volume $V_c = \pi r_c^2$.
 As the coupled reactions from equations~\eqref{eq:spatial-full-system-simplified} change $V_c$, we also automatically adapt the cell radius accordingly.
@@ -960,7 +960,7 @@ These mechanisms will result in the overall expansion of the colony as individua
 %
 %
 % ................................................................................................
-\subsubsection{Cell Cycle}
+\subsubsection{Cell cycle}
 Typically the cycle of a cell consist of multiple phases~\citep{Cooper2000_fn}.
 Since our goal is to include only the necessary details of the underlying biological problem, we drastically simplify the description of the cell cycle.
 Cell growth is already being described the system of coupled \acp{ode} given in equations~\eqref{eq:spatial-full-system-simplified}.
@@ -995,7 +995,7 @@ The concatenation of many such stochastic processes on a population-based level 
 %
 %
 % ------------------------------------------------------------------------------------------------
-\subsection{Comparing \acs{abm} and \acs{ode} Models}
+\subsection{Comparing \acs{abm} and \acs{ode} models}
 The \ac{abm} model should be considered to be the more fundamental model compared to the \ac{ode} model in the sense that it incorporates more biological aspects and maps them closer to the actual behaviour of the bacteria.
 We are thus able to derive the \ac{ode} pool model from its \ac{abm} version via a process of homogenization (see Appendix~\ref{subsec:supplement-abm-details}).
 By doing so, we find a mapping between parameters from the \ac{abm} to parameters used in the \ac{ode} description.
@@ -1195,7 +1195,7 @@ Going forward, this framework can provide a starting point for a more abstract m
 \onecolumn
 
 \newpage
-\section*{Data Availability \& Reproducibility}
+\section*{Data availability \& reproducibility}
 
 The data and simulation code which are presented in this study are publicly available in
 \url{https://github.com/polinagaindrik/pool_model_paper}.
@@ -1208,7 +1208,7 @@ The data and simulation code which are presented in this study are publicly avai
 \beginsupplement
 \section{Appendix}
 % ================================================================================================
-\subsection{General Mathematical Formalism}
+\subsection{General mathematical formalism}
 \label{ssec:supplement1}
 Consider the system consisting of $N$ species in $M$ different states.
 In the general representation, all discussed in the main part systems  can be described with the Ordinary Differential Equations (\acp{ode}) using a non-linear function $\mbF$:
@@ -1303,10 +1303,10 @@ The simpler version of one state per species (Eq.~\ref{eq:LV_simple}) can be sim
 \end{equation}
 
 
-\subsection{ABM Details}
+\subsection{\acs{abm} details}
 \label{subsec:supplement-abm-details}
 
-\subsubsection*{Deriving the Pool Model}
+\subsubsection*{Deriving the pool model}
 Since the \ac{abm} can be considered more fundamental than the \ac{ode} model, we should be able to derive the latter one from the former.
 This can be achieved by starting with equations~\eqref{eq:spatial-full-system-simplified}.
 We integrate the spatial equations over the total domain starting with the resource concentration $[R]$.
@@ -1358,7 +1358,7 @@ It is however straightforward, to set up these equations.
 %
 %
 % ................................................................................................
-\subsubsection{Code Samples}
+\subsubsection{Code samples}
 The code samples show sample code from the simulation that calculate cellular interactions and cell cycle.
 Since backend of the simulation is written in Rust, so is the implementation of cellular aspects.
 Additionally, bindings are generated such that the full power of the simulation tool can be accessed.
@@ -1420,7 +1420,7 @@ c2.set_pos(&(old_pos - offset));
 %
 %
 % ................................................................................................
-\subsubsection{Full List of Parameters}
+\subsubsection{Full list of parameters}
 \label{sec:supplement-full-parameters}
 
 \begin{table}
@@ -1490,7 +1490,7 @@ c2.set_pos(&(old_pos - offset));
 \end{table}
 %
 % ................................................................................................
-\subsubsection{Homogeneous and Inhomogeneous Initial Cell Distributions}
+\subsubsection{Homogeneous and inhomogeneous initial cell distributions}
 To clarify what we mean by homogeneous and inhomogeneous initial configurations, we include snapshots of the simulation.
 At this point, cells have already grown such that the sizes of cell-clumps are better visible by the naked eye.
 The snapshots were taken after $2.08$\unit{\day}.
