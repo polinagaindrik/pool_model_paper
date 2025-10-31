@@ -1036,7 +1036,7 @@ We compare the most general version and thus omit species $A$ for the moment.
 We can use these mappings to numerically compare both approaches.
 Table~\ref{tab:spatial_limit_init} shows a comparison of parameters of two simulations for the \ac{ode} and \ac{abm} model which have been mapped onto each other.
 Figure~\ref{fig:spatial-snapshots} shows snapshots of a numerical simulation of the described system.
-The intial bacteria have been ordered on a grid such that only every diagonal neighbor is of the same species, thus resulting in a more homogenous initial distribution.
+The initial bacteria have been ordered on a grid such that only every diagonal neighbor is of the same species, thus resulting in a more homogenous initial distribution.
 %
 \begin{figure}
     \begin{tikzonimage}[width=0.49\columnwidth]
@@ -1145,14 +1145,18 @@ Furthermore, it was shown that the utilized pool model can be derived from first
 %     \item only simple models have analytical solutions
 % \end{itemize}
 
-The pool model presented here was used to describe the dynamics of 6 systems containing established models of bacterial growth.
-Comparing our approach with the Baranyi-Roberts model which is widely used in food science, it is possible to obtain results which provide growth curves of very similar shape.
-However, their analytical form is not completely identical.
+The presented pool model was used to describe the dynamics of one- and two-species systems containing the main growth stages and interactions between bacteria in the form of cooperation and competition.
+\cmt{Comparing our approach with the Baranyi-Roberts model which is widely used in food science, it is possible
+to obtain results that provide growth curves of very similar shape. However, their analytical form is not completely identical.}
 The inclusion of additional metabolic processes or larger number of cell-species can be achieved by extending the list of possible states and defining transitions between them.
-In addition, we have shown how to treat interspecies interactions in the form of cooperation and competition.
-By constructing an \ac{abm}, we have exemplified how close the devised model is to the individual biological processes that occur within the bacteria.
+As an example, the description of the quorum sensing phenomena can be modelled by adding the equation for the released autoinducer molecules as a part of the microenvironment.
+These molecules then affect the same-species bacteria growth controlling the size of the population.
+The described above approach provides a primary predictive model with transition rates between different pools as parameters.
+To include the influence of external factors, i.e. temperature, pH, pressure, etc., one can simply use the secondary models for the transition rates, e.g., the Ratkowsky model for temperature dependence~\cite{ratkowsky_relationship_1982}.\\
+By constructing an \ac{abm}, we have exemplified how close the devised model is to the individual biological 
+processes that occur within the bacteria.
 This mechanistic single-cell level of understanding of our \ac{abm} is a perspective which can not be easily replicated by other spatial models such as \acp{pde}.
-We have investigated the effect of spatial effects in the form of varying diffusion parameters and different initial spatial distributions of bacteria.
+We have investigated the impact of spatial effects in the form of varying diffusion parameters and different initial spatial distributions of bacteria.
 Our findings reinforce that the \ac{ode} model is a good simplification in the highly-diffusive regime within a mostly homogenous spatial bacterial distribution.
 However, deviations to these assumptions can lead to non-negligible effects, influencing the growth of the colony.
 
@@ -1171,7 +1175,7 @@ However, deviations to these assumptions can lead to non-negligible effects, inf
 %     \item Provide code in a pypi package as well (TODO)
 % \end{itemize}
 
-We introduced the pool model as a novel framework to unify existing approaches and allows researchers to follow a mechanistic approach during model development.
+We introduced the pool model as a framework to unify existing approaches and allows researchers to follow a mechanistic approach during model development.
 It is able to capture the effects of many established models and provides a lens which is useful to generalize existing systems and results in better overall explainability.
 By modeling effects such as mutual inhibition on a single-cell level within an \ac{abm}, we have exemplified that the pool model directly builds on these more fundamental concepts.
 It can thus aid in the mechanistic understanding of the underlying processes, allowing researchers to deepen their knowledge about microbial growth within food science.
