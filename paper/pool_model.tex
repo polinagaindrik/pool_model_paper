@@ -155,12 +155,12 @@
     Various empirical and mechanistic models have been conceived and applied to problems related to food microbiology.
     In this work we present a generalized framework, which uses multiple distinct "pools" that can distinguish
     between microbial types in different metabolic states or describe the extracellular environment properties.
-    It allows us to incorporate the underlying biological processes and construct the \ac{ode} models of
+    It allows us to incorporate the underlying biological processes and construct \ac{ode} based models of
     different complexity levels.
-    To illustrate the application scope of the model, multiple different examples of the microbial systems
+    To illustrate the application scope of the model, multiple different examples of microbial systems
     are reported.
-    Finally, to explore the limitations of the \ac{ode} formulation, we analyze the influence of the spatial effects.
-    For this, we construct an \acl{abm} for a two-species system, showcasing that the resulting pool model
+    Finally, to explore the limitations of the \ac{ode} formulation, we analyze the influence of spatial effects.
+    For this, we construct an \ac{abm} for a two-species system, showcasing that the resulting pool model
     arises naturally from the individual behaviour of many cellular agents.
     We further apply this \ac{abm} to study the role of properties such as diffusion and spatial heterogeneity
     on the dynamics of bacterial growth.
@@ -226,13 +226,13 @@ In order to achieve a comprehensive description of the target system, it is impo
 all relevant biological phenomena arising in these bacterial systems.
 During their reproductive process, bacteria undergo multiple phases~\citep{buchanan_when_1997}, starting in a lag phase which
 is necessary to adapt to new environments and initially impedes the overall growth~\citep{rolfe_lag_2012, monod_growth_1949}.
-Additionally, bacteria are able to cooperate e.g. via complementary metabolic processes or inhibit
-each other e.g. by means of waste production as a metabolic byproduct~\citep{west_social_2007, rainey_evolution_2003, hibbing_bacterial_2010, stubbendieck_bacterial_2016}.
+Additionally, bacteria are able to cooperate, e.g., via complementary metabolic processes or inhibit
+each other, e.g., by means of waste production as a metabolic byproduct~\citep{west_social_2007, rainey_evolution_2003, hibbing_bacterial_2010, stubbendieck_bacterial_2016}.
 A limited supply of nutrients will also affect the overall reproductive capacity of the colony~\citep{monod_growth_1949}.
 Bacteria have thus devised various survival strategies to ensure sufficient access to nutrients.
 Effects on a single-cell level such as adhesion~\citep{htuson_bacteriasurface_2013}, migration~\cite{decoene_microscopic_2011} and chemotaxis can lead to complex
 phenomena on a population-based level which can aid in the goal of survival.
-Cell signaling e.g. in the form of quorum-sensing can lead to collective emergent phenomena such as
+Cell signaling, e.g., in the form of quorum-sensing can lead to collective emergent phenomena such as
 biofilm formation which play an important role for many mature microbial communities~\citep{Jin2020,ng_bacterial_2009}.
 
 % \paragraph{ODE models (predictive microbiology, existing, overview, most popular)}
@@ -249,7 +249,7 @@ biofilm formation which play an important role for many mature microbial communi
 % Secondary models:
 % \begin{itemize}
 %     \item Polynomial models 
-%     \item Square Root-Type Models, e.g., Ratkowski for temperature~\citep{ratkowsky_relationship_1982}
+%     \item Square Root-Type Models, e.g.,, Ratkowski for temperature~\citep{ratkowsky_relationship_1982}
 %     \item The Cardinal Parameter Model~\citep{zwietering_decision_1992}
 % \end{itemize}
 
@@ -300,7 +300,7 @@ In this work, we introduce a new \ac{ode}-based modeling framework which describ
 bacterial species, their metabolic states and external quantities such as nutrients as individual
 pools.
 The dynamics of bacterial growth can be understood in terms of transitions between the different
-bacterial states i.e. pools.
+bacterial states, i.e., pools.
 Our model also allows us to capture interactions between these bacterial states and the external
 microenvironment.
 Compared against the aforementioned methods, this approach turns out to be less complex with general
@@ -363,7 +363,7 @@ We aim to include a resource pool which is consumed by the growing bacteria usin
 \end{equation}
 Note that the pools $L$, $G$ and $D$ represent the number of bacteria (or number of bacteria per unit area/volume) while $R$ represents an abstract resource pool.
 Let say $G=N_B/V$ and $[G]=1/V$, where $N_B$ is the number of bacteria and $V$ is the volume.
-Then $R=N_R/V$ and $[R]=1/V$, where $N_R$ is the number of resource molecules (or any appropriate unit, e.g., mol).
+Then $R=N_R/V$ and $[R]=1/V$, where $N_R$ is the number of resource molecules (or any appropriate unit, e.g.,, mol).
 Then $[\alpha_0]=V/s$, $[N_t]=1/V$, and $[\alpha]=1/s$.
 $N_t$ denotes the maximal size of the total bacterial population due to environmental limitations (Figure \ref{fig:3pool_resource_plots}).
 For homogenous densities it is equivalent to consider the total amount, i.e., multiplying $L$ and $G$ by the volume.
@@ -418,7 +418,7 @@ Moreover, by including the flow of living bacteria to the death pool, we can mod
 % ------------------------------------------------------------------------------------------------
 \subsection{Lag-time Estimation}
 Note that the previously introduced model could be further simplified to a two pool or state model by omitting the pool $D$ and removing cells with rate $\beta$ directly from pool $L$.
-The relevant question here is whether cells in the pool $D$ still contribute to the limitation of the resources by, e.g., occupying space or consuming important nutrients.
+The relevant question here is whether cells in the pool $D$ still contribute to the limitation of the resources by, e.g.,, occupying space or consuming important nutrients.
 If yes, the three pool model would be advantageous, if not the two pool model is sufficient with the advantages of having one parameter less.\\
 %
 % The dynamics of the three pool model can be captured by the coupled system of ordinary differential
@@ -432,7 +432,7 @@ Moreover, for $\mu'=0$ the equations for $L$ and $D$ can be readily integrated r
     \end{split}.
 \end{align}
 For constant parameters $\mu$ and $\lambda$ the integrals for $L$ and $D$ can be inserted into the differential equation for $G$.
-However, in the case of time dependent parameters, e.g., for a dependence on a non-static, dynamic temperature, it appears to be not advantageous to use the analytical results for $L$ and $D$ and work instead with all three equations for $L$, $G$, and $D$.
+However, in the case of time dependent parameters, e.g.,, for a dependence on a non-static, dynamic temperature, it appears to be not advantageous to use the analytical results for $L$ and $D$ and work instead with all three equations for $L$, $G$, and $D$.
 It is interesting to see what type of equations result for the total bacterial population $N=L+G+D$:
 \begin{align}
     \begin{split}
@@ -461,7 +461,7 @@ The lag time $t_L$ diverges very slowly, logarithmically with $\lambda\to 0$.
 \subsection{Back flow from Growth to Lag pool}
 Bacteria which have lived under rather unfavorable conditions have developed different surviving mechanisms, one of which is adapting their metabolism and transitioning into dormant state.
 Dormancy in bacteria is a reversible state where cell continue living with low metabolic activity while the cell division stops~\citep{kaprelyants_dormancy_1993}.
-This survival strategy can appear in response to different external stresses, e.g., nutrient deficiency, temperature stress or extreme fluctuations of environment parameters.
+This survival strategy can appear in response to different external stresses, e.g.,, nutrient deficiency, temperature stress or extreme fluctuations of environment parameters.
 And after "difficult times" bacteria, also called viable but non-culturable (VBNC), can continue cell division~\citep{kell_viability_1998}.
 Multiple models which include transitions of bacteria to the dormant state were proposed by \citet{bar_modelling_2002} and \citet{jones_dormancy_2010}.
 %
@@ -672,7 +672,7 @@ This model assumes that toxin is only produced when the total bacterial grow and
 % ................................................................................................
 \subsubsection{Mutual Inhibition}
 Another special case of the species competition is when the produced toxin does not cause the death of the bacteria but rather inhibit its growth.
-Such situation with 2 bacteria species, a shared resource and produced inhibitor was modeled, e.g., by \citet{lenski_coexistence_1986}.
+Such situation with 2 bacteria species, a shared resource and produced inhibitor was modeled, e.g.,, by \citet{lenski_coexistence_1986}.
 In our case, we would like to look at a rather simplified case reducing the number of variables of the system.
 The easiest way to introduce inhibition of species $A$ by species $B$ is via a growth rate of species $A$ depending on the abundance of species $B$.
 For sake of simplicity we ignore the lag pool and write for a mutual inhibition:
@@ -681,7 +681,7 @@ For sake of simplicity we ignore the lag pool and write for a mutual inhibition:
     \dot{G}_B &= \mathcal{B}_B(G_A) G_B\left(1-\frac{G_A+G_B}{N_t}\right).
 \end{align}
 The function $\mathcal{B}_{A/B}$ captures the inhibiting effects effectively.
-It is straight forward to make the mechanism of inhibition more explicit by, e.g., introducing a toxin pool.
+It is straight forward to make the mechanism of inhibition more explicit by, e.g.,, introducing a toxin pool.
 One possible choice for $\mathcal{B}$ is:
 \begin{equation}
     \mathcal{B}(G) = \frac{\alpha}{1+KI(G)},
@@ -793,7 +793,7 @@ we expect the \ac{ode} description to be valid.
 However, in reality spatial effects can play a significant role for population survival forcing some
 species to develop competitive mechanisms such as cell adhesion to surfaces in the areas rich with
 nutrients~\citep{htuson_bacteriasurface_2013}.
-Another mechanism is the motility of bacteria, e.g., the flagellates \textit{E. coli} or
+Another mechanism is the motility of bacteria, e.g.,, the flagellates \textit{E. coli} or
 \textit{B. subtilis} which are capable of chemotactic motion driven by oxygen
 concentrations~\citep{decoene_microscopic_2011}.
 The bacterial social interactions such as release of toxins or public goods can also
@@ -824,7 +824,7 @@ The \acp{ode} the bacterial population can be written as:
 % In general, bacterial communities in 2D can experience collective motion called swarming~\citep{wu_collective_2015}.
 % Some works modelled 2D motile bacteria:
 % \begin{itemize}
-%     \item \citep{decoene_microscopic_2011}: 2D chemotactic self-propelled bacterial motion of the flagellated bacteria (e.g. E. coli, B. subtilis).
+%     \item \citep{decoene_microscopic_2011}: 2D chemotactic self-propelled bacterial motion of the flagellated bacteria (e.g., E. coli, B. subtilis).
 %     Chemotaxis here was driven by the oxygen concentrations.
 %     \item \citep{rosser_modelling_2014}: modeling of the bacterial reorintation, rotation.
 %     \item \citep{sokolov_physical_2012, li_amplified_2008}: modeling of the bacteria using hydrodynamic interactions and Brownian motion.
@@ -844,7 +844,7 @@ The \acp{ode} the bacterial population can be written as:
 %     (Structurally in 2D it's regimes: smooth propagating of bacterial front vs. branching.)
 %     \item \citep{nagarajan_agent-based_2022-1}: review on the ABM for bacterial population.
 %     The ABM represent a microbial colony as a group of discrete agents that are governed by a set of rules, where each agent can be an individual cell or a collection of cells.
-%     Can use citation when talk about general processes we are accounting as growth, uptake of nutrient, production of inhibitor, e.g.,:
+%     Can use citation when talk about general processes we are accounting as growth, uptake of nutrient, production of inhibitor, e.g.,,:
 %     Physical interactions between agents are calculated using excluded volume interactions.
 %     Chemical interactions as releasing inhibitors are described using concentrations and solved using PDEs.
 % \end{itemize}
@@ -1163,7 +1163,7 @@ The inclusion of additional metabolic processes or larger number of cell-species
 As an example, the description of the quorum sensing phenomena can be modelled by adding the equation for the released autoinducer molecules as a part of the microenvironment.
 These molecules then affect the same-species bacteria growth controlling the size of the population.
 The described above approach provides a primary predictive model with transition rates between different pools as parameters.
-To include the influence of external factors, i.e. temperature, pH, pressure, etc., one can simply use the secondary models for the transition rates, e.g., the Ratkowsky model for temperature dependence~\citep{ratkowsky_relationship_1982}.\\
+To include the influence of external factors, i.e., temperature, pH, pressure, etc., one can simply use the secondary models for the transition rates, e.g.,, the Ratkowsky model for temperature dependence~\citep{ratkowsky_relationship_1982}.\\
 By constructing an \ac{abm}, we have exemplified how close the devised model is to the individual biological 
 processes that occur within the bacteria.
 This mechanistic single-cell level of understanding of our \ac{abm} is a perspective which can not be easily replicated by other spatial models such as \acp{pde}.
@@ -1227,7 +1227,7 @@ In matrix form it can be written as
     \label{eq:model_bact}
 \end{equation}
 with $x_{j}^{i}$ describing the bacterial counts for species $i$ in state $j$.
-$\mbu$ is the vector of different inputs of the model, e.g., temperature, pressure etc.
+$\mbu$ is the vector of different inputs of the model, e.g.,, temperature, pressure etc.
 The vector $\mbm \in \mathbb{R}^{K}$ includes all variables corresponding to the microenvironment of the system which can be concentration of the inhibitors or activators:
 \begin{equation}
     \dot{\mbm} = \mbH (\mbx, \mbm, \mbp, \mbu).
@@ -1328,7 +1328,7 @@ Afterwards, the first part can be evaluated by using the delta-distribution.
 Note that we additionally need to consume a $V_D^{-1}$ term since our volume is finite.
 We evaluate the resource concentration $[R]$ at the position of the individual cells and sum over all contributions.
 Now we assume homogeneity in the sense, that we can reduce $[R]$ to only a single variable instead of considering its spatial distribution.
-This means that every contribution does not depend on the position at which it was evaluated, i.e. $[R]_{x=x_c}=[R]$.
+This means that every contribution does not depend on the position at which it was evaluated, i.e., $[R]_{x=x_c}=[R]$.
 Finally, we can perform the sum to gain the total volume of all cells $V=\sum\limits_c V_c$.
 \begin{alignat}{7}
     \int\limits_D\dot{[I]} &= \int\limits_D \bigg[&&\sum\limits_c b\frac{V_c}{V_D}&&\delta(x-x_c) &&+ D_I\Delta [I]\bigg]\text{dVol}\\
