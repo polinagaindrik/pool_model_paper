@@ -7,7 +7,7 @@ import gc
 import os
 from pathlib import Path
 
-from .analysis import UNIT_DAY, UNIT_HOUR
+from .analysis import UNIT_DAY
 from .ode_models import ODEModel, observable_2pool_2species
 from .plotting_templates import COLORS_ALL, FIGSIZE_DEFAULT
 from .cr_pool import Domain, BacteriaTemplate, MetaParams
@@ -32,16 +32,26 @@ def plot_growth_curve(data_cells, output_path):
     data_cells.plot(
         x="time", y="bacteria_count_total", ax=ax1, label="Combined", color=CN, alpha=0.5
     )
-    ax1.set_ylabel("Bacteria Count")
+    ticks = mpl.ticker.FuncFormatter(lambda x, pos: "{0:g}".format(x / 1e3))
+    ax1.yaxis.set_major_formatter(ticks)
+    ax1.set_ylabel("Bacteria Count [10³]")
     ax1.set_xlabel("Time [days]")
 
     ax2 = ax1.twinx()
     data_cells.plot(x="time", y="bacteria_volume_1", ax=ax2, label="Species 1", color=CA)
     data_cells.plot(x="time", y="bacteria_volume_2", ax=ax2, label="Species 2", color=CB)
     data_cells.plot(x="time", y="bacteria_volume_total", ax=ax2, label="Combined", color=CN)
-    ax2.set_ylabel("Combined Bacteria Volume")
+    ax2.yaxis.set_major_formatter(ticks)
+    ax2.set_ylabel("Total Bacterial Area [10³µm²]")
 
-    ax1.legend()
+    handles, labels = ax1.get_legend_handles_labels()
+    handles = handles[:3] + [
+        mpl.lines.Line2D([0], [0], color="gray", linestyle="-", lw=2, alpha=0.5),
+        mpl.lines.Line2D([0], [0], color="gray", linestyle="-", lw=2),
+    ]
+    labels = labels[:3] + ["Count", "Volume"]
+    ax1.legend(handles, labels)
+    ax1.set_xlim(np.min(data_cells["time"]), np.max(data_cells["time"]))
     fig.tight_layout()
     fig.savefig(f"{output_path}/cell_growth.png")
     fig.savefig(f"{output_path}/cell_growth.pdf")
@@ -56,6 +66,7 @@ def plot_nutrients(data_voxels, output_path):
     )
     ax.set_ylabel("Total Nutrients")
     ax.set_xlabel("Time [days]")
+    ax.set_xlim(np.min(data_voxels["time"]), np.max(data_voxels["time"]))
     fig.savefig(f"{output_path}/nutrients.png")
     fig.savefig(f"{output_path}/nutrients.pdf")
 
@@ -155,24 +166,28 @@ def plot_comparisons(data_cells, output_path):
 
     fig, ax = plt.subplots()
 
-    ax.plot(res.t / UNIT_DAY, obs[0], color=CA, alpha=0.5, label="Species A (ODE)")
-    ax.plot(res.t / UNIT_DAY, obs[1], color=CB, alpha=0.5, label="Species B (ODE)")
-    ax.plot(res.t / UNIT_DAY, obs[2], color=CN, alpha=0.5, label="Combined (ODE)")
+    ax.plot(res.t / UNIT_DAY, obs[0], color=CA, alpha=0.5, label="Species A")
+    ax.plot(res.t / UNIT_DAY, obs[1], color=CB, alpha=0.5, label="Species B")
+    ax.plot(res.t / UNIT_DAY, obs[2], color=CN, alpha=0.5, label="Combined")
 
-    data_cells.plot(
-        x="time", y="bacteria_volume_1", ax=ax, label="Species A (ABM)", color=CA, linestyle="--"
-    )
-    data_cells.plot(
-        x="time", y="bacteria_volume_2", ax=ax, label="Species B (ABM)", color=CB, linestyle="--"
-    )
-    data_cells.plot(
-        x="time", y="bacteria_volume_total", ax=ax, label="Combined (ABM)", color=CN, linestyle="--"
-    )
+    data_cells.plot(x="time", y="bacteria_volume_1", ax=ax, color=CA, linestyle="--")
+    data_cells.plot(x="time", y="bacteria_volume_2", ax=ax, color=CB, linestyle="--")
+    data_cells.plot(x="time", y="bacteria_volume_total", ax=ax, color=CN, linestyle="--")
 
+    ticks = mpl.ticker.FuncFormatter(lambda x, pos: "{0:g}".format(x / 1e3))
+    ax.yaxis.set_major_formatter(ticks)
     ax.set_xlabel("Time [days]")
-    ax.set_ylabel("Combined Bacteria Volume")
+    ax.set_ylabel("Total Bacterial Area [10³µm²]")
     # ax.set_yscale('log')
-    ax.legend()
+    handles, labels = ax.get_legend_handles_labels()
+    handles = handles[:3] + [
+        mpl.lines.Line2D([0], [0], color="gray", linestyle="-", lw=2),
+        mpl.lines.Line2D([0], [0], color="gray", linestyle="--", lw=2),
+    ]
+    labels = labels[:3] + ["ODE", "ABM"]
+    ax.legend(handles, labels)
+    ax.set_xlim(np.min(res.t) / UNIT_DAY, np.max(res.t) / UNIT_DAY)
+
     fig.savefig(output_path / "abm_ode_comparison.png")
     fig.savefig(output_path / "abm_ode_comparison.pdf")
     fig.savefig(output_path / "abm_ode_comparison.eps")
@@ -222,7 +237,7 @@ def plot_lag_phase(data_cells, res, output_path):
 
     ax.legend()
     ax.set_xlabel("Time [days]")
-    ax.set_ylabel("Bacteria Volume")
+    ax.set_ylabel("Total Bacterial Area [10³µm²]")
 
     fig.tight_layout()
     fig.savefig(f"{output_path}/lag_phase.png")
