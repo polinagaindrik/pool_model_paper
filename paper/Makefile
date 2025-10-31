@@ -4,6 +4,7 @@ ZIP_TARGETS:= README.md\
 	$(wildcard *.bib)\
 	$(wildcard *.sty)\
 	$(wildcard Figures-*)\
+	$(wildcard elsarticle*)\
 
 all:
 	latexmk -pdf -shell-escape pool_model.tex
