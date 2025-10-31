@@ -216,41 +216,41 @@ It is of great interest to understand the dynamics of these various processes.
 % \paragraph{Experimental/Biological evidence/phenomena}
 % \begin{itemize}
 %     \item Lag Phase, Competition, Cooperation, Limiting Resource
-%     \item Comprehensive reviews about competition/cooperation bacterial mechanisms: \cite{ghoul_ecology_2016, stubbendieck_bacterial_2016, hibbing_bacterial_2010, west_social_2007}
+%     \item Comprehensive reviews about competition/cooperation bacterial mechanisms: \citep{ghoul_ecology_2016, stubbendieck_bacterial_2016, hibbing_bacterial_2010, west_social_2007}
 %     \item Spatial Effects: adhesion, migration, chemotaxis, diffusion
 %     \item Quorum-sensing
-%     \item Biofilm formation \cite{Jin2020}
+%     \item Biofilm formation \citep{Jin2020}
 % \end{itemize}
 
 In order to achieve a comprehensive description of the target system, it is important to incorporate
 all relevant biological phenomena arising in these bacterial systems.
-During their reproductive process, bacteria undergo multiple phases~\cite{buchanan_when_1997}, starting in a lag phase which
-is necessary to adapt to new environments and initially impedes the overall growth~\cite{rolfe_lag_2012, monod_growth_1949}.
+During their reproductive process, bacteria undergo multiple phases~\citep{buchanan_when_1997}, starting in a lag phase which
+is necessary to adapt to new environments and initially impedes the overall growth~\citep{rolfe_lag_2012, monod_growth_1949}.
 Additionally, bacteria are able to cooperate e.g. via complementary metabolic processes or inhibit
-each other e.g. by means of waste production as a metabolic byproduct~\cite{west_social_2007, rainey_evolution_2003, hibbing_bacterial_2010, stubbendieck_bacterial_2016}.
-A limited supply of nutrients will also affect the overall reproductive capacity of the colony~\cite{monod_growth_1949}.
+each other e.g. by means of waste production as a metabolic byproduct~\citep{west_social_2007, rainey_evolution_2003, hibbing_bacterial_2010, stubbendieck_bacterial_2016}.
+A limited supply of nutrients will also affect the overall reproductive capacity of the colony~\citep{monod_growth_1949}.
 Bacteria have thus devised various survival strategies to ensure sufficient access to nutrients.
-Effects on a single-cell level such as adhesion~\cite{htuson_bacteriasurface_2013}, migration~\cite{decoene_microscopic_2011} and chemotaxis can lead to complex
+Effects on a single-cell level such as adhesion~\citep{htuson_bacteriasurface_2013}, migration~\cite{decoene_microscopic_2011} and chemotaxis can lead to complex
 phenomena on a population-based level which can aid in the goal of survival.
 Cell signaling e.g. in the form of quorum-sensing can lead to collective emergent phenomena such as
-biofilm formation which play an important role for many mature microbial communities~\cite{Jin2020,ng_bacterial_2009}.
+biofilm formation which play an important role for many mature microbial communities~\citep{Jin2020,ng_bacterial_2009}.
 
 % \paragraph{ODE models (predictive microbiology, existing, overview, most popular)}
-% Existing models in Predictive Microbiology (Primary Models)~\cite{perez-rodriguez_predictive_2012}:
+% Existing models in Predictive Microbiology (Primary Models)~\citep{perez-rodriguez_predictive_2012}:
 % \begin{itemize}
-%     \item An overview of primary models used in food science can be found in~\cite{van_boekel_kinetic_2008}.
-%     \item Baranyi-Roberts Model~\cite{baranyi_modeling_1993, baranyi_dynamic_1994}
-%     \item modified Gompertz~\cite{Gompertz1825-wi,Gibson1987}
-%     \item Buchanan et al.: three-phase linear model for lag phase, exponential growth phase, and stationary phase~\cite{buchanan_when_1997}
-%     \item McKellar two-compartment model with bacteria in growing and non-growing state~\cite{mckellar_heterogeneous_1997}
+%     \item An overview of primary models used in food science can be found in~\citep{van_boekel_kinetic_2008}.
+%     \item Baranyi-Roberts Model~\citep{baranyi_modeling_1993, baranyi_dynamic_1994}
+%     \item modified Gompertz~\citep{Gompertz1825-wi,Gibson1987}
+%     \item Buchanan et al.: three-phase linear model for lag phase, exponential growth phase, and stationary phase~\citep{buchanan_when_1997}
+%     \item McKellar two-compartment model with bacteria in growing and non-growing state~\citep{mckellar_heterogeneous_1997}
 %     \item Inactivation models
 % \end{itemize}
 % %
 % Secondary models:
 % \begin{itemize}
 %     \item Polynomial models 
-%     \item Square Root-Type Models, e.g., Ratkowski for temperature~\cite{ratkowsky_relationship_1982}
-%     \item The Cardinal Parameter Model~\cite{zwietering_decision_1992}
+%     \item Square Root-Type Models, e.g., Ratkowski for temperature~\citep{ratkowsky_relationship_1982}
+%     \item The Cardinal Parameter Model~\citep{zwietering_decision_1992}
 % \end{itemize}
 
 The first step in the construction of any mathematical model is to determine the required level of
@@ -258,24 +258,24 @@ detail with respect to the description scale and consequently which effects to i
 The bacterial growth curves let us describe the dynamics of the overall abundance of various
 species.
 The field of predictive microbiology has developed a variety of ODE-based models to capture
-bacterial growth dynamics~\cite{perez-rodriguez_predictive_2012}.
+bacterial growth dynamics~\citep{perez-rodriguez_predictive_2012}.
 Various \acp{ode} \textit{primary models} describe the bacterial growth curve under constant
 environmental conditions.
-Widely used examples include the modified Gompertz model~\cite{Gompertz1825-wi,Gibson1987}, Baranyi-Roberts
-model~\cite{baranyi_modeling_1993, baranyi_dynamic_1994} and McKellar two-compartment model~\cite{buchanan_when_1997} which distinguishes between growing and non-growing bacteria.
+Widely used examples include the modified Gompertz model~\citep{Gompertz1825-wi,Gibson1987}, Baranyi-Roberts
+model~\citep{baranyi_modeling_1993, baranyi_dynamic_1994} and McKellar two-compartment model~\cite{buchanan_when_1997} which distinguishes between growing and non-growing bacteria.
 To take into account changing environmental conditions, so-called \textit{secondary models}
 formulate the model parameters as a function of external quantities such as temperature, pH or
 humidity.
-These can be simple polynomial models, square root-type models~\cite{ratkowsky_relationship_1982} or
-more complex relations such as the cardinal parameter model~\cite{zwietering_decision_1992}.
+These can be simple polynomial models, square root-type models~\citep{ratkowsky_relationship_1982} or
+more complex relations such as the cardinal parameter model~\citep{zwietering_decision_1992}.
 The advantage of the \ac{ode} formulation lies in the predictive power and simplicity of usage.
 However, due to their coarse-grained nature, they lack the ability to describe heterogeneity and
 other spatial effects.
 
 % \paragraph{Models for spatial effects; PDEs, \acp{abm}, others}
 % \begin{itemize}
-%     \item BSim \cite{Gorochowski2012,Dang2020}
-%     \item Bacterial Branching patterns \cite{Kawasaki1997,Matsushita1998}
+%     \item BSim \citep{Gorochowski2012,Dang2020}
+%     \item Bacterial Branching patterns \citep{Kawasaki1997,Matsushita1998}
 % \end{itemize}
 
 % To incorporate spatial heterogeneity or other effects other modeling approaches have been devised.
@@ -288,11 +288,11 @@ individually-based \acp{abm} and can be effective, especially when dealing with 
 cells that can be approximated as a continuum.
 On the other hand, \acp{abm} excel at describing the individual behaviour of cells which can then
 lead to more complex collective phenomena.
-Tools such as BSim~\cite{Gorochowski2012,Dang2020}, AgentCell~\cite{emonet_agentcell_2005}, BacSim~\cite{kreft_bacsim_1998} or \texttt{cellular\_raza}~\cite{Pleyer2025} are
+Tools such as BSim~\citep{Gorochowski2012,Dang2020}, AgentCell~\cite{emonet_agentcell_2005}, BacSim~\cite{kreft_bacsim_1998} or \texttt{cellular\_raza}~\cite{Pleyer2025} are
 capable to describe large amounts of bacteria, performing various intracellular and extracellular
 processes.
 The latter has been used to adapt \ac{pde}-based models into an \ac{abm} formulation which describe
-bacterial branching patterns~\cite{Kawasaki1997,Matsushita1998}.
+bacterial branching patterns~\citep{Kawasaki1997,Matsushita1998}.
 
 % \paragraph{What is the problem/what is the question? How do we address this?}
 
@@ -309,7 +309,7 @@ reality.
 To illustrate the generality of the model, multiple examples are reported.
 We analyze the spatial limitations of an interacting two-species model and show that it can be fully
 understood on an individual-based level in terms of single-cell processes.
-Furthermore, we assess how spatial heterogeneity~\cite{mckellar_heterogeneous_1997} can impact the shape of the growth curves.
+Furthermore, we assess how spatial heterogeneity~\citep{mckellar_heterogeneous_1997} can impact the shape of the growth curves.
 
 
 % ================================================================================================
@@ -317,14 +317,14 @@ Furthermore, we assess how spatial heterogeneity~\cite{mckellar_heterogeneous_19
 % ------------------------------------------------------------------------------------------------
 \subsection{Three-Pool Model}
 We begin our discussion by considering a simplistic system where only one bacteria species is present $N=1$.
-Bacterial growth undergoes different consecutive phases~\cite{buchanan_when_1997}, starting with the so called lag-phase, during which no increase in the bacterial count occurs.
+Bacterial growth undergoes different consecutive phases~\citep{buchanan_when_1997}, starting with the so called lag-phase, during which no increase in the bacterial count occurs.
 This phenomenon appears due to adaptations of the microbial community, for example, to the new environmental conditions.
-This so-called preparation before the exponential growth includes synthesis of the needed compounds, initiation of the transcription~\cite{rolfe_lag_2012} and poorly studied physiological and regulatory mechanisms~\cite{monod_growth_1949}.
+This so-called preparation before the exponential growth includes synthesis of the needed compounds, initiation of the transcription~\citep{rolfe_lag_2012} and poorly studied physiological and regulatory mechanisms~\citep{monod_growth_1949}.
 After this, the bacteria which have succeeded in this adaptation stage enter the exponential growth phase, where the process of cell division is predominant.
 When the levels of nutrition are exhausted by the growing bacteria, the stationary state of the growth curve occurs.
 In this state the cultures accumulate waste products of metabolic activity that lead to cell death in the bacterial colony.
 At the same time dying cells release the nutrients for survivors to continue growing.
-As a result the balance between the growing and dying processes leads to a constant bacterial count~\cite{navarro_llorens_stationary_2010}.
+As a result the balance between the growing and dying processes leads to a constant bacterial count~\citep{navarro_llorens_stationary_2010}.
 In the described simplified version of the real-life system three possible bacterial states are mentioned, corresponding to the underlying process: adaptation, growth or death.
 Motivated by this we divide a bacterial population into three pools (states)~(\ref{fig:SchematicRep}), defining the fraction of the population in the lag phase $L(t)$, growing and dividing $G(t)$ and undergoing cell death $D(t)$.
 \begin{figure}[t]
@@ -353,9 +353,9 @@ Then the \acp{ode} describing such a model can be written as
 with the initial conditions $L(0)=N_0$, $G(0)=0$, and $D(0)=0$, where $N_0$ is the initial bacterial population.
 %
 Based on experimental observations, it was shown that the bacterial growth is strongly influenced by the limiting resource.
-According to the works of Jacques Monod, in the system where all needed nutrients are in excess except for one, the total growth is linear to the concentration of this limiting nutrient resource~\cite{monod_growth_1949}.
+According to the works of \citet{monod_growth_1949} in the system where all needed nutrients are in excess except for one, the total growth is linear to the concentration of this limiting nutrient resource.
 The control of the population density with respect to the available nutrition is implemented using cell communication processes called quorum sensing.
-By releasing extracellular signalling molecules (autoinducer molecules) it is possible for the bacteria to synchronize the gene expression of the whole group~\cite{ng_bacterial_2009}.
+By releasing extracellular signalling molecules (autoinducer molecules) it is possible for the bacteria to synchronize the gene expression of the whole group~\citep{ng_bacterial_2009}.
 We will not dive into the processes of quorum sensing and try to keep it as simple as possible.
 We aim to include a resource pool which is consumed by the growing bacteria using the second order kinetic reaction:
 \begin{equation}
@@ -460,10 +460,10 @@ The lag time $t_L$ diverges very slowly, logarithmically with $\lambda\to 0$.
 % ------------------------------------------------------------------------------------------------
 \subsection{Back flow from Growth to Lag pool}
 Bacteria which have lived under rather unfavorable conditions have developed different surviving mechanisms, one of which is adapting their metabolism and transitioning into dormant state.
-Dormancy in bacteria is a reversible state where cell continue living with low metabolic activity while the cell division stops~\cite{kaprelyants_dormancy_1993}.
+Dormancy in bacteria is a reversible state where cell continue living with low metabolic activity while the cell division stops~\citep{kaprelyants_dormancy_1993}.
 This survival strategy can appear in response to different external stresses, e.g., nutrient deficiency, temperature stress or extreme fluctuations of environment parameters.
-And after "difficult times" bacteria, also called viable but non-culturable (VBNC), can continue cell division~\cite{kell_viability_1998}.
-Multiple models which include transitions of bacteria to the dormant state were proposed by Bär \etal~\cite{bar_modelling_2002} and Jones with Lennon~\cite{jones_dormancy_2010}.
+And after "difficult times" bacteria, also called viable but non-culturable (VBNC), can continue cell division~\citep{kell_viability_1998}.
+Multiple models which include transitions of bacteria to the dormant state were proposed by \citet{bar_modelling_2002} and \citet{jones_dormancy_2010}.
 %
 We explore now the idea that under certain conditions, a sudden change in the environment can lead to parts of the population $G$ entering a lag-phase.
 Within the framework of our pool model this means, that there is a back-flow from $G$ to $L$.
@@ -478,8 +478,8 @@ Stronger and quicker changes will lead to a higher rate $\gamma$.
 %
 %
 \paragraph{Maxwell type of stress - strain relation}
-One of the reasons that bacteria enter the dormant state can be due to a shift in temperature~\cite{oliver_viable_1995}.
-Moreover, a rapid shift in temperature is associated with the appearance of an additional lag phase~\cite{zwietering_modeling_1994}.
+One of the reasons that bacteria enter the dormant state can be due to a shift in temperature~\citep{oliver_viable_1995}.
+Moreover, a rapid shift in temperature is associated with the appearance of an additional lag phase~\citep{zwietering_modeling_1994}.
 To model it we propose a kind of viscoelastic Maxwell type of stress-strain relation and write down the ordinary differential equation for $\gamma$ to be:
 \begin{equation}
     \dot{\gamma} = \Gamma |\dot{T}|-\delta \gamma.
@@ -534,12 +534,12 @@ If the shift happened rather early in time, when most of the bacteria were in la
 % ================================================================================================
 \section{Interaction between species}
 As mentioned above, bacteria usually coexist in large interacting communities of multiple species whose growth is vastly determined by the developed survival mechanisms.
-These mechanisms mostly aim to secure as much available nutrition which lead to competitive strategies or, if it is advantageous, cooperative ones~\cite{hibbing_bacterial_2010, stubbendieck_bacterial_2016}.
+These mechanisms mostly aim to secure as much available nutrition which lead to competitive strategies or, if it is advantageous, cooperative ones~\citep{hibbing_bacterial_2010, stubbendieck_bacterial_2016}.
 Further we show that the model can be readily extended to the systems with more than one bacterium and describe more complex relationships between species.
 %
 % ------------------------------------------------------------------------------------------------
 \subsection{Resource Competition}
-One of the ways to describe competition between bacterial populations is as a function of the limiting resource ratio~\cite{tilman_resource_1977, smith_effects_2002,ghoul_ecology_2016}.
+One of the ways to describe competition between bacterial populations is as a function of the limiting resource ratio~\citep{tilman_resource_1977, smith_effects_2002,ghoul_ecology_2016}.
 To this end we consider for simplicity only one common limiting resource pool.
 The simplest pool model for bacterial species $A$ and $B$ encompassing lag-phases, growth-phases and a common resource pool is given by (no back-flow to the lag-pool):
 \begin{align}
@@ -593,22 +593,22 @@ In order to get the commonly used form of the \ac{glv}, we need to simply elimin
 \end{align}
 %
 Equations (\ref{eq:LV_simple}) can be understood as competitive Lotka-Volterra equations that are widely used in ecological studies and show the principle of competitive excursion.
-That principle claims that two species which compete for the same resource cannot coexist~\cite{wangersky_lotka-volterra_1978}.
-In previous studies it was shown that \ac{glv} equations with one bacterial state can be successfully applied to predict the microbial community dynamics, determine different types of the pairwise interspecies interactions~\cite{dedrick_when_2023, stein_ecological_2013, venturelli_deciphering_2018, hoffmann_power_2007}.
-In food studies the \ac{glv} was applied by Mounier \etal~\cite{mounier_microbial_2008} to study interactions of six bacteria species influenced by yeast omissions in cheese.
-Cauchie \etal~\cite{cauchie_modeling_2020} applied Lotka-Volterra model to study the three-species system of the bacteria majorly present in minced pork meat.\\
+That principle claims that two species which compete for the same resource cannot coexist~\citep{wangersky_lotka-volterra_1978}.
+In previous studies it was shown that \ac{glv} equations with one bacterial state can be successfully applied to predict the microbial community dynamics, determine different types of the pairwise interspecies interactions~\citep{dedrick_when_2023, stein_ecological_2013, venturelli_deciphering_2018, hoffmann_power_2007}.
+In food studies the \ac{glv} was applied by \citet{mounier_microbial_2008} to study interactions of six bacteria species influenced by yeast omissions in cheese.
+\citet{cauchie_modeling_2020} applied Lotka-Volterra model to study the three-species system of the bacteria majorly present in minced pork meat.\\
 %
 However, in contrast to the classical Lotka-Volterra approach, the introduced pool model allows for far more flexibility in tuning properties of the bacterial interactions within and between species.
-For further comparison of the derived model with the matrix formulation of the \ac{glv} we refer the reader to the supplement materials~\ref{ssec:supplement1}.
+For further comparison of the derived model with the matrix formulation of the \ac{glv} we refer the reader to the Appendix~\ref{ssec:supplement1}.
 %
 %
 %
 % ------------------------------------------------------------------------------------------------
 \subsection{Interspecies Competition}
 Mutual inhibition between different species can not only result from competition for a shared resource for which bacteria have developed various other active competition mechanisms.
-One of the examples of such mechanisms is the production of antimicrobial compounds, inhibitors or toxins~\cite{wloch-salamon_effect_2008, chao_structured_1981}.
+One of the examples of such mechanisms is the production of antimicrobial compounds, inhibitors or toxins~\citep{wloch-salamon_effect_2008, chao_structured_1981}.
 On the other hand, some bacteria can produce public goods, the compounds that benefit growth of other species.
-In this way, they can suppress the non-preferred species by helping their competitors~\cite{hibbing_bacterial_2010}.
+In this way, they can suppress the non-preferred species by helping their competitors~\citep{hibbing_bacterial_2010}.
 %
 %
 % ................................................................................................
@@ -672,7 +672,7 @@ This model assumes that toxin is only produced when the total bacterial grow and
 % ................................................................................................
 \subsubsection{Mutual Inhibition}
 Another special case of the species competition is when the produced toxin does not cause the death of the bacteria but rather inhibit its growth.
-Such situation with 2 bacteria species, a shared resource and produced inhibitor was modeled, e.g., by Lenski and Hattingh~\cite{lenski_coexistence_1986}.
+Such situation with 2 bacteria species, a shared resource and produced inhibitor was modeled, e.g., by \citet{lenski_coexistence_1986}.
 In our case, we would like to look at a rather simplified case reducing the number of variables of the system.
 The easiest way to introduce inhibition of species $A$ by species $B$ is via a growth rate of species $A$ depending on the abundance of species $B$.
 For sake of simplicity we ignore the lag pool and write for a mutual inhibition:
@@ -741,8 +741,8 @@ which are displayed in Figure~\ref{fig:1pool_2sp_inhibit}.
 On the other hand, one can also observe some cooperative behaviors between species in cases when it facilitates the competition with others.
 This phenomenon occurs when bacterial metabolism produces compounds that are beneficial for the growth of each other, so-called public goods.
 It is most often observed between species which are close relatives or clonal populations.
-This process is called kin selection~\cite{west_social_2007}.
-Furthermore, neighbors can also benefit from a behavior which does not require any action on an expression level, so-called 'social cheaters'~\cite{rainey_evolution_2003}.
+This process is called kin selection~\citep{west_social_2007}.
+Furthermore, neighbors can also benefit from a behavior which does not require any action on an expression level, so-called 'social cheaters'~\citep{rainey_evolution_2003}.
 This mutual activation benefits all involved species and can be easily included in our mathematical framework.
 For the sake of clarity we omit again the lag pool and write
 \begin{align}
@@ -792,15 +792,15 @@ Assuming that the bacterial system is uniformly distributed (sometimes also call
 we expect the \ac{ode} description to be valid.
 However, in reality spatial effects can play a significant role for population survival forcing some
 species to develop competitive mechanisms such as cell adhesion to surfaces in the areas rich with
-nutrients~\cite{htuson_bacteriasurface_2013}.
+nutrients~\citep{htuson_bacteriasurface_2013}.
 Another mechanism is the motility of bacteria, e.g., the flagellates \textit{E. coli} or
 \textit{B. subtilis} which are capable of chemotactic motion driven by oxygen
-concentrations~\cite{decoene_microscopic_2011}.
+concentrations~\citep{decoene_microscopic_2011}.
 The bacterial social interactions such as release of toxins or public goods can also
-significantly affect the spatial structure of the community~\cite{blanchard_bacterial_2015}.
+significantly affect the spatial structure of the community~\citep{blanchard_bacterial_2015}.
 These effects can only be treated with a spatial model that is able to describe the observed
 effects.\\
-Compared to other modeling techniques such as \acp{pde}, \acp{abm}~\cite{nagarajan_agent-based_2022-1} force researchers to think in
+Compared to other modeling techniques such as \acp{pde}, \acp{abm}~\citep{nagarajan_agent-based_2022-1} force researchers to think in
 terms of cellular processes, thus bridging the gap from a
 collective (bulk) model to an individual-based (single-cell) description.
 Our goal is to provide an \ac{abm} which can be used to derive the given \ac{ode} model as a
@@ -817,32 +817,32 @@ amount.
 The \acp{ode} the bacterial population can be written as:
 %
 %
-% - \cite{emonet_agentcell_2005, gorochowski_bsim_2012, li_nufeb_2019, kreft_bacsim_1998}: examples of another toolboxes for bacterial communities modeling (ABM).\\
-% More about the modelling of the motile bacteria can be seen in works:~\cite{decoene_microscopic_2011, rosser_modelling_2014, sokolov_physical_2012, li_amplified_2008}.
+% - \citep{emonet_agentcell_2005, gorochowski_bsim_2012, li_nufeb_2019, kreft_bacsim_1998}: examples of another toolboxes for bacterial communities modeling (ABM).\\
+% More about the modelling of the motile bacteria can be seen in works:~\citep{decoene_microscopic_2011, rosser_modelling_2014, sokolov_physical_2012, li_amplified_2008}.
 %
 %
-% In general, bacterial communities in 2D can experience collective motion called swarming~\cite{wu_collective_2015}.
+% In general, bacterial communities in 2D can experience collective motion called swarming~\citep{wu_collective_2015}.
 % Some works modelled 2D motile bacteria:
 % \begin{itemize}
-%     \item \cite{decoene_microscopic_2011}: 2D chemotactic self-propelled bacterial motion of the flagellated bacteria (e.g. E. coli, B. subtilis).
+%     \item \citep{decoene_microscopic_2011}: 2D chemotactic self-propelled bacterial motion of the flagellated bacteria (e.g. E. coli, B. subtilis).
 %     Chemotaxis here was driven by the oxygen concentrations.
-%     \item \cite{rosser_modelling_2014}: modeling of the bacterial reorintation, rotation.
-%     \item \cite{sokolov_physical_2012, li_amplified_2008}: modeling of the bacteria using hydrodynamic interactions and Brownian motion.
+%     \item \citep{rosser_modelling_2014}: modeling of the bacterial reorintation, rotation.
+%     \item \citep{sokolov_physical_2012, li_amplified_2008}: modeling of the bacteria using hydrodynamic interactions and Brownian motion.
 %     Fluctuations in velocity and rotations.
-%     (\cite{li_amplified_2008}: Brownian motion gives right motion observed using microscopy).
-%     \item \cite{farrell_mechanically_2013}: 2D modeling using Newtonian dynamics and only mechanical interactions + nutrient diffusion.
+%     (\citep{li_amplified_2008}: Brownian motion gives right motion observed using microscopy).
+%     \item \citep{farrell_mechanically_2013}: 2D modeling using Newtonian dynamics and only mechanical interactions + nutrient diffusion.
 %     Branching parameter defines diff limits where diffusion dominant and limits growth, and where it's irrelevant.
 %     Mechanical pressure (due to bacteria-bacteria interactions) affects growth, can limit it.(!!!)
 % \end{itemize}
 %
 % For simulation results:
 % \begin{itemize}
-%     \item \cite{farrell_mechanically_2013}: Showed the influence of mechanic interactions between bacteria in 2D system with bacteria consuming the nutrient.
+%     \item \citep{farrell_mechanically_2013}: Showed the influence of mechanic interactions between bacteria in 2D system with bacteria consuming the nutrient.
 %     The growth of bacterial colonies where non-motile microorganisms replicate and push each other away as they grow.
 %     Found a transition between two different growth regimes, controlled by the balance between growth and uptake of nutrient:\\
 %     Exponential growth where diffusion of the nutrient does not play any role. Sublinear growth where growth is limited by nutrient diffusion.
 %     (Structurally in 2D it's regimes: smooth propagating of bacterial front vs. branching.)
-%     \item \cite{nagarajan_agent-based_2022-1}: review on the ABM for bacterial population.
+%     \item \citep{nagarajan_agent-based_2022-1}: review on the ABM for bacterial population.
 %     The ABM represent a microbial colony as a group of discrete agents that are governed by a set of rules, where each agent can be an individual cell or a collection of cells.
 %     Can use citation when talk about general processes we are accounting as growth, uptake of nutrient, production of inhibitor, e.g.,:
 %     Physical interactions between agents are calculated using excluded volume interactions.
@@ -870,7 +870,7 @@ The following sections will demonstrate how a given \ac{ode} system can be trans
 custom-built \ac{abm} which has only a few more overall parameters.
 This procedure is a blueprint which can be followed to construct \acp{abm} for similar
 \ac{ode}-based systems.\\
-To construct our \ac{abm}, we use \texttt{cellular\_raza}~\cite{Pleyer2025}.
+To construct our \ac{abm}, we use \texttt{cellular\_raza}~\citep{Pleyer2025}.
 It allows us to define our bacterial agents from a clean slate, without having to rely on and inherit
 existing work.
 With this flexibility, researchers are able to construct minimal models using only as many parameters which are necessary.
@@ -944,7 +944,7 @@ We can calculate the interaction strength via
     \sigma &= \frac{r}{r_1+r_2} && q=0.2\\
     \vec{F} &= \epsilon \frac{1+q}{q+\sigma} \theta(\sigma - 1) \frac{1}{r}\vec{z}
 \end{alignat}
-We assume that the cells are not sticky and consider only a repulsive interaction potential, leaving out any possible attractive forces~\cite{Garrett2008}.
+We assume that the cells are not sticky and consider only a repulsive interaction potential, leaving out any possible attractive forces~\citep{Garrett2008}.
 These mechanisms will result in the overall expansion of the colony as individual cells push each further other apart.
 %
 % \begin{figure}
@@ -961,7 +961,7 @@ These mechanisms will result in the overall expansion of the colony as individua
 %
 % ................................................................................................
 \subsubsection{Cell Cycle}
-Typically the cycle of a cell consist of multiple phases~\cite{Cooper2000_fn}.
+Typically the cycle of a cell consist of multiple phases~\citep{Cooper2000_fn}.
 Since our goal is to include only the necessary details of the underlying biological problem, we drastically simplify the description of the cell cycle.
 Cell growth is already being described the system of coupled \acp{ode} given in equations~\eqref{eq:spatial-full-system-simplified}.
 Thus, we introduce an additional rule that performs the division process when a certain volume threshold is reached.
@@ -997,7 +997,7 @@ The concatenation of many such stochastic processes on a population-based level 
 % ------------------------------------------------------------------------------------------------
 \subsection{Comparing \acs{abm} and \acs{ode} Models}
 The \ac{abm} model should be considered to be the more fundamental model compared to the \ac{ode} model in the sense that it incorporates more biological aspects and maps them closer to the actual behaviour of the bacteria.
-We are thus able to derive the \ac{ode} pool model from its \ac{abm} version via a process of homogenization (see supplementary material~\ref{subsec:supplement-deriving-pool-odes}).
+We are thus able to derive the \ac{ode} pool model from its \ac{abm} version via a process of homogenization (see Appendix~\ref{subsec:supplement-abm-details}).
 By doing so, we find a mapping between parameters from the \ac{abm} to parameters used in the \ac{ode} description.
 The derived equations read
 \begin{align}
@@ -1082,8 +1082,8 @@ The initial bacteria have been ordered on a grid such that only every diagonal n
 Figure~\ref{fig:spatial-growth-curve} shows multiple results for various configurations of the \ac{abm}, differing only in their initial spatial configuration and diffusivity.
 We see that in the highly-diffusive homogenous case of subfigure (a), the pool model is a good fit to the \ac{abm} model.
 Heterogeneity and slower diffusion cause larger differences between the two models as can be seen in subfigures (b) and (c).
-The combination of the two effects shows the largest difference between model predictions.
-In subfigure (c), due to the heterogeneous cell distribution (see also~\ref{fig:supplement-spatial-initial-config-cells}), overall inhibition of species $B$ is significantly reduced.
+The combination of the two effects shows the largest difference between model outputs.
+In subfigure (c), due to the heterogeneous cell distribution (see Appendix~\ref{fig:supplement-spatial-initial-config-cells}), overall inhibition of species $B$ is significantly reduced.
 Subfigure (d) shows how a randomized homogenous initial distribution can lead to even more notable effects of inhibition.
 In contrast to the other results, here the final values of species $A$ and $B$ have larger/smaller counts respectively.
 This illustrates that spatial effects can shift the final results of growth curves towards both directions, leading to an overall increase/decrease of one species.
@@ -1112,7 +1112,7 @@ The chosen diffusion constants $D_I=D_R=30.0$\unit{\micro\metre\squared\per\minu
         Comparison of the \ac{ode} and \ac{abm} model for different configurations, showing
         homogenous (Hom.), heterogeneous (Het.) or randomized (Rand.) initial configurations.
         The diffusion constants are chosen such that $D_R=D_I=D$.
-        Snapshots of the spatial configurations of cells are included in the appendix~\ref{fig:supplement-spatial-initial-config-cells}.
+        Snapshots of the spatial configurations of cells are included in the Appendix~\ref{fig:supplement-spatial-initial-config-cells}.
     }
     \label{fig:spatial-growth-curve}
 \end{figure}
@@ -1164,7 +1164,7 @@ The inclusion of additional metabolic processes or larger number of cell-species
 As an example, the description of the quorum sensing phenomena can be modelled by adding the equation for the released autoinducer molecules as a part of the microenvironment.
 These molecules then affect the same-species bacteria growth controlling the size of the population.
 The described above approach provides a primary predictive model with transition rates between different pools as parameters.
-To include the influence of external factors, i.e. temperature, pH, pressure, etc., one can simply use the secondary models for the transition rates, e.g., the Ratkowsky model for temperature dependence~\cite{ratkowsky_relationship_1982}.\\
+To include the influence of external factors, i.e. temperature, pH, pressure, etc., one can simply use the secondary models for the transition rates, e.g., the Ratkowsky model for temperature dependence~\citep{ratkowsky_relationship_1982}.\\
 By constructing an \ac{abm}, we have exemplified how close the devised model is to the individual biological 
 processes that occur within the bacteria.
 This mechanistic single-cell level of understanding of our \ac{abm} is a perspective which can not be easily replicated by other spatial models such as \acp{pde}.
@@ -1207,9 +1207,10 @@ The data and simulation code which are presented in this study are publicly avai
 % ================================================================================================
 \newpage
 \beginsupplement
-\section{Supplementary Material}
+\section{Appendix}
 % ================================================================================================
-\subsection{General Mathematical Formalism}  \label{ssec:supplement1}
+\subsection{General Mathematical Formalism}
+\label{ssec:supplement1}
 Consider the system consisting of $N$ species in $M$ different states.
 In the general representation, all discussed in the main part systems  can be described with the Ordinary Differential Equations (\acp{ode}) using a non-linear function $\mbF$:
 \begin{equation}
@@ -1303,9 +1304,10 @@ The simpler version of one state per species (Eq.~\ref{eq:LV_simple}) can be sim
 \end{equation}
 
 
-\subsection{ABM Details} \label{ssec:supplement2}
+\subsection{ABM Details}
+\label{subsec:supplement-abm-details}
+
 \subsubsection*{Deriving the Pool Model}
-\label{subsec:supplement-deriving-pool-odes}
 Since the \ac{abm} can be considered more fundamental than the \ac{ode} model, we should be able to derive the latter one from the former.
 This can be achieved by starting with equations~\eqref{eq:spatial-full-system-simplified}.
 We integrate the spatial equations over the total domain starting with the resource concentration $[R]$.
