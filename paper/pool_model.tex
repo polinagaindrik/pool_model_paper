@@ -315,18 +315,18 @@ Furthermore, we assess how spatial heterogeneity~\citep{mckellar_heterogeneous_1
 % ================================================================================================
 \section{One species modeling}
 % ------------------------------------------------------------------------------------------------
-\subsection{Three-Pool Model}
-We begin our discussion by considering a simplistic system where only one bacteria species is present $N=1$.
+\subsection{Three-pool model}
+We begin our discussion by considering a simplistic system where only one species is present $N=1$.
 Bacterial growth undergoes different consecutive phases~\citep{buchanan_when_1997}, starting with the so called lag-phase, during which no increase in the bacterial count occurs.
 This phenomenon appears due to adaptations of the microbial community, for example, to the new environmental conditions.
-This so-called preparation before the exponential growth includes synthesis of the needed compounds, initiation of the transcription~\citep{rolfe_lag_2012} and poorly studied physiological and regulatory mechanisms~\citep{monod_growth_1949}.
+This so-called preparation before the exponential growth includes synthesis of the needed compounds, initiation of the transcription~\citep{rolfe_lag_2012} and other physiological and regulatory mechanisms~\citep{monod_growth_1949}.
 After this, the bacteria which have succeeded in this adaptation stage enter the exponential growth phase, where the process of cell division is predominant.
 When the levels of nutrition are exhausted by the growing bacteria, the stationary state of the growth curve occurs.
 In this state the cultures accumulate waste products of metabolic activity that lead to cell death in the bacterial colony.
 At the same time dying cells release the nutrients for survivors to continue growing.
 As a result the balance between the growing and dying processes leads to a constant bacterial count~\citep{navarro_llorens_stationary_2010}.
-In the described simplified version of the real-life system three possible bacterial states are mentioned, corresponding to the underlying process: adaptation, growth or death.
-Motivated by this we divide a bacterial population into three pools (states)~(\ref{fig:SchematicRep}), defining the fraction of the population in the lag phase $L(t)$, growing and dividing $G(t)$ and undergoing cell death $D(t)$.
+In the described simplified version of the real-life system three possible bacterial states are mentioned, corresponding to the underlying processes: adaptation, growth or death.
+Motivated by this we divide a bacterial population into three pools (states) (Figure~\ref{fig:SchematicRep}), defining the fraction of the population in the lag phase $L(t)$, growing and dividing $G(t)$ and undergoing cell death $D(t)$.
 \begin{figure}[t]
     \begin{center}
     \includegraphics[width=0.9\columnwidth]{Figures-TPM_fig.pdf}
@@ -334,16 +334,16 @@ Motivated by this we divide a bacterial population into three pools (states)~(\r
     \label{fig:SchematicRep}
     \end{center}
 \end{figure}
-To determine the system of equations which describe the system's dynamics, we consider the flows between the different states.
+To determine the equations which describe the system's dynamics, we consider the flows between the different states.
 The pools $G$ and $D$ are unidirectionally connected with the pool $L$.
-For now, we assume for that there is no back flow between growth state $G$ and lag-state $L$.
+For now, we assume no back flow from the growth state $G$ to the lag-state $L$.
 The suggested model can be cast in the following reactions:
-\begin{eqnarray}
-    L &\stackrel{\lambda}{\longrightarrow} & G\\
-    L &\stackrel{\mu}{\longrightarrow} & D\\
-    G &\stackrel{\alpha}{\longrightarrow} & 2G\\
-    G &\stackrel{\mu'}{\longrightarrow} & D
- \end{eqnarray}
+\begin{align}
+    L &\stackrel{\lambda}{\longrightarrow} G\\
+    L &\stackrel{\mu}{\longrightarrow} D\\
+    G &\stackrel{\alpha}{\longrightarrow} 2G\\
+    G &\stackrel{\mu'}{\longrightarrow} D
+\end{align}
 Then the \acp{ode} describing such a model can be written as
 \begin{align}\begin{split}
     \dot{L} &= -(\mu + \lambda) L\\
@@ -354,16 +354,17 @@ with the initial conditions $L(0)=N_0$, $G(0)=0$, and $D(0)=0$, where $N_0$ is t
 %
 Based on experimental observations, it was shown that the bacterial growth is strongly influenced by the limiting resource.
 According to the works of \citet{monod_growth_1949} in the system where all needed nutrients are in excess except for one, the total growth is linear to the concentration of this limiting nutrient resource.
-The control of the population density with respect to the available nutrition is implemented using cell communication processes called quorum sensing.
+The control of the population density with respect to the available nutrition by means of cell communication is called quorum sensing.
 By releasing extracellular signalling molecules (autoinducer molecules) it is possible for the bacteria to synchronize the gene expression of the whole group~\citep{ng_bacterial_2009}.
-We will not dive into the processes of quorum sensing and try to keep it as simple as possible.
-We aim to include a resource pool which is consumed by the growing bacteria using the second order kinetic reaction:
+Instead of modeling complex signalling networks, we choose a simpler approach to describe the dependence of growth on the nutrient availability.
+We include a resource pool which is consumed by the growing bacteria using the second order kinetic reaction:
 \begin{equation}
-    G + R  \stackrel{\alpha_0}{\longrightarrow} 2G.
+    G + R  \stackrel{\alpha_0}{\longrightarrow} 2G
 \end{equation}
+allowing us to keep a minimal number of parameters.
 Note that the pools $L$, $G$ and $D$ represent the number of bacteria (or number of bacteria per unit area/volume) while $R$ represents an abstract resource pool.
-Let say $G=N_B/V$ and $[G]=1/V$, where $N_B$ is the number of bacteria and $V$ is the volume.
-Then $R=N_R/V$ and $[R]=1/V$, where $N_R$ is the number of resource molecules (or any appropriate unit, e.g.,, mol).
+Let's say $G=N_B/V$ and $[G]=1/V$, where $N_B$ is the number of bacteria and $V$ is the volume.
+Then $R=N_R/V$ and $[R]=1/V$, where $N_R$ is the number of resource molecules (or any appropriate unit, e.g., mol).
 Then $[\alpha_0]=V/s$, $[N_t]=1/V$, and $[\alpha]=1/s$.
 $N_t$ denotes the maximal size of the total bacterial population due to environmental limitations (Figure \ref{fig:3pool_resource_plots}).
 For homogenous densities it is equivalent to consider the total amount, i.e., multiplying $L$ and $G$ by the volume.
@@ -377,11 +378,11 @@ In this case the growth term can be simply written as $\alpha G \tilde{R}$ and t
         \dot{G} &= \lambda L + \alpha \tilde{R} G-\mu' G\\
         \dot{D} &= \mu  L + \mu' G\\
         \dot{\tilde{R}} &= - \frac{\alpha}{N_t} \tilde{R} G
-    \end{split}.
+    \end{split}
 \label{eq:ode_3pool_resource}
 \end{align}
 %
-This can be simplified by exploiting the conservation of the resource pool:
+This can be simplified by exploiting the conservation of the resource pool
 \begin{equation}
     \tilde{R} = 1 - \frac{L+G+D}{N_t}
 \end{equation}
@@ -390,8 +391,8 @@ and, hence, the full system can be written as
     \begin{split}
         \dot{L} &= -(\mu + \lambda) L\\
         \dot{G} &= \lambda L + \alpha G\left(1-\frac{L+G+D}{N_t}\right)-\mu' G\\
-        \dot{D} &= \mu  L + \mu' G
-    \end{split}.
+        \dot{D} &= \mu  L + \mu' G.
+    \end{split}
 \label{eq:ode_3pool_resource2}
 \end{align}
 %
@@ -418,8 +419,8 @@ Moreover, by including the flow of living bacteria to the death pool, we can mod
 % ------------------------------------------------------------------------------------------------
 \subsection{Lag-time estimation}
 Note that the previously introduced model could be further simplified to a two pool or state model by omitting the pool $D$ and removing cells with rate $\beta$ directly from pool $L$.
-The relevant question here is whether cells in the pool $D$ still contribute to the limitation of the resources by, e.g.,, occupying space or consuming important nutrients.
-If yes, the three pool model would be advantageous, if not the two pool model is sufficient with the advantages of having one parameter less.\\
+The relevant question here is whether cells in the pool $D$ still contribute to the limitation of the resources by, e.g., occupying space or consuming important nutrients.
+If yes, the three pool model would be advantageous, if not the two pool model is sufficient with the advantage of having one parameter less.\\
 %
 % The dynamics of the three pool model can be captured by the coupled system of ordinary differential
 The dynamics of the three pool model is captured by equations~\ref{eq:ode_3pool_resource2} which can be used to derive the two pool model simply by omitting $D$.
@@ -432,7 +433,7 @@ Moreover, for $\mu'=0$ the equations for $L$ and $D$ can be readily integrated r
     \end{split}.
 \end{align}
 For constant parameters $\mu$ and $\lambda$ the integrals for $L$ and $D$ can be inserted into the differential equation for $G$.
-However, in the case of time dependent parameters, e.g.,, for a dependence on a non-static, dynamic temperature, it appears to be not advantageous to use the analytical results for $L$ and $D$ and work instead with all three equations for $L$, $G$, and $D$.
+However, in the case of time dependent parameters, e.g., for a dependence on a non-static, dynamic temperature, it appears to be not advantageous to use the analytical results for $L$ and $D$ and work instead with all three equations for $L$, $G$, and $D$.
 It is interesting to see what type of equations result for the total bacterial population $N=L+G+D$:
 \begin{align}
     \begin{split}
