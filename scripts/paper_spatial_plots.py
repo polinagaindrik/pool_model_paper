@@ -2,12 +2,14 @@ import cr_pool as crp
 from pathlib import Path
 import argparse
 
+DIFFUSION_UNITS = "\\text{\\textmu}\\text{m}^2\\text{min}^{-1}"
+
 # Diffusion constants, randomness, homogenous
 CONFIGS = [
-    (30, 0, True),
-    (5, 0, True),
-    (30, 0, False),
-    (30, 0.30, True),
+    (30, 0, True, f"Homogeneous $D=30{DIFFUSION_UNITS}$"),
+    (5, 0, True, f"Homogeneous $D=5{DIFFUSION_UNITS}$"),
+    (30, 0, False, f"Heterogeneous $D=30{DIFFUSION_UNITS}$"),
+    (30, 0.30, True, f"Random $D=30{DIFFUSION_UNITS}$"),
 ]
 
 
@@ -45,17 +47,16 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     paths = args.paths
+    paths = [(Path(p), None) for p in paths]
 
     if len(paths) == 0:
         paths = []
-        for diffusion_constant, randomness, homogenous in CONFIGS:
+        for diffusion_constant, randomness, homogenous, title in CONFIGS:
             output_path = calcualte_results(diffusion_constant, randomness, homogenous)
-            paths.append(output_path)
-
-    paths = [Path(p) for p in paths]
+            paths.append((Path(output_path), title))
 
     if args.save_snapshots:
-        for output_path in paths:
+        for output_path, _ in paths:
             iters = crp.get_all_iterations(output_path)
             crp.save_snapshot(output_path, iters[6])
             crp.save_snapshot(output_path, iters[12])
@@ -63,9 +64,9 @@ if __name__ == "__main__":
             crp.save_snapshot(output_path, iters[24])
 
     crp.load_style()
-    for output_path in paths:
+    for output_path, title in paths:
         domain, initial_cells, meta_params = crp.get_simulation_settings(output_path)
         data_cells, data_voxels = crp.analyze_all_cell_voxel_data(output_path, meta_params)
         crp.plot_growth_curve(data_cells, output_path)
         crp.plot_nutrients(data_voxels, output_path)
-        crp.plot_comparisons(data_cells, output_path)
+        crp.plot_comparisons(data_cells, output_path, title=title)
