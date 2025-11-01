@@ -23,6 +23,9 @@ CB = COLORS_ALL["N_B"]
 CN = COLORS_ALL["N"]
 
 
+MICRON_TEX_UNITS = "\\text{\\textmu m}"
+
+
 def plot_growth_curve(data_cells, output_path):
     # Growth Curve
     fig, ax1 = plt.subplots(figsize=FIGSIZE_DEFAULT)
@@ -42,7 +45,7 @@ def plot_growth_curve(data_cells, output_path):
     data_cells.plot(x="time", y="bacteria_volume_2", ax=ax2, label="Species 2", color=CB)
     data_cells.plot(x="time", y="bacteria_volume_total", ax=ax2, label="Combined", color=CN)
     ax2.yaxis.set_major_formatter(ticks)
-    ax2.set_ylabel("Total Bacterial Area [10³µm²]")
+    ax2.set_ylabel("Total Bacterial Area [$10^3{MICRON_TEX_UNITS}^2$]")
 
     handles, labels = ax1.get_legend_handles_labels()
     handles = handles[:3] + [
@@ -157,7 +160,7 @@ def calculate_difference(data_cells, output_path):
     return variance
 
 
-def plot_comparisons(data_cells, output_path):
+def plot_comparisons(data_cells, output_path, title=None):
     settings = get_simulation_settings(output_path)
 
     model = abm_to_ode(*settings)
@@ -174,10 +177,13 @@ def plot_comparisons(data_cells, output_path):
     data_cells.plot(x="time", y="bacteria_volume_2", ax=ax, color=CB, linestyle="--")
     data_cells.plot(x="time", y="bacteria_volume_total", ax=ax, color=CN, linestyle="--")
 
+    if title is not None:
+        ax.set_title(title)
+
     ticks = mpl.ticker.FuncFormatter(lambda x, pos: "{0:g}".format(x / 1e3))
     ax.yaxis.set_major_formatter(ticks)
     ax.set_xlabel("Time [days]")
-    ax.set_ylabel("Total Bacterial Area [10³µm²]")
+    ax.set_ylabel(f"Total Bacterial Area [$10^3{MICRON_TEX_UNITS}^2$]")
     # ax.set_yscale('log')
     handles, labels = ax.get_legend_handles_labels()
     handles = handles[:3] + [
@@ -237,7 +243,7 @@ def plot_lag_phase(data_cells, res, output_path):
 
     ax.legend()
     ax.set_xlabel("Time [days]")
-    ax.set_ylabel("Total Bacterial Area [10³µm²]")
+    ax.set_ylabel(f"Total Bacterial Area [$10^3{MICRON_TEX_UNITS}^2$]")
 
     fig.tight_layout()
     fig.savefig(f"{output_path}/lag_phase.png")
@@ -381,19 +387,19 @@ def _plot_labels(fig, ax, n_bacteria_1, n_bacteria_2):
 
     # Display size of the
     ax.annotate(
-        f"{dx:5.0f}µm",
+        f"${dx:5.0f}{MICRON_TEX_UNITS}$",
         (x_low + dx / 2, y_low + dy / 2),
         ha="center",
         va="center",
     )
     ax.annotate(
-        f"{dx:5.0f}µm",
+        f"${dx:5.0f}{MICRON_TEX_UNITS}$",
         (x_low + 3 * dx / 2, y_low + dy / 2),
         ha="center",
         va="center",
     )
     ax.annotate(
-        f"{dx:5.0f}µm",
+        f"${dx:5.0f}{MICRON_TEX_UNITS}$",
         (x_low + 5 * dx / 2, y_low + dy / 2),
         ha="center",
         va="center",
