@@ -1096,25 +1096,24 @@ This is expected, since processes such as diffusion and cells growing outward in
 The chosen diffusion constants $D_I=D_R=30.0$\unit{\micro\metre\squared\per\minute} are in the order of small molecules such as $NaCl$ while the lower values $D_I=D_R=5.0$\unit{\micro\metre\squared\per\minute} are around values of Glucose in water.
 \begin{figure}
     \centering
-    \begin{subfigure}[c]{0.5\columnwidth}
-        \includegraphics[width=\columnwidth]{Figures-abm-homogenous-abm_ode_comparison.png}
-        \subcaption{Hom. $D=30.0$\unit{\micro\metre\squared\per\minute}}
-    \end{subfigure}%
-    \begin{subfigure}[c]{0.5\columnwidth}
-        \includegraphics[width=\columnwidth]{Figures-abm-homogenous-low-diffusion-abm_ode_comparison.png}
-        \subcaption{Hom. $D=5.0$\unit{\micro\metre\squared\per\minute}}
-    \end{subfigure}\\
-    \begin{subfigure}[c]{0.5\columnwidth}
-        \includegraphics[width=\columnwidth]{Figures-abm-inhomogenous-abm_ode_comparison.png}%
-        \subcaption{Het. $D=30.0$\unit{\micro\metre\squared\per\minute}}
-    \end{subfigure}%
-    \begin{subfigure}[c]{0.5\columnwidth}
-        \includegraphics[width=\columnwidth]{Figures-abm-random-abm_ode_comparison.png}%
-        \subcaption{Rand. $D=30.0$\unit{\micro\metre\squared\per\minute}}
-    \end{subfigure}
+    \begin{tikzonimage}[width=0.5\columnwidth]
+        {Figures-abm-homogenous-abm_ode_comparison.png}
+        \node at (0, 1)[anchor=north west]{\textbf{A}};
+    \end{tikzonimage}%
+    \begin{tikzonimage}[width=0.5\columnwidth]
+        {Figures-abm-homogenous-low-diffusion-abm_ode_comparison.png}
+        \node at (0, 1)[anchor=north west]{\textbf{B}};
+    \end{tikzonimage}\\
+    \begin{tikzonimage}[width=0.5\columnwidth]
+        {Figures-abm-inhomogenous-abm_ode_comparison.png}
+        \node at (0, 1)[anchor=north west]{\textbf{C}};
+    \end{tikzonimage}%
+    \begin{tikzonimage}[width=0.5\columnwidth]
+        {Figures-abm-random-abm_ode_comparison.png}
+        \node at (0, 1)[anchor=north west]{\textbf{D}};
+    \end{tikzonimage}%
     \caption{
-        Comparison of the \ac{ode} and \ac{abm} model for different configurations, showing
-        homogenous (Hom.), heterogeneous (Het.) or randomized (Rand.) initial configurations.
+        (A-D) Comparison of the \ac{ode} and \ac{abm} model for different configurations, showing homogenous, heterogeneous or randomized initial configurations.
         The diffusion constants are chosen such that $D_R=D_I=D$.
         Snapshots of the spatial configurations of cells are included in the Appendix~\ref{fig:supplement-spatial-initial-config-cells}.
     }
