@@ -2,7 +2,7 @@ import cr_pool as crp
 from pathlib import Path
 import argparse
 
-DIFFUSION_UNITS = "\\text{\\textmu}\\text{m}^2\\text{min}^{-1}"
+DIFFUSION_UNITS = "\\text{\\textmu m}^2\\text{min}^{-1}"
 
 # Diffusion constants, randomness, homogenous
 CONFIGS = [
