@@ -561,7 +561,7 @@ We again rescaled the resource pool with $N_t$ and find
     R =1-\frac{L_A+G_A+L_B+G_B}{N_t}
     \label{eq:Resource}
 \end{equation}
-Inserting Eq.~\ref{eq:Resource} into Eqs.~\ref{eq:model_2sp_resource_comp} yields:
+Inserting equation~\ref{eq:Resource} into system~\ref{eq:model_2sp_resource_comp} yields:
 \begin{align}
     \dot{L}_A &= -\lambda_A  L_A + \frac{\lambda_A}{N_t}L_A\left<LG\right>\\
     \dot{L}_B &= -\lambda_B L_B + \frac{\lambda_B}{N_t}L_B \left<LG\right>\\
@@ -577,7 +577,7 @@ As a result, species $A$ was able to suppress species $B$, consuming the larger 
     \begin{center}
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2pools_resource_competition.pdf}
     \caption{
-        The competition of the two bacterial species due to the common limiting resource calculated using Eq.~(\ref{eq:model_2sp_resource_comp}).
+        The competition of the two bacterial species due to the common limiting resource calculated using equation~(\ref{eq:model_2sp_resource_comp}).
         The red curve describes the growth of the bacteria $A$ ($N_A = L_A+G_A$) with model parameters $\lambda_A=10^{-2}$, $\alpha_A=3.0$.
         The blue curve describes the growth of the bacteria $B$ ($N_B = L_B+G_B$) with model parameters $\lambda_B=5\cdot 10^{-2}$, $\alpha_B=2.5$.
         The purple line shows the total bacterial count of the system  $N(t)=N_A+N_B$.
@@ -654,7 +654,7 @@ The difference in the solutions of the given \acp{ode} between the two toxin pro
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2pools_toxin1.pdf}\\
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2pools_toxin2.pdf}
     \caption{
-        The two species system competing for the common nutrient $R$ with production of the toxin $T_B$ (brown line) calculated using Eq.~(\ref{eq:model_2sp_toxin}).
+        The two species system competing for the common nutrient $R$ with production of the toxin $T_B$ (brown line) calculated using equation~(\ref{eq:model_2sp_toxin}).
         The growing bacteria $B$ produces toxin $T_B$ (\textbf{A}) constantly $\dot{T}_B^1 = \mathcal{F}^1 = \kappa G_B$ or (\textbf{B}) only during growth process $\dot{T}_B^2 = \mathcal{F}^2 = \kappa \alpha_B R G_B$ with
         production rate $\kappa=0.2$.
         The toxin $T_B$ causes the cell death of bacteria $A$ with rate constant $\mu = 0.2$.
@@ -676,7 +676,7 @@ This model assumes that toxin is only produced when the total bacterial grow and
 % ................................................................................................
 \subsubsection{Mutual inhibition}
 Another special case of the species competition is when the produced toxin does not cause the death of the bacteria but rather inhibit its growth.
-Such situation with 2 bacteria species, a shared resource and produced inhibitor was modeled, e.g.,, by \citet{lenski_coexistence_1986}.
+Such situation with 2 bacteria species, a shared resource and produced inhibitor was modeled, e.g., by \citet{lenski_coexistence_1986}.
 In our case, we would like to look at a rather simplified case reducing the number of variables of the system.
 The easiest way to introduce inhibition of species $A$ by species $B$ is via a growth rate of species $A$ depending on the abundance of species $B$.
 For sake of simplicity we ignore the lag pool and write for a mutual inhibition:
@@ -685,7 +685,7 @@ For sake of simplicity we ignore the lag pool and write for a mutual inhibition:
     \dot{G}_B &= \mathcal{B}_B(G_A) G_B\left(1-\frac{G_A+G_B}{N_t}\right).
 \end{align}
 The function $\mathcal{B}_{A/B}$ captures the inhibiting effects effectively.
-It is straight forward to make the mechanism of inhibition more explicit by, e.g.,, introducing a toxin pool.
+It is straight forward to make the mechanism of inhibition more explicit by, e.g., introducing a toxin pool.
 One possible choice for $\mathcal{B}$ is:
 \begin{equation}
     \mathcal{B}(G) = \frac{\alpha}{1+KI(G)},
@@ -848,7 +848,7 @@ The \acp{ode} the bacterial population can be written as:
 %     (Structurally in 2D it's regimes: smooth propagating of bacterial front vs. branching.)
 %     \item \citep{nagarajan_agent-based_2022-1}: review on the ABM for bacterial population.
 %     The ABM represent a microbial colony as a group of discrete agents that are governed by a set of rules, where each agent can be an individual cell or a collection of cells.
-%     Can use citation when talk about general processes we are accounting as growth, uptake of nutrient, production of inhibitor, e.g.,,:
+%     Can use citation when talk about general processes we are accounting as growth, uptake of nutrient, production of inhibitor, e.g.,:
 %     Physical interactions between agents are calculated using excluded volume interactions.
 %     Chemical interactions as releasing inhibitors are described using concentrations and solved using PDEs.
 % \end{itemize}
@@ -1230,7 +1230,7 @@ In matrix form it can be written as
     \label{eq:model_bact}
 \end{equation}
 with $x_{j}^{i}$ describing the bacterial counts for species $i$ in state $j$.
-$\mbu$ is the vector of different inputs of the model, e.g.,, temperature, pressure etc.
+$\mbu$ is the vector of different inputs of the model, e.g., temperature, pressure etc.
 The vector $\mbm \in \mathbb{R}^{K}$ includes all variables corresponding to the microenvironment of the system which can be concentration of the inhibitors or activators:
 \begin{equation}
     \dot{\mbm} = \mbH (\mbx, \mbm, \mbp, \mbu).
@@ -1299,7 +1299,7 @@ Likewise, the multispecies system with resource competition present described by
 \label{eq:gLV_x_m}
 \end{equation}
 
-The simpler version of one state per species (Eq.~\ref{eq:LV_simple}) can be simply written in a general mathematical form as generalized Lotka-Volterra:
+The simpler version of one state per species (equation~\ref{eq:LV_simple}) can be simply written in a general mathematical form as generalized Lotka-Volterra:
 \begin{equation}
     \frac{d x_i}{d t} = x_i f_i (\mbx), \hspace{3mm} \mathbf{f} = \mathbf{r} + A \mbx.
 \label{eq:gLV}
