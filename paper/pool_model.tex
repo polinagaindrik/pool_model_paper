@@ -801,12 +801,12 @@ we expect the \ac{ode} description to be valid.
 However, in reality spatial effects can play a significant role for population survival forcing some
 species to develop competitive mechanisms such as cell adhesion to surfaces in the areas rich with
 nutrients~\citep{htuson_bacteriasurface_2013}.
-Another mechanism is the motility of bacteria, e.g.,, the flagellates \textit{E. coli} or
+Another mechanism is the motility of bacteria, e.g., the flagellates of \textit{E. coli} or
 \textit{B. subtilis} which are capable of chemotactic motion driven by oxygen
 concentrations~\citep{decoene_microscopic_2011}.
 The bacterial social interactions such as release of toxins or public goods can also
 significantly affect the spatial structure of the community~\citep{blanchard_bacterial_2015}.
-These effects can only be treated with a spatial model that is able to describe the observed
+These effects can only be treated within a spatial framework that is able to describe the observed
 effects.\\
 Compared to other modeling techniques such as \acp{pde}, \acp{abm}~\citep{nagarajan_agent-based_2022-1} force researchers to think in
 terms of cellular processes, thus bridging the gap from a
@@ -815,14 +815,14 @@ Our goal is to provide an \ac{abm} which can be used to derive the given \ac{ode
 coarse-grained case.
 In this way, we can show that the bulk-based \ac{ode} model is directly related to the mechanistic
 single-cell behaviour of the bacteria.
-To this end, we consider the system consisting from two bacterial species that can be described by two internal states: lag and growth states.
+To this end, we consider the system consisting of two bacterial species that can be described by the two internal states: lag phase and growth.
 Both of these species grow using the same resource pool $R$ but with different growth constants
-$\alpha$ and different lengths of lag phase $\lambda$.
-Moreover, the species $A$ is able to release a certain antimicrobial component $I$ that shows an
-inhibitory effect on species 2 (amensalism).
+$\alpha_{A/B}$ and different lag phase transition rates $\lambda_{A/B}$.
+Moreover, species $A$ is able to release a certain antimicrobial component $I$ that shows an
+inhibitory effect on species $B$ (amensalism).
 We assume that $L,G$ are measured in terms of the overall volume and $R,I$ are measured as total
 amount.
-The \acp{ode} the bacterial population can be written as:
+The \acp{ode} system of the bacterial population can be written as:
 %
 %
 % - \citep{emonet_agentcell_2005, gorochowski_bsim_2012, li_nufeb_2019, kreft_bacsim_1998}: examples of another toolboxes for bacterial communities modeling (ABM).\\
@@ -858,17 +858,21 @@ The \acp{ode} the bacterial population can be written as:
 % \end{itemize}
 %
 \begin{align}
-    \dot{L_A} &= -\lambda_A R L_A\\
-    \dot{G_A} &= \lambda_A R L_A + \alpha_A R G_A\\
-    \dot{L_B} &= -\lambda_B R L_B\\
-    \dot{G_B} &= \lambda_B R L_B + \frac{\alpha_B}{1 + \mu_I I} R G_B
+    \begin{split}
+        \dot{L_A} &= -\lambda_A R L_A\\
+        \dot{G_A} &= \lambda_A R L_A + \alpha_A R G_A\\
+        \dot{L_B} &= -\lambda_B R L_B\\
+        \dot{G_B} &= \lambda_B R L_B + \frac{\alpha_B}{1 + \mu_I I} R G_B.
+    \end{split}
     \label{eq:spatial_limit_F}
 \end{align}
 %
-The microenvironment of our system contains the resource and the inhibitor molecules:
+Moreover, the microenvironment of our system contains the resource and the inhibitor molecules
 \begin{align}
-    \dot{R} &= -\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{(1 + \mu_I I) N_t} R G_B \\
-    \dot{I} &= \kappa G_A
+    \begin{split}
+        \dot{R} &= -\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{(1 + \mu_I I) N_t} R G_B \\
+        \dot{I} &= \kappa G_A.
+    \end{split}
     \label{eq:spatial_limit_H}
 \end{align}
 
@@ -878,72 +882,81 @@ The following sections will demonstrate how a given \ac{ode} system can be trans
 custom-built \ac{abm} which has only a few more overall parameters.
 This procedure is a blueprint which can be followed to construct \acp{abm} for similar
 \ac{ode}-based systems.\\
-To construct our \ac{abm}, we use \texttt{cellular\_raza}~\citep{Pleyer2025}.
-It allows us to define our bacterial agents from a clean slate, without having to rely on and inherit
-existing work.
+To construct our \ac{abm}, we use the modeling framework \texttt{cellular\_raza}~\citep{Pleyer2025}.
+ allows us to define our bacterial agents from a clean slate.
 With this flexibility, researchers are able to construct minimal models using only as many parameters which are necessary.
 This ability, to precisely define and control the exact behavior of our cell-agents, enables the following parts.
 
 \subsubsection{Cellular reactions}
 To construct an \ac{abm} which resembles the given \ac{ode} system of equations~\eqref{eq:spatial_limit_F} and \eqref{eq:spatial_limit_H}, we consider multiple cellular reactions.
-The first is uptake of an extracellular resource $[R_e]$ into the cell $[R_i]$ with rate $u$ in \unit{\per\minute}.
-Nutrients are only taken up at the position of the cell $x_c$
-\begin{align}
-    \dot{[R_i]} &= u [R_e](x_c)\\
-    \dot{[R_e]}(x) &= -u \frac{V_c}{V_D} [R_e] \delta(x-x_c)
-\end{align}
-where $\delta(x-x_\text{cell})$ is the Dirac delta-distribution.
-Note that $[R_e]=[R_e](x)$ explicitly depends on the spatial coordinate but we choose to omit its notation.
-In the second equation, we need to account for the ratio of cellular $V_c$ and domain volume $V_D$ to calculate the correct change.
-Further, we want to modify the cellular volume by growing it increasingly with rate $a$.
-Therefore, we need to specify how many resource molecules are turned into volumetric units $\sigma$ in \unit{\micro\metre\cubed\per\mole}.
-The total amount of resource molecules present inside the cell is given by the current concentration multiplied by the cell-volume $V_c [R_i]$.
-With a rate $a$ and conversion $\sigma$, the cell turns these resource molecules into volume.
-\begin{align}
-    \dot{V_c} &= a\sigma [R_i] V_c\\
-    \dot{[R_i]} &= - a[R_i]
-\end{align}
-Furthermore, we let cells produce an inhibitor with production rate $b$ which inhibits the cell's ability to uptake and thus use the resource by a factor of $1+\nu_I [I]$
-\begin{align}
-    \dot{[I]} &= b\frac{V_c}{V_D}\delta(x-x_c)\\
-    u &\longrightarrow \frac{u}{1+\nu_I [I]}.
-\end{align}
+We denote cells of species $A,B$ with $c_{A/B}$ respectively and indicate shared behavior by simply using $c$.
+Cells $c_A$ of species $A$ take up extracellular resources $[R_e]$ into the cell $[R_{i,c_A}]$ with rate $u$ in \unit{\per\minute}.
+The uptake only occurs at the position of the cell $x_{c_A}$.
+Furthermore, we let cells of species $A$ produce a freely diffusable inhibitor $I$ with production rate $b$ and diffusion constant $D_I$ which inhibits cells of species $B$ in their uptake of nutrients.
+\begin{equation}
+    \dot{[I]} = b\frac{V_{c_A}}{V_D}\delta(x-x_{c_A}) + D_I \Delta [I]
+\end{equation}
+We model this inhibiting effect by modifying the uptake term of species $B$ with a factor of $\frac{1}{1+\nu_I [I]}$.
 % Note that we do not need to distinguish between the two species because we can set parameters individually on agent-level.
-To distinguish between the two species, it suffices to set parameters for every individual agent accordingly.
-This means, we can implement the most general version of the equations and by choosing appropriate parameters, this defines the species of the respective cell-agent.
-If we combine all equations and consider multiple cells, we obtain the system
-\begin{align}
-    \dot{V_c} &= a\sigma [R_i] V_c\\
-    \dot{[R_i]} &= \frac{u}{1+\nu_I [I]} [R_e] - a[R_i]\\
-    \dot{[R_e]} &= -\frac{u}{1+\nu_I [I]} \frac{V_c}{V_D} [R_e] \delta(x-x_c)\\
-    \dot{[I]} &= b\frac{V_c}{V_D}\delta(x-x_c).
-    \label{eq:spatial-full-system-non-simplified}
-\end{align}
+% To distinguish between the two species, it suffices to set parameters for every individual agent accordingly.
+% This means, we can implement the most general version of the equations and by choosing appropriate parameters, this defines the species of the respective cell-agent.
+If we combine these effects and consider multiple cells, we obtain the system
+\begin{alignat}{3}
+    \dot{[R_{i,c_A}]} &=& u &[R_e] - a[R_{i,c_A}]\\
+    \label{eq:spatial-intracellular-a}
+    \dot{[R_{i,c_B}]} &=& \frac{u}{1+\nu_I [I]} &[R_e] - a[R_{i,c_B}]\\
+    \label{eq:spatial-intracellular-b}
+    % TODO fix this
+    % \begin{split}
+        \dot{[R_e]} &=& u &\sum\limits_{c_A}\frac{V_{c_A}}{V_D} [R_e] \delta(x-x_{c_A})\\
+            &&-\frac{u}{1+\nu_I [I]} &\sum\limits_{c_B}\frac{V_{c_B}}{V_D} [R_e] \delta(x-x_{c_B})
+    % \end{split}
+    \label{eq:spatial-extracellular-resources-pde}
+\end{alignat}
+where equations~\eqref{eq:spatial-intracellular-a} and \eqref{eq:spatial-intracellular-b} describe the change of intracellular resources for every individual cell of of species $A,B$ and the equation~\eqref{eq:spatial-extracellular-resources-pde} contains extracellular resources coupled to each individual agent.
+They contain the uptake of resources and term used grow the cell, converting resources into volume which will be explained below.
+We use the Dirac delta-distribution $\delta(x-x_c)$ to enforce exchange of nutrients at the positions of the cells $x_{c}$.
+Note that $[R_e]=[R_e](x)$ explicitly depends on the spatial coordinate but we choose to omit its notation.
+In equation~\eqref{eq:spatial-extracellular-resources-pde} we need to account for the ratio of cellular $V_c$ and domain volume $V_D$ to calculate the correct exchange.
+In addition, we want to modify the cellular volume by growing it increasingly with rate $a$.
+Therefore, we need to specify how many resource molecules are turned into volumetric units $\sigma$ in \unit{\micro\metre\cubed\per\mole}.
+The total amount of resource molecules present inside the cell is given by the current concentration multiplied by the cell-volume $V_c [R_{i,c}]$.
+With a rate $a$ and conversion $\sigma$, the cell turns these resource molecules into volume.
+\begin{equation}
+    \dot{V_c} = a\sigma [R_{i,c}] V_c
+\end{equation}
 In order to simplify this system, we can assume that the internal resources are constantly being depleted by the growth and the limiting process is the uptake of the resource.
-This means, we can effectively set $\dot{[R_i]}=0$.
-Therefore, we obtain the relation $\frac{u}{1+\nu_I [I]}[R_e] = a[R_i]$ which we can use to eliminate the variable monitoring internal resource concentrations $[R_i]$.
-Additionally, we require our external components to be freely diffusible with constants $D_R,D_I$.
-Plugging this into equation~\eqref{eq:spatial-full-system-non-simplified} yields.
+This means, we can effectively set $\dot{[R_{i,c}]}=0$.
+Therefore, we obtain the relations $\frac{u}{1+\nu_I [I]}[R_e] = a[R_{i,cB}]$ and $u[R_e]=a[R_{i,c_A}]$ which we can use to eliminate the variable monitoring internal resource concentrations $[R_{i,c}]$.
+Additionally, we also require the nutrients to be freely diffusible with constants $D_R$.
+With these considerations, we can update equations~\eqref{eq:spatial-intracellular-a} to \eqref{eq:spatial-extracellular-resources-pde} and obtain:
 \begin{align}
-    \dot{V_c} &= \frac{u}{1+\nu_I [I]} \sigma [R]V_c\\
-    \dot{[R]} &= \sum\limits_c -\frac{u}{1+\nu_I [I]} \frac{V_c}{V_D} [R] \delta(x-x_c) + D_R\Delta [R]\\
-    \dot{[I]} &= \sum\limits_c b\frac{V_c}{V_D}\delta(x-x_c) + D_I\Delta [I].
+    \begin{split}
+        % TODO format these equations
+        \dot{V_{c_B}} &= u \sigma [R]V_c\\
+        \dot{V_{c_A}} &= \frac{u}{1+\nu_I [I]} \sigma [R]V_c\\
+        % \dot{[R_e]} &= \sum\limits_c -\frac{u}{1+\nu_I [I]} \frac{V_c}{V_D} [R] \delta(x-x_c) + D_R\Delta [R]\\
+        \dot{[R]} &= u \sum\limits_{c_A}\frac{V_{c_A}}{V_D} [R_e] \delta(x-x_{c_A})\\
+            &-\frac{u}{1+\nu_I [I]} \sum\limits_{c_B}\frac{V_{c_B}}{V_D} [R_e] \delta(x-x_{c_B})\\
+            &+D_R \Delta [R_e]\\
+        \dot{[I]} &= \sum\limits_c b\frac{V_c}{V_D}\delta(x-x_c) + D_I\Delta [I]
+    \end{split}
     \label{eq:spatial-full-system-simplified}
 \end{align}
 For the diffusion, we require Neumann (zero-flux) boundary conditions.
-Since, we will not explicitly model intracellular concentrations $[R_i]$, we will drop the index entirely, only considering the extracellular resource.
+Since, we will not explicitly model intracellular concentrations $[R_{i,c}]$, we will drop the index entirely, only considering the extracellular resource.
 %
 %
 % ................................................................................................
 \subsubsection{Physical mechanics \& interactions}
-We represent cells as spherical objects in 2D space.
-They can be represented by their position $x_c$ and radius $r_c$ which is of course related to their (2D) volume $V_c = \pi r_c^2$.
+We model cells as spherical objects in 2D space.
+They can be represented by their position $x_c$ and radius $r_c$ which is related to their (2D) volume $V_c = \pi r_c^2$.
 As the coupled reactions from equations~\eqref{eq:spatial-full-system-simplified} change $V_c$, we also automatically adapt the cell radius accordingly.
-Notice however, that how the radius is updated does not correspond to the cellular reactions defined previously but is a purely mechanical consideration.
+% Notice however, that how the radius is updated does not correspond to the cellular reactions defined previously but is a purely mechanical consideration.
 The dimensionality of the problem does not find its way into the cellular reactions but only manifests itself in these mechanical considerations.
-The underlying equation of motion is that of a standard damped particle
+The dynamics are described by newtondian motions for particle damping.
 \begin{equation}
-    m \ddot{\vec{x}} = -\eta\dot{\vec{x}} + \vec{F}
+    m \ddot{\vec{x}} = -\eta\dot{\vec{x}} + \vec{F}.
 \end{equation}
 Cells are interacting via a point-like interaction potential.
 We can calculate the interaction strength via
@@ -953,7 +966,7 @@ We can calculate the interaction strength via
     \vec{F} &= \epsilon \frac{1+q}{q+\sigma} \theta(\sigma - 1) \frac{1}{r}\vec{z}
 \end{alignat}
 We assume that the cells are not sticky and consider only a repulsive interaction potential, leaving out any possible attractive forces~\citep{Garrett2008}.
-These mechanisms will result in the overall expansion of the colony as individual cells push each further other apart.
+These mechanisms will result in the overall expansion of the colony as individual cells push each other further apart.
 %
 % \begin{figure}
 %     \centering
@@ -971,7 +984,7 @@ These mechanisms will result in the overall expansion of the colony as individua
 \subsubsection{Cell cycle}
 Typically the cycle of a cell consist of multiple phases~\citep{Cooper2000_fn}.
 Since our goal is to include only the necessary details of the underlying biological problem, we drastically simplify the description of the cell cycle.
-Cell growth is already being described the system of coupled \acp{ode} given in equations~\eqref{eq:spatial-full-system-simplified}.
+Cell growth is already being described by the system of coupled \acp{ode} given in equations~\eqref{eq:spatial-full-system-simplified}.
 Thus, we introduce an additional rule that performs the division process when a certain volume threshold is reached.
 The volume of the cell is divided equally between the new and old cell and both are assigned new random positions close to each other such that their radii do touch but without any overlap.
 \begin{figure}
@@ -1004,7 +1017,7 @@ The concatenation of many such stochastic processes on a population-based level 
 %
 % ------------------------------------------------------------------------------------------------
 \subsection{Comparing \acs{abm} and \acs{ode} models}
-The \ac{abm} model should be considered to be the more fundamental model compared to the \ac{ode} model in the sense that it incorporates more biological aspects and maps them closer to the actual behaviour of the bacteria.
+The \ac{abm} model should be considered to be more fundamental compared to the \ac{ode} description in the sense that it incorporates more biological aspects and maps them closer to the actual behaviour of the bacteria.
 We are thus able to derive the \ac{ode} pool model from its \ac{abm} version via a process of homogenization (see Appendix~\ref{subsec:supplement-abm-details}).
 By doing so, we find a mapping between parameters from the \ac{abm} to parameters used in the \ac{ode} description.
 The derived equations read
@@ -1052,6 +1065,7 @@ We compare the most general version and thus omit species $A$ for the moment.
         \bottomrule
     \end{tabularx}
     \caption{Mappings between \ac{ode} and \ac{abm} parameters.}
+    \label{tab:mappings-ode-abm}
 \end{table*}
 We can use these mappings to numerically compare both approaches.
 Table~\ref{tab:spatial_limit_init} shows a comparison of parameters of two simulations for the \ac{ode} and \ac{abm} model which have been mapped onto each other.
