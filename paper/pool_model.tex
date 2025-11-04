@@ -19,8 +19,6 @@
 \usepackage{here}
 \usepackage{hyperref}
 \usepackage{lipsum}
-\usepackage{listings}
-\usepackage{listings-rust}
 \usepackage[switch]{lineno}
 \usepackage{mathtools}
 \usepackage{mathrsfs}
@@ -45,17 +43,6 @@
 
 \bibliographystyle{elsarticle-harv}
 
-% Define Rust lisintgs
-\lstset{
-    language=Rust,
-    showstringspaces=false
-}
-\DeclareFloatingEnvironment[
-  name=Listing,
-  listname=List of Listings,
-  within=section,
-]{listing}
-
 \restylefloat{table}
 
 % Remove indent across the whole document
@@ -72,8 +59,6 @@
   \renewcommand{\thetable}{S\arabic{table}}%
   % \setcounter{figure}{0}
   \renewcommand{\thefigure}{S\arabic{figure}}%
-  % \setcounter{listing}{0}
-  \renewcommand{\thelisting}{S\arabic{listing}}
 }
 \newcommand{\mbx}{\mathbf{x}}
 \newcommand{\mbm}{\mathbf{m}}
@@ -96,35 +81,6 @@
 \definecolor{background}{HTML}{EEEEEE}
 \definecolor{delim}{RGB}{20,105,176}
 \colorlet{numb}{magenta!60!black}
-
-\lstdefinelanguage{json}{
-    basicstyle=\normalfont\ttfamily,
-    numbers=left,
-    numberstyle=\scriptsize,
-    stepnumber=1,
-    numbersep=8pt,
-    showstringspaces=false,
-    breaklines=true,
-    frame=lines,
-    backgroundcolor=\color{background},
-    literate=
-     *{0}{{{\color{numb}0}}}{1}
-      {1}{{{\color{numb}1}}}{1}
-      {2}{{{\color{numb}2}}}{1}
-      {3}{{{\color{numb}3}}}{1}
-      {4}{{{\color{numb}4}}}{1}
-      {5}{{{\color{numb}5}}}{1}
-      {6}{{{\color{numb}6}}}{1}
-      {7}{{{\color{numb}7}}}{1}
-      {8}{{{\color{numb}8}}}{1}
-      {9}{{{\color{numb}9}}}{1}
-      {:}{{{\color{punct}{:}}}}{1}
-      {,}{{{\color{punct}{,}}}}{1}
-      {\{}{{{\color{delim}{\{}}}}{1}
-      {\}}{{{\color{delim}{\}}}}}{1}
-      {[}{{{\color{delim}{[}}}}{1}
-      {]}{{{\color{delim}{]}}}}{1},
-}
 
 \title{Pool Model - A unified Mathematical\\ Modelling Framework for Food Science}
 \author[1]{Polina Gaindrik}
@@ -1376,68 +1332,6 @@ It is clear that the original model is recovered this way.
 To obtain the full equations, we additionally need to consider transition between states of lag-phase and growth phase not depicted here.
 The preceding equations all assume that cells are in growth phase.
 It is however straightforward, to set up these equations.
-%
-%
-% ................................................................................................
-\subsubsection{Code samples}
-The code samples show sample code from the simulation that calculate cellular interactions and cell cycle.
-Since backend of the simulation is written in Rust, so is the implementation of cellular aspects.
-Additionally, bindings are generated such that the full power of the simulation tool can be accessed.
-This significantly improves handling and development time of new models.
-\begin{listing}
-\begin{lstlisting}[language=rust]
-let z = ext_pos - own_pos;
-let r = z.norm();
-let sigma = r / (self.cell_radius + ext_radius);
-if sigma < 1.0 {
-    let q = 0.2;
-    let dir = z.normalize();
-    let modifier = (1.0 + q) / (q + sigma);
-    return self.potential_strength * dir * modifier;
-} else {
-    return Vector2::zero();
-}
-\end{lstlisting}
-\caption{
-    Sample code for calculation of interactions between two bacteria cells.
-}
-\label{listing:spatial-interaction-strength}
-\end{listing}
-%
-%
-\begin{listing}
-\begin{lstlisting}[language=rust]
-// Clone existing cell
-let mut c2 = c1.clone();
-
-let r = c1.interaction.cell_radius;
-
-// Make both cells smaller
-c1.interaction.cell_radius /= std::f64::consts::SQRT_2;
-c2.interaction.cell_radius /= std::f64::consts::SQRT_2;
-
-// Generate cellular splitting direction randomly
-let angle_1 = rng.gen_range(0.0..2.0 * std::f64::consts::PI);
-let dir_vec = nalgebra::Rotation2::new(angle_1) * Vector2::from([1.0, 0.0]);
-
-// Define new positions for cells
-// It is randomly chosen if the old cell is left or right
-let offset = dir_vec * r / std::f64::consts::SQRT_2;
-let old_pos = c1.pos();
-
-// Increase the remaining food in the bacteria by the fraction of volumes
-// from before and after the division. This exactly coincides with factor 2
-// since we half the volume of the cell
-c1.cellular_reactions.intracellular_concentrations[0] *= 2.0;
-c2.cellular_reactions.intracellular_concentrations[0] *= 2.0;
-
-c1.set_pos(&(old_pos + offset));
-c2.set_pos(&(old_pos - offset));
-\end{lstlisting}
-\caption{
-    Sample code for dividing one bacteria cell into two.
-}
-\end{listing}
 %
 %
 % ................................................................................................
