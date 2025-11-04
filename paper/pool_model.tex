@@ -420,9 +420,9 @@ Moreover, by including the flow of living bacteria to the death pool, we can mod
 %
 % ------------------------------------------------------------------------------------------------
 \subsection{Lag-time estimation}
-Note that the previously introduced model could be further simplified to a two pool or state model by omitting the pool $D$ and removing cells with rate $\beta$ directly from pool $L$.
+Note that the previously introduced model could be further simplified to a two pool or state model by omitting the pool $D$ and removing cells directly from pools $L$ and $G$.
 The relevant question here is whether cells in the pool $D$ still contribute to the limitation of the resources by, e.g., occupying space or consuming important nutrients.
-If yes, the three pool model would be advantageous, if not the two pool model is sufficient with the advantage of having one parameter less.\\
+If yes, the three pool model would be advantageous, if not the two pool model is sufficient with the benefit of having one parameter less.\\
 %
 % The dynamics of the three pool model can be captured by the coupled system of ordinary differential
 The dynamics of the three pool model is captured by equations~\ref{eq:ode_3pool_resource2} which can be used to derive the two pool model simply by omitting $D$.
@@ -436,14 +436,14 @@ Moreover, for $\mu'=0$ the equations for $L$ and $D$ can be readily integrated r
 \end{align}
 For constant parameters $\mu$ and $\lambda$ the integrals for $L$ and $D$ can be inserted into the differential equation for $G$.
 However, in the case of time dependent parameters, e.g., for a dependence on a non-static, dynamic temperature, it appears to be not advantageous to use the analytical results for $L$ and $D$ and work instead with all three equations for $L$, $G$, and $D$.
-It is interesting to see what type of equations result for the total bacterial population $N=L+G+D$:
+It is interesting to see what type of equations result for the total bacterial population $\mathcal{N}=L+G+D$:
 \begin{align}
     \begin{split}
-        \dot{G} &= \lambda L + \alpha G\left(1-\frac{N}{N_t}\right)\\
-        \dot{N} &= \alpha G\left(1-\frac{N}{N_t}\right)
+        \dot{G} &= \lambda L + \alpha G\left(1-\frac{\mathcal{N}}{N_t}\right)\\
+        \dot{\mathcal{N}} &= \alpha G\left(1-\frac{\mathcal{N}}{N_t}\right)
     \end{split}
 \end{align}
-with initial conditions $G(0)=0$ and $N(0)=N_0$.
+with initial conditions $G(0)=0$ and $\mathcal{N}(0)=N_0$.
 These equations have a clear interpretation, are derived from first principles, and are not identical to the popular Barayni-Roberts and modified-Gompertz models.
 A notable difference is that the growth rate $\alpha$ is time independent.
 For the functions $L$ and $D$ it holds: $\lim_{t\to\infty} L(t) = 0$ and  $\lim_{t\to\infty} D(t) =  N_0\frac{\mu}{\mu+\lambda} $.
