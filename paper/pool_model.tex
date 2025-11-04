@@ -1092,7 +1092,7 @@ The initial bacteria have been ordered on a grid such that only every diagonal n
         \node at (0.01, 0.99)[anchor=north west, white]{\textbf{D}};
     \end{tikzonimage}%
     \caption{
-        Simulation snapshots at $1.04$\unit{\day},$2.08$\unit{\day},$3.13$\unit{\day} and $4.17$\unit{\day} corresponding to the parameters given in table~table~\ref{tab:spatial_limit_init}.
+        Simulation snapshots at $1.04$\unit{\day},$2.08$\unit{\day},$3.13$\unit{\day} and $4.17$\unit{\day} corresponding to the parameters given in Table~\ref{tab:spatial_limit_init}.
         Species $B$ is colored blue while species $A$ is colored in red.
         The background shows the resource concentration $[R]$.
         Darker colors indicate that less nutrients are present.
@@ -1102,11 +1102,11 @@ The initial bacteria have been ordered on a grid such that only every diagonal n
 %
 %
 Figure~\ref{fig:spatial-growth-curve} shows multiple results for various configurations of the \ac{abm}, differing only in their initial spatial configuration and diffusivity.
-We see that in the highly-diffusive homogenous case of subfigure (\textbf{A}), the pool model is a good fit to the \ac{abm} model.
-Heterogeneity and slower diffusion cause larger differences between the two models as can be seen in subfigures (\textbf{B}) and \textbf{C}.
+We see that in the highly-diffusive homogenous case of subfigure (A), the pool model is a good fit to the \ac{abm} model.
+Heterogeneity and slower diffusion cause larger differences between the two models as can be seen in subfigures (B) and (C).
 The combination of the two effects shows the largest difference between model outputs.
-In subfigure \textbf{C}, due to the heterogeneous cell distribution (see Appendix~\ref{fig:supplement-spatial-initial-config-cells}), overall inhibition of species $B$ is significantly reduced.
-Subfigure (\textbf{D}) shows how a randomized homogenous initial distribution can lead to even more notable effects of inhibition.
+In subfigure (C), due to the heterogeneous cell distribution (see Appendix~\ref{fig:supplement-spatial-initial-config-cells}), overall inhibition of species $B$ is significantly reduced.
+Subfigure (D) shows how a randomized homogenous initial distribution can lead to even more notable effects of inhibition.
 In contrast to the other results, here the final values of species $A$ and $B$ have larger/smaller counts respectively.
 This illustrates that spatial effects can shift the final results of growth curves towards both directions, leading to an overall increase/decrease of one species.
 We furthermore note that the total bacteria volume of the \ac{abm} model is always smaller or equal compared to the \ac{ode} model.
@@ -1183,8 +1183,8 @@ Our approach produces results which exhibit similarities to other well-known pre
 The inclusion of additional metabolic processes or larger number of cell-species can be achieved by extending the list of possible states and defining transitions between them.
 As an example, the description of the quorum sensing phenomena can be modelled by adding the equation for the released autoinducer molecules as a part of the microenvironment.
 These molecules then affect the same-species bacteria growth controlling the size of the population.
-The described above approach provides a primary predictive model with transition rates between different pools as parameters.
-To include the influence of external factors, i.e., temperature, pH, pressure, etc., one can simply use the secondary models for the transition rates, e.g.,, the Ratkowsky model for temperature dependence~\citep{ratkowsky_relationship_1982}.\\
+The approach described above provides a primary predictive model with transition rates between different pools as parameters.
+To include the influence of external factors, i.e., temperature, pH, pressure, etc., one can simply use the secondary models for the transition rates, e.g., the Ratkowsky model for temperature dependence~\citep{ratkowsky_relationship_1982}.\\
 By constructing an \ac{abm}, we have exemplified how close the devised model is to the individual biological 
 processes that occur within the bacteria.
 This mechanistic single-cell level of understanding of our \ac{abm} is a perspective which can not be easily replicated by other spatial models such as \acp{pde}.
@@ -1207,7 +1207,7 @@ However, deviations to these assumptions can lead to non-negligible effects, inf
 %     \item Provide code in a pypi package as well (TODO)
 % \end{itemize}
 
-We introduced the pool model as a framework to unify existing approaches and allows researchers to follow a mechanistic approach during model development.
+We introduced the pool model as a framework to unify existing approaches and allow researchers to follow a mechanistic approach during model development.
 It is able to capture the effects of many established models and provides a lens which is useful to generalize existing systems and results in better overall explainability.
 By modeling effects such as mutual inhibition on a single-cell level within an \ac{abm}, we have exemplified that the pool model directly builds on these more fundamental concepts.
 It can thus aid in the mechanistic understanding of the underlying processes, allowing researchers to deepen their knowledge about microbial growth within food science.
