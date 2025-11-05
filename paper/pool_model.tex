@@ -976,28 +976,20 @@ We are thus able to derive the \ac{ode} pool model from its \ac{abm} version via
 By doing so, we find a mapping between parameters from the \ac{abm} to parameters used in the \ac{ode} description.
 The derived equations read
 \begin{align}
-<<<<<<< HEAD
     \dot{L}_A &= -\lambda L_A\frac{R}{R_0}\\
     \dot{L}_B &= -\lambda L_B\frac{R}{R_0}\\
     \dot{V}_A &= u\sigma R \frac{V_A}{V_D} + \lambda L_A\frac{R}{R_0}\\
     \dot{V}_B &= \frac{u}{1+\nu_I V_D^{-1} I} \sigma R \frac{V_B}{V_D} + \lambda L_B\frac{R}{R_0}\\
     \dot{R} &= - R \frac{V_A}{V_D} - \frac{u}{1+\nu_I V_D^{-1}I} \frac{1}{V_D} R V_B\\
-=======
-    \dot{L_A} &= -\lambda L_A\frac{R}{R_0}\\
-    \dot{L_B} &= -\lambda L_B\frac{R}{R_0}\\
-    \dot{V_A} &= u\sigma R \frac{V_A}{V_D} + \lambda L_A\frac{R}{R_0}\\
-    \dot{V_B} &= \frac{u}{1+\nu_I V_D^{-1} I} \sigma R \frac{V_B}{V_D} + \lambda L_B\frac{R}{R_0}\\
-    \dot{R} &= - u R \frac{V_A}{V_D} - \frac{u}{1+\nu_I V_D^{-1}I} \frac{1}{V_D} R V_B\\
->>>>>>> e83cdaa63bd845a72cd40759475fffbd002cf9aa
     \dot{I} &= b V_A
 \end{align}
 and the \ac{ode} equations are
 \begin{align}
     \dot{L}_A &= -\lambda_A R L_A\\
     \dot{L}_B &= -\lambda_B R L_B\\
-    \dot{G}_A &= \lambda_A R L_A + \alpha_A R G_A\\
-    \dot{G}_B &= \lambda_B R L_B + \frac{\alpha_B}{1 + \mu_I I} R G_B\\
-    \dot{R} &= -\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{(1 + \mu_I I) N_t} R G_B \\
+    \dot{G}_A &= \alpha_A R G_A + \lambda_A R L_A\\
+    \dot{G}_B &= \frac{\alpha_B}{1 + \mu_I I} R G_B + \lambda_B R L_B\\
+    \dot{R} &= -\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{(1 + \mu_I I) N_t} R G_B\\
     \dot{I} &= \kappa G_A
 \end{align}
 When comparing these equations, we can map them onto each other via the relations
