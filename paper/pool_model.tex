@@ -892,9 +892,9 @@ With these considerations, we can update equations~\eqref{eq:spatial-intracellul
         \dot{V_{c_B}} &= u \sigma [R]V_c\\
         \dot{V_{c_A}} &= \frac{u}{1+\nu_I [I]} \sigma [R]V_c\\
         % \dot{[R_e]} &= \sum\limits_c -\frac{u}{1+\nu_I [I]} \frac{V_c}{V_D} [R] \delta(x-x_c) + D_R\Delta [R]\\
-        \dot{[R]} &= u \sum\limits_{c_A}\frac{V_{c_A}}{V_D} [R_e] \delta(x-x_{c_A})\\
-            &-\frac{u}{1+\nu_I [I]} \sum\limits_{c_B}\frac{V_{c_B}}{V_D} [R_e] \delta(x-x_{c_B})\\
-            &+D_R \Delta [R_e]\\
+        \dot{[R]} &= u \sum\limits_{c_A}\frac{V_{c_A}}{V_D} [R] \delta(x-x_{c_A})\\
+            &-\frac{u}{1+\nu_I [I]} \sum\limits_{c_B}\frac{V_{c_B}}{V_D} [R] \delta(x-x_{c_B})\\
+            &+D_R \Delta [R]\\
         \dot{[I]} &= \sum\limits_c b\frac{V_c}{V_D}\delta(x-x_c) + D_I\Delta [I]
     \end{split}
     \label{eq:spatial-full-system-simplified}
@@ -974,13 +974,16 @@ The concatenation of many such stochastic processes on a population-based level 
 % ------------------------------------------------------------------------------------------------
 \subsection{Comparing \acs{abm} and \acs{ode} models}
 The \ac{abm} model should be considered to be more fundamental compared to the \ac{ode} description in the sense that it incorporates more biological aspects and maps them closer to the actual behaviour of the bacteria.
-We are thus able to derive the \ac{ode} pool model from its \ac{abm} version via a process of homogenization (see Appendix~\ref{subsec:supplement-abm-details}).
+We are thus able to derive the \ac{ode} pool model from its \ac{abm} version via a process of homogenization (see Appendix~\ref{sec:supplement-abm-derivation}).
 By doing so, we find a mapping between parameters from the \ac{abm} to parameters used in the \ac{ode} description.
 The derived equations read
 \begin{align}
-    \dot{R} &= -\frac{u}{1+\nu_I V_D^{-1}I} \frac{1}{V_D} R V\\
-    \dot{I} &= b V\\
-    \dot{V} &= \frac{u}{1+\nu_I V_D^{-1} I} \frac{1}{V_D}\sigma R V.
+    \dot{L_A} &= -\lambda L_A\frac{R}{R_0}\\
+    \dot{L_B} &= -\lambda L_B\frac{R}{R_0}\\
+    \dot{V_A} &= u\sigma R \frac{V_A}{V_D} + \lambda L_A\frac{R}{R_0}\\
+    \dot{V_B} &= \frac{u}{1+\nu_I V_D^{-1} I} \sigma R \frac{V_B}{V_D} + \lambda L_B\frac{R}{R_0}\\
+    \dot{R} &= - R \frac{V_A}{V_D} - \frac{u}{1+\nu_I V_D^{-1}I} \frac{1}{V_D} R V_B\\
+    \dot{I} &= b V_A
 \end{align}
 and the \ac{ode} equations are
 \begin{align}
@@ -991,40 +994,18 @@ and the \ac{ode} equations are
     \dot{R} &= -\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{(1 + \mu_I I) N_t} R G_B \\
     \dot{I} &= \kappa G_A
 \end{align}
-We compare the most general version and thus omit species $A$ for the moment.
-\begin{table*}
-    \centering
-    \renewcommand{\arraystretch}{1.5}
-    \begin{tabularx}{0.8\textwidth}{@{}l *3{>{\centering\arraybackslash}X}@{}}
-        & \textbf{\acs{ode}}
-        & \textbf{\acs{abm}}
-        & \textbf{Mappings}\\
-
-        \toprule
-
-        \multirow{2}{*}{Resource}
-        & \multirow{2}{*}{$\displaystyle \dot{R} = - \frac{\alpha}{(1 + \mu_I I) N_t} R G$}
-        & \multirow{2}{*}{$\displaystyle \dot{R} = -\frac{u}{1+\nu_I V_D^{-1}I} \frac{1}{V_D} R V$}
-        & $\displaystyle N_t = [R_0] V_D \sigma$\\
-
-        &&& $\displaystyle \mu_I = \frac{\nu_I}{V_D}$\\
-
-        Volume
-        & $\displaystyle \dot{G} = \frac{\alpha}{1 + \mu_I I} R G$
-        & $\displaystyle \dot{V} = \frac{u}{1+\nu_I V_D^{-1} I} \frac{1}{V_D}\sigma R V$
-        & $\displaystyle \alpha = u[R_0]\sigma$\\
-
-        Inhibitor
-        & $\displaystyle \dot{I} = \kappa G_A$
-        & $\displaystyle \dot{I} = b V$
-        & $\displaystyle \kappa = b$\\
-        \bottomrule
-    \end{tabularx}
-    \caption{Mappings between \ac{ode} and \ac{abm} parameters.}
-    \label{tab:mappings-ode-abm}
-\end{table*}
-We can use these mappings to numerically compare both approaches.
-Table~\ref{tab:spatial_limit_init} shows a comparison of parameters of two simulations for the \ac{ode} and \ac{abm} model which have been mapped onto each other.
+When comparing these equations, we can map them onto each other via the relations
+\begin{align}
+    \begin{split}
+        N_t &= [R_0]V_D\sigma\\
+        \mu_I &= \frac{\nu_I}{V_D}\\
+        \alpha &= u[R_0]\sigma\\
+        \kappa &= \sigma.
+    \end{split}
+    \label{eq:ode-abm-mappings}
+\end{align}
+Furthermore, we can use these mappings to numerically compare both approaches.
+Table~\ref{tab:spatial_limit_init} shows an example comparison of parameters of the \ac{ode} and \ac{abm} which have been mapped onto each other.
 Figure~\ref{fig:spatial-snapshots} shows snapshots of a numerical simulation of the described system.
 The initial bacteria have been ordered on a grid such that only every diagonal neighbor is of the same species, thus resulting in a more homogenous initial distribution.
 %
@@ -1068,31 +1049,31 @@ This illustrates that spatial effects can shift the final results of growth curv
 We furthermore note that the total bacteria volume of the \ac{abm} model is always smaller or equal compared to the \ac{ode} model.
 This is expected, since processes such as diffusion and cells growing outward introduce another time component which is simply assumed to be instantaneous in the \ac{ode} model.
 The chosen diffusion constants $D_I=D_R=30.0$\unit{\micro\metre\squared\per\minute} are in the order of small molecules such as $NaCl$ while the lower values $D_I=D_R=5.0$\unit{\micro\metre\squared\per\minute} are around values of Glucose in water.
-\begin{figure}
+\begin{figure*}
     \centering
-    \begin{tikzonimage}[width=0.5\columnwidth]
+    \begin{tikzonimage}[width=\columnwidth]
         {Figures-abm-homogenous-abm_ode_comparison.png}
         \node at (0, 1)[anchor=north west]{\textbf{A}};
     \end{tikzonimage}%
-    \begin{tikzonimage}[width=0.5\columnwidth]
+    \begin{tikzonimage}[width=\columnwidth]
         {Figures-abm-homogenous-low-diffusion-abm_ode_comparison.png}
         \node at (0, 1)[anchor=north west]{\textbf{B}};
     \end{tikzonimage}\\
-    \begin{tikzonimage}[width=0.5\columnwidth]
+    \begin{tikzonimage}[width=\columnwidth]
         {Figures-abm-inhomogenous-abm_ode_comparison.png}
         \node at (0, 1)[anchor=north west]{\textbf{C}};
     \end{tikzonimage}%
-    \begin{tikzonimage}[width=0.5\columnwidth]
+    \begin{tikzonimage}[width=\columnwidth]
         {Figures-abm-random-abm_ode_comparison.png}
         \node at (0, 1)[anchor=north west]{\textbf{D}};
-    \end{tikzonimage}%
+    \end{tikzonimage}
     \caption{
         (A-D) Comparison of the \ac{ode} and \ac{abm} model for different configurations, showing homogenous, heterogeneous or randomized initial configurations.
         The diffusion constants are chosen such that $D_R=D_I=D$.
         Snapshots of the spatial configurations of cells are included in the Appendix~\ref{fig:supplement-spatial-initial-config-cells}.
     }
     \label{fig:spatial-growth-curve}
-\end{figure}
+\end{figure*}
 These results show how variations in properties that can not be described by simple \ac{ode} models can lead to large deviations in the growth curves of the species.
 Furthermore, it was shown that the utilized pool model can be derived from first principles by performing a homogenization of the mechanistic bacterial properties.
 %
@@ -1183,9 +1164,8 @@ The data and simulation code which are presented in this study are publicly avai
 % ================================================================================================
 \newpage
 \beginsupplement
-\section{Appendix}
 % ================================================================================================
-\subsection{General mathematical formalism}
+\section{General mathematical formalism}
 \label{ssec:supplement1}
 Consider the system consisting of $N$ species in $M$ different states.
 In the general representation, all discussed in the main part systems  can be described with the Ordinary Differential Equations (\acp{ode}) using a non-linear function $\mbF$:
@@ -1278,67 +1258,93 @@ The simpler version of one state per species (equation~\ref{eq:LV_simple}) can b
     \frac{d x_i}{d t} = x_i f_i (\mbx), \hspace{3mm} \mathbf{f} = \mathbf{r} + A \mbx.
 \label{eq:gLV}
 \end{equation}
-
-
-\subsection{\acs{abm} details}
-\label{subsec:supplement-abm-details}
-
-\subsubsection*{Deriving the pool model}
+%
+%
+\vfill
+\pagebreak
+\section{Deriving the pool model}
+\label{sec:supplement-abm-derivation}
+\paragraph{Reactions}
 Since the \ac{abm} can be considered more fundamental than the \ac{ode} model, we should be able to derive the latter one from the former.
 This can be achieved by starting with equations~\eqref{eq:spatial-full-system-simplified}.
 We integrate the spatial equations over the total domain starting with the resource concentration $[R]$.
-\begin{alignat}{7}
-    \int\limits_D\dot{[R]}\text{dVol} 
-    &= \int\limits_D\bigg[&&\sum\limits_c &&-\frac{u}{1+\nu_I [I]} \frac{V_c}{V_D} [R] \delta(x-x_c) &&+ D_R\Delta [R]\bigg]\text{dVol}\\
-    &= \int\limits_D\bigg[&&\sum\limits_c &&-\frac{u}{1+\nu_I [I]} \frac{V_c}{V_D} [R] \delta(x-x_c)\bigg]\text{dVol} &&+ \int\limits_D D_R\Delta [R]\text{dVol}\\
-    &= \int\limits_D\bigg[&&\sum\limits_c &&-\frac{u}{1+\nu_I [I]} \frac{V_c}{V_D} [R] \delta(x-x_c)\bigg]\text{dVol} &&+ \int\limits_{\partial D} D_R\vec{\nabla} [R]\vec{\text{dA}}\\
-    &= &&\sum\limits_c &&-\frac{u}{1+\nu_I [I]} V_c \int\limits_D \frac{1}{V_D} [R] \delta(x-x_c)\text{dVol}\\
-    &= &&\sum\limits_c &&-\frac{u}{1+\nu_I [I]} V_c [R]_{x=x_c}\\
-    &= &&\sum\limits_c &&-\frac{u}{1+\nu_I [I]} V_c [R]\\
-    &= &&&&-\frac{u}{1+\nu_I [I]V_D V_D^{-1}} V [R]\frac{V_D}{V_D}\\
-    \dot{R} &= &&&&-\frac{u}{1+\nu_I V_D^{-1}I} \frac{1}{V_D} R V\\
+\begin{alignat}{8}
+    \int\limits_D\dot{[R]}\text{dVol}
+    &= \int\limits_D\bigg[&-&u \sum\limits_{c_A}\frac{V_{c_A}}{V_D} [R] \delta(x-x_{c_A})
+        &-&\frac{u}{1+\nu_I [I]} \sum\limits_{c_B}\frac{V_{c_B}}{V_D} [R] \delta(x-x_{c_B})
+        +D_R \Delta [R]\bigg]\text{dVol}\\
+    &= &-&u\sum\limits_{c_A}V_{c_A}\int\limits_D [R] \frac{\delta(x-x_{c_A})}{V_D} \text{dVol}
+        &-&\frac{u}{1+\nu_I [I]} \sum\limits_{c_B}V_{c_B} \int\limits_D [R] \frac{\delta(x-x_{c_B})}{V_D}\text{dVol}
+        +D_R \int\limits_{\partial D} \nabla[R]\text{dVol}\\
+    &= &-&u\sum\limits_{c_A} V_{c_A} [R]_{x=x_{c_A}}
+        &-& \frac{u}{1+\nu_I [I]} \sum\limits_{c_B} V_{c_B} [R]_{x=x_{c_B}}\\
+    &= &-&u\sum\limits_{c_A} V_{c_A} [R]
+        &-& \frac{u}{1+\nu_I [I]} \sum\limits_{c_B} V_{c_B} [R]\\
+    &= &-&uV_A [R] &-&\frac{u}{1+\nu_I[I]} V_B [R]\\
+    &= &-&u \frac{V_A}{V_D}R &-&\frac{u}{1+\nu_I V_D^{-1} I} \frac{V_B}{V_D}R
 \end{alignat}
-We can split up the integral into two parts.
-The second part can then be transformed into an integral over the flux of the resource along the boundary.
+We can split up the integral into three parts.
+The last part can then be transformed into an integral over the flux of the resource along the boundary.
 Since we chose Neumann boundary conditions, this contribution vanishes identically.
-Afterwards, the first part can be evaluated by using the delta-distribution.
-Note that we additionally need to consume a $V_D^{-1}$ term since our volume is finite.
+Afterwards, the remaining parts can be evaluated by using the delta-distribution.
+Note that we additionally need to consume a factor of $V_D^{-1}$ which is the inverse of the domain
+volume when evaluating the delta function.
 We evaluate the resource concentration $[R]$ at the position of the individual cells and sum over all contributions.
-Now we assume homogeneity in the sense, that we can reduce $[R]$ to only a single variable instead of considering its spatial distribution.
+Now we assume homogeneity in the sense, that we can reduce $[R]$ to only a variable with time-dependence, with homogeneous spatial distribution.
 This means that every contribution does not depend on the position at which it was evaluated, i.e., $[R]_{x=x_c}=[R]$.
-Finally, we can perform the sum to gain the total volume of all cells $V=\sum\limits_c V_c$.
-\begin{alignat}{7}
-    \int\limits_D\dot{[I]} &= \int\limits_D \bigg[&&\sum\limits_c b\frac{V_c}{V_D}&&\delta(x-x_c) &&+ D_I\Delta [I]\bigg]\text{dVol}\\
-    &= \int\limits_D&&\sum\limits_c b\frac{V_c}{V_D}&&\delta(x-x_c) \text{dVol} &&+ \int\limits_D D_I\Delta [I]\text{dVol}\\
-    &= \int\limits_D&&\sum\limits_c b\frac{V_c}{V_D}&&\delta(x-x_c) \text{dVol} &&+ \int\limits_{\partial D} D_I\nabla [I]\vec{\text{dA}}\\
-    &= &&\sum\limits_c b V_c\int\limits_D \frac{1}{V_D} &&\delta(x-x_c) \text{dVol}\\
-    \dot{I} &= b V
-\end{alignat}
+Finally, we can perform the sum to gain the total volume of all cells $V_{A/B}=\sum\limits_c V_{c_{A/B}}$.
 Following the same principle as before, we can integrate the inhibitor equation.
-For the equation describing the growth of the cell volume, we simply add up all cells to obtain the total volume of all cells.
-\begin{alignat}{3}
-    \sum\limits_c\dot{V_c}
-    &= \sum\limits_c&&\frac{u}{1+\nu_I [I]} \sigma [R]V_c\\
-    &= &&\frac{u}{1+\nu_I [I]} \sigma [R]V\\
-    \dot{V} &= &&\frac{u}{1+\nu_I V_D^{-1} I} \frac{1}{V_D}\sigma R V
+\begin{alignat}{7}
+    \int\limits_D\dot{[I]} &= \int\limits_D \bigg[&&\sum\limits_{c_A} b\frac{V_{c_A}}{V_D}&&\delta(x-x_{c_A}) &&+ D_I\Delta [I]\bigg]\text{dVol}\\
+    &= \int\limits_D&&\sum\limits_{c_A} b\frac{V_{c_A}}{V_D}&&\delta(x-x_{c_A}) \text{dVol} &&+ \int\limits_D D_I\Delta [I]\text{dVol}\\
+    &= \int\limits_D&&\sum\limits_{c_A} b\frac{V_{c_A}}{V_D}&&\delta(x-x_{c_A}) \text{dVol} &&+ \int\limits_{\partial D} D_I\nabla [I]\vec{\text{dA}}\\
+    &= &&\sum\limits_{c_A} b V_{c_A}\int\limits_D \frac{1}{V_D} &&\delta(x-x_{c_A}) \text{dVol}
 \end{alignat}
+%
+\paragraph{Lag-Phase}
+Cells are initially assumed to be in a lag-phase which they leave with probability $P(\text{transition})$.
+Dividing this probability by the time increment $\Delta t$, gives us the rate at which the transition is occuring.
+This expression can be transfered to a collective rate of change by multiplying with the volume of cells in lag-phase $L_{A/B}$.
+\begin{align}
+    P(\text{transition}) &= \Delta t \lambda \frac{[R]}{[R_0]}\\
+    \frac{1}{\Delta t}P(\text{transition}) &= \lambda \frac{[R]}{[R_0]}\\
+    \frac{L_{A/B}}{\Delta t}P(\text{transition}) &= \lambda L_{A/B}\frac{R}{R_0}\\
+    \partial_t L_{A/B} &= -\lambda L_{A/B}\frac{R}{R_0}
+\end{align}
+In the last step, we take the expectation value and equate it with the negative of its derivative $\partial_t L_{A/B}$.
+%
+%
+\paragraph{Growth}
+For the equation describing the growth of the cell volume, we simply add up cells for the respective species to obtain their total volume.
+\begin{alignat}{5}
+    \sum\limits_{c_A}\dot{V_{c_A}}
+    &= &\sum\limits_{c_A} u& \sigma [R]V_{c_A} + \lambda L_A\frac{R}{R_0} &= &&\sigma [R]V_A + \lambda L_A\frac{R}{R_0}\\
+    \sum\limits_{c_B}\dot{V_{c_B}}
+    &= &\frac{u}{1+\nu_I [I]} &\sigma [R]V_B + \lambda L_B\frac{R}{R_0} &= &\sum\limits_{c_B} \frac{u}{1+\nu_I [I]} &\sigma [R]V_{c_B} + \lambda L_B\frac{R}{R_0}
+\end{alignat}
+In addition, we can reformulate $\tilde{\sigma}=\sigma/V_D$ thus redefining the conversion rate $\sigma$ in terms of the total volume $V_D$.
 We can thus summarize the equations obtained
 \begin{align}
-    \dot{R} &= -\frac{u}{1+\nu_I V_D^{-1}I} \frac{1}{V_D} R V\\
-    \dot{I} &= b V\\
-    \dot{V} &= \frac{u}{1+\nu_I V_D^{-1} I} \frac{1}{V_D}\sigma R V.
+    \dot{L_A} &= -\lambda L_A\frac{R}{R_0}\\
+    \dot{L_B} &= -\lambda L_B\frac{R}{R_0}\\
+    \dot{V_A} &= u\sigma R \frac{V_A}{V_D} + \lambda L_A\frac{R}{R_0}\\
+    \dot{V_B} &= \frac{u}{1+\nu_I V_D^{-1} I} \sigma R \frac{V_B}{V_D} + \lambda L_B\frac{R}{R_0}\\
+    \dot{R} &= - R \frac{V_A}{V_D} - \frac{u}{1+\nu_I V_D^{-1}I} \frac{1}{V_D} R V_B\\
+    \dot{I} &= b V_A
 \end{align}
-It is clear that the original model is recovered this way.
-To obtain the full equations, we additionally need to consider transition between states of lag-phase and growth phase not depicted here.
-The preceding equations all assume that cells are in growth phase.
-It is however straightforward, to set up these equations.
+In this way, we are able to recover the \ac{ode} model.
 %
 %
 % ................................................................................................
-\subsubsection{Full list of parameters}
-\label{sec:supplement-full-parameters}
-
-\begin{table}
+\vfill
+\pagebreak
+\section{Full list of parameters}
+We utilize the calculate mappings (see equations~\eqref{eq:ode-abm-mappings}) between the \ac{ode} formulation and \ac{abm} to compare values for parameters which serve a similar purpose within the two simulations.
+Table~\ref{tab:spatial_limit_init} lists these parameters together with their values.
+Most parameters have clear $1:1$ mappings to ones within the other model.
+However, some such as the ones related to spatial dynamics (damping $\eta$, mass $m$, potential
+strength $\epsilon$, diffusion $D_R,D_I$) do not.
+\begin{table}[H]
     \centering
     \begin{tabularx}{\textwidth}{@{}l *2{>{\centering\arraybackslash}X} l *2{>{\centering\arraybackslash}X}@{}}
         \multicolumn{3}{c}{\textbf{\acs{ode}}} & \multicolumn{3}{c}{\textbf{\acs{abm}}}\\
@@ -1405,11 +1411,13 @@ It is however straightforward, to set up these equations.
 \end{table}
 %
 % ................................................................................................
-\subsubsection{Homogeneous and inhomogeneous initial cell distributions}
+\vfill
+\pagebreak
+\section{Homogeneous and inhomogeneous initial cell distributions}
 To clarify what we mean by homogeneous and inhomogeneous initial configurations, we include snapshots of the simulation.
 At this point, cells have already grown such that the sizes of cell-clumps are better visible by the naked eye.
 The snapshots were taken after $2.08$\unit{\day}.
-\begin{figure}
+\begin{figure}[H]
     \centering
     \begin{subfigure}[c]{0.5\textwidth}
         \includegraphics[width=\textwidth]{Figures-abm-homogenous-images-snapshot_00012000.png}
