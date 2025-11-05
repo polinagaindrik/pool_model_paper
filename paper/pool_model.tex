@@ -82,7 +82,7 @@
 \definecolor{delim}{RGB}{20,105,176}
 \colorlet{numb}{magenta!60!black}
 
-\title{Pool Model - A unified Mathematical\\ Modelling Framework for Food Science}
+\title{Pool Model - A unified Mathematical\\ Modeling Framework for Food Science}
 \author[1]{Polina Gaindrik}
 \author[1]{Jonas Pleyer\fnref{fn1}}
 \author[1]{Christian Fleck\corref{cor1}}
@@ -118,7 +118,7 @@
     are reported.
     Finally, to explore the limitations of the \ac{ode} formulation, we analyze the influence of spatial effects.
     For this, we construct an \ac{abm} for a two-species system, showcasing that the resulting pool model
-    arises naturally from the individual behaviour of many cellular agents.
+    arises naturally from the individual behavior of many cellular agents.
     We further apply this \ac{abm} to study the role of properties such as diffusion and spatial heterogeneity
     on the dynamics of bacterial growth.
 \end{abstract}
@@ -207,7 +207,7 @@ biofilm formation which play an important role for many mature microbial communi
 % Secondary models:
 % \begin{itemize}
 %     \item Polynomial models 
-%     \item Square Root-Type Models, e.g.,, Ratkowski for temperature~\citep{ratkowsky_relationship_1982}
+%     \item Square Root-Type Models, e.g., Ratkowski for temperature~\citep{ratkowsky_relationship_1982}
 %     \item The Cardinal Parameter Model~\citep{zwietering_decision_1992}
 % \end{itemize}
 
@@ -244,7 +244,7 @@ modeling formulations such as \acp{pde} or \acp{abm}.
 The former represent an intermediate step between the population-based \ac{ode} models and the
 individually-based \acp{abm} and can be effective, especially when dealing with large crowds of
 cells that can be approximated as a continuum.
-On the other hand, \acp{abm} excel at describing the individual behaviour of cells which can then
+On the other hand, \acp{abm} excel at describing the individual behavior of cells which can then
 lead to more complex collective phenomena.
 Tools such as BSim~\citep{Gorochowski2012,Dang2020}, AgentCell~\cite{emonet_agentcell_2005}, BacSim~\cite{kreft_bacsim_1998} or \texttt{cellular\_raza}~\cite{Pleyer2025} are
 capable to describe large amounts of bacteria, performing various intracellular and extracellular
@@ -313,7 +313,7 @@ with the initial conditions $L(0)=N_0$, $G(0)=0$, and $D(0)=0$, where $N_0$ is t
 Based on experimental observations, it was shown that the bacterial growth is strongly influenced by the limiting resource.
 According to the works of \citet{monod_growth_1949} in the system where all needed nutrients are in excess except for one, the total growth is linear to the concentration of this limiting nutrient resource.
 The control of the population density with respect to the available nutrition by means of cell communication is called quorum sensing.
-By releasing extracellular signalling molecules (autoinducer molecules) it is possible for the bacteria to synchronize the gene expression of the whole group~\citep{ng_bacterial_2009}.
+By releasing extracellular signalling molecules (autoinducers) it is possible for the bacteria to synchronize the gene expression of the whole group~\citep{ng_bacterial_2009}.
 Instead of modeling complex signalling networks, we choose a simpler approach to describe the dependence of growth on the nutrient availability.
 We include a resource pool which is consumed by the growing bacteria using the second order kinetic reaction:
 \begin{equation}
@@ -321,9 +321,9 @@ We include a resource pool which is consumed by the growing bacteria using the s
 \end{equation}
 allowing us to keep a minimal number of parameters.
 Note that the pools $L$, $G$ and $D$ represent the number of bacteria (or number of bacteria per unit area/volume) while $R$ represents an abstract resource pool.
-Let's say $G=N_B/V$ and $[G]=1/V$, where $N_B$ is the number of bacteria and $V$ is the volume.
-Then $R=N_R/V$ and $[R]=1/V$, where $N_R$ is the number of resource molecules (or any appropriate unit, e.g., mol).
-Then $[\alpha_0]=V/s$, $[N_t]=1/V$, and $[\alpha]=1/s$.
+Let's say $G=N_B/V$ and $[G]=\unit{1/V}$, where $N_B$ is the number of bacteria and $V$ is the volume.
+Then $R=N_R/V$ and $[R]=\unit{1/V}$, where $N_R$ is the number of resource molecules (or any appropriate unit, e.g., \unit{mol}).
+Then $[\alpha_0]=\unit{V/s}$, $[N_t]=\unit{1/V}$, and $[\alpha]= \unit{1/s}$.
 $N_t$ denotes the maximal size of the total bacterial population due to environmental limitations (Figure \ref{fig:3pool_resource_plots}).
 For homogenous densities it is equivalent to consider the total amount, i.e., multiplying $L$ and $G$ by the volume.
 In this case $[L]=[G]=[N_t]=1$.
@@ -420,7 +420,7 @@ The lag time $t_L$ diverges very slowly, logarithmically with $\lambda\to 0$.
 \subsection{Back flow from growth to lag pool}
 Bacteria which have lived under rather unfavorable conditions have developed different surviving mechanisms, one of which is adapting their metabolism and transitioning into dormant state.
 Dormancy in bacteria is a reversible state where cell continue living with low metabolic activity while the cell division stops~\citep{kaprelyants_dormancy_1993}.
-This survival strategy can appear in response to different external stresses, e.g.,, nutrient deficiency, temperature stress or extreme fluctuations of environment parameters.
+This survival strategy can appear in response to different external stresses, e.g., nutrient deficiency, temperature stress or extreme fluctuations of environment parameters.
 And after "difficult times" bacteria can continue cell division~\citep{kell_viability_1998}.
 Multiple models which include transitions of bacteria to the dormant state were proposed by \citet{bar_modelling_2002} and \citet{jones_dormancy_2010}.
 %
@@ -472,7 +472,6 @@ The ordinary differential equations for the pool model with back-flow then read:
 \end{align}
 \begin{figure}[t]
     \begin{center}
-    %\includegraphics[width=0.9\columnwidth]{Figures-pool_model_3pools_resource_tempshift.pdf}
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_3pools_resource_tempshift1.pdf}\\
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_3pools_resource_tempshift2.pdf}
     \caption{
@@ -605,7 +604,6 @@ The difference in the solutions of the given \acp{ode} between the two toxin pro
 %
 \begin{figure}
     \begin{center}
-    %\includegraphics[width=\columnwidth]{Figures-pool_model_2pools_toxin.pdf}
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2pools_toxin1.pdf}\\
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2pools_toxin2.pdf}
     \caption{
@@ -630,7 +628,7 @@ To see this we note $\dot{T}_B^2=\kappa(\dot{L_B}+\dot{G_B})$, which yields: $T_
 %
 % ................................................................................................
 \subsubsection{Mutual inhibition}
-Another special case of inter-species competition is when the produced toxin does not cause the death of the bacteria but rather inhibit their growth.
+Another special case of interspecies competition is when the produced toxin does not cause the death of the bacteria but rather inhibit their growth.
 Such a situation with 2 bacteria species, a shared resource and produced inhibitor was modeled by \citet{lenski_coexistence_1986}.
 The same effect can be modeled by utilizing our pool-based approach.
 In our case, we would like to look at a rather simplified case reducing the number of variables in the system.
@@ -770,7 +768,7 @@ collective (bulk) model to an individual-based (single-cell) description.
 Our goal is to provide an \ac{abm} which can be used to derive the given \ac{ode} model as a
 coarse-grained case.
 In this way, we can show that the bulk-based \ac{ode} model is directly related to the mechanistic
-single-cell behaviour of the bacteria.
+single-cell behavior of the bacteria.
 To this end, we consider the system consisting of two bacterial species that can be described by the two internal states: lag phase and growth.
 Both of these species grow using the same resource pool $R$ but with different growth constants
 $\alpha_{A/B}$ and different lag phase transition rates $\lambda_{A/B}$.
@@ -782,7 +780,7 @@ The \acp{ode} system of the bacterial population can be written as:
 %
 %
 % - \citep{emonet_agentcell_2005, gorochowski_bsim_2012, li_nufeb_2019, kreft_bacsim_1998}: examples of another toolboxes for bacterial communities modeling (ABM).\\
-% More about the modelling of the motile bacteria can be seen in works:~\citep{decoene_microscopic_2011, rosser_modelling_2014, sokolov_physical_2012, li_amplified_2008}.
+% More about the modeling of the motile bacteria can be seen in works:~\citep{decoene_microscopic_2011, rosser_modelling_2014, sokolov_physical_2012, li_amplified_2008}.
 %
 %
 % In general, bacterial communities in 2D can experience collective motion called swarming~\citep{wu_collective_2015}.
@@ -815,10 +813,10 @@ The \acp{ode} system of the bacterial population can be written as:
 %
 \begin{align}
     \begin{split}
-        \dot{L_A} &= -\lambda_A R L_A\\
-        \dot{G_A} &= \lambda_A R L_A + \alpha_A R G_A\\
-        \dot{L_B} &= -\lambda_B R L_B\\
-        \dot{G_B} &= \lambda_B R L_B + \frac{\alpha_B}{1 + \mu_I I} R G_B.
+        \dot{L}_A &= -\lambda_A R L_A\\
+        \dot{G}_A &= \lambda_A R L_A + \alpha_A R G_A\\
+        \dot{L}_B &= -\lambda_B R L_B\\
+        \dot{G}_B &= \lambda_B R L_B + \frac{\alpha_B}{1 + \mu_I I} R G_B.
     \end{split}
     \label{eq:spatial_limit_F}
 \end{align}
@@ -838,8 +836,7 @@ The following sections will demonstrate how a given \ac{ode} system can be trans
 custom-built \ac{abm} which has only a few more overall parameters.
 This procedure is a blueprint which can be followed to construct \acp{abm} for similar
 \ac{ode}-based systems.\\
-To construct our \ac{abm}, we use the modeling framework \texttt{cellular\_raza}~\citep{Pleyer2025}.
- allows us to define our bacterial agents from a clean slate.
+To construct our \ac{abm}, we use the modeling framework \texttt{cellular\_raza}~\citep{Pleyer2025} that allows us to define our bacterial agents from a clean slate.
 With this flexibility, researchers are able to construct minimal models using only as many parameters which are necessary.
 This ability, to precisely define and control the exact behavior of our cell-agents, enables the following parts.
 
@@ -848,7 +845,7 @@ To construct an \ac{abm} which resembles the given \ac{ode} system of equations~
 We denote cells of species $A,B$ with $c_{A/B}$ respectively and indicate shared behavior by simply using $c$.
 Cells $c_A$ of species $A$ take up extracellular resources $[R_e]$ into the cell $[R_{i,c_A}]$ with rate $u$ in \unit{\per\minute}.
 The uptake only occurs at the position of the cell $x_{c_A}$.
-Furthermore, we let cells of species $A$ produce a freely diffusable inhibitor $I$ with production rate $b$ and diffusion constant $D_I$ which inhibits cells of species $B$ in their uptake of nutrients.
+Furthermore, we let cells of species $A$ produce a freely diffusible inhibitor $I$ with production rate $b$ and diffusion constant $D_I$ which inhibits cells of species $B$ in their uptake of nutrients.
 \begin{equation}
     \dot{[I]} = b\frac{V_{c_A}}{V_D}\delta(x-x_{c_A}) + D_I \Delta [I]
 \end{equation}
@@ -879,7 +876,7 @@ Therefore, we need to specify how many resource molecules are turned into volume
 The total amount of resource molecules present inside the cell is given by the current concentration multiplied by the cell-volume $V_c [R_{i,c}]$.
 With a rate $a$ and conversion $\sigma$, the cell turns these resource molecules into volume.
 \begin{equation}
-    \dot{V_c} = a\sigma [R_{i,c}] V_c
+    \dot{V}_c = a\sigma [R_{i,c}] V_c
 \end{equation}
 In order to simplify this system, we can assume that the internal resources are constantly being depleted by the growth and the limiting process is the uptake of the resource.
 This means, we can effectively set $\dot{[R_{i,c}]}=0$.
@@ -889,8 +886,8 @@ With these considerations, we can update equations~\eqref{eq:spatial-intracellul
 \begin{align}
     \begin{split}
         % TODO format these equations
-        \dot{V_{c_B}} &= u \sigma [R]V_c\\
-        \dot{V_{c_A}} &= \frac{u}{1+\nu_I [I]} \sigma [R]V_c\\
+        \dot{V}_{c_B} &= u \sigma [R]V_c\\
+        \dot{V}_{c_A} &= \frac{u}{1+\nu_I [I]} \sigma [R]V_c\\
         % \dot{[R_e]} &= \sum\limits_c -\frac{u}{1+\nu_I [I]} \frac{V_c}{V_D} [R] \delta(x-x_c) + D_R\Delta [R]\\
         \dot{[R]} &= u \sum\limits_{c_A}\frac{V_{c_A}}{V_D} [R] \delta(x-x_{c_A})\\
             &-\frac{u}{1+\nu_I [I]} \sum\limits_{c_B}\frac{V_{c_B}}{V_D} [R] \delta(x-x_{c_B})\\
@@ -910,16 +907,16 @@ They can be represented by their position $x_c$ and radius $r_c$ which is relate
 As the coupled reactions from equations~\eqref{eq:spatial-full-system-simplified} change $V_c$, we also automatically adapt the cell radius accordingly.
 % Notice however, that how the radius is updated does not correspond to the cellular reactions defined previously but is a purely mechanical consideration.
 The dimensionality of the problem does not find its way into the cellular reactions but only manifests itself in these mechanical considerations.
-The dynamics are described by newtondian motions for particle damping.
+The dynamics are described by Newton's law of motion for particle damping.
 \begin{equation}
-    m \ddot{\vec{x}} = -\eta\dot{\vec{x}} + \vec{F}.
+    m \ddot{\mathbf{x}} = -\eta\dot{\mathbf{x}} + \mathbf{F}.
 \end{equation}
 Cells are interacting via a point-like interaction potential.
 We can calculate the interaction strength via
 \begin{alignat}{3}
-    \vec{z} &= \vec{x_1} - \vec{x_2} \hspace{2em}&& r = ||\vec{z}||\\
+    \mathbf{z} &= \mathbf{x_1} - \mathbf{x_2} \hspace{2em}&& r = ||\mathbf{z}||\\
     \sigma &= \frac{r}{r_1+r_2} && q=0.2\\
-    \vec{F} &= \epsilon \frac{1+q}{q+\sigma} \theta(\sigma - 1) \frac{1}{r}\vec{z}
+    \mathbf{F} &= \epsilon \frac{1+q}{q+\sigma} \theta(\sigma - 1) \frac{1}{r}\mathbf{z}
 \end{alignat}
 We assume that the cells are not sticky and consider only a repulsive interaction potential, leaving out any possible attractive forces~\citep{Garrett2008}.
 These mechanisms will result in the overall expansion of the colony as individual cells push each other further apart.
@@ -968,29 +965,29 @@ For each time point of the simulation, we generate a boolean value from a random
     P(\text{transition}) = \Delta t \lambda \frac{[R]}{[R_0]}.
 \end{equation}
 If this boolean is true, we move the cell from the inactive state to the active state where it starts to consume nutrients and grow.
-The concatenation of many such stochastic processes on a population-based level converges identically to the lag-phase behaviour of the \ac{ode} model.
+The concatenation of many such stochastic processes on a population-based level converges identically to the lag-phase behavior of the \ac{ode} model.
 %
 %
 % ------------------------------------------------------------------------------------------------
 \subsection{Comparing \acs{abm} and \acs{ode} models}
-The \ac{abm} model should be considered to be more fundamental compared to the \ac{ode} description in the sense that it incorporates more biological aspects and maps them closer to the actual behaviour of the bacteria.
+The \ac{abm} model should be considered to be more fundamental compared to the \ac{ode} description in the sense that it incorporates more biological aspects and maps them closer to the actual behavior of the bacteria.
 We are thus able to derive the \ac{ode} pool model from its \ac{abm} version via a process of homogenization (see Appendix~\ref{sec:supplement-abm-derivation}).
 By doing so, we find a mapping between parameters from the \ac{abm} to parameters used in the \ac{ode} description.
 The derived equations read
 \begin{align}
-    \dot{L_A} &= -\lambda L_A\frac{R}{R_0}\\
-    \dot{L_B} &= -\lambda L_B\frac{R}{R_0}\\
-    \dot{V_A} &= u\sigma R \frac{V_A}{V_D} + \lambda L_A\frac{R}{R_0}\\
-    \dot{V_B} &= \frac{u}{1+\nu_I V_D^{-1} I} \sigma R \frac{V_B}{V_D} + \lambda L_B\frac{R}{R_0}\\
+    \dot{L}_A &= -\lambda L_A\frac{R}{R_0}\\
+    \dot{L}_B &= -\lambda L_B\frac{R}{R_0}\\
+    \dot{V}_A &= u\sigma R \frac{V_A}{V_D} + \lambda L_A\frac{R}{R_0}\\
+    \dot{V}_B &= \frac{u}{1+\nu_I V_D^{-1} I} \sigma R \frac{V_B}{V_D} + \lambda L_B\frac{R}{R_0}\\
     \dot{R} &= - R \frac{V_A}{V_D} - \frac{u}{1+\nu_I V_D^{-1}I} \frac{1}{V_D} R V_B\\
     \dot{I} &= b V_A
 \end{align}
 and the \ac{ode} equations are
 \begin{align}
-    \dot{L_A} &= -\lambda_A R L_A\\
-    \dot{G_A} &= \lambda_A R L_A + \alpha_A R G_A\\
-    \dot{L_B} &= -\lambda_B R L_B\\
-    \dot{G_B} &= \lambda_B R L_B + \frac{\alpha_B}{1 + \mu_I I} R G_B\\
+    \dot{L}_A &= -\lambda_A R L_A\\
+    \dot{L}_B &= -\lambda_B R L_B\\
+    \dot{G}_A &= \lambda_A R L_A + \alpha_A R G_A\\
+    \dot{G}_B &= \lambda_B R L_B + \frac{\alpha_B}{1 + \mu_I I} R G_B\\
     \dot{R} &= -\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{(1 + \mu_I I) N_t} R G_B \\
     \dot{I} &= \kappa G_A
 \end{align}
@@ -1029,7 +1026,7 @@ The initial bacteria have been ordered on a grid such that only every diagonal n
         \node at (0.01, 0.99)[anchor=north west, white]{\textbf{D}};
     \end{tikzonimage}%
     \caption{
-        Simulation snapshots at $1.04$\unit{\day},$2.08$\unit{\day},$3.13$\unit{\day} and $4.17$\unit{\day} corresponding to the parameters given in Table~\ref{tab:spatial_limit_init}.
+        Simulation snapshots at $1.04$~\unit{\day}, $2.08$~\unit{\day}, $3.13$~\unit{\day} and $4.17$~\unit{\day} corresponding to the parameters given in Table~\ref{tab:spatial_limit_init}.
         Species $B$ is colored blue while species $A$ is colored in red.
         The background shows the resource concentration $[R]$.
         Darker colors indicate that less nutrients are present.
@@ -1048,7 +1045,7 @@ In contrast to the other results, here the final values of species $A$ and $B$ h
 This illustrates that spatial effects can shift the final results of growth curves towards both directions, leading to an overall increase/decrease of one species.
 We furthermore note that the total bacteria volume of the \ac{abm} model is always smaller or equal compared to the \ac{ode} model.
 This is expected, since processes such as diffusion and cells growing outward introduce another time component which is simply assumed to be instantaneous in the \ac{ode} model.
-The chosen diffusion constants $D_I=D_R=30.0$\unit{\micro\metre\squared\per\minute} are in the order of small molecules such as $NaCl$ while the lower values $D_I=D_R=5.0$\unit{\micro\metre\squared\per\minute} are around values of Glucose in water.
+The chosen diffusion constants $D_I=D_R=30.0$~\unit{\micro\metre\squared\per\minute} are in the order of small molecules such as $NaCl$ while the lower values $D_I=D_R=5.0$~\unit{\micro\metre\squared\per\minute} are around values of Glucose in water.
 \begin{figure*}
     \centering
     \begin{tikzonimage}[width=\columnwidth]
@@ -1121,7 +1118,7 @@ The inclusion of additional metabolic processes or larger number of cell-species
 As an example, the description of the quorum sensing phenomena can be modelled by adding the equation for the released autoinducer molecules as a part of the microenvironment.
 These molecules then affect the same-species bacteria growth controlling the size of the population.
 The approach described above provides a primary predictive model with transition rates between different pools as parameters.
-To include the influence of external factors, i.e., temperature, pH, pressure, etc., one can simply use the secondary models for the transition rates, e.g., the Ratkowsky model for temperature dependence~\citep{ratkowsky_relationship_1982}.\\
+To include the influence of external factors, i.e., temperature, pH, pressure, etc., one can simply use the secondary models for the transition rates, e.g., the square-root temperature dependence~\citep{ratkowsky_relationship_1982}.\\
 By constructing an \ac{abm}, we have exemplified how close the devised model is to the individual biological 
 processes that occur within the bacteria.
 This mechanistic single-cell level of understanding of our \ac{abm} is a perspective which can not be easily replicated by other spatial models such as \acp{pde}.
@@ -1297,7 +1294,7 @@ Following the same principle as before, we can integrate the inhibitor equation.
 \begin{alignat}{7}
     \int\limits_D\dot{[I]} &= \int\limits_D \bigg[&&\sum\limits_{c_A} b\frac{V_{c_A}}{V_D}&&\delta(x-x_{c_A}) &&+ D_I\Delta [I]\bigg]\text{dVol}\\
     &= \int\limits_D&&\sum\limits_{c_A} b\frac{V_{c_A}}{V_D}&&\delta(x-x_{c_A}) \text{dVol} &&+ \int\limits_D D_I\Delta [I]\text{dVol}\\
-    &= \int\limits_D&&\sum\limits_{c_A} b\frac{V_{c_A}}{V_D}&&\delta(x-x_{c_A}) \text{dVol} &&+ \int\limits_{\partial D} D_I\nabla [I]\vec{\text{dA}}\\
+    &= \int\limits_D&&\sum\limits_{c_A} b\frac{V_{c_A}}{V_D}&&\delta(x-x_{c_A}) \text{dVol} &&+ \int\limits_{\partial D} D_I\nabla [I]\mathbf{\text{dA}}\\
     &= &&\sum\limits_{c_A} b V_{c_A}\int\limits_D \frac{1}{V_D} &&\delta(x-x_{c_A}) \text{dVol}
 \end{alignat}
 %
@@ -1317,18 +1314,18 @@ In the last step, we take the expectation value and equate it with the negative 
 \paragraph{Growth}
 For the equation describing the growth of the cell volume, we simply add up cells for the respective species to obtain their total volume.
 \begin{alignat}{5}
-    \sum\limits_{c_A}\dot{V_{c_A}}
+    \sum\limits_{c_A}\dot{V}_{c_A}
     &= &\sum\limits_{c_A} u& \sigma [R]V_{c_A} + \lambda L_A\frac{R}{R_0} &= &&\sigma [R]V_A + \lambda L_A\frac{R}{R_0}\\
-    \sum\limits_{c_B}\dot{V_{c_B}}
+    \sum\limits_{c_B}\dot{V}_{c_B}
     &= &\frac{u}{1+\nu_I [I]} &\sigma [R]V_B + \lambda L_B\frac{R}{R_0} &= &\sum\limits_{c_B} \frac{u}{1+\nu_I [I]} &\sigma [R]V_{c_B} + \lambda L_B\frac{R}{R_0}
 \end{alignat}
 In addition, we can reformulate $\tilde{\sigma}=\sigma/V_D$ thus redefining the conversion rate $\sigma$ in terms of the total volume $V_D$.
 We can thus summarize the equations obtained
 \begin{align}
-    \dot{L_A} &= -\lambda L_A\frac{R}{R_0}\\
-    \dot{L_B} &= -\lambda L_B\frac{R}{R_0}\\
-    \dot{V_A} &= u\sigma R \frac{V_A}{V_D} + \lambda L_A\frac{R}{R_0}\\
-    \dot{V_B} &= \frac{u}{1+\nu_I V_D^{-1} I} \sigma R \frac{V_B}{V_D} + \lambda L_B\frac{R}{R_0}\\
+    \dot{L}_A &= -\lambda L_A\frac{R}{R_0}\\
+    \dot{L}_B &= -\lambda L_B\frac{R}{R_0}\\
+    \dot{V}_A &= u\sigma R \frac{V_A}{V_D} + \lambda L_A\frac{R}{R_0}\\
+    \dot{V}_B &= \frac{u}{1+\nu_I V_D^{-1} I} \sigma R \frac{V_B}{V_D} + \lambda L_B\frac{R}{R_0}\\
     \dot{R} &= - R \frac{V_A}{V_D} - \frac{u}{1+\nu_I V_D^{-1}I} \frac{1}{V_D} R V_B\\
     \dot{I} &= b V_A
 \end{align}
@@ -1351,22 +1348,22 @@ strength $\epsilon$, diffusion $D_R,D_I$) do not.
         \toprule
         \multicolumn{6}{c}{\textbf{Cellular Reactions}}\\
         \toprule
-        Production $G_A$            & $\alpha_A$    & $0.002$\unit{\per\minute}
-        & Uptake                    & $u_A$         & $0.01$\unit{\per\minute}\\
-        Production $G_B$            & $\alpha_B$    & $0.002$\unit{\per\minute}
-        & Uptake                    & $u_B$         & $0.01$\unit{\per\minute}\\
-        Production $I$              & $\kappa$      & $0.1$\unit{\per\minute}
-        & Production $I$            & $b$           & $0.1$\unit{\per\minute}\\
-        Inhibition                  & $\mu_I$       & $1.0\cdot 10^{-7}$\unit{\per\micro\metre\cubed}
-        &                           & $\nu_I$       & $0.1$\unit{\micro\metre\cubed\per\mol}\\
+        Production $G_A$            & $\alpha_A$    & $0.002$~\unit{\per\minute}
+        & Uptake                    & $u_A$         & $0.01$~\unit{\per\minute}\\
+        Production $G_B$            & $\alpha_B$    & $0.002$~\unit{\per\minute}
+        & Uptake                    & $u_B$         & $0.01$~\unit{\per\minute}\\
+        Production $I$              & $\kappa$      & $0.1$~\unit{\per\minute}
+        & Production $I$            & $b$           & $0.1$~\unit{\per\minute}\\
+        Inhibition                  & $\mu_I$       & $1.0\cdot 10^{-7}$~\unit{\per\micro\metre\cubed}
+        &                           & $\nu_I$       & $0.1$~\unit{\micro\metre\cubed\per\mol}\\
         &&
-        & Conversion                & $\sigma$      & $0.1$\unit{\micro\metre\cubed\per\mol}\\
-        Total volume                & $N_t$& $2.0\cdot 10^5$\unit{\micro\metre\cubed}
+        & Conversion                & $\sigma$      & $0.1$~\unit{\micro\metre\cubed\per\mol}\\
+        Total volume                & $N_t$& $2.0\cdot 10^5$~\unit{\micro\metre\cubed}
         &&&\\
         &&
-        & Diffusion $R$             & $D_R$         & $30.0$\unit{\micro\metre\squared\per\minute}\\
+        & Diffusion $R$             & $D_R$         & $30.0$~\unit{\micro\metre\squared\per\minute}\\
         &&
-        & Diffusion $I$             & $D_I$         & $30.0$\unit{\micro\metre\squared\per\minute}\\
+        & Diffusion $I$             & $D_I$         & $30.0$~\unit{\micro\metre\squared\per\minute}\\
         % Note: this diffusion roughly corresponds to the one of ethanol in water
         % (see https://de.wikipedia.org/wiki/Diffusionskoeffizient#In_Fl%C3%BCssigkeiten)
         % 15.0 µm^2/min = 0.9 m^2/s
@@ -1374,32 +1371,32 @@ strength $\epsilon$, diffusion $D_R,D_I$) do not.
         \toprule
         \multicolumn{6}{c}{\textbf{Physical Mechanics \& Interactions}}\\
         \toprule
-        &&& Damping                 & $\eta$        & $0.5$\unit{\per\minute}\\
-        &&& Mass                    & $m$           & $7.70$\unit{\pico\gram}\\
-        &&& Potential               & $\epsilon$    & $0.5$\unit{\pico\gram\micro\metre\per\minute\squared}\\
+        &&& Damping                 & $\eta$        & $0.5$~\unit{\per\minute}\\
+        &&& Mass                    & $m$           & $7.70$~\unit{\pico\gram}\\
+        &&& Potential               & $\epsilon$    & $0.5$~\unit{\pico\gram\micro\metre\per\minute\squared}\\
         \toprule
         \multicolumn{6}{c}{\textbf{Cell Cycle}}\\
         \toprule
-        Rate $L_A\rightarrow G_A$   & $\lambda_A$   & $0.0025$\unit{\per\minute}
-        &                           & $\lambda_A$   & $0.0025$\unit{\per\minute}\\
-        Rate $L_B\rightarrow G_B$   & $\lambda_B$   & $0.0005$\unit{\per\minute}
-        &                           & $\lambda_B$   & $0.0005$\unit{\per\minute}\\
-        &&& Division Vol.           & $V_t$         & $14.14$\unit{\micro\metre\cubed}\\
+        Rate $L_A\rightarrow G_A$   & $\lambda_A$   & $0.0025$~\unit{\per\minute}
+        &                           & $\lambda_A$   & $0.0025$~\unit{\per\minute}\\
+        Rate $L_B\rightarrow G_B$   & $\lambda_B$   & $0.0005$~\unit{\per\minute}
+        &                           & $\lambda_B$   & $0.0005$~\unit{\per\minute}\\
+        &&& Division Vol.           & $V_t$         & $14.14$~\unit{\micro\metre\cubed}\\
         \toprule
         \multicolumn{6}{c}{\textbf{Initial Values}}\\
         \toprule
-        Volume of $L_A$             & $L_A$         & $127.2$\unit{\micro\metre\cubed}
+        Volume of $L_A$             & $L_A$         & $127.2$~\unit{\micro\metre\cubed}
         & Cell Number               & $C_A$         & 18\\
-        Volume of $G_A$             & $G_A$         & $0.0$\unit{\micro\metre\cubed}
-        & Cell Volume               & $V_{c,A}$     & $7.07$\unit{\micro\metre\cubed}\\
-        Volume of $L_B$             & $L_B$         & $127.23$\unit{\micro\metre\cubed}
+        Volume of $G_A$             & $G_A$         & $0.0$~\unit{\micro\metre\cubed}
+        & Cell Volume               & $V_{c,A}$     & $7.07$~\unit{\micro\metre\cubed}\\
+        Volume of $L_B$             & $L_B$         & $127.23$~\unit{\micro\metre\cubed}
         & Cell Number               & $C_B$         & 18\\
-        Volume of $G_B$             & $G_B$         & $0.0$\unit{\micro\metre\cubed}
-        & Cell Volume               & $V_{c,B}$     & $7.07$\unit{\micro\metre\cubed}\\
+        Volume of $G_B$             & $G_B$         & $0.0$~\unit{\micro\metre\cubed}
+        & Cell Volume               & $V_{c,B}$     & $7.07$~\unit{\micro\metre\cubed}\\
         Relative Nutrients          & $R$         & $1.0$
-        & Nutrients                 & $[R_0]$       & $1.0$\unit{\mol\per\micro\metre\cubed}\\
-        Inhibitor                   & $I_0$         & $0.0$\unit{\mol}
-        & Inhibitor                 & $[I_0]$       & $0.0$\unit{\mol\per\micro\metre\cubed}\\
+        & Nutrients                 & $[R_0]$       & $1.0$~\unit{\mol\per\micro\metre\cubed}\\
+        Inhibitor                   & $I_0$         & $0.0$~\unit{\mol}
+        & Inhibitor                 & $[I_0]$       & $0.0$~\unit{\mol\per\micro\metre\cubed}\\
         \bottomrule
     \end{tabularx}
     \caption{
@@ -1416,24 +1413,24 @@ strength $\epsilon$, diffusion $D_R,D_I$) do not.
 \section{Homogeneous and inhomogeneous initial cell distributions}
 To clarify what we mean by homogeneous and inhomogeneous initial configurations, we include snapshots of the simulation.
 At this point, cells have already grown such that the sizes of cell-clumps are better visible by the naked eye.
-The snapshots were taken after $2.08$\unit{\day}.
+The snapshots were taken after $2.08$~\unit{\day}.
 \begin{figure}[H]
     \centering
     \begin{subfigure}[c]{0.5\textwidth}
         \includegraphics[width=\textwidth]{Figures-abm-homogenous-images-snapshot_00012000.png}
-        \subcaption{Homogeneous initial cell distribution, $D_R=D_I=30.0$\unit{\micro\metre\squared\per\minute}}
+        \subcaption{Homogeneous initial cell distribution, $D_R=D_I=30.0$~\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}%
     \begin{subfigure}[c]{0.5\textwidth}
         \includegraphics[width=\textwidth]{Figures-abm-homogenous-low-diffusion-images-snapshot_00012000.png}
-        \subcaption{Homogeneous initial cell distribution, $D_R=D_I=5.0$\unit{\micro\metre\squared\per\minute}}
+        \subcaption{Homogeneous initial cell distribution, $D_R=D_I=5.0$~\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}\\
     \begin{subfigure}[c]{0.5\textwidth}
         \includegraphics[width=\textwidth]{Figures-abm-inhomogenous-images-snapshot_00012000.png}%
-        \subcaption{Heterogeneous initial cell distribution, $D_R=D_I=30.0$\unit{\micro\metre\squared\per\minute}}
+        \subcaption{Heterogeneous initial cell distribution, $D_R=D_I=30.0$~\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}%
     \begin{subfigure}[c]{0.5\textwidth}
         \includegraphics[width=\textwidth]{Figures-abm-random-images-snapshot_00012000.png}%
-        \subcaption{Random initial cell distribution, $D_R=D_I=30.0$\unit{\micro\metre\squared\per\minute}}
+        \subcaption{Random initial cell distribution, $D_R=D_I=30.0$~\unit{\micro\metre\squared\per\minute}}
     \end{subfigure}
     \caption{
         Spatial configuration of cells corresponding to the pictures shown in figure~\ref{fig:spatial-growth-curve}.
