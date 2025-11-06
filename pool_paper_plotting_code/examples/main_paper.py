@@ -113,7 +113,7 @@ def pool_model_2sp_comp_toxin2(t, x, param, x0, const):
         - lambd_B * R * L_B,
           lambd_B * R * L_B + (alpha_B * R) * G_B,
         - (alpha_A / N_t) * R * G_A - (alpha_B / N_t) * R * G_B,
-          k * G_B * alpha_B * R
+          k * G_B  * R # * alpha_B
         ]
 
 def pool_model_2sp_comp_inhib(t, x, param, x0, const):

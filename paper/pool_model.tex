@@ -597,7 +597,7 @@ Then the full \ac{ode} system is
 where we consider two possible models of the toxin production
 \begin{align}
     \mathcal{F}^1(R,G)&=\kappa G_B\\
-    \mathcal{F}^2(R,G)&=\kappa\alpha_B R G_B.
+    \mathcal{F}^2(R,G)&=\kappa R G_B.
 \end{align}
 with $\kappa$ as the toxin production rate.
 The difference in the solutions of the given \acp{ode} between the two toxin production models is presented in Figure~\ref{fig:2pool_2sp_toxin}.
@@ -608,12 +608,12 @@ The difference in the solutions of the given \acp{ode} between the two toxin pro
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2pools_toxin1.pdf}\\
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2pools_toxin2.pdf}
     \caption{
-        The two species system competing for the common nutrient $R$ with production of the toxin $T_B$ (brown line) calculated using equation~(\ref{eq:model_2sp_toxin}).
-        The growing bacteria $B$ produces toxin $T_B$ (A) constantly $\dot{T}_B^1 = \mathcal{F}^1 = \kappa G_B$ or (B) only during growth process $\dot{T}_B^2 = \mathcal{F}^2 = \kappa \alpha_B R G_B$ with
-        production rate $\kappa=0.2$.
-        The toxin $T_B$ causes the cell death of bacteria $A$ with rate constant $\mu = 0.2$.
-        The red curve describes the growth of the bacteria $A$ ($N_A = L_A+G_A$) with model parameters $\lambda_A=10^{-2}$, $\alpha_A=3.0$.
-        The blue curve describes the growth of the bacteria $B$ ($N_B = L_B+G_B$) with model parameters $\lambda_A=5\cdot 10^{-2}$, $\alpha_A=2.5$.
+        The two species system competing for the common nutrient $R$ with production of the toxin $T_B$ (brown line) calculated using equations~(\ref{eq:model_2sp_toxin}).
+        The growing bacteria $B$ produces toxin $T_B$ (A) constantly $\dot{T}_B^1 = \mathcal{F}^1 = \kappa G_B$ or (B) only during growth process $\dot{T}_B^2 = \mathcal{F}^2 = \kappa R G_B$ 
+        with production rate $\kappa=0.2~\mathrm{s}^{-1}$.
+        The toxin $T_B$ causes the cell death of bacteria $A$ with rate constant $\mu = 0.2~\mathrm{s}^{-1}$.
+        The red curve describes the growth of the bacteria $A$ ($N_A = L_A+G_A$) with model parameters $\lambda_A=10^{-2}~\mathrm{s}^{-1}$, $\alpha_A=3.0~\mathrm{s}^{-1}$.
+        The blue curve describes the growth of the bacteria $B$ ($N_B = L_B+G_B$) with model parameters $\lambda_B=5\cdot 10^{-2}~\mathrm{s}^{-1}$, $\alpha_B=2.5~\mathrm{s}^{-1}$.
         The gray line denotes the dynamic of the resource pool scaled with its capacity $N_t=10^4$.
     }
     \label{fig:2pool_2sp_toxin}
