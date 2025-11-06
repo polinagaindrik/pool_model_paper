@@ -147,17 +147,6 @@
 % ================================================================================================
 \section{Introduction}
 
-% \paragraph{General Introduction to Bacterial Consortia}
-% \begin{itemize}
-%     \item Complex system; many players (cell-types, interactions)
-%     \item processes on different scales (population, cellular, molecular, gene-level)
-%     \item Food Safety, Production
-%     \item Healthcare: Drug development
-%     \item Environmental Sustainabiliy
-% \end{itemize}
-% Motivation: general, flexible approach for bacterial systems that allows easily modify the system depending on processes on different scales.
-% Allows us to describe the processes within populations using different bacterial states as well as interactions between different populations using ODEs.
-
 Bacterial consortia are highly complex systems which consist of multiple distinct cell types.
 The underlying processes are interconnected with each other and occur on all scales, ranging from
 population-based dynamics of colony growth over molecular processes such as metabolism to gene
@@ -170,17 +159,8 @@ Furthermore, effects such as biofilm formation can hinder drug treatment by shie
 colony from antibiotic substances or immune response of the organism.
 The natural bacterial processes are a crucial part of our planet's ecosystem, being responsible for
 tasks such as nutrient cycling, decomposition of organic matter and oxygen production.
-It is of great interest to understand the dynamics of these various processes.
-
-% \paragraph{Experimental/Biological evidence/phenomena}
-% \begin{itemize}
-%     \item Lag Phase, Competition, Cooperation, Limiting Resource
-%     \item Comprehensive reviews about competition/cooperation bacterial mechanisms: \citep{ghoul_ecology_2016, stubbendieck_bacterial_2016, hibbing_bacterial_2010, west_social_2007}
-%     \item Spatial Effects: adhesion, migration, chemotaxis, diffusion
-%     \item Quorum-sensing
-%     \item Biofilm formation \citep{Jin2020}
-% \end{itemize}
-
+It is of great interest to understand the dynamics of these various processes.\\
+%
 In order to achieve a comprehensive description of the target system, it is important to incorporate
 all relevant biological phenomena arising in these bacterial systems.
 During their reproductive process, bacteria undergo multiple phases~\citep{buchanan_when_1997}, starting in a lag phase which
@@ -192,26 +172,8 @@ Bacteria have thus devised various survival strategies to ensure sufficient acce
 Effects on a single-cell level such as adhesion~\citep{htuson_bacteriasurface_2013}, migration~\cite{decoene_microscopic_2011} and chemotaxis can lead to complex
 phenomena on a population-based level which can aid in the goal of survival.
 Cell signaling, e.g., in the form of quorum-sensing can lead to collective emergent phenomena such as
-biofilm formation which play an important role for many mature microbial communities~\citep{Jin2020,ng_bacterial_2009}.
-
-% \paragraph{ODE models (predictive microbiology, existing, overview, most popular)}
-% Existing models in Predictive Microbiology (Primary Models)~\citep{perez-rodriguez_predictive_2012}:
-% \begin{itemize}
-%     \item An overview of primary models used in food science can be found in~\citep{van_boekel_kinetic_2008}.
-%     \item Baranyi-Roberts Model~\citep{baranyi_modeling_1993, baranyi_dynamic_1994}
-%     \item modified Gompertz~\citep{Gompertz1825-wi,Gibson1987}
-%     \item Buchanan et al.: three-phase linear model for lag phase, exponential growth phase, and stationary phase~\citep{buchanan_when_1997}
-%     \item McKellar two-compartment model with bacteria in growing and non-growing state~\citep{mckellar_heterogeneous_1997}
-%     \item Inactivation models
-% \end{itemize}
-% %
-% Secondary models:
-% \begin{itemize}
-%     \item Polynomial models 
-%     \item Square Root-Type Models, e.g., Ratkowski for temperature~\citep{ratkowsky_relationship_1982}
-%     \item The Cardinal Parameter Model~\citep{zwietering_decision_1992}
-% \end{itemize}
-
+biofilm formation which play an important role for many mature microbial communities~\citep{Jin2020,ng_bacterial_2009}.\\
+%
 The first step in the construction of any mathematical model is to determine the required level of
 detail with respect to the description scale and consequently which effects to include.
 The bacterial growth curves let us describe the dynamics of the overall abundance of various
@@ -229,17 +191,8 @@ These can be simple polynomial models, square root-type models~\citep{ratkowsky_
 more complex relations such as the cardinal parameter model~\citep{zwietering_decision_1992}.
 The advantage of the \ac{ode} formulation lies in the predictive power and simplicity of usage.
 However, due to their coarse-grained nature, they lack the ability to describe heterogeneity and
-other spatial effects.
-
-% \paragraph{Models for spatial effects; PDEs, \acp{abm}, others}
-% \begin{itemize}
-%     \item BSim \citep{Gorochowski2012,Dang2020}
-%     \item Bacterial Branching patterns \citep{Kawasaki1997,Matsushita1998}
-% \end{itemize}
-
-% To incorporate spatial heterogeneity or other effects other modeling approaches have been devised.
-% \acp{pde} follow a similar pattern as \acp{ode} but also distribute the described variables through
-% space.
+other spatial effects.\\
+%
 When dealing with spatial effects such as heterogeneity, we are required to use more extensive
 modeling formulations such as \acp{pde} or \acp{abm}.
 The former represent an intermediate step between the population-based \ac{ode} models and the
@@ -251,10 +204,8 @@ Tools such as BSim~\citep{Gorochowski2012,Dang2020}, AgentCell~\cite{emonet_agen
 capable to describe large amounts of bacteria, performing various intracellular and extracellular
 processes.
 The latter has been used to adapt \ac{pde}-based models into an \ac{abm} formulation which describe
-bacterial branching patterns~\citep{Kawasaki1997,Matsushita1998}.
-
-% \paragraph{What is the problem/what is the question? How do we address this?}
-
+bacterial branching patterns~\citep{Kawasaki1997,Matsushita1998}.\\
+%
 In this work, we introduce a new \ac{ode}-based modeling framework which describes different
 bacterial species, their metabolic states and external quantities such as nutrients as individual
 pools.
@@ -269,8 +220,8 @@ To illustrate the generality of the model, multiple examples are reported.
 We analyze the spatial limitations of an interacting two-species model and show that it can be fully
 understood on an individual-based level in terms of single-cell processes.
 Furthermore, we assess how spatial heterogeneity~\citep{mckellar_heterogeneous_1997} can impact the shape of the growth curves.
-
-
+%
+%
 % ================================================================================================
 \section{One species modeling}
 % ------------------------------------------------------------------------------------------------
@@ -372,8 +323,6 @@ The resulting growth curves for the three pool case are presented in Figure~\ref
 Here we can see that the value of the transition constant $\lambda$ determines how long the bacteria stays in its lag-phase.
 The larger this rate, the shorter is the lag-time.
 Moreover, by including the flow of living bacteria to the death pool, we can model a greater variety of effects by allowing a decrease in the bacterial count.
-% TODO change the name "death pool"?
-%
 %
 % ------------------------------------------------------------------------------------------------
 \subsection{Lag-time estimation}
@@ -381,7 +330,6 @@ Note that the previously introduced model could be further simplified to a two p
 The relevant question here is whether cells in the pool $D$ still contribute to the limitation of the resources by, e.g., occupying space or consuming important nutrients.
 If yes, the three pool model would be advantageous, if not the two pool model is sufficient with the benefit of having one parameter less.\\
 %
-% The dynamics of the three pool model can be captured by the coupled system of ordinary differential
 The dynamics of the three pool model is captured by equations~\ref{eq:ode_3pool_resource2} which can be used to derive the two pool model simply by omitting $D$.
 Moreover, for $\mu'=0$ the equations for $L$ and $D$ can be readily integrated resulting in:
 \begin{align}
@@ -622,7 +570,6 @@ The difference in the solutions of the given \acp{ode} between the two toxin pro
 %
 Model $\mathcal{F}^1$ results in toxin concentration $T_B^1(t)=\kappa\int_{t_0}^tG(t')dt'$.
 The production of toxin only depends on the presence of bacteria $G_B$ and is independent of their growth dynamics.
-% That means that as long as there are bacteria in the growth phase $G_B>0$, toxin is produced, no matter whether the bacterial count $N_B$ is still growing.
 On the other hand, model $\mathcal{F}^2$ assumes that toxin is only produced during bacterial growth and division, hence depends on the growth dynamics of $B$.
 This leads to a toxin accumulation in the steady state $T_B^{2s}=\lim_{t\to\infty}T_B^2(t)=\kappa(N_t-N_0)$.
 To see this we note $\dot{T}_B^2=\kappa(\dot{L_B}+\dot{G_B})$, which yields: $T_B^2(t)=\kappa(L_B(t)+G_B(t)-N_{B0})$ where we used $T_B^2(0)=G_B(0)=0$, $L_B(0)=N_{B0}$.
@@ -780,38 +727,6 @@ amount.
 The \acp{ode} system of the bacterial population can be written as:
 %
 %
-% - \citep{emonet_agentcell_2005, gorochowski_bsim_2012, li_nufeb_2019, kreft_bacsim_1998}: examples of another toolboxes for bacterial communities modeling (ABM).\\
-% More about the modeling of the motile bacteria can be seen in works:~\citep{decoene_microscopic_2011, rosser_modelling_2014, sokolov_physical_2012, li_amplified_2008}.
-%
-%
-% In general, bacterial communities in 2D can experience collective motion called swarming~\citep{wu_collective_2015}.
-% Some works modelled 2D motile bacteria:
-% \begin{itemize}
-%     \item \citep{decoene_microscopic_2011}: 2D chemotactic self-propelled bacterial motion of the flagellated bacteria (e.g., E. coli, B. subtilis).
-%     Chemotaxis here was driven by the oxygen concentrations.
-%     \item \citep{rosser_modelling_2014}: modeling of the bacterial reorintation, rotation.
-%     \item \citep{sokolov_physical_2012, li_amplified_2008}: modeling of the bacteria using hydrodynamic interactions and Brownian motion.
-%     Fluctuations in velocity and rotations.
-%     (\citep{li_amplified_2008}: Brownian motion gives right motion observed using microscopy).
-%     \item \citep{farrell_mechanically_2013}: 2D modeling using Newtonian dynamics and only mechanical interactions + nutrient diffusion.
-%     Branching parameter defines diff limits where diffusion dominant and limits growth, and where it's irrelevant.
-%     Mechanical pressure (due to bacteria-bacteria interactions) affects growth, can limit it.(!!!)
-% \end{itemize}
-%
-% For simulation results:
-% \begin{itemize}
-%     \item \citep{farrell_mechanically_2013}: Showed the influence of mechanic interactions between bacteria in 2D system with bacteria consuming the nutrient.
-%     The growth of bacterial colonies where non-motile microorganisms replicate and push each other away as they grow.
-%     Found a transition between two different growth regimes, controlled by the balance between growth and uptake of nutrient:\\
-%     Exponential growth where diffusion of the nutrient does not play any role. Sublinear growth where growth is limited by nutrient diffusion.
-%     (Structurally in 2D it's regimes: smooth propagating of bacterial front vs. branching.)
-%     \item \citep{nagarajan_agent-based_2022-1}: review on the ABM for bacterial population.
-%     The ABM represent a microbial colony as a group of discrete agents that are governed by a set of rules, where each agent can be an individual cell or a collection of cells.
-%     Can use citation when talk about general processes we are accounting as growth, uptake of nutrient, production of inhibitor, e.g.,:
-%     Physical interactions between agents are calculated using excluded volume interactions.
-%     Chemical interactions as releasing inhibitors are described using concentrations and solved using PDEs.
-% \end{itemize}
-%
 \begin{align}
     \begin{split}
         \dot{L}_A &= -\lambda_A R L_A\\
@@ -840,7 +755,7 @@ This procedure is a blueprint which can be followed to construct \acp{abm} for s
 To construct our \ac{abm}, we use the modeling framework \texttt{cellular\_raza}~\citep{Pleyer2025} that allows us to define our bacterial agents from a clean slate.
 With this flexibility, researchers are able to construct minimal models using only as many parameters which are necessary.
 This ability, to precisely define and control the exact behavior of our cell-agents, enables the following parts.
-
+%
 \subsubsection{Cellular reactions}
 To construct an \ac{abm} which resembles the given \ac{ode} system of equations~\eqref{eq:spatial_limit_F} and \eqref{eq:spatial_limit_H}, we consider multiple cellular reactions.
 We denote cells of species $A,B$ with $c_{A/B}$ respectively and indicate shared behavior by simply using $c$.
@@ -1078,41 +993,7 @@ Furthermore, it was shown that the utilized pool model can be derived from first
 %
 % ================================================================================================
 \section{Discussion}
-
-% How well does the pool model do to encapsulate all the different growth models
-% \begin{itemize}
-%     \item All 6 models can be represented by pool model
-%     \item Baranyi-Roberts results can be reproduced, but not identical; requires some work
-%     \item what are some general limitations within this framework? how can they be circumvented?
-%     \item why is the pool model "better" than the other \ac{ode} models? (why did we do this?);
-%         generalization of many models; better explainability;
-%     \item link to supplement; we can generalize this and prove theorems for the abstract,
-%         generalized model; this allows us to discuss many cases at once
-% \end{itemize}
 %
-% How can we cover more effects of bacteria?
-% \begin{itemize}
-%     \item More states for metabolic processes
-%     \item More states for more species
-%     \item Other cooperiation/inhibition effects
-%     \item external influences
-% \end{itemize}
-%
-% How justified was the construction of the \ac{abm}?
-% \begin{itemize}
-%     \item Discuss simplified physical interaction model
-%     \item Heterogeneity plays a role; as we have shown
-%     \item why did we not simply use a PDE?; because we have to think in terms of cellular processes
-%         and this ensures that our model is actually realistic
-% \end{itemize}
-%
-% What are limitations of our approach?
-% \begin{itemize}
-%     \item spatial stuff; heterogeneity (because \ac{ode})
-%     \item larger models require more parameters, harder to estimate
-%     \item only simple models have analytical solutions
-% \end{itemize}
-
 The presented pool model was used to describe the dynamics of one- and two-species systems containing the main growth stages and interactions between bacteria in the form of cooperation and competition.
 Our approach produces results which exhibit similarities to other well-known predictive microbiology models such as the Baranyi-Roberts model while providing better explainability.
 The inclusion of additional metabolic processes or larger number of cell-species can be achieved by extending the list of possible states and defining transitions between them.
@@ -1126,22 +1007,10 @@ This mechanistic single-cell level of understanding of our \ac{abm} is a perspec
 We have investigated the impact of spatial effects in the form of varying diffusion parameters and different initial spatial distributions of bacteria.
 Our findings reinforce that the \ac{ode} model is a good simplification in the highly-diffusive regime within a mostly homogenous spatial bacterial distribution.
 However, deviations to these assumptions can lead to non-negligible effects, influencing the growth of the colony.
-
+%
 % ------------------------------------------------------------------------------------------------
 \section{Conclusion}
-% \begin{itemize}
-%     \item New theoretical framework
-%     \item consistent with \ac{ode} models (Baranyi-Roberts)
-%     \item Better explainability
-%     \item Include effects such as inhibition, toxins in understandable manner
-%     \item showed spatial limitations of \ac{ode} model
-%     \item \ac{abm} model allowed modeling of cellular processes; ensure that pool model is derivable
-%         from the individual behvaiour of cellular processes
-%     \item outlook: generalized mathematical formulation; extend inhibition model (because it is a
-%         dimensional reduction of existing models)
-%     \item Provide code in a pypi package as well (TODO)
-% \end{itemize}
-
+%
 We introduced the pool model as a framework to unify existing approaches and allow researchers to follow a mechanistic approach during model development.
 It is able to capture the effects of many established models and provides a lens which is useful to generalize existing systems and results in better overall explainability.
 By modeling effects such as mutual inhibition on a single-cell level within an \ac{abm}, we have exemplified that the pool model directly builds on these more fundamental concepts.
@@ -1206,15 +1075,6 @@ While the total bacterial count of all species of our system is
 \end{equation}
 %
 %
-%The three pool system described with equations~\ref{eq:ode_3pools} will be written as
-%\begin{equation}
-%    \dot \mbx  = A \mbx, \hspace{3mm} A = \begin{pmatrix}
-%        -(\mu + \lambda) & 0             & 0      \\
-%        \lambda          & \alpha - \mu' & 0      \\
-%        \mu              & \mu'          & -\beta 
-%    \end{pmatrix}.
-%\label{eq:x_repres_3pools}
-%\end{equation}
 %
 Using such matrix representation of the bacterial system, we can rewrite, for example, the three-pool model with limiting resource described with equations~\ref{eq:ode_3pool_resource} in a more compact form.
 The concentrations of the pools are then the components of our variable vector $\mbx (t) = (L(t), G(t), D(t))^T$.
