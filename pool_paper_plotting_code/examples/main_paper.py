@@ -190,26 +190,26 @@ if __name__ == "__main__":
 
 ###############33############### 3 pool models with resource pool ##############################3########333
     # Generate model data
-    const1 = [1e-2, 0., 2.5, .5, 0., Nt] # (lambd, mu1, alpha, mu2, beta, N_t, )
-    const2 = [1e-3, 0., 2.5, .5, 0., Nt] # (lambd, mu1, alpha, mu2, beta, N_t, )
-    const3 = [5e-5, 0., 2.5, .5, 0., Nt] # (lambd, mu1, alpha, mu2, beta, N_t, )
-    const4 = [1e-3, .5, 2.5, .5, 0., Nt] # (lambd, mu1, alpha, mu2, beta, N_t, )
+    const1 = [1e-2, 0., 2.5, .1, 0., Nt] # (lambd, mu1, alpha, mu2, beta, N_t, )
+    const2 = [1e-3, 0., 2.5, .1, 0., Nt] # (lambd, mu1, alpha, mu2, beta, N_t, )
+    const3 = [5e-5, 0., 2.5, .1, 0., Nt] # (lambd, mu1, alpha, mu2, beta, N_t, )
+    const4 = [1e-3, .15, 2.5, .1, 0., Nt] # (lambd, mu1, alpha, mu2, beta, N_t, )
     const_3pool_res = [const1, const2, const3, const4]
     data_3pool_res = [generate_insilico_data(pool_model_3pools_resource, [t], [], [[]], x01,
                 const=const, obs_func=observable_3pool, n_traj=1) for const in const_3pool_res]
 
-    labels = [r'$\lambda=10^{-2}, \mu=0$', r'$\lambda=10^{-3}, \mu=0$', r'$\lambda=10^{-4}, \mu=0$', r'$\lambda=10^{-3}, \mu=0.5$']
+    labels = [r'$\lambda=10^{-2}, \omega=0$', r'$\lambda=10^{-3}, \omega=0$', r'$\lambda=10^{-4}, \omega=0$', r'$\lambda=10^{-3}, \omega=0.15$']
     color_palette_1sp = [colors_all['N_lambd_1e-3_mu_0'], colors_all['N_wo_tempshift'], colors_all['N_lambd_1e-2_mu_0'], colors_all['N_lambd_1e-3_mu_0_5']]
-
+    lnst = ['solid', 'solid', 'solid', 'dotted']
     # Plot the model
     fig, ax = plt.subplots(1, 1, figsize=figsize_default)
     for i, data in enumerate(data_3pool_res):
         for d in data:
-            ax.plot(d['times'], d['obs_mean'][0], linewidth=2.5, color=color_palette_1sp[i], label=labels[i])
+            ax.plot(d['times'], d['obs_mean'][0], linewidth=2.5, color=color_palette_1sp[i], label=labels[i], linestyle=lnst[i])
     fig, ax = set_labels(fig, ax, r'Time, $t$', r'Total Bacterial Count, $N$')
     ax.set_yscale('log')
-    ax.set_xlim(0., 12.0)
-    ax.set_ylim(3.0e0, 0.6e4)
+    ax.set_xlim(0., 11.0)
+    #ax.set_ylim(3.0e0, 0.6e4)
     ax.legend()
     plt.savefig('paper/Figures-pool_model_3pools_resource.pdf', bbox_inches='tight')
     plt.close(fig)
