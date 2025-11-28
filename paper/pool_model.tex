@@ -251,13 +251,13 @@ The suggested model can be cast in the following reactions:
 \begin{align}
     L &\stackrel{\lambda}{\longrightarrow} G\\
     L &\stackrel{\omega}{\longrightarrow} D\\
-    G &\stackrel{\alpha}{\longrightarrow} 2G\\
+    G &\stackrel{\mu}{\longrightarrow} 2G\\
     G &\stackrel{\omega'}{\longrightarrow} D
 \end{align}
 Then the \acp{ode} describing such a model can be written as
 \begin{align}\begin{split}
     \dot{L} &= -(\omega + \lambda) L\\
-    \dot{G} &= \lambda L + \alpha G - \omega' G\\
+    \dot{G} &= \lambda L + \mu G - \omega' G\\
     \dot{D} &= \omega  L + \omega' G
 \end{split}\end{align}
 with the initial conditions $L(0)=N_0$, $G(0)=0$, and $D(0)=0$, where $N_0$ is the initial bacterial population.
@@ -269,25 +269,25 @@ By releasing extracellular signalling molecules (autoinducers) it is possible fo
 Instead of modeling complex signalling networks, we choose a simpler approach to describe the dependence of growth on the nutrient availability.
 We include a resource pool which is consumed by the growing bacteria using the second order kinetic reaction:
 \begin{equation}
-    G + R  \stackrel{\alpha_0}{\longrightarrow} 2G
+    G + R  \stackrel{\mu_0}{\longrightarrow} 2G
 \end{equation}
 allowing us to keep a minimal number of parameters.
 Note that the pools $L$, $G$ and $D$ represent the number of bacteria (or number of bacteria per unit area/volume) while $R$ represents an abstract resource pool.
 Let's say $G=N_B/V$ and $[G]=\unit{1/V}$, where $N_B$ is the number of bacteria and $V$ is the volume.
 Then $R=N_R/V$ and $[R]=\unit{1/V}$, where $N_R$ is the number of resource molecules (or any appropriate unit, e.g., \unit{mol}).
-Then $[\alpha_0]=\unit{V/s}$, $[N_t]=\unit{1/V}$, and $[\alpha]= \unit{1/s}$.
+Then $[\mu_0]=\unit{V/s}$, $[N_t]=\unit{1/V}$, and $[\mu]= \unit{1/s}$.
 $N_t$ denotes the maximal size of the total bacterial population due to environmental limitations.
 For homogenous densities it is equivalent to consider the total amount, i.e., multiplying $L$ and $G$ by the volume.
 In this case $[L]=[G]=[N_t]=1$.
-For simplicity, we make a transition to the dimensionless constant $\alpha:=\alpha_0 N_t$ and dimensionless resource pool $\tilde{R}(t) = R/ N_t$ ($0 \leqslant \tilde{R} \leqslant 1$).
+For simplicity, we make a transition to the dimensionless constant $\mu:=\mu_0 N_t$ and dimensionless resource pool $\tilde{R}(t) = R/ N_t$ ($0 \leqslant \tilde{R} \leqslant 1$).
 Here the full capacity of the resource pool $N_t$ was used as a scaling constant.
-In this case the growth term can be simply written as $\alpha G \tilde{R}$ and the model is fully formulated in the following way:
+In this case the growth term can be simply written as $\mu G \tilde{R}$ and the model is fully formulated in the following way:
 \begin{align}
     \begin{split}
         \dot{L} &= -(\omega + \lambda) L\\
-        \dot{G} &= \lambda L + \alpha \tilde{R} G-\omega' G\\
+        \dot{G} &= \lambda L + \mu \tilde{R} G-\omega' G\\
         \dot{D} &= \omega  L + \omega' G\\
-        \dot{\tilde{R}} &= - \frac{\alpha}{N_t} \tilde{R} G
+        \dot{\tilde{R}} &= - \frac{\mu}{N_t} \tilde{R} G
     \end{split}
 \label{eq:ode_3pool_resource}
 \end{align}
@@ -300,7 +300,7 @@ and, hence, the full system can be written as
 \begin{align}
     \begin{split}
         \dot{L} &= -(\omega + \lambda) L\\
-        \dot{G} &= \lambda L + \alpha G\left(1-\frac{L+G+D}{N_t}\right)-\omega' G\\
+        \dot{G} &= \lambda L + \mu G\left(1-\frac{L+G+D}{N_t}\right)-\omega' G\\
         \dot{D} &= \omega  L + \omega' G.
     \end{split}
 \label{eq:ode_3pool_resource2}
@@ -312,7 +312,7 @@ and, hence, the full system can be written as
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_3pools_resource.pdf}
     \caption{
         The time dependence of the bacterial count $N(t) = L(t) + G(t) $ is shown.
-        All curves were calculated using the model (\ref{eq:ode_3pool_resource2}) with parameters $\alpha=2.5~\mathrm{s}^{-1}$, $\omega'=0.1~\mathrm{s}^{-1}$, $N_t = 10^4$.
+        All curves were calculated using the model (\ref{eq:ode_3pool_resource2}) with parameters $\mu=2.5~\mathrm{s}^{-1}$, $\omega'=0.1~\mathrm{s}^{-1}$, $N_t = 10^4$.
         The blue curve includes cell-death of the bacteria in the lag phase $\omega = 0.15~\mathrm{s}^{-1}$ and thus exhibits a small dip before its exponential growth.
         Other curves show the case of no bacteria dying $\omega=0~\mathrm{s}^{-1}$ and represent different lengths of lag phases: short $\lambda=10^{-2}~\mathrm{s}^{-1}$ (dark green), intermediate $\lambda=10^{-3}~\mathrm{s}^{-1}$ (light green) and long one $\lambda=10^{-4}~\mathrm{s}^{-1}$ (yellow). Note that the steady state for $N(t)$ and $D(t)$ is for this model $\lim_{t\to\infty} N(t)=0$ and $\lim_{t\to\infty} D(t)=N_t$, because of the depletion of the resource pool.
     }
@@ -344,23 +344,23 @@ However, in the case of time dependent parameters, e.g., for a dependence on a n
 It is interesting to see what type of equations result for the total bacterial population $\mathcal{N}=L+G+D$:
 \begin{align}
     \begin{split}
-        \dot{G} &= \lambda L + \alpha G\left(1-\frac{\mathcal{N}}{N_t}\right)\\
-        \dot{\mathcal{N}} &= \alpha G\left(1-\frac{\mathcal{N}}{N_t}\right)
+        \dot{G} &= \lambda L + \mu G\left(1-\frac{\mathcal{N}}{N_t}\right)\\
+        \dot{\mathcal{N}} &= \mu G\left(1-\frac{\mathcal{N}}{N_t}\right)
     \end{split}
 \end{align}
 with initial conditions $G(0)=0$ and $\mathcal{N}(0)=N_0$.
 These equations have a clear interpretation, are derived from first principles, and are not identical to the popular Barayni-Roberts and modified-Gompertz models.
-A notable difference is that the growth rate $\alpha$ is time independent.
+A notable difference is that the growth rate $\mu$ is time independent.
 For the functions $L$ and $D$ it holds: $\lim_{t\to\infty} L(t) = 0$ and  $\lim_{t\to\infty} D(t) =  N_0\frac{\omega}{\omega+\lambda} $.
 It follows immediately that $\lim_{t\to\infty} G(t) = N_t-N_0\frac{\omega}{\omega+\lambda} $. The lag time $t_L$ can be approximated by the time at which half of the initial population is in the growth phase, i.e., $N_0=2G(t_L)$.
 Assuming $L\ll N_t$, we can ignore the non-linear term in the equation for $G$, which gives rise to:
 \begin{align}
-    N_0&= 2\int_0^{t_L} \lambda L(t)e^{\alpha(t_L-t)}dt\\
-    1  &= 2\lambda e^{\alpha t_L}\frac{1-e^{-(\omega+\lambda+\alpha)t_L}}{\omega+\lambda+\alpha}.
+    N_0&= 2\int_0^{t_L} \lambda L(t)e^{\mu(t_L-t)}dt\\
+    1  &= 2\lambda e^{\mu t_L}\frac{1-e^{-(\omega+\lambda+\mu)t_L}}{\omega+\lambda+\mu}.
 \end{align}
-For $\alpha > \omega+\lambda$  we can approximate $t_L$ by:
+For $\mu > \omega+\lambda$  we can approximate $t_L$ by:
 \begin{align}
-    t_L &\approx -\frac{1}{\alpha}\ln\left(\frac{2\lambda}{\omega+\lambda+\alpha}\right).
+    t_L &\approx -\frac{1}{\mu}\ln\left(\frac{2\lambda}{\omega+\lambda+\mu}\right).
 \end{align}
 The lag time $t_L$ diverges very slowly, logarithmically with $\lambda\to 0$.
 %
@@ -378,7 +378,7 @@ Within the framework of our pool model this means, that there is a back-flow fro
 \begin{align}
     L &\stackrel{\lambda}{\longrightarrow} G\\
     L &\stackrel{\omega}{\longrightarrow} D\\
-    G &\stackrel{\alpha}{\longrightarrow} 2G\\
+    G &\stackrel{\mu}{\longrightarrow} 2G\\
     G &\stackrel{\gamma(t)}{\longrightarrow} L
 \end{align}
 The rate $\gamma(t)$ depends on the rate of change of the environment.
@@ -414,7 +414,7 @@ The ordinary differential equations for the pool model with back-flow then read:
 \begin{align}
     \begin{split}
         \dot{L} &=\gamma(t) G - (\omega + \lambda) L\\
-        \dot{G} &= \lambda L -\gamma(t) G + \alpha G\left(1-\frac{L+G+D}{N_t}\right)\\
+        \dot{G} &= \lambda L -\gamma(t) G + \mu G\left(1-\frac{L+G+D}{N_t}\right)\\
         \dot{D} &= \omega  L
     \end{split}
     \label{eq:ode_tempshift_backlag}
@@ -429,7 +429,7 @@ The ordinary differential equations for the pool model with back-flow then read:
         The curves represent no temperature shift (green), one temperature jump $\Delta T = 10^\circ C$ at time $t=4~\mathrm{s}$ (orange)
         and the series of different temperature shifts of value $10^\circ C$, $5^\circ C$ and $15^\circ C$ at the time points $1, 3$ and $7$, respectively (rose).
         The parameters of the back-flow rate are $\Gamma=1^\circ C / s$ and $\delta=5~\mathrm{s}^{-1}$.
-        The other model parameters are $\alpha=2.5~\mathrm{s}^{-1}$, $\omega'=0.5~\mathrm{s}^{-1}$, $\beta=5~\mathrm{s}^{-1}$, $\lambda=10^{-2}~\mathrm{s}^{-1}$, $\omega = 0~\mathrm{s}^{-1}$ for each curve.
+        The other model parameters are $\mu=2.5~\mathrm{s}^{-1}$, $\omega'=0.5~\mathrm{s}^{-1}$, $\beta=5~\mathrm{s}^{-1}$, $\lambda=10^{-2}~\mathrm{s}^{-1}$, $\omega = 0~\mathrm{s}^{-1}$ for each curve.
     }
     \label{fig:TempJump}
     \end{center}
@@ -453,9 +453,9 @@ The simplest pool model for bacterial species $A$ and $B$ encompassing lag-phase
     \begin{split}
         \dot{L}_A &= - \lambda_A R L_A\\
         \dot{L}_B &= - \lambda_B R L_B \\
-        \dot{G}_A &= \lambda_A R L_A +\alpha_A R G_A\\
-        \dot{G}_B &= \lambda_B R L_B +\alpha_B R G_B\\
-        \dot{R} &=-\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{N_t} R G_B
+        \dot{G}_A &= \lambda_A R L_A +\mu_A R G_A\\
+        \dot{G}_B &= \lambda_B R L_B +\mu_B R G_B\\
+        \dot{R} &=-\frac{\mu_A}{N_t} R G_A-\frac{\mu_B}{N_t} R G_B
     \end{split}
     \label{eq:model_2sp_resource_comp}
 \end{align}
@@ -468,8 +468,8 @@ Inserting equation~\ref{eq:Resource} into system~\ref{eq:model_2sp_resource_comp
 \begin{align}
     \dot{L}_A &= -\lambda_A  L_A + \frac{\lambda_A}{N_t}L_AN\\
     \dot{L}_B &= -\lambda_B L_B + \frac{\lambda_B}{N_t}L_B N\\
-    \dot{G}_A &=  \lambda_A  L_A + \alpha_A G_A - \frac{\lambda_A L_A + \alpha_A G_A}{N_t} N\\
-    \dot{G}_B &=  \lambda_B L_B - \alpha_B G_B \frac{\lambda_B L_B + \alpha_B G_B}{N_t}N
+    \dot{G}_A &=  \lambda_A  L_A + \mu_A G_A - \frac{\lambda_A L_A + \mu_A G_A}{N_t} N\\
+    \dot{G}_B &=  \lambda_B L_B - \mu_B G_B \frac{\lambda_B L_B + \mu_B G_B}{N_t}N
 \end{align}
 where we used the total bacterial count $N=(L_A+G_A+L_B+G_B)$.
 These equations have the structure of a \ac{glv} model expanded with different internal states for one species.
@@ -481,8 +481,8 @@ As a result, species $A$ was able to suppress $B$, consuming the larger amount o
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2pools_resource_competition.pdf}
     \caption{
         The competition of the two bacterial species due to the common limiting resource calculated using equations~(\ref{eq:model_2sp_resource_comp}).
-        The red curve describes the growth of the bacteria $A$ ($N_A = L_A+G_A$) with model parameters $\lambda_A=10^{-2}~\mathrm{s}^{-1}$, $\alpha_A=3.0~\mathrm{s}^{-1}$.
-        The blue curve describes the growth of the bacteria $B$ ($N_B = L_B+G_B$) with model parameters $\lambda_B=5\cdot 10^{-2}~\mathrm{s}^{-1}$, $\alpha_B=2.5~\mathrm{s}^{-1}$.
+        The red curve describes the growth of the bacteria $A$ ($N_A = L_A+G_A$) with model parameters $\lambda_A=10^{-2}~\mathrm{s}^{-1}$, $\mu_A=3.0~\mathrm{s}^{-1}$.
+        The blue curve describes the growth of the bacteria $B$ ($N_B = L_B+G_B$) with model parameters $\lambda_B=5\cdot 10^{-2}~\mathrm{s}^{-1}$, $\mu_B=2.5~\mathrm{s}^{-1}$.
         The purple line shows the total bacterial count of the system  $N(t)=N_A+N_B$.
         The gray line denotes the dynamic of the resource pool scaled with its capacity $N_t=10^4$.
     }
@@ -493,8 +493,8 @@ As a result, species $A$ was able to suppress $B$, consuming the larger amount o
 In order to get the commonly used form of the \ac{glv}, we need to simply omit the bacterial states $L_A=L_B=0$:
 \begin{align}
     \begin{split}
-        \dot{G}_A &= \alpha_A G_A\left(1 - \frac{G_A}{N_t}\right) - \frac{\alpha_A}{N_t}G_AG_B\\
-        \dot{G}_B &= \alpha_B G_B\left(1-\frac{G_B}{N_t}\right) -\frac{\alpha_B}{N_t}G_AG_B. 
+        \dot{G}_A &= \mu_A G_A\left(1 - \frac{G_A}{N_t}\right) - \frac{\mu_A}{N_t}G_AG_B\\
+        \dot{G}_B &= \mu_B G_B\left(1-\frac{G_B}{N_t}\right) -\frac{\mu_B}{N_t}G_AG_B. 
     \label{eq:LV_simple}
     \end{split}
 \end{align}
@@ -534,9 +534,9 @@ Then the full \ac{ode} system is
     \begin{split}
         \dot{L}_A &= - \lambda_A R L_A\\
         \dot{L}_B &= - \lambda_B R L_B \\
-        \dot{G}_A &= \lambda_A R L_A + \alpha_A R G_A - \frac{\omega}{\kappa N_t} T G_A\\
-        \dot{G}_B &= \lambda_B R L_B + \alpha_B R G_B\\ 
-        \dot{R} &= -\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{N_t} R G_B\\
+        \dot{G}_A &= \lambda_A R L_A + \mu_A R G_A - \frac{\omega}{\kappa N_t} T G_A\\
+        \dot{G}_B &= \lambda_B R L_B + \mu_B R G_B\\
+        \dot{R} &= -\frac{\mu_A}{N_t} R G_A-\frac{\mu_B}{N_t} R G_B\\
         \dot{T}_{B}^{1,2} &= \mathcal{F}^{1,2} (R, G_B) \\
     \end{split}
     \label{eq:model_2sp_toxin}
@@ -560,8 +560,8 @@ The difference in the solutions of the given \acp{ode} between the two toxin pro
         The growing bacteria $B$ produces toxin $T_B$ (A) constantly $\dot{T}_B^1 = \mathcal{F}^1 = \kappa G_B$ or (B) only during growth process $\dot{T}_B^2 = \mathcal{F}^2 = \kappa R G_B$ 
         with production rate $\kappa=0.2~\mathrm{s}^{-1}$.
         The toxin $T_B$ causes the cell death of bacteria $A$ with rate constant $\omega = 0.2~\mathrm{s}^{-1}$.
-        The red curve describes the growth of the bacteria $A$ ($N_A = L_A+G_A$) with model parameters $\lambda_A=10^{-2}~\mathrm{s}^{-1}$, $\alpha_A=3.0~\mathrm{s}^{-1}$.
-        The blue curve describes the growth of the bacteria $B$ ($N_B = L_B+G_B$) with model parameters $\lambda_B=5\cdot 10^{-2}~\mathrm{s}^{-1}$, $\alpha_B=2.5~\mathrm{s}^{-1}$.
+        The red curve describes the growth of the bacteria $A$ ($N_A = L_A+G_A$) with model parameters $\lambda_A=10^{-2}~\mathrm{s}^{-1}$, $\mu_A=3.0~\mathrm{s}^{-1}$.
+        The blue curve describes the growth of the bacteria $B$ ($N_B = L_B+G_B$) with model parameters $\lambda_B=5\cdot 10^{-2}~\mathrm{s}^{-1}$, $\mu_B=2.5~\mathrm{s}^{-1}$.
         The gray line denotes the dynamic of the resource pool scaled with its capacity $N_t=10^4$.
     }
     \label{fig:2pool_2sp_toxin}
@@ -590,26 +590,26 @@ The functions $\mathcal{B}_{A/B}$ are a phenomenological choice to capture the i
 It is straightforward to make the mechanism of inhibition more explicit by, e.g., introducing a toxin pool.
 One possible choice for $\mathcal{B}$ is:
 \begin{equation}
-    \mathcal{B}(G) = \frac{\alpha}{1+KI(G)}
+    \mathcal{B}(G) = \frac{\mu}{1+KI(G)}
 \end{equation}
 where $I$ is the concentration of the inhibiting metabolic byproduct of the bacterial growth.
 This leads to
 \begin{align}\begin{split}
-    \dot{G}_A &= \frac{\alpha_A G_A}{1+K_BG_B}\left(1 - \frac{G_A+G_B}{N_t}\right)\\
-    \dot{G}_B &= \frac{\alpha_B G_B}{1+K_AG_A}\left(1-\frac{G_A+G_B}{N_t}\right).
+    \dot{G}_A &= \frac{\mu_A G_A}{1+K_BG_B}\left(1 - \frac{G_A+G_B}{N_t}\right)\\
+    \dot{G}_B &= \frac{\mu_B G_B}{1+K_AG_A}\left(1-\frac{G_A+G_B}{N_t}\right).
 \end{split}\end{align}
 % Note that if the toxin accumulates, i.e., $\dot I \sim G$,  one needs to replace $G$ by $\int G dt$.
 One can distinguish two limiting cases: {\it i}) $K_{A/B}\ll N_t$ and {\it ii}) $K_{A/B}\gg N_t$.
 In the first case the inhibition is of minor importance and could be ignored while in the latter case one can simplify the equations, given $N_A$ and $N_B$ are non-zero:
 \begin{align}\begin{split}
-    \dot{G}_A &=\tilde{\alpha}_A\frac{G_A}{G_B}\left(1 - G_A-G_B\right)\\
-    \dot{G}_B &= \tilde{\alpha}_B\frac{G_B}{G_A}\left(1 - G_A-G_B\right).
+    \dot{G}_A &=\tilde{\mu}_A\frac{G_A}{G_B}\left(1 - G_A-G_B\right)\\
+    \dot{G}_B &= \tilde{\mu}_B\frac{G_B}{G_A}\left(1 - G_A-G_B\right).
 \end{split}\end{align}
-We introduced the rescaled growth rates $\tilde{\alpha}_A=\alpha_A/(N_tK_B)$ and $\tilde{\alpha}_B=\alpha_B/(N_tK_A)$.
-Note that $[\tilde{\alpha}]=\mathrm{s}^{-1}$.
-We rescale the time with $\tilde{\alpha}_A$ and define the dimensionless parameter
+We introduced the rescaled growth rates $\tilde{\mu}_A=\mu_A/(N_tK_B)$ and $\tilde{\mu}_B=\mu_B/(N_tK_A)$.
+Note that $[\tilde{\mu}]=\mathrm{s}^{-1}$.
+We rescale the time with $\tilde{\mu}_A$ and define the dimensionless parameter
 \begin{equation}
-    \psi = \tilde{\alpha}_B/\tilde{\alpha}_A = \frac{K_B\alpha_B}{K_A\alpha_A}
+    \psi = \tilde{\mu}_B/\tilde{\mu}_A = \frac{K_B\mu_B}{K_A\mu_A}
 \end{equation}
 which results in
 \begin{align}
@@ -662,7 +662,7 @@ For the sake of clarity we omit again the lag pool and write
 \end{align}
 where $P_A$ and $P_B$ denote the substance produced by species A and B, respectively.
 The functions $\mathcal{B}_A(P_B,R)$ and $\mathcal{B}_B(P_A,R)$ capture the resource dependent growth.
-Setting $\mathcal{B}_A(P_B,R)=\alpha_A P_BR$, $\mathcal{B}_B(P_A,R)=\alpha_B P_A R$, $\mathcal{F}_A(R,G_A)=\kappa_A RG_A$, $\mathcal{F}_B(R,G_B)=\kappa_B RG_B$, rescaling $G_A$, $G_B$, and $P_B$ with $N_t$, $P_A$ with $\kappa_A/\alpha_A$, time with $\alpha_AN_t^2$, defining $\psi=\kappa_A\alpha_B/(\alpha_A^2N_t)$, and $\phi=\kappa_B/(\alpha_A N_t)$ results in
+Setting $\mathcal{B}_A(P_B,R)=\mu_A P_BR$, $\mathcal{B}_B(P_A,R)=\mu_B P_A R$, $\mathcal{F}_A(R,G_A)=\kappa_A RG_A$, $\mathcal{F}_B(R,G_B)=\kappa_B RG_B$, rescaling $G_A$, $G_B$, and $P_B$ with $N_t$, $P_A$ with $\kappa_A/\mu_A$, time with $\mu_AN_t^2$, defining $\psi=\kappa_A\mu_B/(\mu_A^2N_t)$, and $\phi=\kappa_B/(\mu_A N_t)$ results in
 \begin{align}
     \begin{split}
         \dot{G}_A &= P_B G_A\left(1 - G_A-G_B\right)\\
@@ -719,7 +719,7 @@ In this way, we can show that the bulk-based \ac{ode} model is directly related 
 single-cell behavior of the bacteria.
 To this end, we consider the system consisting of two bacterial species that can be described by the two internal states: lag phase and growth.
 Both of these species grow using the same resource pool $R$ but with different growth constants
-$\alpha_{A/B}$ and different lag phase transition rates $\lambda_{A/B}$.
+$\mu_{A/B}$ and different lag phase transition rates $\lambda_{A/B}$.
 Moreover, species $A$ is able to release a certain antimicrobial component $I$ that shows an
 inhibitory effect on species $B$ (amensalism).
 We assume that $L,G$ are measured in terms of the overall volume and $R,I$ are measured as total
@@ -730,9 +730,9 @@ The \acp{ode} system of the bacterial population can be written as:
 \begin{align}
     \begin{split}
         \dot{L}_A &= -\lambda_A R L_A\\
-        \dot{G}_A &= \lambda_A R L_A + \alpha_A R G_A\\
+        \dot{G}_A &= \lambda_A R L_A + \mu_A R G_A\\
         \dot{L}_B &= -\lambda_B R L_B\\
-        \dot{G}_B &= \lambda_B R L_B + \frac{\alpha_B}{1 + K_I I} R G_B.
+        \dot{G}_B &= \lambda_B R L_B + \frac{\mu_B}{1 + K_I I} R G_B.
     \end{split}
     \label{eq:spatial_limit_F}
 \end{align}
@@ -740,7 +740,7 @@ The \acp{ode} system of the bacterial population can be written as:
 Moreover, the microenvironment of our system contains the resource and the inhibitor molecules
 \begin{align}
     \begin{split}
-        \dot{R} &= -\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{(1 + K_I I) N_t} R G_B \\
+        \dot{R} &= -\frac{\mu_A}{N_t} R G_A-\frac{\mu_B}{(1 + K_I I) N_t} R G_B \\
         \dot{I} &= \kappa G_A.
     \end{split}
     \label{eq:spatial_limit_H}
@@ -902,9 +902,9 @@ and the \ac{ode} equations are
 \begin{align}
     \dot{L}_A &= -\lambda_A R L_A\\
     \dot{L}_B &= -\lambda_B R L_B\\
-    \dot{G}_A &= \alpha_A R G_A + \lambda_A R L_A\\
-    \dot{G}_B &= \frac{\alpha_B}{1 + K_I I} R G_B + \lambda_B R L_B\\
-    \dot{R} &= -\frac{\alpha_A}{N_t} R G_A-\frac{\alpha_B}{(1 + K_I I) N_t} R G_B\\
+    \dot{G}_A &= \mu_A R G_A + \lambda_A R L_A\\
+    \dot{G}_B &= \frac{\mu_B}{1 + K_I I} R G_B + \lambda_B R L_B\\
+    \dot{R} &= -\frac{\mu_A}{N_t} R G_A-\frac{\mu_B}{(1 + K_I I) N_t} R G_B\\
     \dot{I} &= \kappa G_A
 \end{align}
 When comparing these equations, we can map them onto each other via the relations
@@ -912,7 +912,7 @@ When comparing these equations, we can map them onto each other via the relation
     \begin{split}
         N_t &= [R_0]V_D\sigma\\
         K_I &= \frac{\nu_I}{V_D}\\
-        \alpha &= u[R_0]\sigma\\
+        \mu &= u[R_0]\sigma\\
         \kappa &= \sigma.
     \end{split}
     \label{eq:ode-abm-mappings}
@@ -1082,19 +1082,19 @@ The concentrations of the pools are then the components of our variable vector $
 \begin{align}
     \dot \mbx  &= \mbF(\mbx, \mbm, \mbp, \mbu) = \begin{pmatrix}
         -(\omega + \lambda) & 0               & 0      \\
-        \lambda          & \alpha R - \omega' & 0      \\
+        \lambda          & \mu R - \omega' & 0      \\
         \omega              & \omega'            & -\beta
     \end{pmatrix} \mbx\\
-    \dot \mbm &= \mbH (\mbx, \mbm, \mbp, \mbu) = -\frac{\alpha}{N_t} R G.
+    \dot \mbm &= \mbH (\mbx, \mbm, \mbp, \mbu) = -\frac{\mu}{N_t} R G.
 \end{align}
 Separating linear and non-linear parts in two terms yields
 \begin{equation}
     \dot \mbx = \begin{pmatrix}
         -(\omega + \lambda) & 0       & 0 \\
-         \lambda         & \alpha  & 0 \\
+         \lambda         & \mu  & 0 \\
          \omega &  \omega'& - \beta
     \end{pmatrix} 
-    \mbx + \frac{\alpha}{N_t} x^2 \sum_i^3 x^i \begin{pmatrix} 0 \\ 1 \\ 0  \end{pmatrix}.
+    \mbx + \frac{\mu}{N_t} x^2 \sum_i^3 x^i \begin{pmatrix} 0 \\ 1 \\ 0  \end{pmatrix}.
 \label{eq:x_repres_3pools_resource2}
 \end{equation}
 Here the first term is the linear part and the second term define the quadratic behavior of the system.
@@ -1209,9 +1209,9 @@ strength $\epsilon$, diffusion $D_R,D_I$) do not.
         \toprule
         \multicolumn{6}{c}{\textbf{Cellular Reactions}}\\
         \toprule
-        Production $G_A$            & $\alpha_A$    & $0.002$~\unit{\per\minute}
+        Production $G_A$            & $\mu_A$    & $0.002$~\unit{\per\minute}
         & Uptake                    & $u_A$         & $0.01$~\unit{\per\minute}\\
-        Production $G_B$            & $\alpha_B$    & $0.002$~\unit{\per\minute}
+        Production $G_B$            & $\mu_B$    & $0.002$~\unit{\per\minute}
         & Uptake                    & $u_B$         & $0.01$~\unit{\per\minute}\\
         Production $I$              & $\kappa$      & $0.1$~\unit{\per\minute}
         & Production $I$            & $b$           & $0.1$~\unit{\per\minute}\\
