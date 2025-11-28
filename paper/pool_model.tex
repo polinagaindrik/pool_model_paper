@@ -312,8 +312,8 @@ and, hence, the full system can be written as
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_3pools_resource.pdf}
     \caption{
         The time dependence of the bacterial count $N(t) = L(t) + G(t) $ is shown.
-        All curves were calculated using the model (\ref{eq:ode_3pool_resource2}) with parameters $\alpha=2.5~\mathrm{s}^{-1}$, $\mu'=0.5~\mathrm{s}^{-1}$, $N_t = 10^4$.
-        The blue curve shows a significant dip in the behavior of the system where the death of the bacteria is present $\mu = 0.5~\mathrm{s}^{-1}$.
+        All curves were calculated using the model (\ref{eq:ode_3pool_resource2}) with parameters $\alpha=2.5~\mathrm{s}^{-1}$, $\mu'=0.1~\mathrm{s}^{-1}$, $N_t = 10^4$.
+        The blue curve includes cell-death of the bacteria in the lag phase $\mu = 0.15~\mathrm{s}^{-1}$ and thus exhibits a small dip before its exponential growth.
         Other curves show the case of no bacteria dying $\mu=0~\mathrm{s}^{-1}$ and represent different lengths of lag phases: short $\lambda=10^{-2}~\mathrm{s}^{-1}$ (dark green), intermediate $\lambda=10^{-3}~\mathrm{s}^{-1}$ (light green) and long one $\lambda=10^{-4}~\mathrm{s}^{-1}$ (yellow). Note that the steady state for $N(t)$ and $D(t)$ is for this model $\lim_{t\to\infty} N(t)=0$ and $\lim_{t\to\infty} D(t)=N_t$, because of the depletion of the resource pool.
     }
     \label{fig:3pool_resource_plots}
