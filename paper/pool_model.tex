@@ -145,18 +145,33 @@ population-based dynamics of colony growth over molecular processes such as meta
 expression.
 Bacterial communities are ubiquitous and even able to survive under extreme conditions, making them
 virtually omnipresent around any living system.
-They play an especially important role within the context of food safety and production
-being a key contributor to the spoilage of food products as well as fermentation processes.
-Furthermore, effects such as biofilm formation can hinder drug treatment by shielding the bacterial
-colony from antibiotic substances or immune response of the organism.
-The natural bacterial processes are a crucial part of our planet's ecosystem, being responsible for
-tasks such as nutrient cycling, decomposition of organic matter and oxygen production.
+In particular, food matrices represent highly relevant microbial ecosystems, where these communities
+play a key role in both food safety and spoilage as well as fermentation processes.
+Biofilms are biological structures formed by complex and dynamic microbial communities adhered to
+surfaces that develop different communication mechanisms (e.g. quorum sensing), and coordinate to
+improve nutrient accessibility and provide protection against antimicrobial chemicals and physical
+stress~\citep{Zhao2023}.
+These structures are an important problem in food environments, and healthcare settings, being a
+source of contamination and increased risk of infection.
+% Furthermore, effects such as biofilm formation can hinder drug treatment by shielding the bacterial
+% colony from antibiotic substances or immune response of the organism.
+In addition, the natural bacterial processes are a crucial part of our planet's ecosystem, being
+responsible for tasks such as nutrient cycling, decomposition of organic matter and oxygen production.
 It is of great interest to understand the dynamics of these various processes.\\
 %
 In order to achieve a comprehensive description of the target system, it is important to incorporate
 all relevant biological phenomena arising in these bacterial systems.
-During their reproductive process, bacteria undergo multiple phases~\citep{buchanan_when_1997}, starting in a lag phase which
-is necessary to adapt to new environments and initially impedes the overall growth~\citep{rolfe_lag_2012, monod_growth_1949}.
+% During their reproductive process, bacteria undergo multiple phases~\citep{buchanan_when_1997}, starting in a lag phase which
+% is necessary to adapt to new environments and initially impedes the overall growth~\citep{rolfe_lag_2012, monod_growth_1949}.
+During the growth process, bacteria undergo different physiological and metabolic
+states~\citep{buchanan_when_1997}, that determine growth dynamics and response to the environment.
+Typically, when bacteria colonize a new environment, they enter an adaptation phase, commonly
+referred to as lag time~\citep{rolfe_lag_2012, monod_growth_1949}.
+Under this phase, bacteria prepare the enzymatic and metabolic machinery to initiate cell division
+and multiplication.
+According to Baranyi and Roberts~\citep{baranyi_dynamic_1994}, lag time can
+be defined as a function of the concentration of a limiting component that cells should synthesise
+in order to start growing.
 Additionally, bacteria are able to cooperate, e.g., via complementary metabolic processes or inhibit
 each other, e.g., by means of waste production as a metabolic byproduct~\citep{west_social_2007, rainey_evolution_2003, hibbing_bacterial_2010, stubbendieck_bacterial_2016}.
 A limited supply of nutrients will also affect the overall reproductive capacity of the colony~\citep{monod_growth_1949}.
@@ -174,8 +189,8 @@ The field of predictive microbiology has developed a variety of ODE-based models
 bacterial growth dynamics~\citep{perez-rodriguez_predictive_2012, gaindrik_experimental_2025}.
 Various \acp{ode} \textit{primary models} describe the bacterial growth curve under constant
 environmental conditions.
-Widely used examples include the modified Gompertz model~\citep{Gompertz1825-wi,Gibson1987}, Baranyi-Roberts
-model~\citep{baranyi_modeling_1993, baranyi_dynamic_1994} and McKellar two-compartment model~\cite{buchanan_when_1997} which distinguishes between growing and non-growing bacteria.
+Widely used examples include the modified Gompertz model~\citep{Zwietering1990,Gompertz1825-wi,Gibson1987}, Baranyi-Roberts
+model~\citep{baranyi_modeling_1993, baranyi_dynamic_1994} and McKellar~\cite{McKellar1997} two-compartment model~\cite{buchanan_when_1997} which distinguishes between growing and non-growing bacteria.
 To take into account changing environmental conditions, so-called \textit{secondary models}
 formulate the model parameters as a function of external quantities such as temperature, pH or
 humidity.
@@ -188,7 +203,7 @@ other spatial effects.\\
 When dealing with spatial effects such as heterogeneity, we are required to use more extensive
 modeling formulations such as \acp{pde} or \acp{abm}.
 The former represent an intermediate step between the population-based \ac{ode} models and the
-individually-based \acp{abm} and can be effective, especially when dealing with large crowds of
+individually-based \acp{abm} and can be effective, especially when dealing with large population of
 cells that can be approximated as a continuum.
 On the other hand, \acp{abm} excel at describing the individual behavior of cells which can then
 lead to more complex collective phenomena.
@@ -219,7 +234,7 @@ Furthermore, we assess how spatial heterogeneity~\citep{mckellar_heterogeneous_1
 % ------------------------------------------------------------------------------------------------
 \subsection{Three-pool model}
 We begin our discussion by considering a simplistic system where only one species is present $N=1$.
-Bacterial growth undergoes different consecutive phases~\citep{buchanan_when_1997}, starting with the so called lag-phase, during which no increase in the bacterial count occurs.
+Bacterial growth undergoes different consecutive phases~\citep{buchanan_when_1997}, starting with the so called lag-phase, which is a specific case of quiescence, during which no increase in the bacterial count occurs.
 This phenomenon appears due to adaptations of the microbial community, for example, to the new environmental conditions.
 This so-called preparation before the exponential growth includes synthesis of the needed compounds, initiation of the transcription~\citep{rolfe_lag_2012} and other physiological and regulatory mechanisms~\citep{monod_growth_1949}.
 After this, the bacteria which have succeeded in this adaptation stage enter the exponential growth phase, where the process of cell division is predominant.
@@ -239,6 +254,8 @@ Motivated by this we divide a bacterial population into three pools (states) (Fi
 To determine the equations which describe the system's dynamics, we consider the flows between the different states.
 The pools $G$ and $D$ are unidirectionally connected with the pool $L$.
 For now, we assume no back flow from the growth state $G$ to the lag-state $L$.
+It is a logical assumption of the speicific case of cell adaption if environmental conditions do not
+change.
 The suggested model can be cast in the following reactions:
 \begin{align}
     L &\stackrel{\lambda}{\longrightarrow} G\\
@@ -256,9 +273,8 @@ with the initial conditions $L(0)=N_0$, $G(0)=0$, and $D(0)=0$, where $N_0$ is t
 %
 Based on experimental observations, it was shown that the bacterial growth is strongly influenced by the limiting resource.
 According to the works of \citet{monod_growth_1949} in the system where all needed nutrients are in excess except for one, the total growth is linear to the concentration of this limiting nutrient resource.
-The control of the population density with respect to the available nutrition by means of cell communication is called quorum sensing.
-By releasing extracellular signalling molecules (autoinducers) it is possible for the bacteria to synchronize the gene expression of the whole group~\citep{ng_bacterial_2009}.
-Instead of modeling complex signalling networks, we choose a simpler approach to describe the dependence of growth on the nutrient availability.
+% The control of the population density with respect to the available nutrition by means of cell communication is called quorum sensing.
+We choose a minimalistic approach to describe the dependence of growth on the nutrient availability.
 We include a resource pool which is consumed by the growing bacteria using the second order kinetic reaction:
 \begin{equation}
     G + R  \stackrel{\mu_0}{\longrightarrow} 2G
@@ -319,7 +335,7 @@ Moreover, by including the flow of living bacteria to the death pool, we can mod
 % ------------------------------------------------------------------------------------------------
 \subsection{Lag-time estimation}
 Note that the previously introduced model could be further simplified to a two pool or state model by omitting the pool $D$ and removing cells directly from pools $L$ and $G$.
-The relevant question here is whether cells in the pool $D$ still contribute to the limitation of the resources by, e.g., occupying space or consuming important nutrients.
+The relevant question here is whether cells in the pool $D$ provide any significant impact on resource availability, e.g., by freeing previously occupied spaces or releasing previously consumed nutrients.
 If yes, the three pool model would be advantageous, if not the two pool model is sufficient with the benefit of having one parameter less.\\
 %
 The dynamics of the three pool model is captured by equations~\ref{eq:ode_3pool_resource2} which can be used to derive the two pool model simply by omitting $D$.
@@ -344,7 +360,9 @@ with initial conditions $G(0)=0$ and $\mathcal{N}(0)=N_0$.
 These equations have a clear interpretation, are derived from first principles, and are not identical to the popular Barayni-Roberts and modified-Gompertz models.
 A notable difference is that the growth rate $\mu$ is time independent.
 For the functions $L$ and $D$ it holds: $\lim_{t\to\infty} L(t) = 0$ and  $\lim_{t\to\infty} D(t) =  N_0\frac{\omega}{\omega+\lambda} $.
-It follows immediately that $\lim_{t\to\infty} G(t) = N_t-N_0\frac{\omega}{\omega+\lambda} $. The lag time $t_L$ can be approximated by the time at which half of the initial population is in the growth phase, i.e., $N_0=2G(t_L)$.
+It follows immediately that $\lim_{t\to\infty} G(t) = N_t-N_0\frac{\omega}{\omega+\lambda}$.
+The lag time $t_L$ can be approximated by the time at which half of the initial population is in the growth phase, i.e., $N_0=2G(t_L)$.
+This approach differs to other concepts of lag time such as the one by Gompertz (visual lag time) or Baranyi (work to be done).
 Assuming $L\ll N_t$, we can ignore the non-linear term in the equation for $G$, which gives rise to:
 \begin{align}
     N_0&= 2\int_0^{t_L} \lambda L(t)e^{\mu(t_L-t)}dt\\
@@ -360,7 +378,7 @@ The lag time $t_L$ diverges very slowly, logarithmically with $\lambda\to 0$.
 % ------------------------------------------------------------------------------------------------
 \subsection{Back flow from growth to lag pool}
 Bacteria which have lived under rather unfavorable conditions have developed different surviving mechanisms, one of which is adapting their metabolism and transitioning into dormant state.
-Dormancy in bacteria is a reversible state where cell continue living with low metabolic activity while the cell division stops~\citep{kaprelyants_dormancy_1993}.
+Dormancy in bacteria is a reversible state where cells continue living with low metabolic activity while the cell division stops~\citep{kaprelyants_dormancy_1993}.
 This survival strategy can appear in response to different external stresses, e.g., nutrient deficiency, temperature stress or extreme fluctuations of environment parameters.
 And after "difficult times" bacteria can continue cell division~\citep{kell_viability_1998}.
 Multiple models which include transitions of bacteria to the dormant state were proposed by \citet{bar_modelling_2002} and \citet{jones_dormancy_2010}.
@@ -505,13 +523,14 @@ For further comparison of the derived model with the matrix formulation of the \
 % ------------------------------------------------------------------------------------------------
 \subsection{Interspecies competition}
 Mutual inhibition is often a result of active competition mechanisms which have been developed by bacteria to contend for a shared resource.
-Some examples of such mechanisms are the production of antimicrobial compounds, inhibitors or toxins~\citep{wloch-salamon_effect_2008, chao_structured_1981}.
+Some examples of such mechanisms are the production of antimicrobial compounds, inhibitors (section~\ref{section:toxin-production}) or toxins~\citep{wloch-salamon_effect_2008, chao_structured_1981}.
 On the other hand, some bacteria can produce public goods, the compounds that benefit growth of other species.
 In this way, they can suppress the non-preferred species by helping their competitors~\citep{hibbing_bacterial_2010}.
 %
 %
 % ................................................................................................
 \subsubsection{Toxin production}
+\label{section:toxin-production}
 One direct form of inhibition is the production of toxins.
 To introduce active competitive mechanisms, we extend our model with one of the species, producing the toxic compounds $T$ during its growth:
 \begin{equation}
@@ -945,6 +964,7 @@ The initial bacteria have been ordered on a grid such that only every diagonal n
 %
 Figure~\ref{fig:spatial-growth-curve} shows multiple results for various configurations of the \ac{abm}, differing only in their initial spatial configuration and diffusivity.
 We see that in the highly-diffusive homogenous case of subfigure (A), the pool model is a good fit to the \ac{abm} model.
+It means that ODE could still be suitable for aqueous environments, where homogeneity is more probable.
 Heterogeneity and slower diffusion cause larger differences between the two models as can be seen in subfigures (B) and (C).
 The combination of the two effects shows the largest difference between model outputs.
 In subfigure (C), due to the heterogeneous cell distribution (see Appendix~\ref{fig:supplement-spatial-initial-config-cells}), overall inhibition of species $B$ is significantly reduced.
@@ -990,6 +1010,7 @@ The presented pool model was used to describe the dynamics of one- and two-speci
 Our approach produces results which exhibit similarities to other well-known predictive microbiology models such as the Baranyi-Roberts model while providing better explainability.
 The inclusion of additional metabolic processes or larger number of cell-species can be achieved by extending the list of possible states and defining transitions between them.
 As an example, the description of the quorum sensing phenomena can be modelled by adding the equation for the released autoinducer molecules as a part of the microenvironment.
+By releasing these extracellular signalling molecules (autoinducers) it is possible for the bacteria to synchronize the gene expression of the whole group~\citep{ng_bacterial_2009}.
 These molecules then affect the same-species bacteria growth controlling the size of the population.
 The approach described above provides a primary predictive model with transition rates between different pools as parameters.
 To include the influence of external factors, i.e., temperature, pH, pressure, etc., one can simply use the secondary models for the transition rates, e.g., the square-root temperature dependence~\citep{ratkowsky_relationship_1982}.\\
