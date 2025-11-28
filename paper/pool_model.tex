@@ -52,15 +52,7 @@
 % Define equation numbering
 \numberwithin{equation}{section}
 
-\newcommand{\beginsupplement}{%
-  \renewcommand{\thesection}{}
-  \setcounter{section}{0}
-  \renewcommand{\thesection}{S\arabic{section}}
-  % \setcounter{table}{0}
-  \renewcommand{\thetable}{S\arabic{table}}%
-  % \setcounter{figure}{0}
-  \renewcommand{\thefigure}{S\arabic{figure}}%
-}
+
 \newcommand{\mbx}{\mathbf{x}}
 \newcommand{\mbm}{\mathbf{m}}
 \newcommand{\mbp}{\mathbf{p}}
@@ -1030,7 +1022,31 @@ The data and simulation code which are presented in this study are publicly avai
 
 % ================================================================================================
 \newpage
-\beginsupplement
+
+\newcounter{suppsection}
+\newcounter{supptable}
+\newcounter{suppfigure}
+\newcounter{suppequation}
+
+\renewcommand{\thesection}{S\arabic{suppsection}}
+\renewcommand{\thetable}{S\arabic{supptable}}%
+\renewcommand{\thefigure}{S\arabic{suppfigure}}%
+\renewcommand{\theequation}{S\arabic{suppequation}}%
+
+\let\oldsection\section
+\let\oldequation\equation
+\let\oldtable\table
+\let\oldfigure\figure
+% \renewcommand{\section}{\@ifstar{\@oldsection}{\@stepcounter{suppsection}\@oldsection}}
+\makeatletter
+\renewcommand{\section}{\@ifstar{\oldsection*}{\stepcounter{suppsection}\oldsection}}
+\renewcommand{\equation}{\@ifstar{\oldequation*}{\stepcounter{suppequation}\oldequation}}
+\renewcommand{\table}{\@ifstar{\oldtable*}{\stepcounter{supptable}\oldtable}}
+\renewcommand{\figure}{\@ifstar{\oldfigure*}{\stepcounter{suppfigure}\oldfigure}}
+\makeatother
+
+\addcontentsline{toc}{Section}{Supplementary Material}% Add section to ToC
+
 % ================================================================================================
 \section{General mathematical formalism}
 \label{ssec:supplement1}
