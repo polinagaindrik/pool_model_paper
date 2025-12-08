@@ -75,7 +75,7 @@
 \definecolor{delim}{RGB}{20,105,176}
 \colorlet{numb}{magenta!60!black}
 
-\title{Pool Model - A unified Mathematical\\ Modeling Framework for Food Science}
+\title{Pool Model - A Mathematical Framework for Modelling Bacterial Consortia in Food Science}
 \author[1]{Polina Gaindrik\orcidlink{0000-0003-0928-3951}}
 \author[1]{Jonas Pleyer\orcidlink{0000-0003-0928-3951}}
 \author[2]{Fernando Pérez Rodríguez}
@@ -399,7 +399,7 @@ Within the framework of our pool model this means, that there is a back-flow fro
     G &\stackrel{\gamma(t)}{\longrightarrow} L
 \end{align}
 The rate $\gamma(t)$ depends on the rate of change of the environment.
-Stronger and quicker changes will lead to a higher rate $\gamma$.
+Stronger and quicker changes will lead to a higher rate $\gamma$, but the effect will relax to zero after some time.
 %
 %
 \paragraph{Maxwell type of stress - strain relation}
@@ -407,23 +407,32 @@ One of the reasons that bacteria enter the dormant state can be due to a shift i
 Moreover, a rapid shift in temperature is associated with the appearance of an additional lag phase~\citep{zwietering_modeling_1994}.
 To model it we propose a kind of viscoelastic Maxwell type of stress-strain relation and write down the ordinary differential equation for $\gamma$ to be:
 \begin{equation}
-    \dot{\gamma} = \Gamma |\dot{T}|-\delta \gamma.
+    \dot{\gamma} = \Gamma f\left(\dot{T}\right)-\delta \gamma.
 \end{equation}
-We assumed that the direction of the temperature change does not matter, i.e., a change from $T=2$ to $T=12$ has the same effect as a change from $T=14$ to $T=4$.
-$\Gamma$ is a scaling factor and $\delta$ is the relaxation time for the temperature disturbance.
+The dimensionless function $f$, with $f(0)=0$ and $f: \mathbb{R}\to\mathbb{R}_{\ge 0}$, evaluates the effect of a temperature change, i.e., a change from $T=2$ to $T=12$ could have a different effect as a change from $T=14$ to $T=4$. $\Gamma$ is a scaling factor and $\delta$ is the relaxation time for the temperature disturbance.
 Integration of this equation yields (with $\gamma(0)=0$):
 \begin{equation}
-    \gamma(t) = \Gamma \int_0^t |\dot{T}(t^{\prime})|e^{-\delta (t-t^{\prime})}dt^{\prime}.
+    \gamma(t) = \Gamma \int_0^t f\left(\dot{T}(t^{\prime})\right)e^{-\delta (t-t^{\prime})}dt^{\prime}.
 \end{equation}
-After some manipulation of this equation we find:
+One possible choice for $f$ reads:
+\begin{align}
+f(x)&=\begin{cases}\alpha x& x\ge 0\\ -(1-\alpha) x& x < 0,\end{cases}
+\end{align}
+$\alpha\in [0,1]$. For $\alpha=0.5$ it follows $f(x)=\frac{1}{2}|x|$. Using this choice for $f$ we find after some manipulation:
 \begin{equation}
-    \gamma(t) = \Gamma\delta\left |T[t]-T[0]e^{-\delta t}-\delta
-        \int\limits_0^t T(t^{\prime})e^{-\delta (t-t^{\prime})}dt^{\prime}\right |.
+    \gamma(t) = \Gamma\alpha\left [T(t)-T(0)e^{-\delta t}-\delta
+        \int\limits_0^t T(t^{\prime})e^{-\delta (t-t^{\prime})}dt^{\prime}\right ],
 \end{equation}
-This representation of the rate $\gamma(t)$ has the advantage that it only involves $T(t)$ and does not require the calculation of the derivative of $T$.
+for $\dot{T}\ge 0, \,\forall t$ and
+\begin{equation}
+    \gamma(t) = \Gamma(1-\alpha)\left [T(0)e^{-\delta t}-T(t)+\delta
+        \int\limits_0^t T(t^{\prime})e^{-\delta (t-t^{\prime})}dt^{\prime}\right ].
+\end{equation}
+for $\dot{T}< 0, \,\forall t$. 
+This representation of the rate $\gamma(t)$ has the advantage that it only involves $T(t)$ and does not require the calculation of a derivative.
 If $T$ exhibits $n$ temperature jumps, one finds:
 \begin{eqnarray}
-    \gamma(t) &=& \Gamma\sum_{i=1}^n \left |\Delta T_i \right |\theta(t-t_i)e^{-\delta(t-t_i)}.
+    \gamma(t) &=& \Gamma\sum_{i=1}^n f\left(\Delta T_i \right)\theta(t-t_i)e^{-\delta(t-t_i)}.
 \label{eq:gamma_tempshift}
 \end{eqnarray}
 %
