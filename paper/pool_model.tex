@@ -290,7 +290,7 @@ allowing us to keep a minimal number of parameters.
 Note that the pools $L$, $G$ and $D$ represent the number of bacteria (or number of bacteria per unit area/volume) while $R$ represents an abstract resource pool.
 Let's say $G=N_B/V$ and $[G]=\unit{1/V}$, where $N_B$ is the number of bacteria and $V$ is the volume.
 Then $R=N_R/V$ and $[R]=\unit{1/V}$, where $N_R$ is the number of resource molecules (or any appropriate unit, e.g., \unit{mol}).
-Then $[\mu_0]=\unit{V/s}$, $[N_t]=\unit{1/V}$, and $[\mu]= \unit{1/s}$.
+Then $[\mu_0]=\unit{V/h}$, $[N_t]=\unit{1/V}$, and $[\mu]= \unit{1/h}$.
 $N_t$ denotes the maximal size of the total bacterial population due to environmental limitations.
 For homogenous densities it is equivalent to consider the total amount, i.e., multiplying $L$ and $G$ by the volume.
 In this case $[L]=[G]=[N_t]=1$.
@@ -327,9 +327,9 @@ and, hence, the full system can be written as
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_3pools_resource.pdf}
     \caption{
         The time dependence of the bacterial count $N(t) = L(t) + G(t) $ is shown.
-        All curves were calculated using the model (\ref{eq:ode_3pool_resource2}) with parameters $\mu=2.5~\mathrm{s}^{-1}$, $\omega'=0.1~\mathrm{s}^{-1}$, $N_t = 10^4$.
-        The blue curve includes cell-death of the bacteria in the lag phase $\omega = 0.15~\mathrm{s}^{-1}$ and thus exhibits a small dip before its exponential growth.
-        Other curves show the case of no bacteria dying $\omega=0~\mathrm{s}^{-1}$ and represent different lengths of lag phases: short $\lambda=10^{-2}~\mathrm{s}^{-1}$ (dark green), intermediate $\lambda=10^{-3}~\mathrm{s}^{-1}$ (light green) and long one $\lambda=10^{-4}~\mathrm{s}^{-1}$ (yellow). Note that the steady state for $N(t)$ and $D(t)$ is for this model $\lim_{t\to\infty} N(t)=0$ and $\lim_{t\to\infty} D(t)=N_t$, because of the depletion of the resource pool.
+        All curves were calculated using the model (\ref{eq:ode_3pool_resource2}) with parameters $\mu=2.5~\mathrm{h}^{-1}$, $\omega'=0.1~\mathrm{h}^{-1}$, $N_t = 10^4$.
+        The blue curve includes cell-death of the bacteria in the lag phase $\omega = 0.15~\mathrm{h}^{-1}$ and thus exhibits a small dip before its exponential growth.
+        Other curves show the case of no bacteria dying $\omega=0~\mathrm{h}^{-1}$ and represent different lengths of lag phases: short $\lambda=10^{-2}~\mathrm{h}^{-1}$ (dark green), intermediate $\lambda=10^{-3}~\mathrm{h}^{-1}$ (light green) and long one $\lambda=10^{-4}~\mathrm{h}^{-1}$ (yellow). Note that the steady state for $N(t)$ and $D(t)$ is for this model $\lim_{t\to\infty} N(t)=0$ and $\lim_{t\to\infty} D(t)=N_t$, because of the depletion of the resource pool.
     }
     \label{fig:3pool_resource_plots}
     \end{center}
@@ -452,10 +452,10 @@ The ordinary differential equations for the pool model with back-flow then read:
     \caption{
         (A) The time dependence of the total bacterial count $N$ for the model including the back-flow to the lag phase due to temperature stress~(\ref{eq:ode_tempshift_backlag}).
         (B) The value of the corresponding back-flow rate $\gamma$ calculated according to (\ref{eq:gamma_tempshift}).
-        The curves represent no temperature shift (green), one temperature jump $\Delta T = 10^\circ C$ at time $t=4~\mathrm{s}$ (orange)
+        The curves represent no temperature shift (green), one temperature jump $\Delta T = 10^\circ C$ at time $t=4~\mathrm{h}$ (orange)
         and the series of different temperature shifts of value $10^\circ C$, $5^\circ C$ and $15^\circ C$ at the time points $1, 3$ and $7$, respectively (rose).
-        The parameters of the back-flow rate are $\zeta=1 s/K $ and $\delta=5~\mathrm{s}^{-1}$.
-        The other model parameters are $\mu=2.5~\mathrm{s}^{-1}$, $\omega'=0.5~\mathrm{s}^{-1}$, $\beta=5~\mathrm{s}^{-1}$, $\lambda=10^{-2}~\mathrm{s}^{-1}$, $\omega = 0~\mathrm{s}^{-1}$ for each curve.
+        The parameters of the back-flow rate are $\zeta=1 s/K $ and $\delta=5~\mathrm{h}^{-1}$.
+        The other model parameters are $\mu=2.5~\mathrm{h}^{-1}$, $\omega'=0.5~\mathrm{h}^{-1}$, $\beta=5~\mathrm{h}^{-1}$, $\lambda=10^{-2}~\mathrm{h}^{-1}$, $\omega = 0~\mathrm{h}^{-1}$ for each curve.
     }
     \label{fig:TempJump}
     \end{center}
@@ -507,8 +507,8 @@ As a result, species $A$ was able to suppress $B$, consuming the larger amount o
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2pools_resource_competition.pdf}
     \caption{
         The competition of the two bacterial species due to the common limiting resource calculated using equations~(\ref{eq:model_2sp_resource_comp}).
-        The red curve describes the growth of the bacteria $A$ ($N_A = L_A+G_A$) with model parameters $\lambda_A=10^{-2}~\mathrm{s}^{-1}$, $\mu_A=3.0~\mathrm{s}^{-1}$.
-        The blue curve describes the growth of the bacteria $B$ ($N_B = L_B+G_B$) with model parameters $\lambda_B=5\cdot 10^{-2}~\mathrm{s}^{-1}$, $\mu_B=2.5~\mathrm{s}^{-1}$.
+        The red curve describes the growth of the bacteria $A$ ($N_A = L_A+G_A$) with model parameters $\lambda_A=10^{-2}~\mathrm{h}^{-1}$, $\mu_A=3.0~\mathrm{h}^{-1}$.
+        The blue curve describes the growth of the bacteria $B$ ($N_B = L_B+G_B$) with model parameters $\lambda_B=5\cdot 10^{-2}~\mathrm{h}^{-1}$, $\mu_B=2.5~\mathrm{h}^{-1}$.
         The purple line shows the total bacterial count of the system  $N(t)=N_A+N_B$.
         The gray line denotes the dynamic of the resource pool scaled with its capacity $N_t=10^4$.
     }
@@ -585,10 +585,10 @@ The difference in the solutions of the given \acp{ode} between the two toxin pro
     \caption{
         The two species system competing for the common nutrient $R$ with production of the toxin $T_B$ (brown line) calculated using equations~(\ref{eq:model_2sp_toxin}).
         The growing bacteria $B$ produces toxin $T_B$ (A) constantly $\dot{T}_B^1 = \mathcal{F}^1 = \kappa G_B$ or (B) only during growth process $\dot{T}_B^2 = \mathcal{F}^2 = \kappa R G_B$ 
-        with production rate $\kappa=0.2~\mathrm{s}^{-1}$.
-        The toxin $T_B$ causes the cell death of bacteria $A$ with rate constant $\omega = 0.2~\mathrm{s}^{-1}$.
-        The red curve describes the growth of the bacteria $A$ ($N_A = L_A+G_A$) with model parameters $\lambda_A=10^{-2}~\mathrm{s}^{-1}$, $\mu_A=3.0~\mathrm{s}^{-1}$.
-        The blue curve describes the growth of the bacteria $B$ ($N_B = L_B+G_B$) with model parameters $\lambda_B=5\cdot 10^{-2}~\mathrm{s}^{-1}$, $\mu_B=2.5~\mathrm{s}^{-1}$.
+        with production rate $\kappa=0.2~\mathrm{h}^{-1}$.
+        The toxin $T_B$ causes the cell death of bacteria $A$ with rate constant $\omega = 0.2~\mathrm{h}^{-1}$.
+        The red curve describes the growth of the bacteria $A$ ($N_A = L_A+G_A$) with model parameters $\lambda_A=10^{-2}~\mathrm{h}^{-1}$, $\mu_A=3.0~\mathrm{h}^{-1}$.
+        The blue curve describes the growth of the bacteria $B$ ($N_B = L_B+G_B$) with model parameters $\lambda_B=5\cdot 10^{-2}~\mathrm{h}^{-1}$, $\mu_B=2.5~\mathrm{h}^{-1}$.
         The gray line denotes the dynamic of the resource pool scaled with its capacity $N_t=10^4$.
     }
     \label{fig:2pool_2sp_toxin}
@@ -633,7 +633,7 @@ In the first case the inhibition is of minor importance and could be ignored whi
     \dot{G}_B &= \tilde{\mu}_B\frac{G_B}{G_A}\left(1 - G_A-G_B\right).
 \end{split}\end{align}
 We introduced the rescaled growth rates $\tilde{\mu}_A=\mu_A/(N_tK_B)$ and $\tilde{\mu}_B=\mu_B/(N_tK_A)$.
-Note that $[\tilde{\mu}]=\mathrm{s}^{-1}$.
+Note that $[\tilde{\mu}]=\mathrm{h}^{-1}$.
 We rescale the time with $\tilde{\mu}_A$ and define the dimensionless parameter
 \begin{equation}
     \psi = \tilde{\mu}_B/\tilde{\mu}_A = \frac{K_B\mu_B}{K_A\mu_A}
