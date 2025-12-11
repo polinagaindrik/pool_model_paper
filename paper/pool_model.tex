@@ -407,12 +407,12 @@ One of the reasons that bacteria enter the dormant state can be due to a shift i
 Moreover, a rapid shift in temperature is associated with the appearance of an additional lag phase~\citep{zwietering_modeling_1994}.
 To model it we propose a kind of viscoelastic Maxwell type of stress-strain relation and write down the ordinary differential equation for $\gamma$ to be:
 \begin{equation}
-    \dot{\gamma} = \Gamma f\left(\dot{T}\right)-\delta \gamma.
+    \dot{\gamma} = \sigma f\left(\zeta\dot{T}\right)-\delta \gamma.
 \end{equation}
-The dimensionless function $f$, with $f(0)=0$ and $f: \mathbb{R}\to\mathbb{R}_{\ge 0}$, evaluates the effect of a temperature change, i.e., a change from $T=2$ to $T=12$ could have a different effect as a change from $T=14$ to $T=4$. $\Gamma$ is a scaling factor and $\delta$ is the relaxation time for the temperature disturbance.
+The dimensionless function $f$, with $f(0)=0$ and $f: \mathbb{R}\to\mathbb{R}_{\ge 0}$, evaluates the effect of a temperature change, i.e., a change from $T=2$ to $T=12$ could have a different effect as a change from $T=14$ to $T=4$. $\zeta$ is a scaling factor, $\sigma$ is a kind of stiffness telling how strongly the bacteria react to temperature stress, and $\delta^{-1}$ is the relaxation time for the temperature disturbance.
 Integration of this equation yields (with $\gamma(0)=0$):
 \begin{equation}
-    \gamma(t) = \Gamma \int_0^t f\left(\dot{T}(t^{\prime})\right)e^{-\delta (t-t^{\prime})}dt^{\prime}.
+    \gamma(t) = \sigma\int_0^t f\left(\zeta\dot{T}(t^{\prime})\right)e^{-\delta (t-t^{\prime})}dt^{\prime}.
 \end{equation}
 One possible choice for $f$ reads:
 \begin{align}
@@ -420,19 +420,19 @@ f(x)&=\begin{cases}\alpha x& x\ge 0\\ -(1-\alpha) x& x < 0,\end{cases}
 \end{align}
 $\alpha\in [0,1]$. For $\alpha=0.5$ it follows $f(x)=\frac{1}{2}|x|$. Using this choice for $f$ we find after some manipulation:
 \begin{equation}
-    \gamma(t) = \Gamma\alpha\left [T(t)-T(0)e^{-\delta t}-\delta
+    \gamma(t) = \sigma\alpha\zeta\left [T(t)-T(0)e^{-\delta t}-\delta
         \int\limits_0^t T(t^{\prime})e^{-\delta (t-t^{\prime})}dt^{\prime}\right ],
 \end{equation}
 for $\dot{T}\ge 0, \,\forall t$ and
 \begin{equation}
-    \gamma(t) = \Gamma(1-\alpha)\left [T(0)e^{-\delta t}-T(t)+\delta
+    \gamma(t) = \sigma(1-\alpha)\zeta\left [T(0)e^{-\delta t}-T(t)+\delta
         \int\limits_0^t T(t^{\prime})e^{-\delta (t-t^{\prime})}dt^{\prime}\right ].
 \end{equation}
 for $\dot{T}< 0, \,\forall t$. 
 This representation of the rate $\gamma(t)$ has the advantage that it only involves $T(t)$ and does not require the calculation of a derivative.
 If $T$ exhibits $n$ temperature jumps, one finds:
 \begin{eqnarray}
-    \gamma(t) &=& \Gamma\sum_{i=1}^n f\left(\Delta T_i \right)\theta(t-t_i)e^{-\delta(t-t_i)}.
+    \gamma(t) &=& \sigma\sum_{i=1}^n f\left(\zeta\Delta T_i \right)\theta(t-t_i)e^{-\delta(t-t_i)}.
 \label{eq:gamma_tempshift}
 \end{eqnarray}
 %
@@ -454,7 +454,7 @@ The ordinary differential equations for the pool model with back-flow then read:
         (B) The value of the corresponding back-flow rate $\gamma$ calculated according to (\ref{eq:gamma_tempshift}).
         The curves represent no temperature shift (green), one temperature jump $\Delta T = 10^\circ C$ at time $t=4~\mathrm{s}$ (orange)
         and the series of different temperature shifts of value $10^\circ C$, $5^\circ C$ and $15^\circ C$ at the time points $1, 3$ and $7$, respectively (rose).
-        The parameters of the back-flow rate are $\Gamma=1^\circ C / s$ and $\delta=5~\mathrm{s}^{-1}$.
+        The parameters of the back-flow rate are $\zeta=1 s/K $ and $\delta=5~\mathrm{s}^{-1}$.
         The other model parameters are $\mu=2.5~\mathrm{s}^{-1}$, $\omega'=0.5~\mathrm{s}^{-1}$, $\beta=5~\mathrm{s}^{-1}$, $\lambda=10^{-2}~\mathrm{s}^{-1}$, $\omega = 0~\mathrm{s}^{-1}$ for each curve.
     }
     \label{fig:TempJump}
