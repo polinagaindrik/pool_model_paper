@@ -53,7 +53,16 @@ def pool_model_2pools_resource_lag2(t, x, param, x0, const):
         ]
 
 def pool_model_dormant(t, x, param, x0, const):
-    pass
+    (lambd, omega1, mu, omega2, xi, N_t, Gamma, delta, shift_cnd,) = const
+    (L0, G0, D0, S0, ) = x0
+    (L, G, D, S, ) = x
+    gamma = temp_stress(t, Gamma, delta, shift_cnd)
+    return [
+        - (omega1 + lambd) * L,
+        lambd * L + (mu - mu * ((L + G + D)/N_t) - omega2 - gamma) * G + xi * S,
+        omega1 * L + omega2 * G,
+        gamma * G - xi * S
+        ]
 
 def pool_model_tempstress(t, x, param, x0, const):
     (lambd, omega1, mu, omega2, N_t, Gamma, delta, shift_cnd,) = const
