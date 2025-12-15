@@ -327,9 +327,10 @@ and, hence, the full system can be written as
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_3pools_resource.pdf}
     \caption{
         The time dependence of the bacterial count $N(t) = L(t) + G(t) $ is shown.
-        All curves were calculated using the model (\ref{eq:ode_3pool_resource2}) with parameters $\mu=2.5~\mathrm{h}^{-1}$, $\omega'=0.1~\mathrm{h}^{-1}$, $N_t = 10^4$.
-        The blue curve includes cell-death of the bacteria in the lag phase $\omega = 0.15~\mathrm{h}^{-1}$ and thus exhibits a small dip before its exponential growth.
-        Other curves show the case of no bacteria dying $\omega=0~\mathrm{h}^{-1}$ and represent different lengths of lag phases: short $\lambda=10^{-2}~\mathrm{h}^{-1}$ (dark green), intermediate $\lambda=10^{-3}~\mathrm{h}^{-1}$ (light green) and long one $\lambda=10^{-4}~\mathrm{h}^{-1}$ (yellow). Note that the steady state for $N(t)$ and $D(t)$ is for this model $\lim_{t\to\infty} N(t)=0$ and $\lim_{t\to\infty} D(t)=N_t$, because of the depletion of the resource pool.
+        All curves were calculated using the model (\ref{eq:ode_3pool_resource2}) with parameters $\mu=2.5~\mathrm{h}^{-1}$, $\omega=0~\mathrm{h}^{-1}$, $N_t = 10^4$.
+        The blue dashed curve shows the case of no cell death $\omega' = 0~\mathrm{h}^{-1}$ and thus exhibits a steady state without the decrease of the bacterial population.
+        Other curves represent the growing bacteria dying with the rate $\omega'=0.1~\mathrm{h}^{-1}$ and different lengths of lag phases: short $\lambda=10^{-2}~\mathrm{h}^{-1}$ (dark green), intermediate $\lambda=10^{-3}~\mathrm{h}^{-1}$ (light green) and long one $\lambda=10^{-4}~\mathrm{h}^{-1}$ (yellow).
+        Note that the steady state for $N(t)$ and $D(t)$ is for this model $\lim_{t\to\infty} N(t)=0$ and $\lim_{t\to\infty} D(t)=N_t$, because of the depletion of the resource pool.
     }
     \label{fig:3pool_resource_plots}
     \end{center}
