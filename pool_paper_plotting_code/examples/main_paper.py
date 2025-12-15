@@ -10,61 +10,61 @@ from digital_twin import *
 
 
 def pool_model_3pools(t, x, param, x0, const):
-    (lambd, mu1, alpha, mu2, beta, ) = const
+    (lambd, omega1, mu, omega2, ) = const
     (L0, G0, D0, ) = x0
     (L, G, D, ) = x
 
     return [
-        - (mu1 + lambd) * L,
-                  lambd * L + (alpha - mu2) * G,
-                    mu1 * L +           mu2 * G - beta * D
+        - (omega1 + lambd) * L,
+        lambd * L + (mu - omega2) * G,
+        omega1 * L + omega2 * G
         ]
 
 def pool_model_3pools_resource(t, x, param, x0, const):
-    (lambd, mu1, alpha, mu2, beta, N_t, ) = const
+    (lambd, omega1, mu, omega2, N_t, ) = const
     (L0, G0, D0, ) = x0
     (L, G, D, ) = x
 
     return [
-        - (mu1 + lambd) * L,
-                  lambd * L + (alpha - alpha * ((L + G + D)/N_t) - mu2) * G,
-                    mu1 * L +                                       mu2 * G - beta * D
+        - (omega1 + lambd) * L,
+        lambd * L + (mu - mu * ((L + G + D)/N_t) - omega2) * G,
+        omega1 * L + omega2 * G
         ]
 
 def pool_model_2pools_resource_lag(t, x, param, x0, const):
-    (lambd, alpha, N_t, ) = const
+    (lambd, mu, N_t, ) = const
     (L0, G0, R0, ) = x0
     (L, G, R ) = x
 
     return [
         - lambd * R * L,
-          lambd * R * L + alpha * R * G,
-                - (alpha / N_t) * R * G
+        lambd * R * L + mu * R * G,
+        - (mu / N_t) * R * G
         ]
 
 def pool_model_2pools_resource_lag2(t, x, param, x0, const):
-    (lambd, alpha, N_t, ) = const
+    (lambd, mu, N_t, ) = const
     (L0, G0, ) = x0
     (L, G, ) = x
     r_term = 1 - (L+G)/N_t
     return [
         - lambd * r_term * L,
-          lambd * r_term * L + alpha * r_term * G,
+        lambd * r_term * L + mu * r_term * G,
         ]
 
 def pool_model_dormant(t, x, param, x0, const):
     pass
 
 def pool_model_tempstress(t, x, param, x0, const):
-    (lambd, mu1, alpha, mu2, beta, N_t, Gamma, delta, shift_cnd,) = const
+    (lambd, omega1, mu, omega2, N_t, Gamma, delta, shift_cnd,) = const
     (L0, G0, D0, ) = x0
     (L, G, D, ) = x
 
     gamma = temp_stress(t, Gamma, delta, shift_cnd)
     return [
-        - (mu1 + lambd) * L +                                             gamma * G,
-                  lambd * L + (alpha - alpha * ((L + G + D)/N_t) - mu2 - gamma) * G,
-                    mu1 * L +                                               mu2 * G - beta * D
+        - (omega1 + lambd) * L + gamma * G,
+        lambd * L + (mu - mu * ((L + G + D)/N_t) - omega2 - gamma) * G,
+        omega1 * L + omega2 * G
         ]
 
 def temp_stress(t, Gamma, delta, shift_cnd):
@@ -76,44 +76,44 @@ def temp_stress(t, Gamma, delta, shift_cnd):
     return gamma
 
 def pool_model_resource_comp(t, x, param, x0, const):
-    (lambd_A, alpha_A, lambd_B, alpha_B, N_t, ) = const
+    (lambd_A, mu_A, lambd_B, mu_B, N_t, ) = const
     (L_A0, G_A0, L_B0, G_B0, R0, ) = x0
     (L_A, G_A, L_B, G_B, R, ) = x
 
     return [
         - lambd_A * R * L_A,
-          lambd_A * R * L_A + alpha_A * R * G_A,
+          lambd_A * R * L_A + mu_A * R * G_A,
         - lambd_B * R * L_B,
-          lambd_B * R * L_B + alpha_B * R * G_B,
-        - (alpha_A / N_t) * R * G_A - (alpha_B / N_t) * R * G_B
+          lambd_B * R * L_B + mu_B * R * G_B,
+        - (mu_A / N_t) * R * G_A - (mu_B / N_t) * R * G_B
         ]
 
 def pool_model_2sp_comp_toxin1(t, x, param, x0, const):
-    (lambd_A, alpha_A, lambd_B, alpha_B, N_t, k, mu,) = const
+    (lambd_A, mu_A, lambd_B, mu_B, N_t, k, omega,) = const
     (L_A0, G_A0, L_B0, G_B0, R0, T0) = x0
     (L_A, G_A, L_B, G_B, R, T) = x
 
     return [
         - lambd_A * R * L_A,
-          lambd_A * R * L_A + (alpha_A * R - mu/(k*N_t) * T) * G_A,
+          lambd_A * R * L_A + (mu_A * R - omega/(k*N_t) * T) * G_A,
         - lambd_B * R * L_B,
-          lambd_B * R * L_B + (alpha_B * R) * G_B,
-        - (alpha_A / N_t) * R * G_A - (alpha_B / N_t) * R * G_B,
+          lambd_B * R * L_B + (mu_B * R) * G_B,
+        - (mu_A / N_t) * R * G_A - (mu_B / N_t) * R * G_B,
           k * G_B
         ]
 
 def pool_model_2sp_comp_toxin2(t, x, param, x0, const):
-    (lambd_A, alpha_A, lambd_B, alpha_B, N_t, k, mu,) = const
+    (lambd_A, mu_A, lambd_B, mu_B, N_t, k, omega,) = const
     (L_A0, G_A0, L_B0, G_B0, R0, T0) = x0
     (L_A, G_A, L_B, G_B, R, T) = x
 
     return [
         - lambd_A * R * L_A,
-          lambd_A * R * L_A + (alpha_A * R - mu/(k*N_t) * T) * G_A,
+          lambd_A * R * L_A + (mu_A * R - omega/(k*N_t) * T) * G_A,
         - lambd_B * R * L_B,
-          lambd_B * R * L_B + (alpha_B * R) * G_B,
-        - (alpha_A / N_t) * R * G_A - (alpha_B / N_t) * R * G_B,
-          k * G_B  * R # * alpha_B
+          lambd_B * R * L_B + (mu_B * R) * G_B,
+        - (mu_A / N_t) * R * G_A - (mu_B / N_t) * R * G_B,
+          k * G_B  * R # * mu_B
         ]
 
 def pool_model_2sp_comp_inhib(t, x, param, x0, const):
@@ -147,21 +147,6 @@ def observable_2pool(output):
     # => Output [n = L+G+D]
     return [output[0]+output[1]]
 
-def pool_model_spatial_limit(t, x, temp, x0, const):
-    (L1, G1, L2, G2, R, I,) = x
-    (lambd1, lambd2, alph1, alph2, chi, muI, N_t, ) = const
-    res = 1 - (L1+L2+G1+G2)/N_t
-    alpha2_inhib = alph2/(1 + muI*I)
-    return [
-        - lambd1 * R * L1,
-          lambd1 * R * L1 + alph1 * R * G1,
-        - lambd2 * R * L2,
-          lambd2 * R * L2 + alpha2_inhib * R * G2 ,
-          #lambd2 * R * L2 + alph2 * R * G2 - muI/(chi*N_t) * I * G2,
-        - (alph1/N_t) * R * G1 - (alpha2_inhib/  N_t) * R * G2,
-          chi * G1
-    ]
-
 def observable_2pool_2species(output):
     # Output (n_variables x n_times)
     # Variables: (L, G, D,) = x
@@ -190,23 +175,23 @@ if __name__ == "__main__":
 
 ###############33############### 3 pool models with resource pool ##############################3########333
     # Generate model data
-    const1 = [1e-2, 0., 2.5, .1, 0., Nt] # (lambd, mu1, alpha, mu2, beta, N_t, )
-    const2 = [1e-3, 0., 2.5, .1, 0., Nt] # (lambd, mu1, alpha, mu2, beta, N_t, )
-    const3 = [5e-5, 0., 2.5, .1, 0., Nt] # (lambd, mu1, alpha, mu2, beta, N_t, )
-    const4 = [1e-3, .15, 2.5, .1, 0., Nt] # (lambd, mu1, alpha, mu2, beta, N_t, )
+    const1 = [1e-2, 0., 2.5, .1, Nt] # (lambd, omega1, mu, omega2, N_t, )
+    const2 = [1e-3, 0., 2.5, .1, Nt] # (lambd, omega1, mu, omega2, N_t, )
+    const3 = [5e-5, 0., 2.5, .1, Nt] # (lambd, omega1, mu, omega2, N_t, )
+    const4 = [1e-3, .15, 2.5, .1, Nt] # (lambd, omega1, mu, omega2, N_t, )
     const_3pool_res = [const1, const2, const3, const4]
     data_3pool_res = [generate_insilico_data(pool_model_3pools_resource, [t], [], [[]], x01,
                 const=const, obs_func=observable_3pool, n_traj=1) for const in const_3pool_res]
 
     labels = [r'$\lambda=10^{-2}, \omega=0$', r'$\lambda=10^{-3}, \omega=0$', r'$\lambda=10^{-4}, \omega=0$', r'$\lambda=10^{-3}, \omega=0.15$']
-    color_palette_1sp = [colors_all['N_lambd_1e-3_mu_0'], colors_all['N_wo_tempshift'], colors_all['N_lambd_1e-2_mu_0'], colors_all['N_lambd_1e-3_mu_0_5']]
+    color_palette_1sp = [colors_all['N_lambd_1e-3_omega_0'], colors_all['N_wo_tempshift'], colors_all['N_lambd_1e-2_omega_0'], colors_all['N_lambd_1e-3_omega_0_5']]
     lnst = ['solid', 'solid', 'solid', 'dotted']
     # Plot the model
     fig, ax = plt.subplots(1, 1, figsize=figsize_default)
     for i, data in enumerate(data_3pool_res):
         for d in data:
             ax.plot(d['times'], d['obs_mean'][0], linewidth=2.5, color=color_palette_1sp[i], label=labels[i], linestyle=lnst[i])
-    fig, ax = set_labels(fig, ax, r'Time, $t$', r'Total Bacterial Count, $N$')
+    fig, ax = set_labels(fig, ax, r'Time, $t$ [h]', r'Total Bacterial Count, $N$')
     ax.set_yscale('log')
     ax.set_xlim(0., 11.0)
     #ax.set_ylim(3.0e0, 0.6e4)
@@ -220,8 +205,8 @@ if __name__ == "__main__":
     Gamma, delta= 1., 5.
     shift_cnd = [(4, 10)] #((1, 10), (3, 5), (5, 5), (7, 15))
     y = [temp_stress(tt, Gamma, delta, shift_cnd) for tt in t]
-    const5 = [1e-2, 0., 2.5, .5, 0., Nt, Gamma, delta, shift_cnd] # (lambd, mu1, alpha, mu2, beta, N_t, Gamma, delta, shift_cnd)
-    const6 = [1e-2, 0., 2.5, .5, 0., Nt, Gamma, delta, ((1, 10), (3, 5), (7, 15))] # (lambd, mu1, alpha, mu2, beta, N_t, Gamma, delta, shift_cnd)
+    const5 = [1e-2, 0., 2.5, .5, Nt, Gamma, delta, shift_cnd] # (lambd, omega1, mu, omega2, N_t, Gamma, delta, shift_cnd)
+    const6 = [1e-2, 0., 2.5, .5, Nt, Gamma, delta, ((1, 10), (3, 5), (7, 15))] # (lambd, omega1, mu, omega2, N_t, Gamma, delta, shift_cnd)
     consts_Tempshift = [const1, const5, const6]
     data_Tempshift = [data_3pool_res[0]] + [generate_insilico_data(pool_model_tempstress, [t], [], [[]], x01,
                                             const=const, obs_func=observable_3pool, n_traj=1) for const in consts_Tempshift[1:]]
@@ -238,7 +223,7 @@ if __name__ == "__main__":
     y2 = [temp_stress(tt, *const6[-3:]) for tt in t]
     ax[1].plot(t, y2, color=color_palette_1sp_tempshift[i])
     fig, ax[0] = set_labels(fig, ax[0], r'', r'Bacterial Count, $N$')
-    fig, ax[1] = set_labels(fig, ax[1], r'Time, $t$', r'Rate, $\gamma$')
+    fig, ax[1] = set_labels(fig, ax[1], r'Time, $t$ [h]', r'Rate, $\gamma$')
     ax[0].set_yscale('log')
     ax[0].set_xlim(0.7, 8.5)
     ax[0].set_ylim(6e0, 1.1e4)
@@ -265,7 +250,7 @@ if __name__ == "__main__":
     ax.plot(t, y, color=color_palette_1sp_tempshift[i-1])
     y2 = [temp_stress(tt, *const6[-3:]) for tt in t]
     ax.plot(t, y2, color=color_palette_1sp_tempshift[i])
-    fig, ax = set_labels(fig, ax, r'Time, $t$', r'Rate, $\gamma$')
+    fig, ax = set_labels(fig, ax, r'Time, $t$ [h]', r'Rate, $\gamma$')
     ax.set_xlim(0.7, 8.5)
     ax.text(0.04, 0.8, r'\textbf{B}', transform = ax.transAxes)
     plt.savefig('paper/Figures-pool_model_3pools_resource_tempshift2.pdf', bbox_inches='tight')
@@ -281,7 +266,7 @@ if __name__ == "__main__":
     lnst = ['solid', 'solid', 'dashed', 'solid']
 
     fig, ax = plt.subplots(1, 1, figsize=figsize_default)
-    fig, ax = set_labels(fig, ax, r'Time, $t$', r'Bacterial Count, $N$')
+    fig, ax = set_labels(fig, ax, r'Time, $t$ [h]', r'Bacterial Count, $N$')
     for d in data_gLV:
         for i, obs in enumerate(d['obs_mean']):
             if i == 3:
@@ -297,7 +282,7 @@ if __name__ == "__main__":
 ######################## Interspecies competition (Waste/inhibitor production) #############################
 ####################################### Toxin Production ##############################################
     x0_tox = [[10.], [0.], [10.], [0.], [1.], [0.]]
-    const_tox = [.01, 3., .05, 2.5, Nt, 0.2, 0.2] # (lambd1, lambd2, alph1, alph2, Nt, k, mu)
+    const_tox = [.01, 3., .05, 2.5, Nt, 0.2, 0.2] # (lambd1, lambd2, alph1, alph2, Nt, k, omega)
     data_tox1 = generate_insilico_data(pool_model_2sp_comp_toxin1, [np.linspace(0, 10, 100)], [], [[]], x0_tox,
                                        const=const_tox, n_traj=1, obs_func=observable_2pool_2species_resource_toxin)
     data_tox2 = generate_insilico_data(pool_model_2sp_comp_toxin2, [np.linspace(0, 10, 100)], [], [[]], x0_tox,
@@ -322,7 +307,7 @@ if __name__ == "__main__":
         ax[i].set_xlim(2., 9.0)
         ax[i].set_ylim(-100, 1.01e4)
         ax[i].legend()
-        fig, ax[i] = set_labels(fig, ax[i], r'Time, $t$', r'Bacterial Count, $N$')
+        fig, ax[i] = set_labels(fig, ax[i], r'Time, $t$ [h]', r'Bacterial Count, $N$')
     ax[0].text(2.1, 800, r'\textbf{A}')#r'(a) $\mathcal{F}^1$')
     ax[1].text(2.1, 800, r'\textbf{B}')#r'(b) $\mathcal{F}^2$')
     #plt.savefig('paper/Figures-pool_model_2pools_toxin.pdf', bbox_inches='tight')
@@ -337,7 +322,7 @@ if __name__ == "__main__":
     ax.set_xlim(2., 9.0)
     ax.set_ylim(-100, 1.01e4)
     ax.legend()
-    fig, ax = set_labels(fig, ax, r'Time, $t$', r'Bacterial Count, $N$')
+    fig, ax = set_labels(fig, ax, r'Time, $t$ [h]', r'Bacterial Count, $N$')
     ax.text(*coord_text, r'\textbf{A}', transform = ax.transAxes)
     plt.savefig('paper/Figures-pool_model_2pools_toxin1.pdf', bbox_inches='tight')
     plt.close(fig)
@@ -351,14 +336,14 @@ if __name__ == "__main__":
     ax.set_xlim(2., 9.0)
     ax.set_ylim(-100, 1.01e4)
     ax.legend()
-    fig, ax = set_labels(fig, ax, r'Time, $t$', r'Bacterial Count, $N$')
+    fig, ax = set_labels(fig, ax, r'Time, $t$ [h]', r'Bacterial Count, $N$')
     ax.text(*coord_text, r'\textbf{B}', transform = ax.transAxes)
     plt.savefig('paper/Figures-pool_model_2pools_toxin2.pdf', bbox_inches='tight')
     plt.close(fig)
 
 ############################# Inhibition ######################################
     x0_inhib = [[0.1], [0.1]]
-    const_inhib = [1., 0.5, 2] # (lambd1, lambd2, alph1, alph2, Nt, k, mu)
+    const_inhib = [1., 0.5, 2] # ()
     data_inhib = []
     lnst = ['solid', 'dashed', 'dotted']
     color_palette_2sp_only = [colors_all['N_A'], colors_all['N_B']]
@@ -374,7 +359,7 @@ if __name__ == "__main__":
             ax[j].plot(d['times'], obs, linewidth=3-i, color=color_palette_2sp_only[i], label=labels[i], linestyle='dashed')
         ax[j].set_xlim(-0.001, 1.)
         ax[j].legend(loc='center right')
-        fig, ax[j] = set_labels(fig, ax[j], r'Time, $t$', r'$N / N_t$')
+        fig, ax[j] = set_labels(fig, ax[j], r'Time, $t$ [h]', r'$N / N_t$')
     ax[0].text(*coord_text, r'\textbf{A}', transform = ax[0].transAxes)#r'(a) $\psi$ = 1')
     ax[1].text(*coord_text, r'\textbf{B}', transform = ax[1].transAxes)#r'(b) $\psi$ = 0.5')
     ax[2].text(*coord_text, r'\textbf{C}', transform = ax[2].transAxes)#r'(c) $\psi$ = 2')
@@ -394,7 +379,7 @@ if __name__ == "__main__":
             ax.plot(d['times'], obs, linewidth=3-i, color=color_palette_2sp_only[i], label=labels[i], linestyle='dashed')
         ax.set_xlim(-0.001, 1.)
         ax.legend(loc='center right')
-        fig, ax = set_labels(fig, ax, r'Time, $t$', r'$N / N_t$')
+        fig, ax = set_labels(fig, ax, r'Time, $t$ [h]', r'$N / N_t$')
         ax.text(*coord_text, text[j], transform = ax.transAxes)
         ax.set_ylim(0.1, y_max_lim[j])
         plt.savefig(f'paper/Figures-pool_model_1pool_inhib{j+1}.pdf', bbox_inches='tight')
@@ -422,7 +407,7 @@ if __name__ == "__main__":
             for i, obs in enumerate(d['obs_mean']):
                 ax[k].plot(d['times'], obs, color=color_palette_2sp_coop[i], label=labels[i], linestyle=lnst[i],
                            linewidth=lwdth[i])
-        fig, ax[k] = set_labels(fig, ax[k], r'Time, $t$', r'$N / N_t$')
+        fig, ax[k] = set_labels(fig, ax[k], r'Time, $t$ [h]', r'$N / N_t$')
         ax[k].set_xlim(-0.001, 10.5)
     ax[0].set_ylim(0.0, 1.47)
     ax[1].set_ylim(0.0, 1.22)
@@ -445,7 +430,7 @@ if __name__ == "__main__":
             for i, obs in enumerate(d['obs_mean']):
                 ax.plot(d['times'], obs, color=color_palette_2sp_coop[i], label=labels[i], linestyle=lnst[i],
                            linewidth=lwdth[i])
-        fig, ax = set_labels(fig, ax, r'Time, $t$', r'$N / N_t$')
+        fig, ax = set_labels(fig, ax, r'Time, $t$ [h]', r'$N / N_t$')
         ax.set_xlim(-0.001, 10.5)
         ax.set_ylim(0.0, ymax_lim[k])
         ax.text(*coord_text, text[k], transform = ax.transAxes)
@@ -453,22 +438,3 @@ if __name__ == "__main__":
         plt.savefig(f'paper/Figures-pool_model_2sp_1pool_coop{k+1}.pdf', bbox_inches='tight')
         plt.close(fig)
 
-
-###############################3 Spatial Limitation ###############################################3
-    '''
-    x0sp = [[5.], [0.], [5.], [0.], [1.], [0.]]
-    constsp = [.008, .005, 4., 5., .1, .1, Nt] # (lambd1, lambd2, alph1, alph2, chi, muI, Nt, )
-    data = generate_insilico_data(pool_model_spatial_limit, [np.linspace(0, 10, 100)], [], [[]], x0sp,
-                                  const=constsp, obs_func=observable_2pool_2species, n_traj=1)
-    fig, ax = plt.subplots()
-    labels = ['Species 1', 'Species 2', 'Sp 1 + Sp 2']
-    for d in data:
-        for j, obs in enumerate(d['obs_mean']):
-            ax.plot(d['times'], obs, label=labels[j])#, color=colorsp[i+2])
-    fig, ax = set_labels(fig, ax, 'Time, [days]', 'Total Bacterial Count')
-    #ax.set_yscale('log')
-    ax.set_xlim(0., 10.)
-    ax.legend()
-    plt.savefig('paper/Figures-pool_model_spatial.pdf', bbox_inches='tight')
-    plt.close(fig)
-    '''
