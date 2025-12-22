@@ -53,35 +53,40 @@ def pool_model_2pools_resource_lag2(t, x, param, x0, const):
         ]
 
 def pool_model_dormant(t, x, param, x0, const):
-    (lambd, omega1, mu, omega2, xi, N_t, Gamma, delta, shift_cnd,) = const
+    T_const = 1.
+    (lambd, omega1, mu, omega2, xi, N_t, sigma, delta, zeta, alpha, shift_cnd,) = const
     (L0, G0, D0, S0, ) = x0
     (L, G, D, S, ) = x
-    gamma = temp_stress(t, Gamma, delta, shift_cnd)
+    gamma = temp_stress(t, sigma, delta, zeta, alpha, shift_cnd)
     return [
-        - (omega1 + lambd) * L,
-        lambd * L + (mu - mu * ((L + G + D)/N_t) - omega2 - gamma) * G + xi * S,
+        - (omega1 + lambd*T_const) * L,
+        lambd*T_const * L + (mu*T_const - mu*T_const * ((L + G + D)/N_t) - omega2 - gamma) * G + xi * S,
         omega1 * L + omega2 * G,
         gamma * G - xi * S
         ]
 
 def pool_model_tempstress(t, x, param, x0, const):
-    (lambd, omega1, mu, omega2, N_t, Gamma, delta, shift_cnd,) = const
+    (lambd, omega1, mu, omega2, N_t, sigma, delta, zeta, alpha, shift_cnd,) = const
     (L0, G0, D0, ) = x0
     (L, G, D, ) = x
 
-    gamma = temp_stress(t, Gamma, delta, shift_cnd)
+    gamma = temp_stress(t, sigma, delta, zeta, alpha, shift_cnd)
     return [
         - (omega1 + lambd) * L + gamma * G,
         lambd * L + (mu - mu * ((L + G + D)/N_t) - omega2 - gamma) * G,
         omega1 * L + omega2 * G
         ]
 
-def temp_stress(t, Gamma, delta, shift_cnd):
+def temp_stress(t, sigma, delta, zeta, alpha, shift_cnd):
     #shift_cnd = ((t, T), (t, T))
     gamma = 0
     for tsh, Tsh in shift_cnd:
         if t >= tsh:
-            gamma += Gamma * np.abs(Tsh) * np.exp(-delta * (t - tsh))
+            if Tsh > 0:
+                f = alpha*zeta*Tsh
+            else:
+                f = -(1-alpha)*zeta*Tsh
+            gamma += sigma * f * np.exp(-delta * (t - tsh))
     return gamma
 
 def pool_model_resource_comp(t, x, param, x0, const):
@@ -150,6 +155,12 @@ def observable_3pool(output):
     # => Output [n = L+G]
     return [output[0]+output[1]]#+output[2]]
 
+def observable_3pool_dormant(output):
+    # Output (n_variables x n_times)
+    # Variables: (L, G, D,) = x
+    # => Output [n = L+G]
+    return [output[0]+output[1]+output[3]]#]
+
 def observable_2pool(output):
     # Output (n_variables x n_times)
     # Variables: (L, G, D,) = x
@@ -210,17 +221,20 @@ if __name__ == "__main__":
 
 #################################### Temperature shift ##########################################
     coord_text = (0.04, 0.88)
-    x01 = [[1e1], [0.], [0.]]
+    x01 = [[1e1], [0.], [0.], [0.]]
     Gamma, delta= 1., 5.
-    shift_cnd = [(4, 10)] #((1, 10), (3, 5), (5, 5), (7, 15))
-    y = [temp_stress(tt, Gamma, delta, shift_cnd) for tt in t]
-    const5 = [1e-2, 0., 2.5, .5, Nt, Gamma, delta, shift_cnd] # (lambd, omega1, mu, omega2, N_t, Gamma, delta, shift_cnd)
-    const6 = [1e-2, 0., 2.5, .5, Nt, Gamma, delta, ((1, 10), (3, 5), (7, 15))] # (lambd, omega1, mu, omega2, N_t, Gamma, delta, shift_cnd)
+    shift_cnd = [(4, -5)] #((1, 10), (3, 5), (5, 5), (7, 15))
+    # Gamma rate constants:
+    sigma, delta, zeta, alpha = 1., 5., 1., 0.05
+    y = [temp_stress(tt, sigma, delta, zeta, alpha, shift_cnd) for tt in t]
+    const5 = [1e-2, 0., 2.5, .5, 1e-3, Nt, sigma, delta, zeta, alpha, shift_cnd] #  (lambd, omega1, mu, omega2, xi, N_t, sigma, delta, zeta, alpha, shift_cnd,)
+    const6 = [1e-2, 0., 2.5, .5, 1e-3, Nt, sigma, delta, zeta, alpha, ((1, 10), (3, -10), (7, -5))] #  (lambd, omega1, mu, omega2, xi, N_t, sigma, delta, zeta, alpha, shift_cnd,)
+    y2 = [temp_stress(tt, *const6[6:]) for tt in t]
     consts_Tempshift = [const1, const5, const6]
-    data_Tempshift = [data_3pool_res[0]] + [generate_insilico_data(pool_model_tempstress, [t], [], [[]], x01,
-                                            const=const, obs_func=observable_3pool, n_traj=1) for const in consts_Tempshift[1:]]
+    data_Tempshift = [data_3pool_res[0]] + [generate_insilico_data(pool_model_dormant, [t], [], [[]], x01,
+                                            const=const, obs_func=observable_3pool_dormant, n_traj=1) for const in consts_Tempshift[1:]]
 
-    labels = [r'$\Delta T = 0$', r'$\Delta T = 10$',  r'$\Delta T = 10, 5, 15$']
+    labels = [r'$\Delta T = 0$', r'$\Delta T = -5$',  r'$\Delta T = 10, -10, -5$']
     color_palette_1sp_tempshift = [colors_all['N_wo_tempshift'], colors_all['N_tempshift_10'], colors_all['N_tempshift_10_5_15']]
 
     fig, ax = plt.subplots(2, 1, figsize=(6.5, 5.5), gridspec_kw={'height_ratios': [2, 1]}, sharex=True)
@@ -229,7 +243,6 @@ if __name__ == "__main__":
         for d in data:
             ax[0].plot(d['times'], d['obs_mean'][0], color=color_palette_1sp_tempshift[i], label=labels[i])
     ax[1].plot(t, y, color=color_palette_1sp_tempshift[i-1])
-    y2 = [temp_stress(tt, *const6[-3:]) for tt in t]
     ax[1].plot(t, y2, color=color_palette_1sp_tempshift[i])
     fig, ax[0] = set_labels(fig, ax[0], r'', r'Bacterial Count, $N$ [CFU/mL]')
     fig, ax[1] = set_labels(fig, ax[1], r'Time, $t$ [h]', r'Rate, $\gamma$')
@@ -257,7 +270,6 @@ if __name__ == "__main__":
 
     fig, ax = plt.subplots(1, 1, figsize=figsize_default_small)
     ax.plot(t, y, color=color_palette_1sp_tempshift[i-1])
-    y2 = [temp_stress(tt, *const6[-3:]) for tt in t]
     ax.plot(t, y2, color=color_palette_1sp_tempshift[i])
     fig, ax = set_labels(fig, ax, r'Time, $t$ [h]', r'Rate, $\gamma$')
     ax.set_xlim(0.7, 8.5)
