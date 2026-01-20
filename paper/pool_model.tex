@@ -384,33 +384,36 @@ The lag time $t_L$ diverges very slowly, logarithmically with $\lambda\to 0$.
 %
 %
 % ------------------------------------------------------------------------------------------------
-\subsection{Back flow from growth to lag pool}
+\subsection{Dormancy}
 Bacteria which have lived under rather unfavorable conditions have developed different surviving mechanisms, one of which is adapting their metabolism and transitioning into dormant state.
 Dormancy in bacteria is a reversible state where cells continue living with low metabolic activity while the cell division stops~\citep{kaprelyants_dormancy_1993}.
 This survival strategy can appear in response to different external stresses, e.g., nutrient deficiency, temperature stress or extreme fluctuations of environment parameters.
 And after "difficult times" bacteria can continue cell division~\citep{kell_viability_1998}.
 Multiple models which include transitions of bacteria to the dormant state were proposed by \citet{bar_modelling_2002} and \citet{jones_dormancy_2010}.
 %
-We explore now the idea that under certain conditions, a sudden change in the environment can lead to parts of the population $G$ entering a lag-phase.
-Within the framework of our pool model this means, that there is a back-flow from $G$ to $L$.
+We now aim to investigate the case where parts of the population $G$ enter a dormant state under stress conditions.
+Within the framework of our pool model this means that we define a new metabolic state $S$ corresponding to the bacterial stress.
 \begin{align}
     L &\stackrel{\lambda}{\longrightarrow} G\\
-    L &\stackrel{\omega}{\longrightarrow} D\\
     G &\stackrel{\mu}{\longrightarrow} 2G\\
-    G &\stackrel{\gamma(t)}{\longrightarrow} L
+    G &\stackrel{\omega'}{\longrightarrow} D\\
+    G &\stackrel{\gamma(t)}{\longrightarrow} S\\
+    S &\stackrel{\xi}{\longrightarrow} G
 \end{align}
-The rate $\gamma(t)$ depends on the rate of change of the environment.
+The transition rate of the growing bacteria to the stress state $\gamma(t)$ depends on the change of the environment.
 Stronger and quicker changes will lead to a higher rate $\gamma$, but the effect will relax to zero after some time.
+After the extreme conditions are overcome the bacteria returns to a normal exponential growth with the rate $\xi$.
 %
 %
 \paragraph{Maxwell type of stress - strain relation}
-One of the reasons that bacteria enter the dormant state can be due to a shift in temperature~\citep{oliver_viable_1995}.
-Moreover, a rapid shift in temperature is associated with the appearance of an additional lag phase~\citep{zwietering_modeling_1994}.
+One of the reasons that bacteria enter the dormant state can be a shift in temperature conditions, e.g., to low temperatures unfavorable for bacteria growth~\citep{oliver_viable_1995}.
 To model it we propose a kind of viscoelastic Maxwell type of stress-strain relation and write down the ordinary differential equation for $\gamma$ to be:
 \begin{equation}
     \dot{\gamma} = \sigma f\left(\zeta\dot{T}\right)-\delta \gamma.
 \end{equation}
-The dimensionless function $f$, with $f(0)=0$ and $f: \mathbb{R}\to\mathbb{R}_{\ge 0}$, evaluates the effect of a temperature change, i.e., a change from $T=2$ to $T=12$ could have a different effect as a change from $T=14$ to $T=4$. $\zeta$ is a scaling factor, $\sigma$ is a kind of stiffness telling how strongly the bacteria react to temperature stress, and $\delta^{-1}$ is the relaxation time for the temperature disturbance.
+The dimensionless function $f$, with $f(0)=0$ and $f: \mathbb{R}\to\mathbb{R}_{\ge 0}$, evaluates the effect of a temperature change.
+Note that here the direction of the temperature change is important, an increase from $T=2^\circ C$ to $T=12^\circ C$ have a different effect than a decrease from $T=14^\circ C$ to $T=4^\circ C$.
+$\zeta$ is a scaling factor, $\sigma$ is a kind of stiffness telling how strongly the bacteria react to temperature stress, and $\delta^{-1}$ is the relaxation time for the temperature disturbance.
 Integration of this equation yields (with $\gamma(0)=0$):
 \begin{equation}
     \gamma(t) = \sigma\int_0^t f\left(\zeta\dot{T}(t^{\prime})\right)e^{-\delta (t-t^{\prime})}dt^{\prime}.
@@ -418,8 +421,10 @@ Integration of this equation yields (with $\gamma(0)=0$):
 One possible choice for $f$ reads:
 \begin{align}
 f(x)&=\begin{cases}\alpha x& x\ge 0\\ -(1-\alpha) x& x < 0,\end{cases}
+\label{eq:f_stress}
 \end{align}
-$\alpha\in [0,1]$. For $\alpha=0.5$ it follows $f(x)=\frac{1}{2}|x|$. Using this choice for $f$ we find after some manipulation:
+$\alpha\in [0,1]$. For $\alpha=0.5$ it follows $f(x)=\frac{1}{2}|x|$ that represents the case where the direction of the temperature change does not matter.
+Using this choice for $f$ we find after some manipulation:
 \begin{equation}
     \gamma(t) = \sigma\alpha\zeta\left [T(t)-T(0)e^{-\delta t}-\delta
         \int\limits_0^t T(t^{\prime})e^{-\delta (t-t^{\prime})}dt^{\prime}\right ],
@@ -440,30 +445,42 @@ If $T$ exhibits $n$ temperature jumps, one finds:
 The ordinary differential equations for the pool model with back-flow then read:
 \begin{align}
     \begin{split}
-        \dot{L} &=\gamma(t) G - (\omega + \lambda) L\\
-        \dot{G} &= \lambda L -\gamma(t) G + \mu G\left(1-\frac{L+G+D}{N_t}\right)\\
-        \dot{D} &= \omega  L
+        \dot{L} &= - \lambda L\\
+        \dot{G} &= \lambda L + \mu G\left(1-\frac{L+G+D}{N_t}\right)-\gamma(t) G + \xi S - \omega' G\\
+        \dot{D} &= \omega' G\\
+        \dot{S} &= \gamma(t) G - \xi S
     \end{split}
     \label{eq:ode_tempshift_backlag}
+\end{align}
+Here the transition rates between different states can also be temperature-dependent.
+The reasonable assumption is the linear dependence of the growth and lag-phase rates:
+\begin{align}
+    \begin{split}
+        \alpha(T)  &= \alpha_1 T\\
+        \lambda(T) &= \lambda_1 T\\
+    \end{split}
+    \label{eq:rates_temp_linear}
 \end{align}
 \begin{figure}[t]
     \begin{center}
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_3pools_resource_tempshift1.pdf}\\
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_3pools_resource_tempshift2.pdf}
     \caption{
-        (A) The time dependence of the total bacterial count $N$ for the model including the back-flow to the lag phase due to temperature stress~(\ref{eq:ode_tempshift_backlag}).
-        (B) The value of the corresponding back-flow rate $\gamma$ calculated according to (\ref{eq:gamma_tempshift}).
-        The curves represent no temperature shift (green), one temperature jump $\Delta T = 10^\circ C$ at time $t=4~\mathrm{h}$ (orange)
-        and the series of different temperature shifts of value $10^\circ C$, $5^\circ C$ and $15^\circ C$ at the time points $1, 3$ and $7$, respectively (rose).
-        The parameters of the back-flow rate are $\zeta=1 s/K $ and $\delta=5~\mathrm{h}^{-1}$.
-        The other model parameters are $\mu=2.5~\mathrm{h}^{-1}$, $\omega'=0.5~\mathrm{h}^{-1}$, $\beta=5~\mathrm{h}^{-1}$, $\lambda=10^{-2}~\mathrm{h}^{-1}$, $\omega = 0~\mathrm{h}^{-1}$ for each curve.
+        (A) The time dependence of the total bacterial count $N$ for the model including the transition to dormant state due to temperature stress~(\ref{eq:ode_tempshift_backlag}-\ref{eq:rates_temp_linear}).
+        (B) The value of the corresponding flow rate $\gamma$ calculated according to (\ref{eq:gamma_tempshift}) and function~(\ref{eq:f_stress}) with $\alpha=0.05$.
+        The curves represent no temperature shift (green), two temperature jumps $\Delta T = -5^\circ C, -5^\circ C$ at times $t=1~\mathrm{h}$ and $t=5~\mathrm{h}$ (orange)
+        and the series of different temperature shifts of value $10^\circ C$, $-10^\circ C$ and $-5^\circ C$ at the time points $1~\mathrm{h}, 3~\mathrm{h}$ and $7~\mathrm{h}$, respectively (rose).
+        The parameters associated with dormancy are $\zeta=1~\mathrm{h}/^\circ C $ and $\delta=5~\mathrm{h}^{-1}$, $\sigma=2~\mathrm{h}^{-2}$, $\xi=10^{-3}~\mathrm{h}^{-1}$.
+        The growth and lag-phase rate linearly depend on the temperature $T$ and defined as $\mu(T)=0.2 T~\mathrm{h}^{-1}$, $\lambda(T)=10^{-2} T~\mathrm{h}^{-1}$.
+        The other model parameters are $\omega'=0.1~\mathrm{h}^{-1}$, $N_t=10^4$.
     }
     \label{fig:TempJump}
     \end{center}
 \end{figure}
 The effect of the temperature shift on the total bacterial count can be shown in Figure~\ref{fig:TempJump}.
-After the rapid temperature increase, the growth slows down till the bacteria that transitioned back to lag-phase migrate back to the growth pool.
-If the shift happened rather early in time, when most of the bacteria were in lag-phase, the effect is not noticeable.
+There we can see the asymmetric behavior of the rate $\gamma$ depending on the direction of the temperature change.
+Due to the rapid temperature decrease, the general growth slows down till the dormant bacteria migrate back to the growth pool.
+In case of increase of the temperature the transition into the dormant state is much less so the effect is not noticeable while on the other hand the division of bacteria is stimulated by more preferable conditions.
 %
 % ================================================================================================
 \section{Interaction between species}
