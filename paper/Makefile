@@ -7,7 +7,7 @@ ZIP_TARGETS:= README.md\
 	$(wildcard elsarticle*)\
 
 all:
-	latexmk -pdf -shell-escape pool_model.tex
+	latexmk -pdf -shell-escape main.tex
 
 clean_partial:
 	rm -f *.aux
