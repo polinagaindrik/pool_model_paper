@@ -62,6 +62,16 @@
 \newcommand{\cmt}[1]{\textcolor{red} {[#1]}}
 \newcommand{\etal}{{\textit{et al. }}}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ONLY FOR EDITING REMOVE IN THE END
+\usepackage{ulem}
+\newcommand{\change}[2]{
+    \ifthenelse{\equal{#1}{}}
+    {\textcolor{purple}{#2}}
+    {\textcolor{gray}{[\sout{#1}]} \textcolor{purple}{#2}}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newacro{ode}[ODE]{Ordinary Differential Equation}
 \newacro{pde}[PDE]{Partial Differential Equation}
 \newacro{glv}[gLV]{generalized Lotka-Volterra}
@@ -384,14 +394,14 @@ The lag time $t_L$ diverges very slowly, logarithmically with $\lambda\to 0$.
 %
 % ------------------------------------------------------------------------------------------------
 \subsection{Dormancy}
-Bacteria which have lived under rather unfavorable conditions have developed different surviving mechanisms, one of which is adapting their metabolism and transitioning into dormant state.
+Bacteria which have lived under rather unfavorable conditions have developed different \change{surviving }{survival} mechanisms, one of which is adapting their metabolism and transitioning into \change{}{a} dormant state.
 Dormancy in bacteria is a reversible state where cells continue living with low metabolic activity while the cell division stops~\citep{kaprelyants_dormancy_1993}.
-This survival strategy can appear in response to different external stresses, e.g., nutrient deficiency, temperature stress or extreme fluctuations of environment parameters.
-And after "difficult times" bacteria can continue cell division~\citep{kell_viability_1998}.
-Multiple models which include transitions of bacteria to the dormant state were proposed by \citet{bar_modelling_2002} and \citet{jones_dormancy_2010}.
+This survival strategy can appear in response to different external stresses, e.g., nutrient deficiency, temperature stress or extreme fluctuations of \change{environment}{environmental} parameters.
+\change{And after}{Having survived these} "difficult times" bacteria can continue \change{cell division}{growing and dividing}~\citep{kell_viability_1998}.
+\change{Multiple models}{There exists a variety of} which include transitions of bacteria to the dormant state were proposed by \citet{bar_modelling_2002} and \citet{jones_dormancy_2010}.
 %
 We now aim to investigate the case where parts of the population $G$ enter a dormant state under stress conditions.
-Within the framework of our pool model this means that we define a new metabolic state $S$ corresponding to the bacterial stress.
+Within the framework of our pool model\change{}{,} this means that we define a new metabolic state $S$ corresponding to the bacterial stress.
 \begin{align}
     L &\stackrel{\lambda}{\longrightarrow} G\\
     G &\stackrel{\mu}{\longrightarrow} 2G\\
@@ -399,30 +409,31 @@ Within the framework of our pool model this means that we define a new metabolic
     G &\stackrel{\gamma(t)}{\longrightarrow} S\\
     S &\stackrel{\xi}{\longrightarrow} G
 \end{align}
-The transition rate of the growing bacteria to the stress state $\gamma(t)$ depends on the change of the environment.
-Stronger and quicker changes will lead to a higher rate $\gamma$, but the effect will relax to zero after some time.
-After the extreme conditions are overcome the bacteria returns to a normal exponential growth with the transition rate $\xi$.
+The transition rate of the growing bacteria to the stress state $\gamma(t)$ depends on the change of the environment \cmt{does it really depend on the "change" of the environment? Or does it depend in general on environmental conditions?}.
+Stronger and quicker changes will lead to a higher rate $\gamma$, but the effect will relax to zero after some time. \cmt{Why is this the case?}
+After the extreme conditions are overcome the bacteria \change{returns to a}{return to} normal exponential growth with the transition rate $\xi$.
 %
 %
 \paragraph{Maxwell type of stress - strain relation}
-One of the reasons that bacteria enter the dormant state can be a shift in temperature conditions, e.g., to low temperatures unfavorable for bacteria growth~\citep{oliver_viable_1995}.
-To model it we propose a kind of viscoelastic Maxwell type of stress-strain relation and write down the ordinary differential equation for $\gamma$ to be:
+One of the reasons that bacteria enter the dormant state can be a shift in temperature conditions, e.g., to low temperatures\change{}{,} unfavorable for \change{bacteria}{bacterial} growth~\citep{oliver_viable_1995}.
+To model \change{it}{this} we propose a kind of viscoelastic Maxwell type of stress-strain relation and write down the ordinary differential equation for $\gamma$ to be:
 \begin{equation}
     \dot{\gamma} = \sigma f\left(\zeta\dot{T}\right)-\delta \gamma.
 \end{equation}
 The dimensionless function $f$, with $f(0)=0$ and $f: \mathbb{R}\to\mathbb{R}_{\ge 0}$, evaluates the effect of a temperature change.
-Note that here the direction of the temperature change is important, an increase from $T=2^\circ C$ to $T=12^\circ C$ have a different effect than a decrease from $T=14^\circ C$ to $T=4^\circ C$.
-$\zeta$ is a scaling factor, $\sigma$ is a kind of stiffness telling how strongly the bacteria react to temperature stress, and $\delta^{-1}$ is the relaxation time for the temperature disturbance.
+Note that here the direction of the temperature change is important, an increase from $T=2^\circ C$ to $T=12^\circ C$ \change{have}{has} a different effect than a decrease from $T=14^\circ C$ to $T=4^\circ C$.
+$\zeta$ is a scaling factor, $\sigma$ \change{is a kind of stiffness telling}{resembles a stiffness which quantifies} how strongly the bacteria react to temperature stress.
+\change{and}{Finally,} $\delta^{-1}$ is the relaxation time for the temperature disturbance.
 Integration of this equation yields (with $\gamma(0)=0$):
 \begin{equation}
     \gamma(t) = \sigma\int_0^t f\left(\zeta\dot{T}(t^{\prime})\right)e^{-\delta (t-t^{\prime})}dt^{\prime}.
 \end{equation}
-One possible choice for $f$ reads:
+One possible choice \cmt{can we motivate this better? Why is this choice taken?} for $f$ reads:
 \begin{align}
 f(x)&=\begin{cases}\alpha x& x\ge 0\\ -(1-\alpha) x& x < 0,\end{cases}
 \label{eq:f_stress}
 \end{align}
-$\alpha\in [0,1]$. For $\alpha=0.5$ it follows $f(x)=\frac{1}{2}|x|$ that represents the case where the direction of the temperature change does not matter.
+$\alpha\in [0,1]$. For $\alpha=0.5$ it follows $f(x)=\frac{1}{2}|x|$ \change{that}{which} represents the case where the direction of the temperature change does not matter.
 Using this choice for $f$ we find after some manipulation:
 \begin{equation}
     \gamma(t) = \sigma\alpha\zeta\left [T(t)-T(0)e^{-\delta t}-\delta
@@ -433,7 +444,7 @@ for $\dot{T}\ge 0, \,\forall t$ and
     \gamma(t) = \sigma(1-\alpha)\zeta\left [T(0)e^{-\delta t}-T(t)+\delta
         \int\limits_0^t T(t^{\prime})e^{-\delta (t-t^{\prime})}dt^{\prime}\right ].
 \end{equation}
-for $\dot{T}< 0, \,\forall t$. 
+for $\dot{T}< 0, \,\forall t$.
 This representation of the rate $\gamma(t)$ has the advantage that it only involves $T(t)$ and does not require the calculation of a derivative.
 If $T$ exhibits $n$ temperature jumps, one finds:
 \begin{eqnarray}
@@ -452,7 +463,7 @@ The ordinary differential equations for the pool model with back-flow then read:
     \label{eq:ode_tempshift_backlag}
 \end{align}
 Here the transition rates between different states can also be temperature-dependent.
-The reasonable assumption is the linear dependence of the growth and lag-phase rates:
+The reasonable assumption is \change{the}{a} linear dependence of the growth and lag-phase rates: \cmt{why is this a reasonable assumption? Can we provide a reference possibly?}
 \begin{align}
     \begin{split}
         \alpha(T)  &= \alpha_1 T\\
@@ -476,10 +487,10 @@ The reasonable assumption is the linear dependence of the growth and lag-phase r
     \label{fig:TempJump}
     \end{center}
 \end{figure}
-The effect of the temperature shift on the total bacterial count can be shown in Figure~\ref{fig:TempJump}.
+The effect of the temperature shift on the total bacterial count \change{can be}{is} shown in Figure~\ref{fig:TempJump}.
 There we can see the asymmetric behavior of the rate $\gamma$ depending on the direction of the temperature change (at $t=1~\mathrm{h}$).
-Due to the rapid temperature decrease, the general growth slows down till the dormant bacteria migrate back to the growth pool.
-In case of increase of the temperature the transition into the dormant state is much less so the effect is not noticeable while in contrast the division of bacteria is stimulated by more preferable conditions.
+Due to the rapid temperature decrease, the general growth slows down \change{till the}{untill} dormant bacteria migrate back to the growth pool.
+\change{In case of increase of}{Upon increasing} the temperature\change{}{,} the transition into the dormant state is \change{much less so}{less pronounced such that} the effect is not noticeable while in contrast \cmt{I do not understand why you write "while in contrast". Is it really in contrast or is it just "in addition"? Maybe I have not correctly understood this.} the division of bacteria is stimulated by more preferable conditions.
 %
 % ================================================================================================
 \section{Interaction between species}
