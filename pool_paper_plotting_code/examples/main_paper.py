@@ -249,7 +249,7 @@ if __name__ == "__main__":
     data_Tempshift = [generate_insilico_data(pool_model_dormant, [t], [], [[]], x01,
                                             const=const, obs_func=observable_3pool_dormant, n_traj=1) for const in consts_Tempshift]
 
-    labels = [r'constant temperature', r'$\Delta T = -5, -5$',  r'$\Delta T = 10, -10, -5$']
+    labels = [r'constant temperature', r'$\Delta T = -5^\circ C, -5^\circ C$',  r'$\Delta T = 10^\circ C, -10^\circ C, -5^\circ C$']
     color_palette_1sp_tempshift = [colors_all['N_wo_tempshift'], colors_all['N_tempshift_10'], colors_all['N_tempshift_10_5_15']]
 
     fig, ax = plt.subplots(2, 1, figsize=(6.5, 5.5), gridspec_kw={'height_ratios': [2, 1]}, sharex=True)
