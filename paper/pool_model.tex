@@ -326,8 +326,7 @@ and, hence, the full system can be written as
     \begin{center}
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_3pools_resource.pdf}
     \caption{
-        The time dependence of the bacterial count $N(t) = L(t) + G(t) $ is shown.
-        All curves were calculated using the model (\ref{eq:ode_3pool_resource2}) with parameters $\mu=2.5~\mathrm{h}^{-1}$, $\omega=0~\mathrm{h}^{-1}$, $N_t = 10^4$.
+        The time dependence of the bacterial count $N(t) = L(t) + G(t) $ is shown calculated using the model (\ref{eq:ode_3pool_resource2}) with parameters $\mu=2.5~\mathrm{h}^{-1}$, $\omega=0~\mathrm{h}^{-1}$, $N_t = 10^4$.
         The blue dashed curve shows the case of no cell death $\omega' = 0~\mathrm{h}^{-1}$ and thus exhibits a steady state without the decrease of the bacterial population.
         Other curves represent the growing bacteria dying with the rate $\omega'=0.1~\mathrm{h}^{-1}$ and different lengths of lag phases: short $\lambda=10^{-2}~\mathrm{h}^{-1}$ (dark green), intermediate $\lambda=10^{-3}~\mathrm{h}^{-1}$ (light green) and long one $\lambda=10^{-4}~\mathrm{h}^{-1}$ (yellow).
         Note that the steady state for $N(t)$ and $D(t)$ is for this model $\lim_{t\to\infty} N(t)=0$ and $\lim_{t\to\infty} D(t)=N_t$, because of the depletion of the resource pool.
@@ -402,7 +401,7 @@ Within the framework of our pool model this means that we define a new metabolic
 \end{align}
 The transition rate of the growing bacteria to the stress state $\gamma(t)$ depends on the change of the environment.
 Stronger and quicker changes will lead to a higher rate $\gamma$, but the effect will relax to zero after some time.
-After the extreme conditions are overcome the bacteria returns to a normal exponential growth with the rate $\xi$.
+After the extreme conditions are overcome the bacteria returns to a normal exponential growth with the transition rate $\xi$.
 %
 %
 \paragraph{Maxwell type of stress - strain relation}
@@ -457,7 +456,7 @@ The reasonable assumption is the linear dependence of the growth and lag-phase r
 \begin{align}
     \begin{split}
         \alpha(T)  &= \alpha_1 T\\
-        \lambda(T) &= \lambda_1 T\\
+        \lambda(T) &= \lambda_1 T.
     \end{split}
     \label{eq:rates_temp_linear}
 \end{align}
@@ -478,9 +477,9 @@ The reasonable assumption is the linear dependence of the growth and lag-phase r
     \end{center}
 \end{figure}
 The effect of the temperature shift on the total bacterial count can be shown in Figure~\ref{fig:TempJump}.
-There we can see the asymmetric behavior of the rate $\gamma$ depending on the direction of the temperature change.
+There we can see the asymmetric behavior of the rate $\gamma$ depending on the direction of the temperature change (at $t=1~\mathrm{h}$).
 Due to the rapid temperature decrease, the general growth slows down till the dormant bacteria migrate back to the growth pool.
-In case of increase of the temperature the transition into the dormant state is much less so the effect is not noticeable while on the other hand the division of bacteria is stimulated by more preferable conditions.
+In case of increase of the temperature the transition into the dormant state is much less so the effect is not noticeable while in contrast the division of bacteria is stimulated by more preferable conditions.
 %
 % ================================================================================================
 \section{Interaction between species}
