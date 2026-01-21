@@ -252,6 +252,7 @@ if __name__ == "__main__":
     labels = [r'constant temperature', r'$\Delta T = -5^\circ C, -5^\circ C$',  r'$\Delta T = 10^\circ C, -10^\circ C, -5^\circ C$']
     color_palette_1sp_tempshift = [colors_all['N_wo_tempshift'], colors_all['N_tempshift_10'], colors_all['N_tempshift_10_5_15']]
 
+    '''
     fig, ax = plt.subplots(2, 1, figsize=(6.5, 5.5), gridspec_kw={'height_ratios': [2, 1]}, sharex=True)
     fig.subplots_adjust(hspace=0.1)
     for i, data in enumerate(data_Tempshift):
@@ -269,6 +270,7 @@ if __name__ == "__main__":
     ax[1].text(8., 1.5,  r'\textbf{B}')
     plt.savefig('paper/Figures-pool_model_3pools_resource_tempshift.pdf', bbox_inches='tight')
     plt.close(fig)
+    '''
 
     fig, ax = plt.subplots(1, 1, figsize=figsize_default)
     for i, data in enumerate(data_Tempshift):
