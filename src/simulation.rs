@@ -183,13 +183,11 @@ pub fn generate_cells(
             let y = rng.random_range(0.0..domain.size);
 
             if n_cell >= n_bacteria_1 {
-                let mut reactions = new_bacteria
-                    .cellular_reactions
-                    .extract::<BacteriaReactions>(py)?;
+                let mut reactions = new_bacteria.cellular_reactions.borrow(py).clone();
                 reactions.species = Species::S2;
                 new_bacteria.cellular_reactions = Py::new(py, reactions)?;
             }
-            let mut mechanics = new_bacteria.mechanics.extract::<NewtonDamped2D>(py)?;
+            let mut mechanics = new_bacteria.mechanics.borrow(py).clone();
             mechanics.set_pos([x, y]);
             new_bacteria.mechanics = Py::new(py, mechanics)?;
             Ok(new_bacteria)
@@ -215,12 +213,7 @@ pub fn run_simulation(
         None => {
             let mut max_cell_radius = cells
                 .iter()
-                .map(|cell| {
-                    cell.cellular_reactions
-                        .extract::<BacteriaReactions>(py)
-                        .unwrap()
-                        .cell_radius()
-                })
+                .map(|cell| cell.cellular_reactions.borrow(py).cell_radius())
                 .fold(f64::MIN, f64::max);
             if max_cell_radius <= 0.0 {
                 max_cell_radius = domain.size / 3.0;

@@ -63,12 +63,14 @@ impl BacteriaTemplate {
             cellular_reactions,
             interactionextracellulargradient,
         } = self;
-        let e1 = mechanics.extract::<NewtonDamped2D>(py)? == other.mechanics.extract(py)?;
-        let e2 = cycle.extract::<BacteriaCycle>(py)? == other.cycle.extract(py)?;
-        let e3 = cellular_reactions.extract::<BacteriaReactions>(py)?
-            == other.cellular_reactions.extract(py)?;
-        let e4 = interactionextracellulargradient.extract::<GradientSensing>(py)?
-            == other.interactionextracellulargradient.extract(py)?;
+        let e1 = mechanics.borrow(py).eq(&other.mechanics.borrow(py));
+        let e2 = cycle.borrow(py).eq(&other.cycle.borrow(py));
+        let e3 = cellular_reactions
+            .borrow(py)
+            .eq(&other.cellular_reactions.borrow(py));
+        let e4 = interactionextracellulargradient
+            .borrow(py)
+            .eq(&other.interactionextracellulargradient.borrow(py));
 
         Ok(e1 && e2 && e3 && e4)
     }
@@ -135,14 +137,13 @@ impl Bacteria {
     #[staticmethod]
     pub fn from(py: Python, bacteria_template: BacteriaTemplate) -> PyResult<Self> {
         Ok(Self {
-            mechanics: bacteria_template.mechanics.extract::<NewtonDamped2D>(py)?,
-            cycle: bacteria_template.cycle.extract::<BacteriaCycle>(py)?,
-            cellular_reactions: bacteria_template
-                .cellular_reactions
-                .extract::<BacteriaReactions>(py)?,
+            mechanics: bacteria_template.mechanics.borrow(py).clone(),
+            cycle: bacteria_template.cycle.borrow(py).clone(),
+            cellular_reactions: bacteria_template.cellular_reactions.borrow(py).clone(),
             interactionextracellulargradient: bacteria_template
                 .interactionextracellulargradient
-                .extract::<GradientSensing>(py)?,
+                .borrow(py)
+                .clone(),
         })
     }
     /// We can have a look at this paper https://doi.org/10.1128/jb.148.1.58-63.1981
