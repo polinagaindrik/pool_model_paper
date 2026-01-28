@@ -342,6 +342,7 @@ impl BacteriaReactions {
         inhibition_production_rate=0.1,
         inhibition_coefficient=0.1,
     ))]
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         potential_strength: f64,
         food_to_volume_conversion: f64,
