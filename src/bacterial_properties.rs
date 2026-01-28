@@ -126,6 +126,18 @@ impl BacteriaTemplate {
             interactionextracellulargradient: Py::new(py, GradientSensing)?,
         })
     }
+
+    pub fn __deepcopy__(&self, py: Python) -> PyResult<Self> {
+        Ok(Self {
+            mechanics: Py::new(py, self.mechanics.borrow(py).clone())?,
+            cycle: Py::new(py, self.cycle.borrow(py).clone())?,
+            cellular_reactions: Py::new(py, self.cellular_reactions.borrow(py).clone())?,
+            interactionextracellulargradient: Py::new(
+                py,
+                self.interactionextracellulargradient.borrow(py).clone(),
+            )?,
+        })
+    }
 }
 
 fn volume_to_radius(volume: f64) -> f64 {
