@@ -14,10 +14,10 @@ DIFFUSION_UNITS = "\\text{\\textmu m}^2\\text{s}^{-1}"
 
 # Diffusion constants, randomness, homogenous
 CONFIGS = [
-    (30, 0, True, f"Homogeneous $D=30{DIFFUSION_UNITS}$"),
-    (5, 0, True, f"Homogeneous $D=5{DIFFUSION_UNITS}$"),
-    (30, 0, False, f"Heterogeneous $D=30{DIFFUSION_UNITS}$"),
-    (30, 0.30, True, f"Random $D=30{DIFFUSION_UNITS}$"),
+    (30, 0, True, "Homogeneous"),
+    # (30, 0, True, "Homogeneous"),
+    # (100, 0, False, "Heterogeneous"),
+    # (100, 0.30, True, "Random"),
 ]
 
 
@@ -81,8 +81,9 @@ if __name__ == "__main__":
     if len(paths) == 0:
         paths = []
         for diffusion_constant, randomness, homogenous, title in CONFIGS:
+            full_title = f"{title} $D={diffusion_constant}{DIFFUSION_UNITS}$"
             output_path = calcualte_results(diffusion_constant, randomness, homogenous)
-            paths.append((Path(output_path), title))
+            paths.append((Path(output_path), full_title))
 
     if args.save_snapshots:
         for output_path, _ in paths:
