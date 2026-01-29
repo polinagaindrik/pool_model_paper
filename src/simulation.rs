@@ -48,17 +48,6 @@ impl Domain {
             n_voxels,
         }
     }
-
-    /* #[staticmethod]
-    fn default() -> Self {
-        Self {
-            diffusion_constants: [2.0, 0.2],
-            initial_concentrations: [1.0, 0.0],
-
-            size: 250.0,
-            n_voxels: None,
-        }
-    }*/
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
@@ -92,6 +81,7 @@ impl MetaParams {
         save_path="out/pool_model".into(),
         save_add_date=true,
     ))]
+    #[allow(clippy::too_many_arguments)]
     fn new(
         random_seed: u64,
         n_times: usize,
