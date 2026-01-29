@@ -311,7 +311,14 @@ def calculate_index_distributions(n_cells_1, n_cells_2, n_positions, homogenous=
 
 
 def generate_cells(
-    n_cells_1, n_cells_2, domain, randomness=0.0, pad=0.15, seed=0, homogenous=False
+    n_cells_1,
+    n_cells_2,
+    domain,
+    randomness=0.0,
+    pad=0.15,
+    seed=0,
+    homogenous=False,
+    template=BacteriaTemplate(),
 ):
     """
     n_cells_1: int
@@ -336,9 +343,7 @@ def generate_cells(
     cells = []
     for i in range(n_cells_1 + n_cells_2):
         # Cell Settings
-        cell = BacteriaTemplate()
-        cell.cycle.lag_phase_transition_rate_1 = 0.005
-        cell.cycle.lag_phase_transition_rate_2 = 0.0025
+        cell = template.__deepcopy__()
 
         if i < n_cells_1:
             # x = rng.uniform(d_min, (1-u)*d_min + u*d_max)
