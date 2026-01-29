@@ -268,13 +268,18 @@ def calculate_entropy(output_path, iteration) -> np.ndarray:
     return np.array([z1, z2])
 
 
-def calculate_lattice_points(x_min, x_max, n_agents):
+def calculate_lattice_points(x_min, x_max, n_agents: int):
     # Calculate the lowest number possible such that
     # we can create a almost even lattice based on that
-    m = np.ceil(np.sqrt(n_agents)) + 1
-    dx = (x_max - x_min) / m
+    m = 0
+    while m**2 < n_agents:
+        m += 1
+    dx = (x_max - x_min) / (m + 1)
 
-    x, y = np.mgrid[x_min + dx : x_max : dx, x_min + dx : x_max : dx]
+    x, y = np.mgrid[0:m, 0:m]
+    x = x.astype(float) * dx + x_min + dx / 2
+    y = y.astype(float) * dx + x_min + dx / 2
+
     if m % 2 == 0:
         z = np.vstack([x.reshape(-1), y.reshape(-1)]).T
     else:
