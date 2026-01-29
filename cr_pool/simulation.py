@@ -127,9 +127,9 @@ def _convert_entries(df, element_path):
         df["element.extracellular_concentration_increments"] = df[
             "element.extracellular_concentration_increments"
         ].apply(lambda x: np.array(x))
-        df["element.concentration_boundaries"] = df["element.concentration_boundaries"].apply(
-            lambda x: np.array(x)
-        )
+        # df["element.concentration_boundaries"] = df["element.concentration_boundaries"].apply(
+        #     lambda x: np.array(x)
+        # )
 
     return df
 
