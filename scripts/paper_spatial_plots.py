@@ -21,7 +21,7 @@ CONFIGS = [
 ]
 
 
-def calcualte_results(diffusion_constant, randomness, homogenous):
+def calculate_results(diffusion_constant, randomness, homogenous):
     # Domain Settings
     domain = crp.Domain()
     domain.size = 1_000
@@ -82,7 +82,7 @@ if __name__ == "__main__":
         paths = []
         for diffusion_constant, randomness, homogenous, title in CONFIGS:
             full_title = f"{title} $D={diffusion_constant}{DIFFUSION_UNITS}$"
-            output_path = calcualte_results(diffusion_constant, randomness, homogenous)
+            output_path = calculate_results(diffusion_constant, randomness, homogenous)
             paths.append((Path(output_path), full_title))
 
     if args.save_snapshots:
