@@ -25,7 +25,6 @@ def calculate_results(diffusion_constant, randomness, homogenous):
     # Domain Settings
     domain = crp.Domain()
     domain.size = 1_000
-    # domain.diffusion_constants = [5.0, 5.0]
     domain.diffusion_constants = [diffusion_constant] * 2
 
     # Meta Parameters
