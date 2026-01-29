@@ -9,9 +9,7 @@ from .simulation import (
     calculate_entropy,
 )
 
-# Define units for time
-UNIT_HOUR = 60
-UNIT_DAY = 24 * UNIT_HOUR
+from .units import HOUR
 
 
 def print_cell_properties(output_path):
@@ -64,7 +62,7 @@ def analyze_voxel_data(output_path, iteration, meta_params, get_entropy):
 
     return {
         "iteration": iteration,
-        "time": iteration * meta_params.dt / UNIT_DAY,
+        "time": iteration * meta_params.dt / HOUR,
         "nutrients_conc_total": conc_total[0],
         "inhib_total": conc_total[1],
     }
@@ -101,7 +99,7 @@ def analyze_cell_data(output_path, iteration, meta_params, get_entropy):
     # Return combined results
     res = {
         "iteration": iteration,
-        "time": iteration * meta_params.dt / UNIT_DAY,
+        "time": iteration * meta_params.dt / HOUR,
         "bacteria_count_1": bacteria_count_1,
         "bacteria_count_2": bacteria_count_2,
         "bacteria_count_total": bacteria_count_1 + bacteria_count_2,

@@ -3,9 +3,7 @@ import numpy as np
 import scipy as sp
 from dataclasses import dataclass
 
-UNIT_MINUTE = 1
-UNIT_HOUR = 60 * UNIT_MINUTE
-UNIT_DAY = 24 * UNIT_HOUR
+from .units import SECOND, MICRON, PICO_GRAM, MOL
 
 
 def observable_2pool_2species(out):
@@ -45,10 +43,10 @@ class ODEParameters:
 
 @dataclass
 class ODEInitialValues:
-    initial_total_volume_lag_phase_1: int = 127.2
-    initial_total_volume_growth_phase_1: int = 0
-    initial_total_volume_lag_phase_2: int = 127.2
-    initial_total_volume_growth_phase_2: int = 0
+    initial_total_volume_lag_phase_1: float = 127.2 * MICRON**2
+    initial_total_volume_growth_phase_1: float = 0
+    initial_total_volume_lag_phase_2: float = 127.2 * MICRON**2
+    initial_total_volume_growth_phase_2: float = 0
     # NEVER TOUCH THIS VALUE (IF YOU WANT TO GET TOTAL_CELL_VOLUME)!
     initial_nutrients: float = 1.0
     initial_inhibitor: float = 0
@@ -69,8 +67,8 @@ class ODEInitialValues:
 
 @dataclass
 class ODEMetaParameters:
-    time_start: float = 0 * UNIT_MINUTE
-    time_dt: float = 0.5 * UNIT_MINUTE
+    time_start: float = 0 * SECOND
+    time_dt: float = 0.5 * SECOND
     time_steps: int = 20_001
     time_save_interval: int = 500
 
