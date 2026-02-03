@@ -277,8 +277,8 @@ def calculate_lattice_points(x_min, x_max, n_agents: int):
     dx = (x_max - x_min) / (m + 1)
 
     x, y = np.mgrid[0:m, 0:m]
-    x = x.astype(float) * dx + x_min + dx / 2
-    y = y.astype(float) * dx + x_min + dx / 2
+    x = x.astype(float) * dx + x_min + dx
+    y = y.astype(float) * dx + x_min + dx
 
     if m % 2 == 0:
         z = np.vstack([x.reshape(-1), y.reshape(-1)]).T
