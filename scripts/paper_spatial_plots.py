@@ -92,21 +92,40 @@ if __name__ == "__main__":
             paths.append((Path(output_path), full_title))
 
     dataframes = []
+    pb = tqdm(total=len(paths) * 2, desc="Loading Data")
     for output_path, title in paths:
         domain, initial_cells, meta_params = crp.get_simulation_settings(output_path)
-        data_cells, data_voxels = crp.analyze_all_cell_voxel_data(output_path, meta_params)
+        data_cells, data_voxels = crp.analyze_all_cell_voxel_data(
+            output_path,
+            meta_params,
+            args.n_threads,
+            False,
+            pb,
+        )
         dataframes.append((data_cells, data_voxels))
 
-    if args.save_snapshots:
-        for (output_path, _), (data_cells, data_voxels) in zip(paths, dataframes):
-            iters = crp.get_all_iterations(output_path)
-            crp.save_snapshot(output_path, iters[6])
-            crp.save_snapshot(output_path, iters[12])
-            crp.save_snapshot(output_path, iters[18])
-            crp.save_snapshot(output_path, iters[24])
-
     crp.load_style()
+    pb = tqdm(total=len(paths) * 3, desc="Plotting Graphs")
     for (output_path, title), (data_cells, data_voxels) in zip(paths, dataframes):
         crp.plot_growth_curve(data_cells, output_path)
+        pb.update(1)
         crp.plot_nutrients(data_voxels, output_path)
+        pb.update(1)
         crp.plot_comparisons(data_cells, output_path, title=title)
+        pb.update(1)
+
+    if args.save_snapshots:
+        pb = tqdm(
+            total=len(paths) * 4,
+            desc="Plotting Snapshots",
+        )
+        for output_path, _ in paths:
+            iters = crp.get_all_iterations(output_path)
+            crp.save_snapshot(output_path, iters[6], True, ["png", "pdf"])
+            pb.update()
+            crp.save_snapshot(output_path, iters[12], True, ["png", "pdf"])
+            pb.update()
+            crp.save_snapshot(output_path, iters[18], True, ["png", "pdf"])
+            pb.update()
+            crp.save_snapshot(output_path, iters[24], True, ["png", "pdf"])
+            pb.update()
