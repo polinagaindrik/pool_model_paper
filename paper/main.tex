@@ -826,16 +826,13 @@ We model this inhibiting effect by modifying the uptake term of species $B$ with
 % This means, we can implement the most general version of the equations and by choosing appropriate parameters, this defines the species of the respective cell-agent.
 If we combine these effects and consider multiple cells, we obtain the system
 \begin{alignat}{3}
-    \dot{[R_{i,c_A}]} &=& u &[R_e] - a[R_{i,c_A}]\\
-    \label{eq:spatial-intracellular-a}
-    \dot{[R_{i,c_B}]} &=& \frac{u}{1+\nu_I [I]} &[R_e] - a[R_{i,c_B}]\\
-    \label{eq:spatial-intracellular-b}
-    % TODO fix this
-    % \begin{split}
-        \dot{[R_e]} &=& u &\sum\limits_{c_A}\frac{V_{c_A}}{V_D} [R_e] \delta(x-x_{c_A})\\
-            &&-\frac{u}{1+\nu_I [I]} &\sum\limits_{c_B}\frac{V_{c_B}}{V_D} [R_e] \delta(x-x_{c_B})
-    % \end{split}
+    \dot{[R_{i,c_A}]} &=& u &[R_e] - a[R_{i,c_A}]
+    \label{eq:spatial-intracellular-a}\\
+    \dot{[R_{i,c_B}]} &=& \frac{u}{1+\nu_I [I]} &[R_e] - a[R_{i,c_B}]
+    \label{eq:spatial-intracellular-b}\\
     \label{eq:spatial-extracellular-resources-pde}
+    \dot{[R_e]} &=& u &\sum\limits_{c_A}\frac{V_{c_A}}{V_D} [R_e] \delta(x-x_{c_A})\nonumber\\
+        &&-\frac{u}{1+\nu_I [I]} &\sum\limits_{c_B}\frac{V_{c_B}}{V_D} [R_e] \delta(x-x_{c_B})
 \end{alignat}
 where equations~\eqref{eq:spatial-intracellular-a} and \eqref{eq:spatial-intracellular-b} describe the change of intracellular resources for every individual cell of of species $A,B$ and the equation~\eqref{eq:spatial-extracellular-resources-pde} contains extracellular resources coupled to each individual agent.
 They contain the uptake of resources and term used grow the cell, converting resources into volume which will be explained below.
@@ -854,19 +851,14 @@ This means, we can effectively set $\dot{[R_{i,c}]}=0$.
 Therefore, we obtain the relations $\frac{u}{1+\nu_I [I]}[R_e] = a[R_{i,cB}]$ and $u[R_e]=a[R_{i,c_A}]$ which we can use to eliminate the variable monitoring internal resource concentrations $[R_{i,c}]$.
 Additionally, we also require the nutrients to be freely diffusible with constants $D_R$.
 With these considerations, we can update equations~\eqref{eq:spatial-intracellular-a} to \eqref{eq:spatial-extracellular-resources-pde} and obtain:
-\begin{align}
-    \begin{split}
-        % TODO format these equations
-        \dot{V}_{c_B} &= u \sigma [R]V_c\\
-        \dot{V}_{c_A} &= \frac{u}{1+\nu_I [I]} \sigma [R]V_c\\
-        % \dot{[R_e]} &= \sum\limits_c -\frac{u}{1+\nu_I [I]} \frac{V_c}{V_D} [R] \delta(x-x_c) + D_R\Delta [R]\\
-        \dot{[R]} &= u \sum\limits_{c_A}\frac{V_{c_A}}{V_D} [R] \delta(x-x_{c_A})\\
-            &-\frac{u}{1+\nu_I [I]} \sum\limits_{c_B}\frac{V_{c_B}}{V_D} [R] \delta(x-x_{c_B})\\
-            &+D_R \Delta [R]\\
-        \dot{[I]} &= \sum\limits_c b\frac{V_c}{V_D}\delta(x-x_c) + D_I\Delta [I]
-    \end{split}
+\begin{alignat}{5}
+    \dot{V}_{c_B} &=& u \sigma &[R]V_c\\
+    \dot{V}_{c_A} &=& \frac{u}{1+\nu_I [I]} \sigma &[R]V_c\\
+    \dot{[R]} &=& u \sum\limits_{c_A}\frac{V_{c_A}}{V_D} &[R] \delta(x-x_{c_A})\\
+        &&-\frac{u}{1+\nu_I [I]} \sum\limits_{c_B}\frac{V_{c_B}}{V_D} &[R] \delta(x-x_{c_B}) &+& D_R \Delta [R]\nonumber\\
+    \dot{[I]} &=& \sum\limits_{c_A} b&\frac{V_{c_A}}{V_D}\delta(x-x_c) &+& D_I\Delta [I]
     \label{eq:spatial-full-system-simplified}
-\end{align}
+\end{alignat}
 For the diffusion, we require Neumann (zero-flux) boundary conditions.
 Since, we will not explicitly model intracellular concentrations $[R_{i,c}]$, we will drop the index entirely, only considering the extracellular resource.
 %
