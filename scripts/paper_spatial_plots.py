@@ -2,6 +2,8 @@ import cr_pool as crp
 from pathlib import Path
 import argparse
 import numpy as np
+import multiprocessing as mp
+from tqdm import tqdm
 
 from cr_pool.units import (
     SECOND,
@@ -73,7 +75,11 @@ if __name__ == "__main__":
     )
     parser.add_argument("paths", type=str, nargs="*")
     parser.add_argument("--save-snapshots", action="store_true")
+    parser.add_argument("--n-threads", type=int, default=None)
     args = parser.parse_args()
+
+    if args.n_threads is None:
+        args.n_threads = mp.cpu_count()
 
     paths = args.paths
     paths = [(Path(p), None) for p in paths]
