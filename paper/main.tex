@@ -989,7 +989,7 @@ The initial bacteria have been ordered on a grid such that only every diagonal n
         \node at (0.01, 0.99)[anchor=north west, white]{\textbf{D}};
     \end{tikzonimage}%
     \caption{
-        Simulation snapshots at $1.04$~\unit{\day}, $\SI{100}{\minute},\SI{200}{\minute},\SI{300}{\minute}$ and $\SI{400}{\minute}$
+        Simulation snapshots at $\SI{100}{\minute},\SI{200}{\minute},\SI{300}{\minute}$ and $\SI{400}{\minute}$
         corresponding to the parameters given in Table~\ref{tab:spatial_limit_init}.
         Species $B$ is colored blue while species $A$ is colored in red.
         The background shows the resource concentration $[R]$.
@@ -1012,7 +1012,7 @@ We furthermore note that the total bacteria volume of the \ac{abm} model is alwa
 This is expected, since processes such as diffusion and cells growing outward introduce another time component which is simply assumed to be instantaneous in the \ac{ode} model.
 From studies surrounding the branching patterns of bacterial colonies~\citep{Kawasaki1997,Matsushita1998}, we know that the diffusivity of
 nutrients is of the order of the spatial extension rate of the bacterial colony.
-The chosen diffusion constants $D_I=D_R=\SI{20}{\micro\metre\squared\per\second},\SI{5}{\micro\metre\squared\per\second}$ mimick a behavior of a fast and slowly diffusing system respectively.
+The chosen diffusion constants $D_I=D_R=\{5,20\}~\unit{\micro\metre\squared\per\second}$ mimick a behavior of a fast and slowly diffusing system respectively.
 \begin{figure*}
     \centering
     \begin{tikzonimage}[width=\columnwidth]
@@ -1032,8 +1032,12 @@ The chosen diffusion constants $D_I=D_R=\SI{20}{\micro\metre\squared\per\second}
         \node at (0, 1)[anchor=north west]{\textbf{D}};
     \end{tikzonimage}
     \caption{
-        (A-D) Comparison of the \ac{ode} and \ac{abm} model for different configurations, showing homogenous, heterogeneous or randomized initial configurations.
-        The diffusion constants are chosen such that $D_R=D_I=D$.
+        (A-D) Comparison of the \ac{ode} and \ac{abm} model for different configurations.
+        (A) Homogeneous, fast diffusion
+        (B) Homogeneous, slow diffusion
+        (C) Heterogeneous, fast diffusion
+        (D) Random, fast diffusion
+        The diffusion constants are chosen such that $D_R=D_I=D={5,20}~\unit{\micro\metre\squared\per\second}$.
         Snapshots of the spatial configurations of cells are included in the Appendix~\ref{fig:supplement-spatial-initial-config-cells}.
     }
     \label{fig:spatial-growth-curve}
@@ -1298,9 +1302,9 @@ strength $\epsilon$, diffusion $D_R,D_I$) do not.
         Total volume                & $N_t$& $0.5\cdot 10^5$~\unit{\micro\metre\cubed}
         &&&\\
         &&
-        & Diffusion $R$             & $D_R$         & $30.0$~\unit{\micro\metre\squared\per\second}\\
+        & Diffusion $R$             & $D_R$         & $20.0$~\unit{\micro\metre\squared\per\second}\\
         &&
-        & Diffusion $I$             & $D_I$         & $30.0$~\unit{\micro\metre\squared\per\second}\\
+        & Diffusion $I$             & $D_I$         & $20.0$~\unit{\micro\metre\squared\per\second}\\
         % Note: this diffusion roughly corresponds to the one of ethanol in water
         % (see https://de.wikipedia.org/wiki/Diffusionskoeffizient#In_Fl%C3%BCssigkeiten)
         % 15.0 µm^2/min = 0.9 m^2/s
