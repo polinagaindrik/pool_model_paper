@@ -14,10 +14,10 @@ DIFFUSION_UNITS = "\\text{\\textmu m}^2\\text{s}^{-1}"
 
 # Diffusion constants, randomness, homogenous
 CONFIGS = [
-    (30, 0, True, "Homogeneous"),
-    # (30, 0, True, "Homogeneous"),
-    # (100, 0, False, "Heterogeneous"),
-    # (100, 0.30, True, "Random"),
+    (20.0, 0, True, "Homogeneous"),
+    (2.0, 0, True, "Homogeneous"),
+    (20.0, 0, False, "Heterogeneous"),
+    (20.0, 0.30, True, "Random"),
 ]
 
 
@@ -26,6 +26,7 @@ def calculate_results(diffusion_constant, randomness, homogenous):
     domain = crp.Domain()
     domain.size = 1_000
     domain.diffusion_constants = [diffusion_constant] * 2
+    domain.n_voxels = 50
 
     # Meta Parameters
     meta_params = crp.MetaParams()
@@ -40,8 +41,8 @@ def calculate_results(diffusion_constant, randomness, homogenous):
     # Cellular Reactions
     cell.cellular_reactions.uptake_rate = 0.0025 / SECOND
     cell.cellular_reactions.inhibition_production_rate = 0.025 / SECOND
-    cell.cellular_reactions.inhibition_coefficient = 0.025 * MICRON**3 / MOL
-    cell.cellular_reactions.food_to_volume_conversion = 0.025 * MICRON**3 / MOL
+    cell.cellular_reactions.inhibition_coefficient = 0.1 * MICRON**3 / MOL
+    cell.cellular_reactions.food_to_volume_conversion = 0.1 * MICRON**3 / MOL
 
     # Interaction
     cell.cellular_reactions.potential_strength = 0.125 * PICO_GRAM * MICRON / SECOND
