@@ -122,7 +122,13 @@ def _analyze_cell_data_helper(args):
     return analyze_cell_data(*args)
 
 
-def analyze_all_cell_voxel_data(output_path, meta_params, n_threads=None, get_entropy=False):
+def analyze_all_cell_voxel_data(
+    output_path,
+    meta_params,
+    n_threads=None,
+    get_entropy=False,
+    pb=None,
+):
     # Construct pool to process results in parallel
     if n_threads is None:
         n_threads = mp.cpu_count()
@@ -133,34 +139,30 @@ def analyze_all_cell_voxel_data(output_path, meta_params, n_threads=None, get_en
         (output_path, iteration, meta_params, get_entropy)
         for iteration in get_all_iterations(output_path)
     ]
-    print("Loading Cell Data")
     data_cells = (
         pd.DataFrame(
-            tqdm.tqdm(
-                pool.imap_unordered(
-                    _analyze_cell_data_helper,
-                    args,
-                ),
-                total=len(args),
-            )
+            pool.imap_unordered(
+                _analyze_cell_data_helper,
+                args,
+            ),
         )
         .sort_values("iteration")
         .reset_index(drop=True)
     )
-    print("Loading Voxel Data")
+    if pb is not None:
+        pb.update()
     data_voxels = (
         pd.DataFrame(
-            tqdm.tqdm(
-                pool.imap_unordered(
-                    _analyze_voxel_data_helper,
-                    args,
-                ),
-                total=len(args),
-            )
+            pool.imap_unordered(
+                _analyze_voxel_data_helper,
+                args,
+            ),
         )
         .sort_values("iteration")
         .reset_index(drop=True)
     )
+    if pb is not None:
+        pb.update()
 
     # Close the pool to free any remaining resources
     pool.close()
