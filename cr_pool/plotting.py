@@ -99,9 +99,6 @@ def abm_to_ode(
     )
 
     # Inhibitor Production rate
-    abm_cell_volume_max = np.average([c.cycle.volume_division_threshold for c in initial_cells])
-    abm_cell_volume_min = abm_cell_volume_max / 2.0
-    abm_cell_volume_average = 0.5 * (abm_cell_volume_max + abm_cell_volume_min)
     abm_domain_volume = domain.size**2
     abm_inhibition_production_rate = np.average(
         [c.cellular_reactions.inhibition_production_rate for c in initial_cells]
