@@ -814,7 +814,7 @@ This ability, to precisely define and control the exact behavior of our cell-age
 \subsubsection{Cellular reactions}
 To construct an \ac{abm} which resembles the given \ac{ode} system of equations~\eqref{eq:spatial_limit_F} and \eqref{eq:spatial_limit_H}, we consider multiple cellular reactions.
 We denote cells of species $A,B$ with $c_{A/B}$ respectively and indicate shared behavior by simply using $c$.
-Cells $c_A$ of species $A$ take up extracellular resources $[R_e]$ into the cell $[R_{i,c_A}]$ with rate $u$ in \unit{\per\minute}.
+Cells $c_A$ of species $A$ take up extracellular resources $[R_e]$ into the cell $[R_{i,c_A}]$ with rate $u$ in \unit{\per\second}.
 The uptake only occurs at the position of the cell $x_{c_A}$.
 Furthermore, we let cells of species $A$ produce a freely diffusible inhibitor $I$ with production rate $b$ and diffusion constant $D_I$ which inhibits cells of species $B$ in their uptake of nutrients.
 \begin{equation}
@@ -989,7 +989,8 @@ The initial bacteria have been ordered on a grid such that only every diagonal n
         \node at (0.01, 0.99)[anchor=north west, white]{\textbf{D}};
     \end{tikzonimage}%
     \caption{
-        Simulation snapshots at $1.04$~\unit{\day}, $2.08$~\unit{\day}, $3.13$~\unit{\day} and $4.17$~\unit{\day} corresponding to the parameters given in Table~\ref{tab:spatial_limit_init}.
+        Simulation snapshots at $1.04$~\unit{\day}, $\SI{100}{\minute},\SI{200}{\minute},\SI{300}{\minute}$ and $\SI{400}{\minute}$
+        corresponding to the parameters given in Table~\ref{tab:spatial_limit_init}.
         Species $B$ is colored blue while species $A$ is colored in red.
         The background shows the resource concentration $[R]$.
         Darker colors indicate that less nutrients are present.
@@ -1009,7 +1010,9 @@ In contrast to the other results, here the final values of species $A$ and $B$ h
 This illustrates that spatial effects can shift the final results of growth curves towards both directions, leading to an overall increase/decrease of one species.
 We furthermore note that the total bacteria volume of the \ac{abm} model is always smaller or equal compared to the \ac{ode} model.
 This is expected, since processes such as diffusion and cells growing outward introduce another time component which is simply assumed to be instantaneous in the \ac{ode} model.
-The chosen diffusion constants $D_I=D_R=30.0$~\unit{\micro\metre\squared\per\minute} are in the order of small molecules such as $NaCl$ while the lower values $D_I=D_R=5.0$~\unit{\micro\metre\squared\per\minute} are around values of Glucose in water.
+From studies surrounding the branching patterns of bacterial colonies~\citep{Kawasaki1997,Matsushita1998}, we know that the diffusivity of
+nutrients is of the order of the spatial extension rate of the bacterial colony.
+The chosen diffusion constants $D_I=_D_R=\SI{20/5}{\micro\metre\squared\per\second}$ mimick a behavior of a fast and slowly diffusing system respectively.
 \begin{figure*}
     \centering
     \begin{tikzonimage}[width=\columnwidth]
@@ -1347,24 +1350,24 @@ strength $\epsilon$, diffusion $D_R,D_I$) do not.
 \section{Homogeneous and inhomogeneous initial cell distributions}
 To clarify what we mean by homogeneous and inhomogeneous initial configurations, we include snapshots of the simulation.
 At this point, cells have already grown such that the sizes of cell-clumps are better visible by the naked eye.
-The snapshots were taken after $2.08$~\unit{\day}.
+The snapshots were taken after $\SI{100}{\minute}$.
 \begin{figure}[H]
     \centering
     \begin{subfigure}[c]{0.5\textwidth}
         \includegraphics[width=\textwidth]{Figures-abm-homogenous-images-snapshot_00024000.pdf}
-        \subcaption{Homogeneous initial cell distribution, $D_R=D_I=30.0$~\unit{\micro\metre\squared\per\minute}}
+        \subcaption{Homogeneous initial cell distribution, $D_R=D_I=30.0$~\unit{\micro\metre\squared\per\second}}
     \end{subfigure}%
     \begin{subfigure}[c]{0.5\textwidth}
         \includegraphics[width=\textwidth]{Figures-abm-homogenous-low-diffusion-images-snapshot_00024000.pdf}
-        \subcaption{Homogeneous initial cell distribution, $D_R=D_I=5.0$~\unit{\micro\metre\squared\per\minute}}
+        \subcaption{Homogeneous initial cell distribution, $D_R=D_I=5.0$~\unit{\micro\metre\squared\per\second}}
     \end{subfigure}\\
     \begin{subfigure}[c]{0.5\textwidth}
         \includegraphics[width=\textwidth]{Figures-abm-inhomogenous-images-snapshot_00024000.pdf}%
-        \subcaption{Heterogeneous initial cell distribution, $D_R=D_I=30.0$~\unit{\micro\metre\squared\per\minute}}
+        \subcaption{Heterogeneous initial cell distribution, $D_R=D_I=30.0$~\unit{\micro\metre\squared\per\second}}
     \end{subfigure}%
     \begin{subfigure}[c]{0.5\textwidth}
         \includegraphics[width=\textwidth]{Figures-abm-random-images-snapshot_00024000.pdf}%
-        \subcaption{Random initial cell distribution, $D_R=D_I=30.0$~\unit{\micro\metre\squared\per\minute}}
+        \subcaption{Random initial cell distribution, $D_R=D_I=30.0$~\unit{\micro\metre\squared\per\second}}
     \end{subfigure}
     \caption{
         Spatial configuration of cells corresponding to the pictures shown in Figure~\ref{fig:spatial-growth-curve}.
