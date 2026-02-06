@@ -391,13 +391,13 @@ if __name__ == "__main__":
 
     fig, ax = plt.subplots(3, 1, figsize=(4, 6.7), sharex=True)
     fig.subplots_adjust(hspace=0.25)
-    labels = [r'$G_A$', r'$G_B$']
+    labels = [r'$\tilde G_A$', r'$\tilde G_B$']
     for j, d in enumerate(data_inhib):
         for i, obs in enumerate(d['obs_mean']):
             ax[j].plot(d['times'], obs, linewidth=3-i, color=color_palette_2sp_only[i], label=labels[i], linestyle='dashed')
         ax[j].set_xlim(-0.001, 1.)
         ax[j].legend(loc='center right')
-        fig, ax[j] = set_labels(fig, ax[j], r'Time, $t$ [h]', r'$N / N_t$')
+        fig, ax[j] = set_labels(fig, ax[j], r'Time, $t$ [h]', 'Rescaled Bacterial Count')
     ax[0].text(*coord_text, r'\textbf{A}', transform = ax[0].transAxes)#r'(a) $\psi$ = 1')
     ax[1].text(*coord_text, r'\textbf{B}', transform = ax[1].transAxes)#r'(b) $\psi$ = 0.5')
     ax[2].text(*coord_text, r'\textbf{C}', transform = ax[2].transAxes)#r'(c) $\psi$ = 2')
@@ -417,7 +417,7 @@ if __name__ == "__main__":
             ax.plot(d['times'], obs, linewidth=3-i, color=color_palette_2sp_only[i], label=labels[i], linestyle='dashed')
         ax.set_xlim(-0.001, 1.)
         ax.legend(loc='center right')
-        fig, ax = set_labels(fig, ax, r'Time, $t$ [h]', r'$N / N_t$')
+        fig, ax = set_labels(fig, ax, r'Time, $t$ [h]', 'Rescaled Bacterial Count')
         ax.text(*coord_text, text[j], transform = ax.transAxes)
         ax.set_ylim(0.1, y_max_lim[j])
         plt.savefig(f'paper/Figures-pool_model_1pool_inhib{j+1}.pdf', bbox_inches='tight')
@@ -432,7 +432,7 @@ if __name__ == "__main__":
     fig, ax = plt.subplots(3, 1, figsize=(4, 6.7), sharex=True)
     fig.subplots_adjust(hspace=0.25)
     lnst = ['dashed', 'dashed', 'solid', 'solid']
-    labels = [r'$G_A$', r'$G_B$', r'$P_A$', r'$P_B$']
+    labels = [r'$\tilde G_A$', r'$\tilde G_B$', r'$\tilde P_A$', r'$\tilde P_B$']
     color_palette_2sp_coop = [colors_all['N_A'], colors_all['N_B'], colors_all['T_A'], colors_all['T']]
     const_coop = [
         [1., 1.], # (psi, phi)
@@ -445,7 +445,7 @@ if __name__ == "__main__":
             for i, obs in enumerate(d['obs_mean']):
                 ax[k].plot(d['times'], obs, color=color_palette_2sp_coop[i], label=labels[i], linestyle=lnst[i],
                            linewidth=lwdth[i])
-        fig, ax[k] = set_labels(fig, ax[k], r'Time, $t$ [h]', r'$N / N_t$')
+        fig, ax[k] = set_labels(fig, ax[k], r'Time, $t$ [h]', 'Rescaled Bacterial Count')
         ax[k].set_xlim(-0.001, 10.5)
     ax[0].set_ylim(0.0, 1.47)
     ax[1].set_ylim(0.0, 1.22)
@@ -468,7 +468,7 @@ if __name__ == "__main__":
             for i, obs in enumerate(d['obs_mean']):
                 ax.plot(d['times'], obs, color=color_palette_2sp_coop[i], label=labels[i], linestyle=lnst[i],
                            linewidth=lwdth[i])
-        fig, ax = set_labels(fig, ax, r'Time, $t$ [h]', r'$N / N_t$')
+        fig, ax = set_labels(fig, ax, r'Time, $t$ [h]', 'Rescaled Bacterial Count')
         ax.set_xlim(-0.001, 10.5)
         ax.set_ylim(0.0, ymax_lim[k])
         ax.text(*coord_text, text[k], transform = ax.transAxes)
