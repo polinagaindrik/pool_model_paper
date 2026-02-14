@@ -814,49 +814,60 @@ This ability, to precisely define and control the exact behavior of our cell-age
 \subsubsection{Cellular reactions}
 To construct an \ac{abm} which resembles the given \ac{ode} system of equations~\eqref{eq:spatial_limit_F} and \eqref{eq:spatial_limit_H}, we consider multiple cellular reactions.
 We denote cells of species $A,B$ with $c_{A/B}$ respectively and indicate shared behavior by simply using $c$.
-Cells $c_A$ of species $A$ take up extracellular resources $R_e$ into the cell $R_{i,c_A}$ with rate $u$ in \unit{\per\second}.
-The uptake only occurs at the position of the cell $x_{c_A}$.
-Furthermore, we let cells of species $A$ produce a freely diffusible inhibitor $I$ with production rate $b$ and diffusion constant $D_I$ which inhibits cells of species $B$ in their uptake of nutrients.
+The presented equations are motivated and obtained in greater detail in the supplementary material (section~\ref{sec:supplement-abm-derivation}).
+Cells $c_A$ of species $A$ take up extracellular resources $R_e$ and immediately convert it into biomass in the form of cellular volume $V_c$
 \begin{equation}
-    \dot{I} = b\frac{V_{c_A}}{V_D}\delta(x-x_{c_A}) + D_I \Delta I
+    \dot{V}_c = u_c\sigma R_{i,c} V_c
 \end{equation}
-We model this inhibiting effect by modifying the uptake term of species $B$ with a factor of $\frac{1}{1+\nu_I I}$.
+where $\sigma$ resembles a conversion rate of nutrients in cellular volume and $u_c$ defines the rate of this process.
+Its value is influenced by the abundance of an external inhibitor $I$ which is produced by species $A$ and inhibits species $B$.
+For species $B$, the rate is reduced via $u_{c_B}=u/(1+\nu_I I)$ while species $A$ remains unaffected $u_{c_A}=u$.
+The inhibitor also diffuses freely in the given domain, resulting in
+\begin{equation}
+    \dot{I} = b\frac{V_{c_A}}{V_D}\delta(x-x_{c_A}) + D_I \Delta I.
+\end{equation}
+We use the Dirac delta-distribution $\delta(x-x_c)$ to enforce interactions at the positions of the cells $x_{c}$.
+% Cells $c_A$ of species $A$ take up extracellular resources $R_e$ into the cell $R_{i,c_A}$ with rate $u$ in \unit{\per\second}.
+% The uptake only occurs at the position of the cell $x_{c_A}$.
+% Furthermore, we let cells of species $A$ produce a freely diffusible inhibitor $I$ with production rate $b$ and diffusion constant $D_I$ which inhibits cells of species $B$ in their uptake of nutrients.
+% \begin{equation}
+%     \dot{I} = b\frac{V_{c_A}}{V_D}\delta(x-x_{c_A}) + D_I \Delta I
+% \end{equation}
+% We model this inhibiting effect by modifying the uptake term of species $B$ with a factor of $\frac{1}{1+\nu_I I}$.
 % Note that we do not need to distinguish between the two species because we can set parameters individually on agent-level.
 % To distinguish between the two species, it suffices to set parameters for every individual agent accordingly.
 % This means, we can implement the most general version of the equations and by choosing appropriate parameters, this defines the species of the respective cell-agent.
-If we combine these effects and consider multiple cells, we obtain the system
-\begin{alignat}{3}
-    \dot{R_{i,c_A}} &=& u &R_e - aR_{i,c_A}
-    \label{eq:spatial-intracellular-a}\\
-    \dot{R_{i,c_B}} &=& \frac{u}{1+\nu_I I} &R_e - aR_{i,c_B}
-    \label{eq:spatial-intracellular-b}\\
-    \label{eq:spatial-extracellular-resources-pde}
-    \dot{R_e} &=& u &\sum\limits_{c_A}\frac{V_{c_A}}{V_D} R_e \delta(x-x_{c_A})\nonumber\\
-        &&-\frac{u}{1+\nu_I I} &\sum\limits_{c_B}\frac{V_{c_B}}{V_D} R_e \delta(x-x_{c_B})
-\end{alignat}
-where equations~\eqref{eq:spatial-intracellular-a} and \eqref{eq:spatial-intracellular-b} describe the change of intracellular resources for every individual cell of of species $A,B$ and the equation~\eqref{eq:spatial-extracellular-resources-pde} contains extracellular resources coupled to each individual agent.
-They contain the uptake of resources and term used grow the cell, converting resources into volume which will be explained below.
-We use the Dirac delta-distribution $\delta(x-x_c)$ to enforce exchange of nutrients at the positions of the cells $x_{c}$.
-Note that $R_e=R_e(x)$ explicitly depends on the spatial coordinate but we choose to omit its notation.
-In equation~\eqref{eq:spatial-extracellular-resources-pde} we need to account for the ratio of cellular $V_c$ and domain volume $V_D$ to calculate the correct exchange.
-In addition, we want to modify the cellular volume by growing it increasingly with rate $a$.
-Therefore, we need to specify how many resource molecules are turned into volumetric units $\sigma$ in \unit{\micro\metre\cubed\per\mole}.
-The total amount of resource molecules present inside the cell is given by the current concentration multiplied by the cell-volume $V_c R_{i,c}$.
-With a rate $a$ and conversion $\sigma$, the cell turns these resource molecules into volume.
-\begin{equation}
-    \dot{V}_c = a\sigma R_{i,c} V_c
-\end{equation}
-In order to simplify this system, we can assume that the internal resources are constantly being depleted by the growth and the limiting process is the uptake of the resource.
-This means, we can effectively set $\dot{R_{i,c}}=0$.
-Therefore, we obtain the relations $\frac{u}{1+\nu_I I}R_e = aR_{i,cB}$ and $u R_e=a R_{i,c_A}$ which we can use to eliminate the variable monitoring internal resource concentrations $R_{i,c}$.
+% \begin{alignat}{3}
+%     \dot{R_{i,c_A}} &=& u &R_e(x_{c_A}) - aR_{i,c_A}
+%     \label{eq:spatial-intracellular-a}\\
+%     \dot{R_{i,c_B}} &=& \frac{u}{1+\nu_I I} &R_e(x_{c_B}) - aR_{i,c_B}
+%     \label{eq:spatial-intracellular-b}\\
+%     \label{eq:spatial-extracellular-resources-pde}
+%     \dot{R_e}(x) &=& -u &\sum\limits_{c_A}\frac{V_{c_A}}{V_D} R_e(x) \delta(x-x_{c_A})\nonumber\\
+%         &&-\frac{u}{1+\nu_I I} &\sum\limits_{c_B}\frac{V_{c_B}}{V_D} R_e(x) \delta(x-x_{c_B})\nonumber\\
+%         &&+D_R\Delta R_e(x)
+% \end{alignat}
+% where equations~\eqref{eq:spatial-intracellular-a} and \eqref{eq:spatial-intracellular-b} describe the change of intracellular resources for every individual cell of of species $A,B$ and the equation~\eqref{eq:spatial-extracellular-resources-pde} contains extracellular resources coupled to each individual agent.
+% They contain the uptake of resources and term used grow the cell, converting resources into volume which will be explained below.
+% We use the Dirac delta-distribution $\delta(x-x_c)$ to enforce exchange of nutrients at the positions of the cells $x_{c}$.
+% Note that $R_e=R_e(x)$ explicitly depends on the spatial coordinate but we choose to omit its notation.
+% In equation~\eqref{eq:spatial-extracellular-resources-pde} we need to account for the ratio of cellular $V_c$ and domain volume $V_D$ to calculate the correct exchange.
+% In addition, we want to modify the cellular volume by growing it increasingly with rate $u$.
+% Therefore, we need to specify how many resource molecules are turned into volumetric units $\sigma$ in \unit{\micro\metre\cubed\per\mole}.
+% The total amount of resource molecules present inside the cell is given by the current concentration multiplied by the cell-volume $V_c R_{i,c}$.
+% With a rate $a$ and conversion $\sigma$, the cell takes up and converts the resource molecules into volume.
+% In order to simplify this system, we can assume that the internal resources are constantly being depleted by the growth and the limiting process is the uptake of the resource.
+% This means, we can effectively set $\dot{R_{i,c}}=0$.
+% Therefore, we obtain the relations $\frac{u}{1+\nu_I I}R_e(x_{c_B}) = aR_{i,c_B}$ and $u R_e(x_{c_A})=a R_{i,c_A}$ which we can use to eliminate the variable monitoring internal resource concentrations $R_{i,c}$.
 Additionally, we also require the nutrients to be freely diffusible with constants $D_R$.
-With these considerations, we can update equations~\eqref{eq:spatial-intracellular-a} to \eqref{eq:spatial-extracellular-resources-pde} and obtain:
+When combining all of the listed effects and considering multiple cells of the two species $A/B$, we obtain the system
+% With these considerations, we can update equations~\eqref{eq:spatial-intracellular-a} to \eqref{eq:spatial-extracellular-resources-pde} and obtain:
 \begin{alignat}{5}
     \dot{V}_{c_B} &=& u \sigma &RV_c\\
     \dot{V}_{c_A} &=& \frac{u}{1+\nu_I I} \sigma &R V_c\\
-    \dot{R} &=& u \sum\limits_{c_A}\frac{V_{c_A}}{V_D} &R \delta(x-x_{c_A})\\
-        &&-\frac{u}{1+\nu_I I} \sum\limits_{c_B}\frac{V_{c_B}}{V_D} &R \delta(x-x_{c_B}) &+& D_R \Delta R\nonumber\\
-    \dot{I} &=& \sum\limits_{c_A} b&\frac{V_{c_A}}{V_D}\delta(x-x_c) &+& D_I\Delta I
+    \dot{R}_e &=& -u \sum\limits_{c_A}\frac{V_{c_A}}{V_D} &R_e(x) \delta(x-x_{c_A})\\
+        &&-\frac{u}{1+\nu_I I} \sum\limits_{c_B}\frac{V_{c_B}}{V_D} &R_e(x) \delta(x-x_{c_B}) &+& D_R \Delta R_e(x)\nonumber\\
+    \dot{I} &=&b\sum\limits_{c_A} \frac{V_{c_A}}{V_D}&\delta(x-x_c) &+& D_I\Delta I
     \label{eq:spatial-full-system-simplified}
 \end{alignat}
 For the diffusion, we require Neumann (zero-flux) boundary conditions.
