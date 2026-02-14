@@ -1101,21 +1101,25 @@ The data and simulation code which are presented in this study are publicly avai
 \newcounter{suppsection}
 \newcounter{supptable}
 \newcounter{suppfigure}
-\newcounter{suppequation}
+% \newcounter{suppequation}
 
 \renewcommand{\thesection}{S\arabic{suppsection}}
 \renewcommand{\thetable}{S\arabic{supptable}}%
 \renewcommand{\thefigure}{S\arabic{suppfigure}}%
-\renewcommand{\theequation}{S\arabic{suppequation}}%
+% \renewcommand{\theequation}{S\arabic{suppequation}}%
 
 \let\oldsection\section
-\let\oldequation\equation
+% \let\oldequation\equation
+% \let\oldalign\align
+% \let\oldalignat\alignat
 \let\oldtable\table
 \let\oldfigure\figure
 % \renewcommand{\section}{\@ifstar{\@oldsection}{\@stepcounter{suppsection}\@oldsection}}
 \makeatletter
 \renewcommand{\section}{\@ifstar{\oldsection*}{\stepcounter{suppsection}\oldsection}}
-\renewcommand{\equation}{\@ifstar{\oldequation*}{\stepcounter{suppequation}\oldequation}}
+% \renewcommand{\equation}{\@ifstar{\oldequation*}{\stepcounter{suppequation}\oldequation}}
+% \renewcommand{\align}{\@ifstar{\oldalign*}{\stepcounter{suppequation}\oldalign}}
+% \renewcommand{\alignat}{\@ifstar{\oldalignat*}{\stepcounter{suppequation}\oldalignat}}
 \renewcommand{\table}{\@ifstar{\oldtable*}{\stepcounter{supptable}\oldtable}}
 \renewcommand{\figure}{\@ifstar{\oldfigure*}{\stepcounter{suppfigure}\oldfigure}}
 \makeatother
