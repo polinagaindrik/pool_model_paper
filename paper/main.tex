@@ -1211,12 +1211,74 @@ The simpler version of one state per species (equation~\ref{eq:LV_simple}) can b
 %
 \vfill
 \pagebreak
-\section{Deriving the pool model}
+\section{Motivating the Cellular Reactions of the \ac{abm}}
 \label{sec:supplement-abm-derivation}
+The equations governing the dynamics of the \ac{abm} can not be directly derived from higher principles but can still aim to motivate them as best as possible.
+Our model consists of individual cells with volume $V_c$ and extracellular nutrients $R_e(x)$ which are spatially distributed.
+We set up a balancing equation that aims to relate these concepts.
+To this end, we assume that any loss in extracellular nutrients is directly converted into cellular volume.
+To compare any changes in $R_e$ with changes of volume, we introduce a conversion factor $\sigma$.
+The balancing equation then reads
+\begin{equation}
+    \text{const} = \sigma \int\limits_D R_e(x)\text{dVol} + \sum\limits_c V_c.
+\end{equation}
+We now assume that there are two species $A,B$ present and split the sum and since we are interested in the dynamics of the system, we also take the temporal derivative.
+By adding a zero in the form of
+\begin{equation}
+    \pm u_c\sigma \sum\limits_c\int\limits_D\frac{V_c}{V_D}R_e(x)\delta(x-x_c)\text{dVol}
+\end{equation}
+we can introduce an exchange term between extracellular nutrients and cellular volume.
+In total we obtain
+\begin{alignat}{3}
+    0 &= \sigma\int\limits_D\dot{R}_e(x)\text{dVol} &+ \sigma\sum\limits_c u_c&\int\limits_D\frac{V_c}{V_D}R_e(x)\delta(x-x_c)\text{dVol}\\
+    &&- \sigma\sum\limits_c u_c&\int\limits_D\frac{V_c}{V_D}R_e(x)\delta(x-x_c)\text{dVol} + \sum\limits_c \dot{V}_c\\
+     &= \sigma\int\limits_D\Big[\dot{R}_e(x) &+ \sum\limits_c u_c&\frac{V_c}{V_D}R_e(x)\delta(x-x_c)\Big]\text{dVol}
+     \label{eq:supplement-abm-derivation-intermediate-3}\\
+    &&- \sum\limits_c\Big[\sigma u_c&V_cR_e(x_c) + \dot{V}_c\Big].
+     \label{eq:supplement-abm-derivation-intermediate-4}
+\end{alignat}
+In order to satisfy this balancing equation, we can enforce equality of the dynamics for the subsystems given by \ref{eq:supplement-abm-derivation-intermediate-3} and \ref{eq:supplement-abm-derivation-intermediate-4}.
+These can be viewed as the extracellular dynamics surrounding the nutrient resource $R_e$ and intracellular dynamics increasing the volume $V_c$.
+We assume that the spatial distribution of $R_e$ is governed by a diffusion process with Neumann boundary conditions such that no additional nutrients are introduced and no nutrients lost.
+In particular, any diffusion effects vanishe in the integral
+\begin{equation}
+    \int\limits_D\Delta R_e(x)\text{dVol} = \int\limits_{\partial D}\nabla R_e(x)\text{d\textbf{A}} = 0
+\end{equation}
+due to the Neumann boundary conditions.
+We separate the preceding equations and enforce equality of the dynamics under the integral.
+We therefore obtain
+\begin{align}
+    \dot{R}_e(x) &= -\sigma\sum\limits_c u_c\frac{V_c}{V_D}R_e(x)\delta(x-x_c) + D_R\Delta R_e(x)\\
+    \dot{V}_c &= \sigma u_c R_e(x_c)V_c
+\end{align}
+where $D_R$ is the diffusion constant of the nutrients $R_e$.
+So far, we have treated all cells equally but the system which we aim to describe consists of two distinct species $A/B$ which behave differently.
+We can express this variation by introducing differing growth terms $u_c$ depending on the species.
+This splits apart the sum, raning over cells $c_A$ and $c_B$.
+Another mechanism of this system is the inhibition of growth mediated by an external inhibitor $I$ which is produced by species $A$.
+We assume that the release of inhibitor molecules can be neglected for the assumptions governing the initial balancing of the system.
+In addition to the production of the inhibitor, we also introduce diffusion with constant $D_I$ which results in
+\begin{equation}
+    \dot{I}(x) = b\sum\limits_{c_A}\frac{V_{c_A}}{V_D}\delta(x-x_{c_A}).
+\end{equation}
+By splitting up all terms with respect to species, we arrive at our final equations
+\begin{alignat}{3}
+    \dot{V}_{c_A} &= &\sigma u& R_e(x_c)V_c\\
+    \dot{V}_{c_B} &= &\sigma \frac{u}{1+\nu_I I(x_{c_B})}&R_e(x_{c_B})V_c\\
+    \dot{R}_e(x) &=
+        &-\sigma u&\sum\limits_{c_B}\frac{V_{c_B}}{V_D}R_e(x)\delta(x-x_{c_B})\\
+        &&-\sigma\frac{u}{1+\nu_II(x_{c_B})}&\sum\limits_{c_B} \frac{V_{c_A}}{V_D}R_e(x)\delta(x-x_{c_B}) + D_R\Delta R_e(x)\\
+    \dot{I}(x) &= &b\sum\limits_{c_A}\frac{V_{c_A}}{V_D}\delta(x-x_{c_A}).
+\end{alignat}
+%
+%
+\vfill
+\pagebreak
+\section{Deriving the pool model from the \acs{abm}}
 \paragraph{Reactions}
 Since the \ac{abm} can be considered more fundamental than the \ac{ode} model, we should be able to derive the latter one from the former.
 This can be achieved by starting with equations~\eqref{eq:spatial-full-system-simplified}.
-We integrate the spatial equations over the total domain starting with the resource concentration $[R]$.
+We integrate the spatial equations over the total domain starting with the resource concentration $R$.
 \begin{alignat}{8}
     \int\limits_D\dot{R}\text{dVol}
     &= \int\limits_D\bigg[&-&u \sum\limits_{c_A}\frac{V_{c_A}}{V_D} R \delta(x-x_{c_A})
@@ -1229,8 +1291,8 @@ We integrate the spatial equations over the total domain starting with the resou
         &-& \frac{u}{1+\nu_I I} \sum\limits_{c_B} V_{c_B} R_{x=x_{c_B}}\\
     &= &-&u\sum\limits_{c_A} V_{c_A} R
         &-& \frac{u}{1+\nu_I I} \sum\limits_{c_B} V_{c_B} R\\
-    &= &-&uV_A R &-&\frac{u}{1+\nu_I I} V_B R\\
-    &= &-&u \frac{V_A}{V_D}R &-&\frac{u}{1+\nu_I V_D^{-1} I} \frac{V_B}{V_D}R
+    &= &-&uV_A R &-&\frac{u}{1+\nu_I I} V_B R
+    % &= &-&u \frac{V_A}{V_D}R &-&\frac{u}{1+\nu_I V_D^{-1} I} \frac{V_B}{V_D}R
 \end{alignat}
 We can split up the integral into three parts.
 The last part can then be transformed into an integral over the flux of the resource along the boundary.
@@ -1247,7 +1309,8 @@ Following the same principle as before, we can integrate the inhibitor equation.
     \int\limits_D\dot{I} &= \int\limits_D \bigg[&&\sum\limits_{c_A} b\frac{V_{c_A}}{V_D}&&\delta(x-x_{c_A}) &&+ D_I\Delta I\bigg]\text{dVol}\\
     &= \int\limits_D&&\sum\limits_{c_A} b\frac{V_{c_A}}{V_D}&&\delta(x-x_{c_A}) \text{dVol} &&+ \int\limits_D D_I\Delta I\text{dVol}\\
     &= \int\limits_D&&\sum\limits_{c_A} b\frac{V_{c_A}}{V_D}&&\delta(x-x_{c_A}) \text{dVol} &&+ \int\limits_{\partial D} D_I\nabla I\mathbf{\text{dA}}\\
-    &= &&\sum\limits_{c_A} b V_{c_A}\int\limits_D \frac{1}{V_D} &&\delta(x-x_{c_A}) \text{dVol}
+    &= &&\sum\limits_{c_A} b V_{c_A}\int\limits_D \frac{1}{V_D} &&\delta(x-x_{c_A}) \text{dVol}\\
+    &= b V_A
 \end{alignat}
 %
 \paragraph{Lag-Phase}
