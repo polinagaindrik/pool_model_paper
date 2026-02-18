@@ -1263,16 +1263,16 @@ Another mechanism of this system is the inhibition of growth mediated by an exte
 We assume that the release of inhibitor molecules can be neglected for the assumptions governing the initial balancing of the system.
 In addition to the production of the inhibitor, we also introduce diffusion with constant $D_I$ which results in
 \begin{equation}
-    \dot{I}(x) = b\sum\limits_{c_A}\frac{V_{c_A}}{V_D}\delta(x-x_{c_A}).
+    \dot{I}(x) = b\sum\limits_{c_A}\frac{V_{c_A}}{V_D}\delta(x-x_{c_A}) + D_I \Delta I(x).
 \end{equation}
 By splitting up all terms with respect to species, we arrive at our final equations
-\begin{alignat}{3}
+\begin{alignat}{5}
     \dot{V}_{c_A} &= &\sigma u& R_e(x_c)V_c\\
     \dot{V}_{c_B} &= &\sigma \frac{u}{1+\nu_I I(x_{c_B})}&R_e(x_{c_B})V_c\\
     \dot{R}_e(x) &=
         &-\sigma u&\sum\limits_{c_B}\frac{V_{c_B}}{V_D}R_e(x)\delta(x-x_{c_B})\\
-        &&-\sigma\frac{u}{1+\nu_II(x_{c_B})}&\sum\limits_{c_B} \frac{V_{c_A}}{V_D}R_e(x)\delta(x-x_{c_B}) + D_R\Delta R_e(x)\\
-    \dot{I}(x) &= &b\sum\limits_{c_A}\frac{V_{c_A}}{V_D}\delta(x-x_{c_A}).
+        &&-\sigma\frac{u}{1+\nu_II(x_{c_B})}&\sum\limits_{c_B} \frac{V_{c_A}}{V_D}R_e(x)\delta(x-x_{c_B}) &+& D_R\Delta R_e(x)\\
+    \dot{I}(x) &= &b&\sum\limits_{c_A}\frac{V_{c_A}}{V_D}\delta(x-x_{c_A}) &+& D_I \Delta I(x).
 \end{alignat}
 %
 %
