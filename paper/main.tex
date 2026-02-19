@@ -108,7 +108,6 @@
     postcode={70195},
     country={Germany},
 }
-
 \affiliation[3]{
     organization={Department of Food Science and Technology, UIC Zoonosis y Enfermedades Emergentes ENZOEM, ceiA3, Universidad de Córdoba},
     addressline={Campus Rabanales s/n. Darwin building- Annex},
@@ -937,7 +936,7 @@ The concatenation of many such stochastic processes on a population-based level 
 % ------------------------------------------------------------------------------------------------
 \subsection{Comparing \acs{abm} and \acs{ode} models}
 The \ac{abm} model should be considered to be more fundamental compared to the \ac{ode} description in the sense that it incorporates more biological aspects and maps them closer to the actual behavior of the bacteria.
-We are thus able to derive the \ac{ode} pool model from its \ac{abm} version via a process of homogenization (see Appendix~\ref{ssec:supplement3}).
+We are thus able to derive the \ac{ode} pool model from its \ac{abm} version via a process of homogenization (see Appendix~\ref{sec:supplement-abm-derivation}).
 By doing so, we find a mapping between parameters from the \ac{abm} to parameters used in the \ac{ode} description.
 The derived equations read
 \begin{align}
@@ -960,9 +959,9 @@ and the \ac{ode} equations are
 When comparing these equations, we can map them onto each other via the relations
 \begin{align}
     \begin{split}
-        N_t &= [R_0]V_D\sigma\\
+        N_t &= R_0 V_D\sigma\\
         K_I &= \frac{\nu_I}{V_D}\\
-        \mu &= u[R_0]\sigma\\
+        \mu &= u R_0\sigma\\
         \kappa &= \sigma.
     \end{split}
     \label{eq:ode-abm-mappings}
@@ -995,7 +994,7 @@ The initial bacteria have been ordered on a grid such that only every diagonal n
         Simulation snapshots at $\SI{100}{\minute},\SI{200}{\minute},\SI{300}{\minute}$ and $\SI{400}{\minute}$
         corresponding to the parameters given in Table~\ref{tab:spatial_limit_init}.
         Species $B$ is colored blue while species $A$ is colored in red.
-        The background shows the resource concentration $[R]$.
+        The background shows the resource concentration $R$.
         Darker colors indicate that less nutrients are present.
     }
     \label{fig:spatial-snapshots}
@@ -1187,6 +1186,7 @@ Separating linear and non-linear parts in two terms yields
 Here the first term is the linear part and the second term define the quadratic behavior of the system.
 %
 \paragraph{Generalized Lotka-Volterra}
+
 Likewise, the multispecies system with resource competition present described by equations~\ref{eq:model_2sp_resource_comp} can be represented in the same way by defining
 \begin{equation}
     \mbm = R, \hspace{1cm}
@@ -1266,7 +1266,6 @@ By splitting up all terms with respect to species, we arrive at our final equati
 \vfill
 \pagebreak
 \section{Deriving the pool model from the \acs{abm}}
-\label{ssec:supplement3}
 \paragraph{Reactions}
 Since the \ac{abm} can be considered more fundamental than the \ac{ode} model, we should be able to derive the latter one from the former.
 This can be achieved by starting with equations~\eqref{eq:spatial-full-system-simplified}.
@@ -1343,7 +1342,8 @@ In this way, we are able to recover the \ac{ode} model.
 % ................................................................................................
 \vfill
 \pagebreak
-\section{Full list of parameters}
+\section{Parameter Values and Initial Conditions of the \acs{abm}}
+\paragraph{Parameter Values}
 We utilize the calculate mappings (see equations~\eqref{eq:ode-abm-mappings}) between the \ac{ode} formulation and \ac{abm} to compare values for parameters which serve a similar purpose within the two simulations.
 Table~\ref{tab:spatial_limit_init} lists these parameters together with their values.
 Most parameters have clear $1:1$ mappings to ones within the other model.
@@ -1402,9 +1402,9 @@ strength $\epsilon$, diffusion $D_R,D_I$) do not.
         Volume of $G_B$             & $G_B$         & $0.0$~\unit{\micro\metre\cubed}
         & Cell Volume               & $V_{c,B}$     & $7.07$~\unit{\micro\metre\cubed}\\
         Relative Nutrients          & $R$           & $1.0$
-        & Nutrients                 & $[R_0]$       & $1.0$~\unit{\mol\per\micro\metre\cubed}\\
+        & Nutrients                 & $R_0$       & $1.0$~\unit{\mol\per\micro\metre\cubed}\\
         Inhibitor                   & $I_0$         & $0.0$~\unit{\mol}
-        & Inhibitor                 & $[I_0]$       & $0.0$~\unit{\mol\per\micro\metre\cubed}\\
+        & Inhibitor                 & $I_0$       & $0.0$~\unit{\mol\per\micro\metre\cubed}\\
         \bottomrule
     \end{tabularx}
     \caption{
@@ -1415,10 +1415,7 @@ strength $\epsilon$, diffusion $D_R,D_I$) do not.
     \label{tab:spatial_limit_init}
 \end{table}
 %
-% ................................................................................................
-\vfill
-\pagebreak
-\section{Homogeneous and inhomogeneous initial cell distributions}
+\paragraph{Homogeneous and inhomogeneous initial cell distributions}
 To clarify what we mean by homogeneous and inhomogeneous initial configurations, we include snapshots of the simulation.
 At this point, cells have already grown such that the sizes of cell-clumps are better visible by the naked eye.
 The snapshots were taken after $\SI{100}{\minute}$.
