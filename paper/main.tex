@@ -257,6 +257,7 @@ Furthermore, we assess how spatial heterogeneity~\citep{mckellar_heterogeneous_1
 \section{One species modeling}
 % ------------------------------------------------------------------------------------------------
 \subsection{Three-pool model}
+\label{sec:three-pool-model}
 We begin our discussion by considering a simplistic system where only one species is present $N=1$.
 Bacterial growth undergoes different consecutive phases~\citep{buchanan_when_1997}, starting with the so called lag-phase, which is a specific case of quiescence, during which no increase in the bacterial count occurs.
 This phenomenon appears due to adaptations of the microbial community, for example, to the new environmental conditions.
@@ -819,8 +820,12 @@ This ability, to precisely define and control the exact behavior of our cell-age
 %
 \subsubsection{Cellular reactions}
 To construct an \ac{abm} which resembles the given \ac{ode} system of equations~\eqref{eq:spatial_limit_F} and \eqref{eq:spatial_limit_H}, we consider multiple cellular reactions.
-We denote quantities of cellular species $A,B$ with the subscript $c_{A/B}$, respectively, and indicate shared cellular behavior by the subscript $c$. The equations stated below are motivated and obtained in greater detail in the supplementary material (section~\ref{ssec:supplement2}). Nutrients or resources in the microenvironment with the concentration $R_e$ diffuse freely with the diffusion constant $D_R$. Cells take up extracellular resources $R_e$ and convert them into biomass, which is measured in terms of cellular volume. Cells of type $A$ release a diffusible molecule into the microenvironment with concentration $I$ and diffusion constant $D_I$, which inhibits the growth of the cells of type $B$. 
-
+We denote quantities of cellular species $A,B$ with the subscript $c_{A/B}$, respectively, and indicate shared cellular behavior by the subscript $c$.
+The equations stated below are motivated and obtained in greater detail in the supplementary material (section~\ref{ssec:supplement2}).
+Nutrients or resources in the microenvironment with the concentration $R_e$ diffuse freely with the diffusion constant $D_R$.
+Cells take up extracellular resources $R_e$ and convert them into biomass, which is measured in terms of cellular volume.
+Cells of type $A$ release a diffusible molecule into the microenvironment with concentration $I$ and diffusion constant $D_I$, which inhibits the growth of the cells of type $B$.
+%
 % Cells $c_A$ of species $A$ take up extracellular resources $R_e$ into the cell $R_{i,c_A}$ with rate $u$ in \unit{\per\second}.
 % The uptake only occurs at the position of the cell $x_{c_A}$.
 % Furthermore, we let cells of species $A$ produce a freely diffusible inhibitor $I$ with production rate $b$ and diffusion constant $D_I$ which inhibits cells of species $B$ in their uptake of nutrients.
