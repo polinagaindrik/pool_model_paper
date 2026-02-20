@@ -832,18 +832,18 @@ Cells of type $A$ release a diffusible molecule into the microenvironment with c
 % \begin{equation}
 %     \dot{I} = b\frac{V_{c_A}}{V_D}\delta(x-x_{c_A}) + D_I \Delta I
 % \end{equation}
-% We model this inhibiting effect by modifying the uptake term of species $B$ with a factor of $\frac{1}{1+\nu_I I}$.
+% We model this inhibiting effect by modifying the uptake term of species $B$ with a factor of $\frac{1}{1+\nu I}$.
 % Note that we do not need to distinguish between the two species because we can set parameters individually on agent-level.
 % To distinguish between the two species, it suffices to set parameters for every individual agent accordingly.
 % This means, we can implement the most general version of the equations and by choosing appropriate parameters, this defines the species of the respective cell-agent.
 % \begin{alignat}{3}
 %     \dot{R_{i,c_A}} &=& u &R_e(x_{c_A}) - aR_{i,c_A}
 %     \label{eq:spatial-intracellular-a}\\
-%     \dot{R_{i,c_B}} &=& \frac{u}{1+\nu_I I} &R_e(x_{c_B}) - aR_{i,c_B}
+%     \dot{R_{i,c_B}} &=& \frac{u}{1+\nu I} &R_e(x_{c_B}) - aR_{i,c_B}
 %     \label{eq:spatial-intracellular-b}\\
 %     \label{eq:spatial-extracellular-resources-pde}
 %     \dot{R_e}(x) &=& -u &\sum\limits_{c_A}\frac{V_{c_A}}{V_D} R_e(x) \delta(x-x_{c_A})\nonumber\\
-%         &&-\frac{u}{1+\nu_I I} &\sum\limits_{c_B}\frac{V_{c_B}}{V_D} R_e(x) \delta(x-x_{c_B})\nonumber\\
+%         &&-\frac{u}{1+\nu I} &\sum\limits_{c_B}\frac{V_{c_B}}{V_D} R_e(x) \delta(x-x_{c_B})\nonumber\\
 %         &&+D_R\Delta R_e(x)
 % \end{alignat}
 % where equations~\eqref{eq:spatial-intracellular-a} and \eqref{eq:spatial-intracellular-b} describe the change of intracellular resources for every individual cell of of species $A,B$ and the equation~\eqref{eq:spatial-extracellular-resources-pde} contains extracellular resources coupled to each individual agent.
@@ -857,40 +857,42 @@ Cells of type $A$ release a diffusible molecule into the microenvironment with c
 % With a rate $a$ and conversion $\sigma$, the cell takes up and converts the resource molecules into volume.
 % In order to simplify this system, we can assume that the internal resources are constantly being depleted by the growth and the limiting process is the uptake of the resource.
 % This means, we can effectively set $\dot{R_{i,c}}=0$.
-% Therefore, we obtain the relations $\frac{u}{1+\nu_I I}R_e(x_{c_B}) = aR_{i,c_B}$ and $u R_e(x_{c_A})=a R_{i,c_A}$ which we can use to eliminate the variable monitoring internal resource concentrations $R_{i,c}$.
-This results into the set of equations: 
+% Therefore, we obtain the relations $\frac{u}{1+\nu I}R_e(x_{c_B}) = aR_{i,c_B}$ and $u R_e(x_{c_A})=a R_{i,c_A}$ which we can use to eliminate the variable monitoring internal resource concentrations $R_{i,c}$.
+Additionally, we also require the nutrients to be freely diffusible with constants $D_R$.
+When combining all of the listed effects and considering multiple cells of the two species $A/B$, we obtain the system
 % With these considerations, we can update equations~\eqref{eq:spatial-intracellular-a} to \eqref{eq:spatial-extracellular-resources-pde} and obtain:
 \begin{alignat}{5}
-    \dot{V}_{c_A} &=& u \sigma &R_e(x_A)V_{c_A}\label{eq:spatial-full-system-simplified-begin}\\
-    \dot{V}_{c_B} &=& \frac{u}{1+\nu_I I(x_B)} \sigma &R_e(x_B) V_{c_B}\\
-    \dot{R}_e(x) &=& -u \sum\limits_{c_A}\frac{V_{c_A}}{V_D} &R_e(x) \delta(x-x_{c_A})\\
-        &&-\frac{u}{1+\nu_I I(x)} \sum\limits_{c_B}\frac{V_{c_B}}{V_D} &R_e(x) \delta(x-x_{c_B}) &+& D_R \Delta R_e(x)\nonumber\\
-    \dot{I}(x) &=&b\sum\limits_{c_A} \frac{V_{c_A}}{V_D}&\delta(x-x_c) &+& D_I\Delta I(x)
+    \dot{V}_{c_B} &=& u \sigma &RV_c
+    \label{eq:spatial-full-system-simplified-begin}\\
+    \dot{V}_{c_A} &=& \frac{u}{1+\nu I} \sigma &R V_c\\
+    \dot{R}_e &=& -u \sum\limits_{c_A}V_{c_A} &R_e(x) \delta(x-x_{c_A})\\
+        &&-\frac{u}{1+\nu I} \sum\limits_{c_B}V_{c_B} &R_e(x) \delta(x-x_{c_B}) &+& D_R \Delta R_e(x)\nonumber\\
+    \dot{I} &=&b\sum\limits_{c_A} V_{c_A}&\delta(x-x_c) &+& D_I\Delta I
     \label{eq:spatial-full-system-simplified-end}
 \end{alignat}
-We use the Dirac delta-distribution $\delta(x-x_c)$ to enforce interactions at the positions of the cells $x_{c}$. $\sigma$ is the conversion rate of nutrients into cellular volume and $u_c$ defines the rate of this process. For the diffusion, we require Neumann (zero-flux) boundary conditions. Note that we made the dependence of $R_e$ and $I$ on the spatial coordinate $x$ explizit for clarity reasons. 
-
+For the diffusion, we require Neumann (zero-flux) boundary conditions.
 % Since, we will not explicitly model intracellular concentrations $R_{i,c}$, we will drop the index entirely, only considering the extracellular resource.
+%
 %
 % ................................................................................................
 \subsubsection{Physical mechanics \& interactions}
 We model cells as spherical objects in 2D space.
 They can be represented by their position $x_c$ and radius $r_c$ which is related to their (2D) volume $V_c = \pi r_c^2$.
-As the coupled reactions from equations~\eqref{eq:spatial-full-system-simplified-begin}-\eqref{eq:spatial-full-system-simplified-end} change $V_c$, we also automatically adapt the cell radius accordingly.
+As the coupled reactions from equations~\eqref{eq:spatial-full-system-simplified-begin} change $V_c$, we also automatically adapt the cell radius accordingly.
 % Notice however, that how the radius is updated does not correspond to the cellular reactions defined previously but is a purely mechanical consideration.
-The dimensionality of the problem does not find its way into the cellular reactions but only manifests itself in these mechanical considerations. {\bf [Verstehe nicht, was du damit meinst]}
-The dynamics of the cells are governed by Newton's law of motion with damping or friction:
+The dimensionality of the problem does not find its way into the cellular reactions but only manifests itself in these mechanical considerations.
+The dynamics are described by Newton's law of motion for particle damping.
 \begin{equation}
     m \ddot{\mathbf{x}} = -\eta\dot{\mathbf{x}} + \mathbf{F}.
 \end{equation}
-Cells are interacting via a point-like interaction potential. We can calculate the interaction strength via
+Cells are interacting via a point-like interaction potential.
+We can calculate the interaction strength via
 \begin{alignat}{3}
     \mathbf{z} &= \mathbf{x_1} - \mathbf{x_2} \hspace{2em}&& r = ||\mathbf{z}||\\
     \sigma &= \frac{r}{r_1+r_2} && q=0.2\\
     \mathbf{F} &= \epsilon \frac{1+q}{q+\sigma} \theta(\sigma - 1) \frac{1}{r}\mathbf{z}
 \end{alignat}
-{\bf [was sind $r_1$ und $r_2$? Welche Rolle spielt $q$?]}
-We consider only a repulsive interaction potential between cells, leaving out any possible attractive forces~\citep{Garrett2008}.
+We assume that the cells are not sticky and consider only a repulsive interaction potential, leaving out any possible attractive forces~\citep{Garrett2008}.
 These mechanisms will result in the overall expansion of the colony as individual cells push each other further apart.
 %
 % \begin{figure}
@@ -932,7 +934,7 @@ In addition to modeling division events, the cells are subject to the lag-phase 
 We model this by assigning a transition rate to each cell.
 For each time point of the simulation, we generate a boolean value from a random number generator with probability
 \begin{equation}
-    P(\text{transition}) = \Delta t \lambda \frac{[R]}{[R_0]}.
+    P(\text{transition}) = \Delta t \lambda \frac{R}{R_0}.
 \end{equation}
 If this boolean is true, we move the cell from the inactive state to the active state where it starts to consume nutrients and grow.
 The concatenation of many such stochastic processes on a population-based level converges identically to the lag-phase behavior of the \ac{ode} model.
@@ -942,32 +944,35 @@ The concatenation of many such stochastic processes on a population-based level 
 \subsection{Comparing \acs{abm} and \acs{ode} models}
 The \ac{abm} model should be considered to be more fundamental compared to the \ac{ode} description in the sense that it incorporates more biological aspects and maps them closer to the actual behavior of the bacteria.
 We are thus able to derive the \ac{ode} pool model from its \ac{abm} version via a process of homogenization (see Appendix~\ref{sec:supplement-abm-derivation}).
+We can formulate the resulting \ac{ode} in terms of volumetric quantities of the \ac{abm}.
 By doing so, we find a mapping between parameters from the \ac{abm} to parameters used in the \ac{ode} description.
 The derived equations read
-\begin{align}
-    \dot{L}_A &= -\lambda L_A\frac{R}{R_0}\\
-    \dot{L}_B &= -\lambda L_B\frac{R}{R_0}\\
-    \dot{V}_A &= u\sigma R \frac{V_A}{V_D} + \lambda L_A\frac{R}{R_0}\\
-    \dot{V}_B &= \frac{u}{1+\nu_I V_D^{-1} I} \sigma R \frac{V_B}{V_D} + \lambda L_B\frac{R}{R_0}\\
-    \dot{R} &= - R \frac{V_A}{V_D} - \frac{u}{1+\nu_I V_D^{-1}I} \frac{1}{V_D} R V_B\\
-    \dot{I} &= b V_A
-\end{align}
-and the \ac{ode} equations are
+\begin{alignat}{9}
+    \dot{V}_{L,A} &= &&&&&-\lambda_A V_{L,A} &\bar{R}\\
+    \dot{V}_{L,B} &= &&&&&-\lambda_B V_{L,B} &\bar{R}\\
+    \dot{V}_A &= &u_A\sigma N_t\bar{R} &V_A &&&+ \lambda_A V_{L,A} &\bar{R}\\
+    \dot{V}_B &= &&&\frac{u_B\sigma}{1+\nu I}N_t \bar{R} &V_B &+ \lambda_B V_{L,B} &\bar{R}\\
+    \dot{\bar{R}} &= &-u_A\frac{V_A}{V_D} &\bar{R} &-\frac{u_B}{1+\nu I} \frac{V_B}{V_D} &\bar{R}\\
+    \dot{I} &= b \frac{V_A}{V_D}
+\end{alignat}
+where we have already introduced the non-dimensional, rescaled nutrient concentration $\bar{R}$.
+The previous \ac{ode} equations are
 \begin{align}
     \dot{L}_A &= -\lambda_A R L_A\\
     \dot{L}_B &= -\lambda_B R L_B\\
     \dot{G}_A &= \mu_A R G_A + \lambda_A R L_A\\
     \dot{G}_B &= \frac{\mu_B}{1 + K_I I} R G_B + \lambda_B R L_B\\
     \dot{R} &= -\frac{\mu_A}{N_t} R G_A-\frac{\mu_B}{(1 + K_I I) N_t} R G_B\\
-    \dot{I} &= \kappa G_A
+    \dot{I} &= \kappa G_A.
 \end{align}
 When comparing these equations, we can map them onto each other via the relations
 \begin{align}
     \begin{split}
-        N_t &= R_0 V_D\sigma\\
-        K_I &= \frac{\nu_I}{V_D}\\
-        \mu &= u R_0\sigma\\
-        \kappa &= \sigma.
+        G_{A/B} &= \frac{1}{\sigma}\frac{V_{A/B}}{V_D}\\
+        L_{A/B} &= \frac{1}{\sigma}\frac{V_{L,A/B}}{V_D}\\
+        \frac{\mu_{A/B}}{N_t} &= u_{A/B}\sigma\\
+        \kappa &= \sigma b\\
+        K_I &= \nu
     \end{split}
     \label{eq:ode-abm-mappings}
 \end{align}
@@ -1211,137 +1216,145 @@ The simpler version of one state per species (equation~\ref{eq:LV_simple}) can b
 %
 \vfill
 \pagebreak
-\section{Motivating the Cellular Reactions of the \ac{abm}}
-\label{ssec:supplement2}
-The equations governing the dynamics of the \ac{abm} cannot be directly derived from higher principles but one can motivate them via the following considerations.
-Our model consists of individual cells with volume $V_c$ and extracellular nutrients $R_e(x)$ which are spatially distributed. We set up a balancing equation that aims to relate these concepts.
-Assuming that any loss in extracellular nutrients $R_e$ is directly converted into cellular volume with a conversion factor $\sigma$ ($[\sigma]=V$), the balancing equation then reads:
-\begin{equation}
-    \text{const} = \sigma \int\limits_D R_e(x)\text{dVol} + \sum\limits_c V_c.
-\end{equation}
-We now assume that there are two species $A,B$ present and split the sum and since we are interested in the dynamics of the system, we also take the temporal derivative.
-By adding a zero in the form of:
-\begin{equation}
-   0= u_c\sigma \sum\limits_c\int\limits_D\frac{V_c}{V_D}R_e(x)\delta(x-x_c)\text{dVol}-u_c\sigma \sum\limits_c\int\limits_D\frac{V_c}{V_D}R_e(x)\delta(x-x_c)\text{dVol},
-\end{equation}
-we can introduce an exchange term between extracellular nutrients and cellular volume.
-In total we obtain
-\begin{alignat}{3}
-    0 &= \sigma\int\limits_D\dot{R}_e(x)\text{dVol} &+ \sigma\sum\limits_c u_c&\int\limits_D\frac{V_c}{V_D}R_e(x)\delta(x-x_c)\text{dVol}\nonumber\\
-    &&- \sigma\sum\limits_c u_c&\int\limits_D\frac{V_c}{V_D}R_e(x)\delta(x-x_c)\text{dVol} + \sum\limits_c \dot{V}_c\\
-    0 &= \sigma\int\limits_D\Big[\dot{R}_e(x) &+ \sum\limits_c u_c&\frac{V_c}{V_D}R_e(x)\delta(x-x_c)\Big]\text{dVol}\nonumber\\
-    &&- \sum\limits_c\Big[\sigma u_c&V_cR_e(x_c) + \dot{V}_c\Big].
-     \label{eq:supplement-abm-derivation-intermediate-4}
-\end{alignat}
-In order to satisfy this balancing equation, we can enforce equality of the dynamics for the subsystems given by \ref{eq:supplement-abm-derivation-intermediate-4}.
-These can be viewed as the extracellular dynamics surrounding the nutrient resource $R_e$ and intracellular dynamics increasing the volume $V_c$.
-We assume that the spatial distribution of $R_e$ is governed by a diffusion process with Neumann boundary conditions such that no additional nutrients are introduced and no nutrients lost.
-In particular, any diffusion effects vanish in the integral
-\begin{equation}
-    \int\limits_D\Delta R_e(x)\text{dVol} = \int\limits_{\partial D}\nabla R_e(x)\text{d\textbf{A}} = 0
-\end{equation}
-due to the Neumann boundary conditions.
-We separate the preceding equations and enforce equality of the dynamics under the integral.
-We therefore obtain
-\begin{align}
-    \dot{R}_e(x) &= -\sigma\sum\limits_c u_c\frac{V_c}{V_D}R_e(x)\delta(x-x_c) + D_R\Delta R_e(x)\\
-    \dot{V}_c &= \sigma u_c R_e(x_c)V_c
-\end{align}
-where $D_R$ is the diffusion constant of the nutrients $R_e$.
-So far, we have treated all cells equally but the system which we aim to describe consists of two distinct species $A/B$ which behave differently.
-We can express this variation by introducing differing growth terms $u_c$ depending on the species.
-This splits apart the sum, raning over cells $c_A$ and $c_B$.
-Another mechanism of this system is the inhibition of growth mediated by an external inhibitor $I$ which is produced by species $A$.
-We assume that the release of inhibitor molecules can be neglected for the assumptions governing the initial balancing of the system.
-In addition to the production of the inhibitor, we also introduce diffusion with constant $D_I$ which results in
-\begin{equation}
-    \dot{I}(x) = b\sum\limits_{c_A}\frac{V_{c_A}}{V_D}\delta(x-x_{c_A}) + D_I \Delta I(x).
-\end{equation}
-By splitting up all terms with respect to species, we arrive at our final equations
-\begin{alignat}{5}
-    \dot{V}_{c_A} &= &\sigma u& R_e(x_c)V_c\\
-    \dot{V}_{c_B} &= &\sigma \frac{u}{1+\nu_I I(x_{c_B})}&R_e(x_{c_B})V_c\\
-    \dot{R}_e(x) &=
-        &-\sigma u&\sum\limits_{c_B}\frac{V_{c_B}}{V_D}R_e(x)\delta(x-x_{c_B})\\
-        &&-\sigma\frac{u}{1+\nu_II(x_{c_B})}&\sum\limits_{c_B} \frac{V_{c_A}}{V_D}R_e(x)\delta(x-x_{c_B}) &+& D_R\Delta R_e(x)\\
-    \dot{I}(x) &= &b&\sum\limits_{c_A}\frac{V_{c_A}}{V_D}\delta(x-x_{c_A}) &+& D_I \Delta I(x).
-\end{alignat}
-%
-%
-\vfill
-\pagebreak
 \section{Deriving the pool model from the \acs{abm}}
+\label{sec:supplement-abm-derivation}
 \paragraph{Reactions}
 Since the \ac{abm} can be considered more fundamental than the \ac{ode} model, we should be able to derive the latter one from the former.
-This can be achieved by starting with equations~\eqref{eq:spatial-full-system-simplified}.
+The equations~\eqref{eq:spatial-full-system-simplified} related to nutrient uptake and growth and its inhibition are
+\begin{alignat}{3}
+    \dot{V}_{c_B} &=& u_B \sigma &RV_c\\
+    \dot{V}_{c_A} &=& \frac{u_A}{1+\nu I} \sigma &R V_c\\
+    \dot{R}_e &=& -u_A \sum\limits_{c_A}V_{c_A} &R_e(x) \delta(x-x_{c_A})\\
+        &&-\frac{u_B}{1+\nu I} \sum\limits_{c_B}V_{c_B} &R_e(x) \delta(x-x_{c_B}) &+& D_R \Delta R_e(x)\nonumber\\
+    \dot{I} &=&b\sum\limits_{c_A} V_{c_A}&\delta(x-x_c) &+& D_I\Delta I.
+\end{alignat}
 We integrate the spatial equations over the total domain starting with the resource concentration $R$.
 \begin{alignat}{8}
     \int\limits_D\dot{R}\text{dVol}
-    &= \int\limits_D\bigg[&-&u \sum\limits_{c_A}\frac{V_{c_A}}{V_D} R \delta(x-x_{c_A})
-        &-&\frac{u}{1+\nu_I I} \sum\limits_{c_B}\frac{V_{c_B}}{V_D} R \delta(x-x_{c_B})
+    &= \int\limits_D\bigg[&-&u_A \sum\limits_{c_A}V_{c_A} R \delta(x-x_{c_A})
+        &-&\frac{u_B}{1+\nu I} \sum\limits_{c_B}V_{c_B} R \delta(x-x_{c_B})
         +D_R \Delta R\bigg]\text{dVol}\\
-    &= &-&u\sum\limits_{c_A}V_{c_A}\int\limits_D R \frac{\delta(x-x_{c_A})}{V_D} \text{dVol}
-        &-&\frac{u}{1+\nu_I I} \sum\limits_{c_B}V_{c_B} \int\limits_D R \frac{\delta(x-x_{c_B})}{V_D}\text{dVol}
+    &= &-&u_A\sum\limits_{c_A}V_{c_A}\int\limits_D R \delta(x-x_{c_A}) \text{dVol}
+        &-&\frac{u_B}{1+\nu I} \sum\limits_{c_B}V_{c_B} \int\limits_D R \delta(x-x_{c_B})\text{dVol}
         +D_R \int\limits_{\partial D} \nabla R\text{dVol}\\
-    &= &-&u\sum\limits_{c_A} V_{c_A} R_{x=x_{c_A}}
-        &-& \frac{u}{1+\nu_I I} \sum\limits_{c_B} V_{c_B} R_{x=x_{c_B}}\\
-    &= &-&u\sum\limits_{c_A} V_{c_A} R
-        &-& \frac{u}{1+\nu_I I} \sum\limits_{c_B} V_{c_B} R\\
-    &= &-&uV_A R &-&\frac{u}{1+\nu_I I} V_B R
-    % &= &-&u \frac{V_A}{V_D}R &-&\frac{u}{1+\nu_I V_D^{-1} I} \frac{V_B}{V_D}R
+    &= &-&u_A\sum\limits_{c_A} V_{c_A} R_{x=x_{c_A}}
+        &-& \frac{u_B}{1+\nu I} \sum\limits_{c_B} V_{c_B} R_{x=x_{c_B}}
 \end{alignat}
 We can split up the integral into three parts.
 The last part can then be transformed into an integral over the flux of the resource along the boundary.
 Since we chose Neumann boundary conditions, this contribution vanishes identically.
 Afterwards, the remaining parts can be evaluated by using the delta-distribution.
-Note that we additionally need to consume a factor of $V_D^{-1}$ which is the inverse of the domain
-volume when evaluating the delta function.
-We evaluate the resource concentration $R$ at the position of the individual cells and sum over all contributions.
-Now we assume homogeneity in the sense, that we can reduce $R$ to only a variable with time-dependence, with homogeneous spatial distribution.
-This means that every contribution does not depend on the position at which it was evaluated, i.e., $R_{x=x_c}=R$.
-Finally, we can perform the sum to gain the total volume of all cells $V_{A/B}=\sum\limits_c V_{c_{A/B}}$.
+We now evaluate the resource concentration $R$ at the position of the individual cells and sum over all contributions.
+By defining the spatially averaged (and thus homogeneous) resource concentration $\hat{R}=V_D^{-1}\int_D R \text{dVol}$, we can rewrite the previous eqations to
+\begin{alignat}{8}
+    \frac{\text{d}}{\text{d}t} \frac{1}{V_D}\int\limits_D R\text{dVol}
+        &= &-&u_A\sum\limits_{c_A} \frac{V_{c_A}}{V_D} R_{x=x_{c_A}}
+        &-& \frac{u_B}{1+\nu I} \sum\limits_{c_B} \frac{V_{c_B}}{V_D} R_{x=x_{c_B}}\\
+        &= &-&u_A\sum\limits_{c_A} \frac{V_{c_A}}{V_D} \hat{R}
+        &-& \frac{u_B}{1+\nu I} \sum\limits_{c_B} \frac{V_{c_B}}{V_D} \hat{R}\\
+    \frac{\text{d}}{\text{d}t}\hat{R}
+        &= &-&u_A\frac{V_A}{V_D} \hat{R} &-&\frac{u_B}{1+\nu I} \frac{V_B}{V_D} \hat{R}.
+\end{alignat}
+Using the spatially averaged resource concentration $\hat{R}$, we can drop the point of evaluation, i.e. $\hat{R}_{x=x_c}=\hat{R}$.
+% Now we assume homogeneity in the sense, that we can reduce $R$ to only a variable with time-dependence, with homogeneous spatial distribution.
+% This means that every contribution does not depend on the position at which it was evaluated, i.e., $R_{x=x_c}=R$.
+Finally, we can perform the sum to gain the total volume of all cells $V_{A/B}=\sum_{c_{A/B}} V_{c_{A/B}}$.
+In order to achieve the same normalization as used in the \ac{ode} version, we also divide by the total resource capacity $N_t$ and denote the resulting quantity as $\bar{R}=\hat{R}/N_t$.
+\begin{equation}
+    \frac{\text{d}}{\text{d}t}\bar{R} = -u_A\frac{V_A}{V_D} \bar{R} -\frac{u_B}{1+\nu I} \frac{V_B}{V_D} \bar{R}
+\end{equation}
 Following the same principle as before, we can integrate the inhibitor equation.
 \begin{alignat}{7}
-    \int\limits_D\dot{I} &= \int\limits_D \bigg[&&\sum\limits_{c_A} b\frac{V_{c_A}}{V_D}&&\delta(x-x_{c_A}) &&+ D_I\Delta I\bigg]\text{dVol}\\
-    &= \int\limits_D&&\sum\limits_{c_A} b\frac{V_{c_A}}{V_D}&&\delta(x-x_{c_A}) \text{dVol} &&+ \int\limits_D D_I\Delta I\text{dVol}\\
-    &= \int\limits_D&&\sum\limits_{c_A} b\frac{V_{c_A}}{V_D}&&\delta(x-x_{c_A}) \text{dVol} &&+ \int\limits_{\partial D} D_I\nabla I\mathbf{\text{dA}}\\
-    &= &&\sum\limits_{c_A} b V_{c_A}\int\limits_D \frac{1}{V_D} &&\delta(x-x_{c_A}) \text{dVol}\\
+    \int\limits_D\dot{I} &= \int\limits_D \bigg[&&\sum\limits_{c_A} b V_{c_A}&&\delta(x-x_{c_A}) &&+ D_I\Delta I\bigg]\text{dVol}\\
+    % &= \int\limits_D&&\sum\limits_{c_A} b V_{c_A}&&\delta(x-x_{c_A}) \text{dVol} &&+ \int\limits_D D_I\Delta I\text{dVol}\\
+    &= \int\limits_D&&\sum\limits_{c_A} b V_{c_A}&&\delta(x-x_{c_A}) \text{dVol} &&+ \int\limits_{\partial D} D_I\nabla I\mathbf{\text{dA}}\\
+    &= &&\sum\limits_{c_A} b V_{c_A}\int\limits_D &&\delta(x-x_{c_A}) \text{dVol}\\
     &= b V_A
 \end{alignat}
-
+By again using the spatially averaged inhibitor concentration $\hat{I}=V_D^{-1}\int_D I\text{dVol}$, we arrive at
+\begin{equation}
+    \frac{\text{d}}{\text{d}t} \hat{I} = b \frac{V_A}{V_D}
+\end{equation}
 %
 \paragraph{Lag-Phase}
 Cells are initially assumed to be in a lag-phase which they leave with probability $P(\text{transition})$.
 Dividing this probability by the time increment $\Delta t$, gives us the rate at which the transition is occuring.
-This expression can be transfered to a collective rate of change by multiplying with the volume of cells in lag-phase $L_{A/B}$.
+This expression can be transfered to a collective rate of change by multiplying with the cells in lag-phase $L_{A/B}$.
 \begin{align}
-    P(\text{transition}) &= \Delta t \lambda \frac{[R]}{[R_0]}\\
-    \frac{1}{\Delta t}P(\text{transition}) &= \lambda \frac{[R]}{[R_0]}\\
-    \frac{L_{A/B}}{\Delta t}P(\text{transition}) &= \lambda L_{A/B}\frac{R}{R_0}\\
-    \partial_t L_{A/B} &= -\lambda L_{A/B}\frac{R}{R_0}
+    P(\text{transition}) &= \Delta t \lambda_{A/B} \frac{R}{N_t}\\
+    \frac{1}{\Delta t}P(\text{transition}) &= \lambda_{A/B} \frac{R}{N_t}\\
+    \frac{L_{A/B}}{\Delta t}P(\text{transition}) &= \lambda_{A/B} L_{A/B}\frac{R}{N_t}\\
+    \frac{\text{d}}{\text{d}t} L_{A/B} &= -\lambda_{A/B} L_{A/B}\frac{R}{N_t}
 \end{align}
-In the last step, we take the expectation value and equate it with the negative of its derivative $\partial_t L_{A/B}$.
+In the last step, we take the expectation value and equate it with the negative of its derivative $\text{d}/\text{d}t L_{A/B}$.
+When switching to a fully homogeneous system, we exchange $R$ with its spatially averaged counterpart $\hat{R}$.
+Taking into account the normalization via $\bar{R}=\hat{R}/N_t$, we can write
+\begin{equation}
+    \frac{\text{d}}{\text{d}t}L_{A/B} = - \lambda_{A/B}L_{A/B}\bar{R}.
+\end{equation}
 %
 %
 \paragraph{Growth}
-For the equation describing the growth of the cell volume, we simply add up cells for the respective species to obtain their total volume.
-\begin{alignat}{5}
-    \sum\limits_{c_A}\dot{V}_{c_A}
-    &= &\sum\limits_{c_A} u& \sigma [R]V_{c_A} + \lambda L_A\frac{R}{R_0} &= &&\sigma [R]V_A + \lambda L_A\frac{R}{R_0}\\
-    \sum\limits_{c_B}\dot{V}_{c_B}
-    &= &\frac{u}{1+\nu_I [I]} &\sigma [R]V_B + \lambda L_B\frac{R}{R_0} &= &\sum\limits_{c_B} \frac{u}{1+\nu_I [I]} &\sigma [R]V_{c_B} + \lambda L_B\frac{R}{R_0}
+The equations describing the overall growth of the bacteria is governed by two distinct effects:
+Bacteria are leaving the lag phase and starting to grow, thus adding them to this pool and bacteria already in the growth pool consume nutrients, thus growing and dividing.
+For the equation describing growth of the cell volume due to nutrient uptake, we simply add up cells for the respective species to obtain their total volume.
+\begin{alignat}{9}
+    \dot{V}_{A,R} &= \sum\limits_{c_A}\dot{V}_{c_A} &=& &u_A\sigma\sum\limits_{c_A} &R V_{c_A} &=& &u_A\sigma& R V_A\\
+    \dot{V}_{B,R} &= \sum\limits_{c_B}\dot{V}_{c_B} &=& &\frac{u_B\sigma}{1+\nu I} \sum\limits_{c_B} & R V_{c_B} &=& &\frac{u_B\sigma}{1+\nu I} &R V_B
 \end{alignat}
-In addition, we can reformulate $\tilde{\sigma}=\sigma/V_D$ thus redefining the conversion rate $\sigma$ in terms of the total volume $V_D$.
+We can see that this equation can be easily rescaled with appropriate constants such that we can use the same notion defined in section~\ref{sec:three-pool-model}
+\begin{alignat}{3}
+    \dot{G}_{A,R} &=& u_A\sigma R G_A\\
+    \dot{G}_{B,R} &=& \frac{u_B\sigma}{1+\nu I} R G_B.
+\end{alignat}
+We combine this with the result obtained for the lag phase to obtain the complete dynamics
+\begin{alignat}{5}
+    \dot{G}_A &=& u_A\sigma N_t \bar{R} G_A &+ \lambda_A L_A &\bar{R}\\
+    \dot{G}_B &=& \frac{u_B\sigma}{1+\nu I}N_t \bar{R} G_B &+ \lambda_B L_B &\bar{R}
+\end{alignat}
+where we have again introduced the rescaled and spatially averaged resource concenration $\bar{R}$.
+These terms only apply to bacteria which are in a growing state and not in the lag phase.
 We can thus summarize the equations obtained
+\begin{alignat}{9}
+    \dot{L}_A &= &&&&&-\lambda_A L_A &\bar{R}\\
+    \dot{L}_B &= &&&&&-\lambda_B L_B &\bar{R}\\
+    \dot{G}_A &= &u_A\sigma N_t\bar{R} &G_A &&&+ \lambda_A L_A &\bar{R}\\
+    \dot{G}_B &= &&&\frac{u_B\sigma}{1+\nu I}N_t \bar{R} &G_B &+ \lambda_B L_B &\bar{R}\\
+    \dot{\bar{R}} &= &-u_A\frac{V_A}{V_D} &\bar{R} &-\frac{u_B}{1+\nu I} \frac{V_B}{V_D} &\bar{R}\\
+    \dot{I} &= b \frac{V_A}{V_D}
+\end{alignat}
+Comparing these equations with the \ac{ode} version defined by \eqref{eq:spatial_limit_F} and \eqref{eq:spatial_limit_H}, we can identify
 \begin{align}
-    \dot{L}_A &= -\lambda L_A\frac{R}{R_0}\\
-    \dot{L}_B &= -\lambda L_B\frac{R}{R_0}\\
-    \dot{V}_A &= u\sigma R \frac{V_A}{V_D} + \lambda L_A\frac{R}{R_0}\\
-    \dot{V}_B &= \frac{u}{1+\nu_I V_D^{-1} I} \sigma R \frac{V_B}{V_D} + \lambda L_B\frac{R}{R_0}\\
-    \dot{R} &= - R \frac{V_A}{V_D} - \frac{u}{1+\nu_I V_D^{-1}I} \frac{1}{V_D} R V_B\\
-    \dot{I} &= b V_A
+    \mu_{A/B} &= u_{A/B}\sigma N_t\\
+    \frac{\mu_{A/B}}{N_t}G_{A/B} &= u_{A/B}\frac{V_{A/B}}{V_D}\\
+    \kappa G_A &= b \frac{V_A}{V_D}
 \end{align}
-In this way, we are able to recover the \ac{ode} model.
+which can be combined to yield
+\begin{align}
+    G_{A/B} &= \frac{1}{\sigma}\frac{V_{A/B}}{V_D}\\
+    \kappa &= \sigma b.
+\end{align}
+Checking the units of these quantities, we have $[\sigma^{-1}]=[R]=1/V$ which matches the definition of section~\ref{sec:three-pool-model}.
+Furthermore, we have $[b]=[R/t]=1/V/T$ and thus $[\kappa]=[\sigma b]=[1/t]$ which also matches equation~\eqref{eq:spatial_limit_H}.
+Expressing the obtained equations again in terms of volumes $V_{A/B}$, we obtain
+\begin{alignat}{9}
+    \dot{V}_{L,A} &= &&&&&-\lambda_A V_{L,A} &\bar{R}\\
+    \dot{V}_{L,B} &= &&&&&-\lambda_B V_{L,B} &\bar{R}\\
+    \dot{V}_A &= &u_A\sigma N_t\bar{R} &V_A &&&+ \lambda_A V_{L,A} &\bar{R}\\
+    \dot{V}_B &= &&&\frac{u_B\sigma}{1+\nu I}N_t \bar{R} &V_B &+ \lambda_B V_{L,B} &\bar{R}\\
+    \dot{\bar{R}} &= &-u_A\frac{V_A}{V_D} &\bar{R} &-\frac{u_B}{1+\nu I} \frac{V_B}{V_D} &\bar{R}\\
+    \dot{I} &= b \frac{V_A}{V_D}
+\end{alignat}
+where we introduced the quantities $V_{L,A/B}$ which correspond to the volume encapsulated by the lag state of species $A/B$.
+These equations can now be converted directly to the original \ac{ode} via
+\begin{align}
+    G_{A/B} &= \frac{1}{\sigma}\frac{V_{A/B}}{V_D}\\
+    L_{A/B} &= \frac{1}{\sigma}\frac{V_{L,A/B}}{V_D}\\
+    \frac{\mu_{A/B}}{N_t} &= u_{A/B}\sigma\\
+    \kappa &= \sigma b\\
+    K_I &= \nu
+\end{align}
+where we have related \ac{ode}-specific parameters on the left side with \ac{abm}-specific ones on the right side.
 %
 %
 % ................................................................................................
@@ -1356,60 +1369,60 @@ However, some such as the ones related to spatial dynamics (damping $\eta$, mass
 strength $\epsilon$, diffusion $D_R,D_I$) do not.
 \begin{table}[H]
     \centering
-    \begin{tabularx}{\textwidth}{@{}l *2{>{\centering\arraybackslash}X} l *2{>{\centering\arraybackslash}X}@{}}
-        \multicolumn{3}{c}{\textbf{\acs{ode}}} & \multicolumn{3}{c}{\textbf{\acs{abm}}}\\
+    % \begin{tabularx}{\textwidth}{@{} X c @{\hspace{0.5cm}} r l @{\hspace{1cm}} X c @{\hspace{0.5cm}} r l @{}}
+    \begin{tabularx}{0.9\textwidth}{@{}l *1{>{\centering\arraybackslash}X} r l @{\hspace{1cm}} l *1{>{\centering\arraybackslash}X} r l @{}}
+        \multicolumn{4}{c}{\textbf{\acs{ode}}} & \multicolumn{4}{c}{\textbf{\acs{abm}}}\\
         \toprule
-        \multicolumn{6}{c}{\textbf{Cellular Reactions}}\\
+        \multicolumn{8}{c}{\textbf{Cellular Reactions}}\\
         \toprule
-        Production $G_A$            & $\mu_A$       & $0.0005$~\unit{\per\second}
-        & Uptake                    & $u_A$         & $0.0025$~\unit{\per\second}\\
-        Production $G_B$            & $\mu_B$       & $0.0005$~\unit{\per\second}
-        & Uptake                    & $u_B$         & $0.0025$~\unit{\per\second}\\
-        Production $I$              & $\kappa$      & $0.025$~\unit{\per\second}
-        & Production $I$            & $b$           & $0.025$~\unit{\per\second}\\
-        Inhibition                  & $K_I$         & $0.25\cdot 10^{-7}$~\unit{\per\micro\metre\cubed}
-        & Inhibition                & $\nu_I$       & $0.025$~\unit{\micro\metre\cubed\per\mol}\\
+        Production $G_A$            & $\mu_A$       & $6.25\cdot10^{-5}$  & \unit{\per\second}
+        & Uptake                    & $u_A$         & $0.0025$  & \unit{\per\second}\\
+        Production $G_B$            & $\mu_B$       & $6.25\cdot10^{-5}$  & \unit{\per\second}
+        & Uptake                    & $u_B$         & $0.0025$  & \unit{\per\second}\\
+        Production $I$              & $\kappa$      & $0.0250$  & \unit{\per\second}
+        & Production $I$            & $b$           & $1.0$     & \unit{\mol\per\micro\metre\cubed\per\second}\\
+        Inhibition                  & $K_I$         & $0.025$   & \unit{\micro\metre\cubed\per\mol}
+        & Inhibition                & $\nu$         & $0.025$   & \unit{\micro\metre\cubed\per\mol}\\
         &&
-        & Conversion                & $\sigma$      & $0.025$~\unit{\micro\metre\cubed\per\mol}\\
-        Total volume                & $N_t$& $0.5\cdot 10^5$~\unit{\micro\metre\cubed}
-        &&&\\
-        &&
-        & Diffusion $R$             & $D_R$         & $20.0$~\unit{\micro\metre\squared\per\second}\\
-        &&
-        & Diffusion $I$             & $D_I$         & $20.0$~\unit{\micro\metre\squared\per\second}\\
+        && Conversion               & $\sigma$      & $0.025$   & \unit{\micro\metre\cubed\per\mol}\\
+        Total nutrient capacity     & $N_t$         & $1.0$     & \unit{\mol\per\micro\metre\cubed}\\
+        &&&
+        & Diffusion $R$             & $D_R$         & $20.0$    & \unit{\micro\metre\squared\per\second}\\
+        &&&
+        & Diffusion $I$             & $D_I$         & $20.0$    & \unit{\micro\metre\squared\per\second}\\
         % Note: this diffusion roughly corresponds to the one of ethanol in water
         % (see https://de.wikipedia.org/wiki/Diffusionskoeffizient#In_Fl%C3%BCssigkeiten)
         % 15.0 µm^2/min = 0.9 m^2/s
         % Ethanol: 0.84 m^2/s
         \toprule
-        \multicolumn{6}{c}{\textbf{Physical Mechanics \& Interactions}}\\
+        \multicolumn{8}{c}{\textbf{Physical Mechanics \& Interactions}}\\
         \toprule
-        &&& Damping                 & $\eta$        & $0.125$~\unit{\per\second}\\
-        &&& Mass                    & $m$           & $7.70$~\unit{\pico\gram}\\
-        &&& Potential               & $\epsilon$    & $0.03125$~\unit{\pico\gram\micro\metre\per\second\squared}\\
+        &&&& Damping                 & $\eta$        & $0.125$   & \unit{\per\second}\\
+        &&&& Mass                    & $m$           & $7.70$    & \unit{\pico\gram}\\
+        &&&& Potential               & $\epsilon$    & $0.03125$ & \unit{\pico\gram\micro\metre\per\second\squared}\\
         \toprule
-        \multicolumn{6}{c}{\textbf{Cell Cycle}}\\
+        \multicolumn{8}{c}{\textbf{Cell Cycle}}\\
         \toprule
-        Rate $L_A\rightarrow G_A$   & $\lambda_A$   & $0.001250$~\unit{\per\second}
-        &                           & $\lambda_A$   & $0.001250$~\unit{\per\second}\\
-        Rate $L_B\rightarrow G_B$   & $\lambda_B$   & $0.000625$~\unit{\per\second}
-        &                           & $\lambda_B$   & $0.000625$~\unit{\per\second}\\
-        &&& Division Vol.           & $V_t$         & $14.14$~\unit{\micro\metre\cubed}\\
+        Rate $L_A\rightarrow G_A$   & $\lambda_A$   & $0.001250$ & \unit{\per\second}
+        &                           & $\lambda_A$   & $0.001250$ & \unit{\per\second}\\
+        Rate $L_B\rightarrow G_B$   & $\lambda_B$   & $0.000625$ & \unit{\per\second}
+        &                           & $\lambda_B$   & $0.000625$ & \unit{\per\second}\\
+        &&&& Division Vol.          & $V_t$         & $14.14$    & \unit{\micro\metre\cubed}\\
         \toprule
-        \multicolumn{6}{c}{\textbf{Initial Values}}\\
+        \multicolumn{8}{c}{\textbf{Initial Values}}\\
         \toprule
-        Volume of $L_A$             & $L_A$         & $127.2$~\unit{\micro\metre\cubed}
+        Lag phase species $A$       & $L_A$         & $0.0051$  & \unit{\mol\per\micro\metre\cubed}
         & Cell Number               & $C_A$         & 18\\
-        Volume of $G_A$             & $G_A$         & $0.0$~\unit{\micro\metre\cubed}
-        & Cell Volume               & $V_{c,A}$     & $7.07$~\unit{\micro\metre\cubed}\\
-        Volume of $L_B$             & $L_B$         & $127.2$~\unit{\micro\metre\cubed}
+        Lag phase species $B$       & $L_B$         & $0.0051$  & \unit{\mol\per\micro\metre\cubed}
         & Cell Number               & $C_B$         & 18\\
-        Volume of $G_B$             & $G_B$         & $0.0$~\unit{\micro\metre\cubed}
-        & Cell Volume               & $V_{c,B}$     & $7.07$~\unit{\micro\metre\cubed}\\
+        Growth phase species $A$    & $G_A$         & $0.0$     & \unit{\mol\per\micro\metre\cubed}
+        & Cell Volume               & $V_{c,A}$     & $7.07$    & \unit{\micro\metre\cubed}\\
+        Growth phase species $B$    & $G_B$         & $0.0$     & \unit{\mol\per\micro\metre\cubed}
+        & Cell Volume               & $V_{c,B}$     & $7.07$    & \unit{\micro\metre\cubed}\\
         Relative Nutrients          & $R$           & $1.0$
-        & Nutrients                 & $R_0$       & $1.0$~\unit{\mol\per\micro\metre\cubed}\\
-        Inhibitor                   & $I_0$         & $0.0$~\unit{\mol}
-        & Inhibitor                 & $I_0$       & $0.0$~\unit{\mol\per\micro\metre\cubed}\\
+        && Nutrients                & $R_0$         & $1.0$     & \unit{\mol\per\micro\metre\cubed}\\
+        Inhibitor                   & $I_0$         & $0.0$     & \unit{\mol\per\micro\metre\cubed}
+        & Inhibitor                 & $I_0$         & $0.0$     & \unit{\mol\per\micro\metre\cubed}\\
         \bottomrule
     \end{tabularx}
     \caption{
