@@ -821,12 +821,12 @@ This ability, to precisely define and control the exact behavior of our cell-age
 \subsubsection{Cellular reactions}
 To construct an \ac{abm} which resembles the given \ac{ode} system of equations~\eqref{eq:spatial_limit_F} and \eqref{eq:spatial_limit_H}, we consider multiple cellular reactions.
 We denote quantities of cellular species $A,B$ with the subscript $c_{A/B}$, respectively, and indicate shared cellular behavior by the subscript $c$.
-The equations stated below are motivated and obtained in greater detail in the supplementary material (section~\ref{ssec:supplement2}).
-Nutrients or resources in the microenvironment with the concentration $R_e$ diffuse freely with the diffusion constant $D_R$.
-Cells take up extracellular resources $R_e$ and convert them into biomass, which is measured in terms of cellular volume.
+% The equations stated below are motivated and obtained in greater detail in the supplementary material (section~\ref{ssec:supplement2}).
+Nutrients or resources in the microenvironment with the concentration $R$ diffuse freely with the diffusion constant $D_R$.
+Cells take up extracellular resources $R$ and convert them into biomass, which is measured in terms of cellular volume.
 Cells of type $A$ release a diffusible molecule into the microenvironment with concentration $I$ and diffusion constant $D_I$, which inhibits the growth of the cells of type $B$.
 %
-% Cells $c_A$ of species $A$ take up extracellular resources $R_e$ into the cell $R_{i,c_A}$ with rate $u$ in \unit{\per\second}.
+% Cells $c_A$ of species $A$ take up extracellular resources $R$ into the cell $R_{i,c_A}$ with rate $u$ in \unit{\per\second}.
 % The uptake only occurs at the position of the cell $x_{c_A}$.
 % Furthermore, we let cells of species $A$ produce a freely diffusible inhibitor $I$ with production rate $b$ and diffusion constant $D_I$ which inhibits cells of species $B$ in their uptake of nutrients.
 % \begin{equation}
@@ -837,19 +837,19 @@ Cells of type $A$ release a diffusible molecule into the microenvironment with c
 % To distinguish between the two species, it suffices to set parameters for every individual agent accordingly.
 % This means, we can implement the most general version of the equations and by choosing appropriate parameters, this defines the species of the respective cell-agent.
 % \begin{alignat}{3}
-%     \dot{R_{i,c_A}} &=& u &R_e(x_{c_A}) - aR_{i,c_A}
+%     \dot{R_{i,c_A}} &=& u &R(x_{c_A}) - aR_{i,c_A}
 %     \label{eq:spatial-intracellular-a}\\
-%     \dot{R_{i,c_B}} &=& \frac{u}{1+\nu I} &R_e(x_{c_B}) - aR_{i,c_B}
+%     \dot{R_{i,c_B}} &=& \frac{u}{1+\nu I} &R(x_{c_B}) - aR_{i,c_B}
 %     \label{eq:spatial-intracellular-b}\\
 %     \label{eq:spatial-extracellular-resources-pde}
-%     \dot{R_e}(x) &=& -u &\sum\limits_{c_A}\frac{V_{c_A}}{V_D} R_e(x) \delta(x-x_{c_A})\nonumber\\
-%         &&-\frac{u}{1+\nu I} &\sum\limits_{c_B}\frac{V_{c_B}}{V_D} R_e(x) \delta(x-x_{c_B})\nonumber\\
-%         &&+D_R\Delta R_e(x)
+%     \dot{R}(x) &=& -u &\sum\limits_{c_A}\frac{V_{c_A}}{V_D} R(x) \delta(x-x_{c_A})\nonumber\\
+%         &&-\frac{u}{1+\nu I} &\sum\limits_{c_B}\frac{V_{c_B}}{V_D} R(x) \delta(x-x_{c_B})\nonumber\\
+%         &&+D_R\Delta R(x)
 % \end{alignat}
 % where equations~\eqref{eq:spatial-intracellular-a} and \eqref{eq:spatial-intracellular-b} describe the change of intracellular resources for every individual cell of of species $A,B$ and the equation~\eqref{eq:spatial-extracellular-resources-pde} contains extracellular resources coupled to each individual agent.
 % They contain the uptake of resources and term used grow the cell, converting resources into volume which will be explained below.
 % We use the Dirac delta-distribution $\delta(x-x_c)$ to enforce exchange of nutrients at the positions of the cells $x_{c}$.
-% Note that $R_e=R_e(x)$ explicitly depends on the spatial coordinate but we choose to omit its notation.
+% Note that $R=R(x)$ explicitly depends on the spatial coordinate but we choose to omit its notation.
 % In equation~\eqref{eq:spatial-extracellular-resources-pde} we need to account for the ratio of cellular $V_c$ and domain volume $V_D$ to calculate the correct exchange.
 % In addition, we want to modify the cellular volume by growing it increasingly with rate $u$.
 % Therefore, we need to specify how many resource molecules are turned into volumetric units $\sigma$ in \unit{\micro\metre\cubed\per\mole}.
@@ -857,7 +857,7 @@ Cells of type $A$ release a diffusible molecule into the microenvironment with c
 % With a rate $a$ and conversion $\sigma$, the cell takes up and converts the resource molecules into volume.
 % In order to simplify this system, we can assume that the internal resources are constantly being depleted by the growth and the limiting process is the uptake of the resource.
 % This means, we can effectively set $\dot{R_{i,c}}=0$.
-% Therefore, we obtain the relations $\frac{u}{1+\nu I}R_e(x_{c_B}) = aR_{i,c_B}$ and $u R_e(x_{c_A})=a R_{i,c_A}$ which we can use to eliminate the variable monitoring internal resource concentrations $R_{i,c}$.
+% Therefore, we obtain the relations $\frac{u}{1+\nu I}R(x_{c_B}) = aR_{i,c_B}$ and $u R(x_{c_A})=a R_{i,c_A}$ which we can use to eliminate the variable monitoring internal resource concentrations $R_{i,c}$.
 Additionally, we also require the nutrients to be freely diffusible with constants $D_R$.
 When combining all of the listed effects and considering multiple cells of the two species $A/B$, we obtain the system
 % With these considerations, we can update equations~\eqref{eq:spatial-intracellular-a} to \eqref{eq:spatial-extracellular-resources-pde} and obtain:
@@ -865,12 +865,15 @@ When combining all of the listed effects and considering multiple cells of the t
     \dot{V}_{c_B} &=& u \sigma &RV_c
     \label{eq:spatial-full-system-simplified-begin}\\
     \dot{V}_{c_A} &=& \frac{u}{1+\nu I} \sigma &R V_c\\
-    \dot{R}_e &=& -u \sum\limits_{c_A}V_{c_A} &R_e(x) \delta(x-x_{c_A})\\
-        &&-\frac{u}{1+\nu I} \sum\limits_{c_B}V_{c_B} &R_e(x) \delta(x-x_{c_B}) &+& D_R \Delta R_e(x)\nonumber\\
+    \dot{R}_e &=& -u \sum\limits_{c_A}V_{c_A} &R(x) \delta(x-x_{c_A})\\
+        &&-\frac{u}{1+\nu I} \sum\limits_{c_B}V_{c_B} &R(x) \delta(x-x_{c_B}) &+& D_R \Delta R(x)\nonumber\\
     \dot{I} &=&b\sum\limits_{c_A} V_{c_A}&\delta(x-x_c) &+& D_I\Delta I
     \label{eq:spatial-full-system-simplified-end}
 \end{alignat}
 For the diffusion, we require Neumann (zero-flux) boundary conditions.
+It has to be noted that the sums $\sum_{c_{A/B}}$ range over all individual cells of the respective species at any given time point.
+This means explicitly, that the number of summands varies in time and is part of the overall dynamics.
+We indicate individual-based behavior with indices of types $X_c,X_{c_{A/B}}$ whereas macroscopic quantities related to a whole species are labelled with $X_{A/B}$.
 % Since, we will not explicitly model intracellular concentrations $R_{i,c}$, we will drop the index entirely, only considering the extracellular resource.
 %
 %
@@ -1229,12 +1232,12 @@ The simpler version of one state per species (equation~\ref{eq:LV_simple}) can b
 \label{sec:supplement-abm-derivation}
 \paragraph{Reactions}
 Since the \ac{abm} can be considered more fundamental than the \ac{ode} model, we should be able to derive the latter one from the former.
-The equations~\eqref{eq:spatial-full-system-simplified} related to nutrient uptake and growth and its inhibition are
+We recall equations \eqref{eq:spatial-full-system-simplified-begin} to \eqref{eq:spatial-full-system-simplified-end} related to nutrient uptake, growth and inhibition
 \begin{alignat}{3}
     \dot{V}_{c_B} &=& u_B \sigma &RV_c\\
     \dot{V}_{c_A} &=& \frac{u_A}{1+\nu I} \sigma &R V_c\\
-    \dot{R}_e &=& -u_A \sum\limits_{c_A}V_{c_A} &R_e(x) \delta(x-x_{c_A})\\
-        &&-\frac{u_B}{1+\nu I} \sum\limits_{c_B}V_{c_B} &R_e(x) \delta(x-x_{c_B}) &+& D_R \Delta R_e(x)\nonumber\\
+    \dot{R}_e &=& -u_A \sum\limits_{c_A}V_{c_A} &R(x) \delta(x-x_{c_A})\\
+        &&-\frac{u_B}{1+\nu I} \sum\limits_{c_B}V_{c_B} &R(x) \delta(x-x_{c_B}) &+& D_R \Delta R(x)\nonumber\\
     \dot{I} &=&b\sum\limits_{c_A} V_{c_A}&\delta(x-x_c) &+& D_I\Delta I.
 \end{alignat}
 We integrate the spatial equations over the total domain starting with the resource concentration $R$.
