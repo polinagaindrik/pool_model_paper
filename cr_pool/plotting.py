@@ -45,7 +45,7 @@ def plot_growth_curve(data_cells, output_path):
     data_cells.plot(x="time", y="bacteria_volume_2", ax=ax2, label="Species 2", color=CB)
     data_cells.plot(x="time", y="bacteria_volume_total", ax=ax2, label="Combined", color=CN)
     ax2.yaxis.set_major_formatter(ticks)
-    ax2.set_ylabel(f"Total Bacterial Area [$10^3{MICRON_TEX_UNITS}^2$]")
+    ax2.set_ylabel(f"Total Bacterial Volume [$10^3{MICRON_TEX_UNITS}^3$]")
 
     handles, labels = ax1.get_legend_handles_labels()
     handles = handles[:3] + [
@@ -180,7 +180,7 @@ def plot_comparisons(data_cells, output_path, title=None):
     ticks = mpl.ticker.FuncFormatter(lambda x, pos: "{0:g}".format(x / 1e3))
     ax.yaxis.set_major_formatter(ticks)
     ax.set_xlabel("Time [hours]")
-    ax.set_ylabel(f"Total Bacterial Area [$10^3{MICRON_TEX_UNITS}^2$]")
+    ax.set_ylabel(f"Total Bacterial Volume [$10^3{MICRON_TEX_UNITS}^3$]")
     # ax.set_yscale('log')
     handles, labels = ax.get_legend_handles_labels()
     handles = handles[:3] + [
@@ -240,7 +240,7 @@ def plot_lag_phase(data_cells, res, output_path):
 
     ax.legend()
     ax.set_xlabel("Time [hours]")
-    ax.set_ylabel(f"Total Bacterial Area [$10^3{MICRON_TEX_UNITS}^2$]")
+    ax.set_ylabel(f"Total Bacterial Volume [$10^3{MICRON_TEX_UNITS}^3$]")
 
     fig.tight_layout()
     fig.savefig(f"{output_path}/lag_phase.png")
