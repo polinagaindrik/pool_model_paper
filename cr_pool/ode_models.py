@@ -26,7 +26,7 @@ class ODEParameters:
     production_rate_2: float = 0.002
     inhibitor_production: float = 0.1
     inhibition_constant: float = 1e-7
-    total_cell_volume: int = 2e5
+    total_cell_volume: float = 2e5
 
     @property
     def parameters(self):
