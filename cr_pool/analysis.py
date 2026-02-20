@@ -139,28 +139,39 @@ def analyze_all_cell_voxel_data(
         (output_path, iteration, meta_params, get_entropy)
         for iteration in get_all_iterations(output_path)
     ]
-    data_cells = (
-        pd.DataFrame(
-            pool.imap_unordered(
-                _analyze_cell_data_helper,
-                args,
-            ),
+    cells_csv_path = str(output_path) + "/data_cells.csv"
+    try:
+        data_cells = pd.read_csv(cells_csv_path)
+    except:
+        data_cells = (
+            pd.DataFrame(
+                pool.imap_unordered(
+                    _analyze_cell_data_helper,
+                    args,
+                ),
+            )
+            .sort_values("iteration")
+            .reset_index(drop=True)
         )
-        .sort_values("iteration")
-        .reset_index(drop=True)
-    )
+        print("Loaded cells")
+        data_cells.to_csv(cells_csv_path)
     if pb is not None:
         pb.update()
-    data_voxels = (
-        pd.DataFrame(
-            pool.imap_unordered(
-                _analyze_voxel_data_helper,
-                args,
-            ),
+    voxels_csv_path = str(output_path) + "/data_voxels.csv"
+    try:
+        data_voxels = pd.read_csv(voxels_csv_path)
+    except:
+        data_voxels = (
+            pd.DataFrame(
+                pool.imap_unordered(
+                    _analyze_voxel_data_helper,
+                    args,
+                ),
+            )
+            .sort_values("iteration")
+            .reset_index(drop=True)
         )
-        .sort_values("iteration")
-        .reset_index(drop=True)
-    )
+        data_voxels.to_csv(voxels_csv_path)
     if pb is not None:
         pb.update()
 
