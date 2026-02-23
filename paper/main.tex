@@ -1474,4 +1474,101 @@ The snapshots were taken after $\SI{100}{\minute}$.
 \end{figure}
 %
 %
+% ................................................................................................
+\vfill
+\pagebreak
+\section{Remarks on comparing ABM and ODE results}
+In order to compare the quantities defined by the \ac{abm} and the \ac{ode}, we can use the
+conversion relations \eqref{eq:ode-abm-mappings}.
+This allows us to understand the quantities $G_{A/B},L_{A,B},R$ in terms of the cellular quantities
+defined by the \ac{abm}.
+We have introduced the growth pools $G_{A/B}$ in such a way that they can be directly compared with
+the resource pool $R$ which is immediately clear by looking at equations
+\eqref{eq:ode_3pool_resource} to \eqref{eq:ode_3pool_resource2}.
+Therefore we can not simply interpret $G_A$ as the cell density defined by the cell number divided
+by the total volume of the domain.
+However, equations \eqref{eq:ode-abm-mappings} allow us to investigate this matter further.
+
+We start by expressing the total volume of species $A$ in terms of the total amount of cells.
+To this end, we introduce the average cell volume $\bar{V}_c$ which can be assumed to be constant
+for large enough populations.
+We thus obtain
+\begin{equation}
+    V_A = N_A \bar{V}_c
+\end{equation}
+which we plug into equation~\ref{eq:ode-abm-mappings} and obtain
+\begin{equation}
+    G_A = \frac{1}{\sigma} N_A \frac{\bar{V}_c}{V_D}.
+\end{equation}
+We rearrange this equation and additionally assume that $G_A$ is proportional to the cell number
+$N_A$ via
+\begin{equation}
+    G_A = a N_A
+\end{equation}
+and thus obtain
+\begin{equation}
+    a = \frac{1}{\sigma}\frac{\bar{V}_c}{V_D}.
+\end{equation}
+We consider the case in which we want to consume nutrients to add a single bacterium
+($\Delta N_A=1$) of average volume $\bar{V}_c$ to $G_A$.
+For this scenario, we calculate the difference in resources $\Delta R$ and $\Delta G_A$ to be
+\begin{equation}
+    - \Delta R = \Delta G_A = \frac{1}{\sigma}\frac{\bar{V}_c}{V_D}.
+\end{equation}
+
+We can apply these observations to the numerical results oft the \ac{abm} and \ac{ode} and thus
+estimate quantities such as the cell number $N_{A/B}$ over the course of the simulation via
+different methods.
+First and foremost, the \ac{abm} tracks the total amount of bacteria and thus we can simply read out
+this quantity.
+Secondly, we can estimate this quantity by via the total volume $V_{A/B}$ and the average volume
+$\bar{V}_c$ via
+\begin{equation}
+    N_A = \frac{V_A}{\bar{V}_c}.
+\end{equation}
+And lastly, we can use the results $G_A$ of the \ac{ode} and calculate $N_A$ via
+\begin{equation}
+    N_A = \sigma G_A \frac{V_D}{\bar{V}_c}.
+\end{equation}
+Figure~\ref{fig:spatial-growth-curve-cellcount} shows the numerical values for these approaches.
+When comparing this plot with the volumetric-based one (Figure~\ref{fig:spatial-growth-curve}), we
+see that the cell number is subject to fluctuations due to the low overall cellcount.
+These fluctuations will be less noticable in larger systems containing significantly more bacterial
+agents but show here.
+In contrast, the volumetric plot presents a smooth curve, since individual jumps in cellcount do not
+affect the overall amount of volume.
+Therefore, the volumetric comparison was chosen since these curves are expected to be better
+representative of a larger system.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzonimage}[width=0.5\textwidth]
+        {Figures-abm-homogenous-abm_ode_comparison-cellcount.pdf}
+        \node at (0, 1)[anchor=north west]{\textbf{A}};
+    \end{tikzonimage}%
+    \begin{tikzonimage}[width=0.5\textwidth]
+        {Figures-abm-homogenous-low-diffusion-abm_ode_comparison-cellcount.pdf}
+        \node at (0, 1)[anchor=north west]{\textbf{B}};
+    \end{tikzonimage}\\
+    \begin{tikzonimage}[width=0.5\textwidth]
+        {Figures-abm-inhomogenous-abm_ode_comparison-cellcount.pdf}
+        \node at (0, 1)[anchor=north west]{\textbf{C}};
+    \end{tikzonimage}%
+    \begin{tikzonimage}[width=0.5\textwidth]
+        {Figures-abm-random-abm_ode_comparison-cellcount.pdf}
+        \node at (0, 1)[anchor=north west]{\textbf{D}};
+    \end{tikzonimage}
+    \caption{
+        (A-D) Comparison of the \ac{ode} and \ac{abm} model for different configurations.
+        We plot the celcount $N_{A/B/\text{Total}}$ obtained via different methods.
+        (A) Homogeneous, fast diffusion
+        (B) Homogeneous, slow diffusion
+        (C) Heterogeneous, fast diffusion
+        (D) Random, fast diffusion
+        The diffusion constants are chosen such that $D_R=D_I=D={5,20}~\unit{\micro\metre\squared\per\second}$.
+        Snapshots of the spatial configurations of cells are included in the Appendix~\ref{fig:supplement-spatial-initial-config-cells}.
+    }
+    \label{fig:spatial-growth-curve-cellcount}
+\end{figure}
+
 \end{document}
