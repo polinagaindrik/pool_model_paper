@@ -293,14 +293,16 @@ def calculate_index_distributions(n_cells_1, n_cells_2, n_positions, homogenous=
     if homogenous:
         indices = np.arange(n_positions)
 
-        ind_even = indices[::2]
-        ind_uneven = indices[1::2]
+        ind1 = []
+        ind2 = []
 
-        ind1_even = ind_even[:n_cells_1]
-        ind1_uneven = ind_uneven[: n_cells_1 - len(ind1_even)]
-
-        ind1 = np.sort(np.hstack([ind1_even, ind1_uneven]))
-        ind2 = np.sort(np.setdiff1d(indices, ind1))[:n_cells_2]
+        ncols = int(np.ceil(n_positions**0.5))
+        for i in range(n_cells_1 + n_cells_2):
+            row = int(i / ncols)
+            if i % 2 == row % 2:
+                ind1.append(i)
+            else:
+                ind2.append(i)
 
         return ind1, ind2
     else:
