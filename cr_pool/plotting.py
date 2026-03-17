@@ -166,9 +166,9 @@ def plot_comparisons(data_cells, output_path, title=None):
 
     fig, ax = plt.subplots()
 
-    ax.plot(res.t / HOUR, obs[0], color=CA, alpha=0.5, label="Species A")
-    ax.plot(res.t / HOUR, obs[1], color=CB, alpha=0.5, label="Species B")
-    ax.plot(res.t / HOUR, obs[2], color=CN, alpha=0.5, label="Combined")
+    ax.plot(res.t / HOUR, obs[0], color=CA, alpha=0.5, label="A")
+    ax.plot(res.t / HOUR, obs[1], color=CB, alpha=0.5, label="B")
+    ax.plot(res.t / HOUR, obs[2], color=CN, alpha=0.5, label="A+B")
 
     data_cells.plot(x="time", y="bacteria_volume_1", ax=ax, color=CA, linestyle="--")
     data_cells.plot(x="time", y="bacteria_volume_2", ax=ax, color=CB, linestyle="--")
@@ -183,11 +183,8 @@ def plot_comparisons(data_cells, output_path, title=None):
     ax.set_ylabel(f"Total Bacterial Volume [$10^3{MICRON_TEX_UNITS}^3$]")
     # ax.set_yscale('log')
     handles, labels = ax.get_legend_handles_labels()
-    handles = handles[:3] + [
-        mpl.lines.Line2D([0], [0], color="gray", linestyle="-", lw=2),
-        mpl.lines.Line2D([0], [0], color="gray", linestyle="--", lw=2),
-    ]
-    labels = labels[:3] + ["ODE", "ABM"]
+    handles = handles[:3]
+    labels = labels[:3]
     ax.legend(handles, labels)
     ax.set_xlim(np.min(res.t) / HOUR, np.max(res.t) / HOUR)
 
