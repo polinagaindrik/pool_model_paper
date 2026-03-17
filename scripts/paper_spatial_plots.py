@@ -32,7 +32,7 @@ def calculate_results(diffusion_constant, randomness, homogenous):
 
     # Meta Parameters
     meta_params = crp.MetaParams()
-    precision = 4
+    precision = 8
     meta_params.dt = SECOND / precision
     meta_params.n_times = 40_000 * precision + 1
     meta_params.save_interval = 1_000 * precision
@@ -58,7 +58,9 @@ def calculate_results(diffusion_constant, randomness, homogenous):
     cell.cycle.lag_phase_transition_rate_2 = 0.000625 / SECOND
     cell.cycle.volume_division_threshold = 2 * np.pi * (1.5 * MICRON) ** 2
 
-    cells = crp.generate_cells(18, 18, domain, randomness, homogenous=homogenous, template=cell)
+    cells = crp.generate_cells(
+        18, 18, domain, randomness, homogenous=homogenous, template=cell, seed=2
+    )
 
     output_path = crp.run_or_load_simulation(
         cells,
