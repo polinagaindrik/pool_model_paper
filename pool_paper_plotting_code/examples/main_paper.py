@@ -450,15 +450,15 @@ if __name__ == "__main__":
     ax[0].set_ylim(0.0, 1.47)
     ax[1].set_ylim(0.0, 1.22)
     ax[2].set_ylim(0.0, 0.9)
-    ax[0].text(0.05, 0.85, r'\textbf{A}', transform = ax[0].transAxes)
-    ax[1].text(0.05, 0.85, r'\textbf{B}', transform = ax[1].transAxes)
-    ax[2].text(0.05, 0.85, r'\textbf{C}', transform = ax[2].transAxes)
+    ax[0].text(0.05, 0.85, r'\textbf{D}', transform = ax[0].transAxes)
+    ax[1].text(0.05, 0.85, r'\textbf{E}', transform = ax[1].transAxes)
+    ax[2].text(0.05, 0.85, r'\textbf{F}', transform = ax[2].transAxes)
     ax[0].legend(loc='upper left', ncols=2)
     #plt.savefig('paper/Figures-pool_model_2sp_1pool_coop.pdf', bbox_inches='tight')
     plt.close(fig)
 
     ymax_lim = [0.9, 1.3, 0.9]
-    text = [r'\textbf{A}', r'\textbf{B}', r'\textbf{C}']
+    text = [r'\textbf{D}', r'\textbf{E}', r'\textbf{F}']
 
     for k, c in enumerate(const_coop):
         fig, ax = plt.subplots(1, 1, figsize=(6., 3.5))#figsize_default)
