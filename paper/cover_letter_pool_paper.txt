@@ -1,0 +1,21 @@
+Prof. Dr. Sophia Johler
+Editor-in-Chef
+International Journal of Food Microbiology
+
+Februar, 2026
+
+Dear Prof. Dr. Johler,
+
+We are pleased to submit for consideration the original article entitled "Pool Model - A Mathematical Framework for Modelling Bacterial Consortia in Food Science" to the International Journal of Food Microbiology.
+
+In this work, we introduce a generalized "pool-based" modeling framework that enables differentiation between bacterial species and their metabolic states. This approach facilitates the construction of Ordinary Differential Equations (ODEs) models of varying complexity, while maintaining model interpretability through explicit links with the underlying biological processes. 
+We demonstrate its broad scope of application using examples of microbial population dynamics relevant to food systems.
+In addition, we examine the limitations of the ODE formulation by comparing it with a corresponding Agent-Based Model (ABM), allowing us to assess the effects of diffusion and spatial heterogeneity on bacterial growth dynamics.
+
+We believe that this manuscript aligns well with the scope of the International Journal of Food Microbiology. In particular, our contribution may be valuable for the researchers focused on predictive food microbiology who seek more flexible and interpretable modeling approach.
+
+All authors have approved the final version of the manuscript and agree to be accountable for all aspects of this work.
+We declare that this manuscript has not been published previously, in whole or in part, and is not currently being considered for publication elsewhere.
+
+Sincerely,
+[Authors]
