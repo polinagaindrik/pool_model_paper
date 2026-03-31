@@ -542,7 +542,7 @@ def save_snapshot(
     # Plot labels in bottom left corner
     n_bacteria_1 = len(df_cells[df_cells["element.cell.cellular_reactions.species"] == "S1"])
     n_bacteria_2 = len(df_cells[df_cells["element.cell.cellular_reactions.species"] != "S1"])
-    _plot_labels(fig, ax, n_bacteria_1, n_bacteria_2)
+    # _plot_labels(fig, ax, n_bacteria_1, n_bacteria_2)
 
     # Save figure and cut off excess white space
     for format in formats:
