@@ -166,9 +166,9 @@ def plot_comparisons(data_cells, output_path, title=None):
 
     fig, ax = plt.subplots()
 
-    ax.plot(res.t / HOUR, obs[0], color=CA, alpha=0.5, label="A")
-    ax.plot(res.t / HOUR, obs[1], color=CB, alpha=0.5, label="B")
-    ax.plot(res.t / HOUR, obs[2], color=CN, alpha=0.5, label="A+B")
+    ax.plot(res.t / HOUR, obs[0], color=CA, alpha=0.5, label="$N_A$")
+    ax.plot(res.t / HOUR, obs[1], color=CB, alpha=0.5, label="$N_B$")
+    ax.plot(res.t / HOUR, obs[2], color=CN, alpha=0.5, label="$N_A+N_B$")
 
     data_cells.plot(x="time", y="bacteria_volume_1", ax=ax, color=CA, linestyle="--")
     data_cells.plot(x="time", y="bacteria_volume_2", ax=ax, color=CB, linestyle="--")
