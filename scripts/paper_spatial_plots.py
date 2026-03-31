@@ -16,10 +16,10 @@ DIFFUSION_UNITS = "\\text{\\textmu m}^2\\text{s}^{-1}"
 
 # Diffusion constants, randomness, homogenous
 CONFIGS = [
-    (20.0, 0, True, "Homogeneous"),
-    (2.0, 0, True, "Homogeneous"),
-    (20.0, 0, False, "Heterogeneous"),
-    (20.0, 0.30, True, "Random"),
+    (20.0, 0, True, "Homogeneous", "Figures-abm-homogenous"),
+    (2.0, 0, True, "Homogeneous", "Figures-abm-homogenous-low-diffusion"),
+    (20.0, 0, False, "Heterogeneous", "Figures-abm-inhomogenous"),
+    (20.0, 0.30, True, "Random", "Figures-abm-random"),
 ]
 
 
@@ -85,13 +85,15 @@ if __name__ == "__main__":
 
     paths = args.paths
     paths = [(Path(p), None) for p in paths]
+    save_prefixes = []
 
     if len(paths) == 0:
         paths = []
-        for diffusion_constant, randomness, homogenous, title in CONFIGS:
+        for diffusion_constant, randomness, homogenous, title, save_prefix in CONFIGS:
             full_title = f"{title} $D={diffusion_constant}{DIFFUSION_UNITS}$"
             output_path = calculate_results(diffusion_constant, randomness, homogenous)
             paths.append((Path(output_path), full_title))
+            save_prefixes.append(save_prefix)
 
     dataframes = []
     pb = tqdm(total=len(paths) * 2, desc="Loading Data")
@@ -108,12 +110,14 @@ if __name__ == "__main__":
 
     crp.load_style()
     pb = tqdm(total=len(paths) * 3, desc="Plotting Graphs")
-    for (output_path, title), (data_cells, data_voxels) in zip(paths, dataframes):
-        crp.plot_growth_curve(data_cells, output_path)
+    for (output_path, title), (data_cells, data_voxels), save_prefix in zip(
+        paths, dataframes, save_prefixes
+    ):
+        crp.plot_growth_curve(data_cells, output_path, save_prefix)
         pb.update(1)
-        crp.plot_nutrients(data_voxels, output_path)
+        crp.plot_nutrients(data_voxels, output_path, save_prefix)
         pb.update(1)
-        crp.plot_comparisons(data_cells, output_path, title=title)
+        crp.plot_comparisons(data_cells, output_path, save_prefix, title=title)
         pb.update(1)
 
     if args.save_snapshots:

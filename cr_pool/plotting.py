@@ -26,7 +26,7 @@ CN = COLORS_ALL["N"]
 MICRON_TEX_UNITS = "\\text{\\textmu m}"
 
 
-def plot_growth_curve(data_cells, output_path):
+def plot_growth_curve(data_cells, output_path, save_prefix):
     # Growth Curve
     fig, ax1 = plt.subplots(figsize=FIGSIZE_DEFAULT)
 
@@ -53,15 +53,15 @@ def plot_growth_curve(data_cells, output_path):
         mpl.lines.Line2D([0], [0], color="gray", linestyle="-", lw=2),
     ]
     labels = labels[:3] + ["Count", "Volume"]
-    ax1.legend(handles, labels)
+    # ax1.legend(handles, labels)
     ax1.set_xlim(np.min(data_cells["time"]), np.max(data_cells["time"]))
     fig.tight_layout()
-    fig.savefig(f"{output_path}/cell_growth.png")
-    fig.savefig(f"{output_path}/cell_growth.pdf")
+    fig.savefig(f"{output_path}/{save_prefix}-cell_growth.png")
+    fig.savefig(f"{output_path}/{save_prefix}-cell_growth.pdf")
     plt.close(fig)
 
 
-def plot_nutrients(data_voxels, output_path):
+def plot_nutrients(data_voxels, output_path, save_prefix):
     # Nutrients
     fig, ax = plt.subplots(figsize=FIGSIZE_DEFAULT)
     data_voxels.plot(
@@ -70,8 +70,8 @@ def plot_nutrients(data_voxels, output_path):
     ax.set_ylabel("Total Nutrients")
     ax.set_xlabel("Time [hours]")
     ax.set_xlim(np.min(data_voxels["time"]), np.max(data_voxels["time"]))
-    fig.savefig(f"{output_path}/nutrients.png")
-    fig.savefig(f"{output_path}/nutrients.pdf")
+    fig.savefig(f"{output_path}/{save_prefix}-nutrients.png")
+    fig.savefig(f"{output_path}/{save_prefix}-nutrients.pdf")
 
 
 def abm_to_ode(
@@ -157,7 +157,7 @@ def calculate_difference(data_cells, output_path):
     return variance
 
 
-def plot_comparisons(data_cells, output_path, title=None):
+def plot_comparisons(data_cells, output_path, save_prefix, title=None):
     settings = get_simulation_settings(output_path)
 
     model = abm_to_ode(*settings)
@@ -188,9 +188,9 @@ def plot_comparisons(data_cells, output_path, title=None):
     ax.legend(handles, labels)
     ax.set_xlim(np.min(res.t) / HOUR, np.max(res.t) / HOUR)
 
-    fig.savefig(output_path / "abm_ode_comparison.png")
-    fig.savefig(output_path / "abm_ode_comparison.pdf")
-    fig.savefig(output_path / "abm_ode_comparison.eps")
+    fig.savefig(output_path / f"{save_prefix}-abm_ode_comparison.png")
+    fig.savefig(output_path / f"{save_prefix}-abm_ode_comparison.pdf")
+    fig.savefig(output_path / f"{save_prefix}-abm_ode_comparison.eps")
     plt.close(fig)
 
 
@@ -269,7 +269,9 @@ def _determine_image_save_path(output_path, iteration, fmt="png"):
     save_folder.mkdir(parents=True, exist_ok=True)
 
     # Create save path from new save folder
-    save_path = save_folder / "snapshot_{:08}.{}".format(iteration, fmt)
+    save_path = save_folder / "Figures-abm-homogenous-images-snapshot_{:08}.{}".format(
+        iteration, fmt
+    )
 
     return save_path
 
