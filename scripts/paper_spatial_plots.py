@@ -125,13 +125,13 @@ if __name__ == "__main__":
             total=len(paths) * 4,
             desc="Plotting Snapshots",
         )
-        for output_path, _ in paths:
+        for (output_path, _), save_prefix in zip(paths, save_prefixes):
             iters = crp.get_all_iterations(output_path)
-            crp.save_snapshot(output_path, iters[6], True, ["png", "pdf"])
+            crp.save_snapshot(output_path, iters[6], save_prefix, True, ["png", "pdf"])
             pb.update()
-            crp.save_snapshot(output_path, iters[12], True, ["png", "pdf"])
+            crp.save_snapshot(output_path, iters[12], save_prefix, True, ["png", "pdf"])
             pb.update()
-            crp.save_snapshot(output_path, iters[18], True, ["png", "pdf"])
+            crp.save_snapshot(output_path, iters[18], save_prefix, True, ["png", "pdf"])
             pb.update()
-            crp.save_snapshot(output_path, iters[24], True, ["png", "pdf"])
+            crp.save_snapshot(output_path, iters[24], save_prefix, True, ["png", "pdf"])
             pb.update()

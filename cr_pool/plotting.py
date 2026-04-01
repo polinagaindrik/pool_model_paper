@@ -22,8 +22,9 @@ CA = COLORS_ALL["N_A"]
 CB = COLORS_ALL["N_B"]
 CN = COLORS_ALL["N"]
 
-
 MICRON_TEX_UNITS = "\\text{\\textmu m}"
+
+mpl.use("Agg")
 
 
 def plot_growth_curve(data_cells, output_path, save_prefix):
@@ -262,16 +263,14 @@ def plot_entropy(data_cells, output_path):
     plt.close(fig)
 
 
-def _determine_image_save_path(output_path, iteration, fmt="png"):
+def _determine_image_save_path(output_path, iteration, save_prefix, fmt="png"):
     # Save images in dedicated images folder
     save_folder = Path(output_path) / "images"
     # Create folder if it does not exist
     save_folder.mkdir(parents=True, exist_ok=True)
 
     # Create save path from new save folder
-    save_path = save_folder / "Figures-abm-homogenous-images-snapshot_{:08}.{}".format(
-        iteration, fmt
-    )
+    save_path = save_folder / f"{save_prefix}-snapshot_{iteration:08}.{fmt}"
 
     return save_path
 
@@ -496,6 +495,7 @@ def _plot_bacteria(df_cells, ax):
 def save_snapshot(
     output_path,
     iteration,
+    save_prefix,
     overwrite=False,
     formats=["png"],
 ):
@@ -511,7 +511,7 @@ def save_snapshot(
     """
     quit = True
     for format in formats:
-        save_path = _determine_image_save_path(output_path, iteration, fmt=format)
+        save_path = _determine_image_save_path(output_path, iteration, save_prefix, fmt=format)
 
         # If the image is present we do not proceed unless the overwrite flag is active
         if overwrite or not os.path.isfile(save_path):
@@ -548,7 +548,7 @@ def save_snapshot(
 
     # Save figure and cut off excess white space
     for format in formats:
-        save_path = _determine_image_save_path(output_path, iteration, fmt=format)
+        save_path = _determine_image_save_path(output_path, iteration, save_prefix, fmt=format)
         fig.savefig(
             save_path,
             bbox_inches="tight",
