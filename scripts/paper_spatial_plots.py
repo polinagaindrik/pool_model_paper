@@ -90,7 +90,7 @@ if __name__ == "__main__":
     if len(paths) == 0:
         paths = []
         for diffusion_constant, randomness, homogenous, title, save_prefix in CONFIGS:
-            full_title = f"{title} $D={diffusion_constant}{DIFFUSION_UNITS}$"
+            full_title = f"{title} $D={diffusion_constant}$ ${DIFFUSION_UNITS}$"
             output_path = calculate_results(diffusion_constant, randomness, homogenous)
             paths.append((Path(output_path), full_title))
             save_prefixes.append(save_prefix)
