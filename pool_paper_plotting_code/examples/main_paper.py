@@ -67,7 +67,7 @@ def pool_model_dormant(t, x, param, x0, const):
         mu = muT * T_const
     return [
         - (omega1 + lambd) * L,
-        lambd * L + (mu - mu * ((L + G + D)/N_t) - omega2 - gamma) * G + xi * S,
+        lambd * L + (mu - mu * ((L + G + D + S)/N_t) - omega2 - gamma) * G + xi * S,
         omega1 * L + omega2 * G,
         gamma * G - xi * S
         ]
@@ -119,7 +119,7 @@ def pool_model_2sp_comp_toxin1(t, x, param, x0, const):
 
     return [
         - lambd_A * R * L_A,
-          lambd_A * R * L_A + (mu_A * R - omega/(k*N_t) * T) * G_A,
+          lambd_A * R * L_A + (mu_A * R - omega/(N_t) * T) * G_A,
         - lambd_B * R * L_B,
           lambd_B * R * L_B + (mu_B * R) * G_B,
         - (mu_A / N_t) * R * G_A - (mu_B / N_t) * R * G_B,
@@ -133,7 +133,7 @@ def pool_model_2sp_comp_toxin2(t, x, param, x0, const):
 
     return [
         - lambd_A * R * L_A,
-          lambd_A * R * L_A + (mu_A * R - omega/(k*N_t) * T) * G_A,
+          lambd_A * R * L_A + (mu_A * R - omega/(N_t) * T) * G_A,
         - lambd_B * R * L_B,
           lambd_B * R * L_B + (mu_B * R) * G_B,
         - (mu_A / N_t) * R * G_A - (mu_B / N_t) * R * G_B,
@@ -150,11 +150,11 @@ def pool_model_2sp_comp_inhib(t, x, param, x0, const):
         ]
 
 def pool_model_2sp_cooper(t, x, param, x0, const):
-    (psi, phi, ) = const
+    (chi, phi, ) = const
     (G_A, G_B, W_A, W_B, ) = x
     return [
         W_B * G_A * (1 - G_A - G_B),
-        psi * W_A * G_B * (1 - G_A - G_B),
+        chi * W_A * G_B * (1 - G_A - G_B),
         G_A * (1 - G_A - G_B),
         phi * G_B * (1 - G_A - G_B)
         ]
@@ -167,9 +167,9 @@ def observable_3pool(output):
 
 def observable_3pool_dormant(output):
     # Output (n_variables x n_times)
-    # Variables: (L, G, D,) = x
-    # => Output [n = L+G]
-    return [output[0]+output[1]+output[3]]#]
+    # Variables: (L, G, D, S) = x
+    # => Output [n = L+G+S]
+    return [output[0]+output[1]+output[3] + output[2]]#]
 
 def observable_2pool(output):
     # Output (n_variables x n_times)
@@ -221,7 +221,7 @@ if __name__ == "__main__":
     for i, data in enumerate(data_3pool_res):
         for d in data:
             ax.plot(d['times'], d['obs_mean'][0], linewidth=2.5, color=color_palette_1sp[i], label=labels[i], linestyle=lnst[i])
-    fig, ax = set_labels(fig, ax, r'Time, $t$ [h]', r'Bacterial Count, $N$ [CFU/mL]')
+    fig, ax = set_labels(fig, ax, r'Time, $t$ [h]', 'Bacterial Count [CFU/mL]')
     ax.set_yscale('log')
     ax.set_xlim(0., 11.0)
     #ax.set_ylim(3.0e0, 0.6e4)
@@ -235,7 +235,7 @@ if __name__ == "__main__":
     Gamma, delta= 1., 5.
     shift_cnd = [(1, -5), (5, -5)] #((1, 10), (3, 5), (5, 5), (7, 15))
     # Gamma rate constants:
-    sigma, delta, zeta, alpha = 2., 5., 1., 0.05
+    sigma, delta, zeta, alpha = 2., 5., 1., 0.05 # in paper now beta instead of sigma
     
     const_constT = [1e-2, 0., 0.2, .1, 1e-3, Nt, sigma, delta, zeta, alpha, ()]
     #(lambd, omega1, mu, omega2, xi, N_t, sigma, delta, zeta, alpha, shift_cnd,) 
@@ -260,7 +260,7 @@ if __name__ == "__main__":
             ax[0].plot(d['times'], d['obs_mean'][0], color=color_palette_1sp_tempshift[i], label=labels[i])
     ax[1].plot(t, y, color=color_palette_1sp_tempshift[i-1])
     ax[1].plot(t, y2, color=color_palette_1sp_tempshift[i])
-    fig, ax[0] = set_labels(fig, ax[0], r'', r'Bacterial Count, $N$ [CFU/mL]')
+    fig, ax[0] = set_labels(fig, ax[0], r'', r'Bacterial Count [CFU/mL]')
     fig, ax[1] = set_labels(fig, ax[1], r'Time, $t$ [h]', r'Rate, $\gamma$')
     ax[0].set_yscale('log')
     ax[0].set_xlim(0., 8.5)
@@ -276,9 +276,9 @@ if __name__ == "__main__":
     for i, data in enumerate(data_Tempshift):
         for d in data:
             ax.plot(d['times'], d['obs_mean'][0], color=color_palette_1sp_tempshift[i], label=labels[i])
-    fig, ax = set_labels(fig, ax, r'', r'Bacterial Count, $N$ [CFU/mL]')
+    fig, ax = set_labels(fig, ax, r'', 'Bacterial Count [CFU/mL]')
     ax.set_yscale('log')
-    ax.set_xlim(0.0, 9)
+    ax.set_xlim(0.0, 8)
     ax.set_ylim(6e0, 2e4)
     ax.legend()
     ax.text(0.04, 0.9, r'\textbf{A}', transform = ax.transAxes)
@@ -289,7 +289,7 @@ if __name__ == "__main__":
     ax.plot(t, y, color=color_palette_1sp_tempshift[i-1])
     ax.plot(t, y2, color=color_palette_1sp_tempshift[i])
     fig, ax = set_labels(fig, ax, r'Time, $t$ [h]', r'Rate, $\gamma$')
-    ax.set_xlim(0., 9)
+    ax.set_xlim(0., 8)
     ax.text(0.04, 0.8, r'\textbf{B}', transform = ax.transAxes)
     plt.savefig('paper/Figures-pool_model_3pools_resource_tempshift2.pdf', bbox_inches='tight')
     plt.close(fig)
@@ -299,12 +299,12 @@ if __name__ == "__main__":
     const_gLV = [.01, 3., .05, 2.5, Nt] # (lambd1, lambd2, alph1, alph2, Nt, )
     data_gLV = generate_insilico_data(pool_model_resource_comp, [np.linspace(0, 10, 100)], [], [[]], x0_gLV,
                                       const=const_gLV, n_traj=1, obs_func=observable_2pool_2species_resource)
-    labels = [r'$N_A=L_A+G_A$', r'$N_B=L_B+G_B$', r'$N=N_A+N_B$', r'$R N_t$']
+    labels = [r'$N_A=L_A+G_A$', r'$N_B=L_B+G_B$', r'$N_A+N_B$', r'$\tilde R N_t$']
     color_palette_2sp = [colors_all['N_A'], colors_all['N_B'], colors_all['N'], colors_all['R']]
     lnst = ['solid', 'solid', 'dashed', 'solid']
 
     fig, ax = plt.subplots(1, 1, figsize=figsize_default)
-    fig, ax = set_labels(fig, ax, r'Time, $t$ [h]', r'Bacterial Count, $N$ [CFU/mL]')
+    fig, ax = set_labels(fig, ax, r'Time, $t$ [h]', r'Bacterial Count [CFU/mL]')
     for d in data_gLV:
         for i, obs in enumerate(d['obs_mean']):
             if i == 3:
@@ -320,7 +320,7 @@ if __name__ == "__main__":
 ######################## Interspecies competition (Waste/inhibitor production) #############################
 ####################################### Toxin Production ##############################################
     x0_tox = [[10.], [0.], [10.], [0.], [1.], [0.]]
-    const_tox = [.01, 3., .05, 2.5, Nt, 0.2, 0.2] # (lambd1, lambd2, alph1, alph2, Nt, k, omega)
+    const_tox = [.01, 3., .05, 2.5, Nt, 0.2, 1.] # (lambd1, lambd2, alph1, alph2, Nt, k, omega)
     data_tox1 = generate_insilico_data(pool_model_2sp_comp_toxin1, [np.linspace(0, 10, 100)], [], [[]], x0_tox,
                                        const=const_tox, n_traj=1, obs_func=observable_2pool_2species_resource_toxin)
     data_tox2 = generate_insilico_data(pool_model_2sp_comp_toxin2, [np.linspace(0, 10, 100)], [], [[]], x0_tox,
@@ -328,8 +328,8 @@ if __name__ == "__main__":
 
     fig, ax = plt.subplots(1, 2, figsize=figsize_default2subpl)
     fig.subplots_adjust(wspace=0.25)
-    labels1 = [r'$N_A=L_A+G_A$', r'$N_B=L_B+G_B$', r'$R N_t$', r'$T_B^1$']
-    labels2 = [r'$N_A=L_A+G_A$', r'$N_B=L_B+G_B$', r'$R N_t$', r'$T_B^2$']
+    labels1 = [r'$N_A=L_A+G_A$', r'$N_B=L_B+G_B$', r'$\tilde R N_t$', r'$\mathcal{T}_B^1$']
+    labels2 = [r'$N_A=L_A+G_A$', r'$N_B=L_B+G_B$', r'$\tilde R N_t$', r'$\mathcal{T}_B^2$']
     color_palette_2sp_toxin = [colors_all['N_A'], colors_all['N_B'], colors_all['R'], colors_all['T']]
     for d in data_tox1:
         for i, obs in enumerate(d['obs_mean']):
@@ -345,7 +345,7 @@ if __name__ == "__main__":
         ax[i].set_xlim(2., 9.0)
         ax[i].set_ylim(-100, 1.01e4)
         ax[i].legend()
-        fig, ax[i] = set_labels(fig, ax[i], r'Time, $t$ [h]', r'Bacterial Count, $N$ [CFU/mL]')
+        fig, ax[i] = set_labels(fig, ax[i], r'Time, $t$ [h]', r'Bacterial Count [CFU/mL]')
     ax[0].text(2.1, 800, r'\textbf{A}')#r'(a) $\mathcal{F}^1$')
     ax[1].text(2.1, 800, r'\textbf{B}')#r'(b) $\mathcal{F}^2$')
     #plt.savefig('paper/Figures-pool_model_2pools_toxin.pdf', bbox_inches='tight')
@@ -360,7 +360,7 @@ if __name__ == "__main__":
     ax.set_xlim(2., 9.0)
     ax.set_ylim(-100, 1.01e4)
     ax.legend()
-    fig, ax = set_labels(fig, ax, r'Time, $t$ [h]', r'Bacterial Count, $N$ [CFU/mL]')
+    fig, ax = set_labels(fig, ax, r'Time, $t$ [h]', r'Bacterial Count [CFU/mL]')
     ax.text(*coord_text, r'\textbf{A}', transform = ax.transAxes)
     plt.savefig('paper/Figures-pool_model_2pools_toxin1.pdf', bbox_inches='tight')
     plt.close(fig)
@@ -374,14 +374,14 @@ if __name__ == "__main__":
     ax.set_xlim(2., 9.0)
     ax.set_ylim(-100, 1.01e4)
     ax.legend()
-    fig, ax = set_labels(fig, ax, r'Time, $t$ [h]', r'Bacterial Count, $N$ [CFU/mL]')
+    fig, ax = set_labels(fig, ax, r'Time, $t$ [h]', r'Bacterial Count [CFU/mL]')
     ax.text(*coord_text, r'\textbf{B}', transform = ax.transAxes)
     plt.savefig('paper/Figures-pool_model_2pools_toxin2.pdf', bbox_inches='tight')
     plt.close(fig)
 
 ############################# Inhibition ######################################
     x0_inhib = [[0.1], [0.1]]
-    const_inhib = [1., 0.5, 2] # ()
+    const_inhib = [1., 0.5, 2] 
     data_inhib = []
     lnst = ['solid', 'dashed', 'dotted']
     color_palette_2sp_only = [colors_all['N_A'], colors_all['N_B']]
@@ -435,7 +435,7 @@ if __name__ == "__main__":
     labels = [r'$\tilde G_A$', r'$\tilde G_B$', r'$\tilde P_A$', r'$\tilde P_B$']
     color_palette_2sp_coop = [colors_all['N_A'], colors_all['N_B'], colors_all['T_A'], colors_all['T']]
     const_coop = [
-        [1., 1.], # (psi, phi)
+        [1., 1.], # (chi, phi)
         [1., 2.],
         [2., 1.]]
     for k, c in enumerate(const_coop):
@@ -472,7 +472,9 @@ if __name__ == "__main__":
         ax.set_xlim(-0.001, 10.5)
         ax.set_ylim(0.0, ymax_lim[k])
         ax.text(*coord_text, text[k], transform = ax.transAxes)
-        ax.legend(loc='center left')#ncol=2, loc='lower right')
+        legend_box = [0.317, 0.3]
+        ax.legend(bbox_to_anchor=legend_box, bbox_transform=fig.transFigure)
+        #ax.legend(loc='center left')#ncol=2, loc='lower right')
         plt.savefig(f'paper/Figures-pool_model_2sp_1pool_coop{k+1}.pdf', bbox_inches='tight')
         plt.close(fig)
 
