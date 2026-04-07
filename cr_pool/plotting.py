@@ -22,11 +22,12 @@ CA = COLORS_ALL["N_A"]
 CB = COLORS_ALL["N_B"]
 CN = COLORS_ALL["N"]
 
-
 MICRON_TEX_UNITS = "\\text{\\textmu m}"
 
+mpl.use("Agg")
 
-def plot_growth_curve(data_cells, output_path):
+
+def plot_growth_curve(data_cells, output_path, save_prefix):
     # Growth Curve
     fig, ax1 = plt.subplots(figsize=FIGSIZE_DEFAULT)
 
@@ -53,15 +54,15 @@ def plot_growth_curve(data_cells, output_path):
         mpl.lines.Line2D([0], [0], color="gray", linestyle="-", lw=2),
     ]
     labels = labels[:3] + ["Count", "Volume"]
-    ax1.legend(handles, labels)
+    # ax1.legend(handles, labels)
     ax1.set_xlim(np.min(data_cells["time"]), np.max(data_cells["time"]))
     fig.tight_layout()
-    fig.savefig(f"{output_path}/cell_growth.png")
-    fig.savefig(f"{output_path}/cell_growth.pdf")
+    fig.savefig(f"{output_path}/{save_prefix}-cell_growth.png")
+    fig.savefig(f"{output_path}/{save_prefix}-cell_growth.pdf")
     plt.close(fig)
 
 
-def plot_nutrients(data_voxels, output_path):
+def plot_nutrients(data_voxels, output_path, save_prefix):
     # Nutrients
     fig, ax = plt.subplots(figsize=FIGSIZE_DEFAULT)
     data_voxels.plot(
@@ -70,8 +71,8 @@ def plot_nutrients(data_voxels, output_path):
     ax.set_ylabel("Total Nutrients")
     ax.set_xlabel("Time [hours]")
     ax.set_xlim(np.min(data_voxels["time"]), np.max(data_voxels["time"]))
-    fig.savefig(f"{output_path}/nutrients.png")
-    fig.savefig(f"{output_path}/nutrients.pdf")
+    fig.savefig(f"{output_path}/{save_prefix}-nutrients.png")
+    fig.savefig(f"{output_path}/{save_prefix}-nutrients.pdf")
 
 
 def abm_to_ode(
@@ -157,7 +158,7 @@ def calculate_difference(data_cells, output_path):
     return variance
 
 
-def plot_comparisons(data_cells, output_path, title=None):
+def plot_comparisons(data_cells, output_path, save_prefix, title=None):
     settings = get_simulation_settings(output_path)
 
     model = abm_to_ode(*settings)
@@ -166,9 +167,9 @@ def plot_comparisons(data_cells, output_path, title=None):
 
     fig, ax = plt.subplots()
 
-    ax.plot(res.t / HOUR, obs[0], color=CA, alpha=0.5, label="A")
-    ax.plot(res.t / HOUR, obs[1], color=CB, alpha=0.5, label="B")
-    ax.plot(res.t / HOUR, obs[2], color=CN, alpha=0.5, label="A+B")
+    ax.plot(res.t / HOUR, obs[0], color=CA, alpha=0.5, label="$N_A$")
+    ax.plot(res.t / HOUR, obs[1], color=CB, alpha=0.5, label="$N_B$")
+    ax.plot(res.t / HOUR, obs[2], color=CN, alpha=0.5, label="$N_A+N_B$")
 
     data_cells.plot(x="time", y="bacteria_volume_1", ax=ax, color=CA, linestyle="--")
     data_cells.plot(x="time", y="bacteria_volume_2", ax=ax, color=CB, linestyle="--")
@@ -188,9 +189,9 @@ def plot_comparisons(data_cells, output_path, title=None):
     ax.legend(handles, labels)
     ax.set_xlim(np.min(res.t) / HOUR, np.max(res.t) / HOUR)
 
-    fig.savefig(output_path / "abm_ode_comparison.png")
-    fig.savefig(output_path / "abm_ode_comparison.pdf")
-    fig.savefig(output_path / "abm_ode_comparison.eps")
+    fig.savefig(output_path / f"{save_prefix}-abm_ode_comparison.png")
+    fig.savefig(output_path / f"{save_prefix}-abm_ode_comparison.pdf")
+    fig.savefig(output_path / f"{save_prefix}-abm_ode_comparison.eps")
     plt.close(fig)
 
 
@@ -262,14 +263,14 @@ def plot_entropy(data_cells, output_path):
     plt.close(fig)
 
 
-def _determine_image_save_path(output_path, iteration, fmt="png"):
+def _determine_image_save_path(output_path, iteration, save_prefix, fmt="png"):
     # Save images in dedicated images folder
     save_folder = Path(output_path) / "images"
     # Create folder if it does not exist
     save_folder.mkdir(parents=True, exist_ok=True)
 
     # Create save path from new save folder
-    save_path = save_folder / "snapshot_{:08}.{}".format(iteration, fmt)
+    save_path = save_folder / f"{save_prefix}-snapshot_{iteration:08}.{fmt}"
 
     return save_path
 
@@ -494,6 +495,7 @@ def _plot_bacteria(df_cells, ax):
 def save_snapshot(
     output_path,
     iteration,
+    save_prefix,
     overwrite=False,
     formats=["png"],
 ):
@@ -509,7 +511,7 @@ def save_snapshot(
     """
     quit = True
     for format in formats:
-        save_path = _determine_image_save_path(output_path, iteration, fmt=format)
+        save_path = _determine_image_save_path(output_path, iteration, save_prefix, fmt=format)
 
         # If the image is present we do not proceed unless the overwrite flag is active
         if overwrite or not os.path.isfile(save_path):
@@ -542,11 +544,11 @@ def save_snapshot(
     # Plot labels in bottom left corner
     n_bacteria_1 = len(df_cells[df_cells["element.cell.cellular_reactions.species"] == "S1"])
     n_bacteria_2 = len(df_cells[df_cells["element.cell.cellular_reactions.species"] != "S1"])
-    _plot_labels(fig, ax, n_bacteria_1, n_bacteria_2)
+    # _plot_labels(fig, ax, n_bacteria_1, n_bacteria_2)
 
     # Save figure and cut off excess white space
     for format in formats:
-        save_path = _determine_image_save_path(output_path, iteration, fmt=format)
+        save_path = _determine_image_save_path(output_path, iteration, save_prefix, fmt=format)
         fig.savefig(
             save_path,
             bbox_inches="tight",
