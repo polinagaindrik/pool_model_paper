@@ -1,5 +1,4 @@
-% \documentclass[10pt,A4paper]{article}
-\documentclass[10pt,twocolumn,5p,authoryear]{elsarticle}
+\documentclass[10pt,1p,authoryear]{elsarticle}
 \usepackage[utf8]{inputenc}
 
 \setlength{\tabcolsep}{1.3pt}
@@ -18,8 +17,9 @@
 \usepackage{graphicx}% Include figure files
 \usepackage{here}
 \usepackage{hyperref}
-\usepackage{lipsum}
-\usepackage[switch]{lineno}
+%\usepackage{lipsum}
+\usepackage{lineno}
+\usepackage{setspace}
 \usepackage{mathtools}
 \usepackage{mathrsfs}
 \usepackage{multirow}
@@ -33,7 +33,7 @@
 \usepackage{xpatch}
 \usepackage{orcidlink}
 
-% Ensure that subcaptions have captial letter
+% Ensure that subcaptions have capital letter
 \renewcommand{\thesubfigure}{\Alph{subfigure}}
 
 % Must be loaded after tikz
@@ -62,16 +62,6 @@
 \newcommand{\cmt}[1]{\textcolor{red} {[#1]}}
 \newcommand{\etal}{{\textit{et al. }}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ONLY FOR EDITING REMOVE IN THE END
-\usepackage{ulem}
-\newcommand{\change}[2]{
-    \ifthenelse{\equal{#1}{}}
-    {\textcolor{purple}{#2}}
-    {\textcolor{gray}{[\sout{#1}]} \textcolor{purple}{#2}}
-}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \newacro{ode}[ODE]{Ordinary Differential Equation}
 \newacro{pde}[PDE]{Partial Differential Equation}
 \newacro{glv}[gLV]{generalized Lotka-Volterra}
@@ -85,9 +75,9 @@
 \definecolor{delim}{RGB}{20,105,176}
 \colorlet{numb}{magenta!60!black}
 
-\title{Pool Model - A Mathematical Framework for Modelling Bacterial Consortia in Food Science}
+\title{The Pool Model: A Mechanistic ODE Framework for Bacterial Consortia in Food Science}
 \author[1]{Polina Gaindrik\orcidlink{0000-0003-0928-3951}}
-\author[1]{Jonas Pleyer\orcidlink{0000-0003-0928-3951}}
+\author[1]{Jonas Pleyer\orcidlink{0009-0001-0613-7978}}
 \author[2]{Matthias Brunner}
 \author[3]{Fernando Pérez Rodríguez}
 \author[1]{Christian Fleck\orcidlink{0000-0002-6371-4495}\corref{cor1}}
@@ -95,7 +85,7 @@
 
 \cortext[cor1]{Corresponding Author\\ \textit{E-mail address:} christian.fleck@fdm.uni-freiburg.de}
 \affiliation[1]{
-    organization={Freiburg Center for Data Analysis and Modeling},
+    organization={Freiburg Center for Data Analysis and Modeling and AI},
     addressline={Ernst-Zermelo Str. 1},
     city={Freiburg im Breisgau},
     postcode={79104},
@@ -120,33 +110,47 @@
     \textsuperscript{\textbf{1}}
 }
 
+% Force double spacing in abstract (elsarticle overrides \doublespacing there)
+\makeatletter
+\let\els@abstract\abstract
+\renewcommand{\abstract}{\els@abstract\setstretch{2}}
+\makeatother
+
 \begin{document}
+\doublespacing
+\linenumbers
 
 \begin{abstract}
-    Bacterial consortia are complex systems which are often comprised of multiple distinct species.
-    Their dynamics on a population-based level often result from various intra- and interspecies interactions,
-    including cooperation or competition.
-    Various empirical and mechanistic models have been conceived and applied to problems related to food microbiology.
-    In this work we present a generalized framework, which uses multiple distinct "pools" that can distinguish
-    between microbial types in different metabolic states or describe the extracellular environment properties.
-    It allows us to incorporate the underlying biological processes and construct \ac{ode} based models of
-    different complexity levels.
-    To illustrate the application scope of the model, multiple different examples of microbial systems
-    are reported.
-    Finally, to explore the limitations of the \ac{ode} formulation, we analyze the influence of spatial effects.
-    For this, we construct an \ac{abm} for a two-species system, showcasing that the resulting pool model
-    arises naturally from the individual behavior of many cellular agents.
-    We further apply this \ac{abm} to study the role of properties such as diffusion and spatial heterogeneity
-    on the dynamics of bacterial growth.
+Predictive microbiology in food science requires models that are both mechanistically
+interpretable and flexible enough to describe the diversity of bacterial behaviors in
+complex food matrices. We introduce the pool model, an \ac{ode}-based framework in which bacterial populations
+are partitioned into discrete metabolic states -- pools -- with biologically motivated
+transitions between them. The framework systematically incorporates single-cell processes such as lag phase
+adaptation, growth, death, and dormancy, and extends naturally to multi-species consortia. For a single species, the three-pool model with a limiting resource reproduces the
+characteristic sigmoidal growth curve. A dormancy extension based on a Maxwell-type
+stress-strain relation captures the experimentally observed asymmetric response of
+bacteria to temperature shifts. For two-species systems, the framework encompasses resource competition, which
+reduces exactly to the generalized Lotka-Volterra equations as a special case, as
+well as toxin production, mutual inhibition, and mutualism. To assess the validity of the \ac{ode} approximation, we derive the pool model
+analytically from an \ac{abm}, demonstrating that it arises naturally from individual
+cell-level behavior. Numerical comparisons across four spatial configurations show that the \ac{ode}
+description holds in the well-mixed limit with fast nutrient diffusion, while spatial
+heterogeneity and slow diffusion introduce systematic deviations in the predicted
+growth curves. The pool model thus provides a unified, mechanistically interpretable starting point
+for modeling bacterial consortia in food safety applications.
 \end{abstract}
 
 %%Graphical abstract
-\begin{graphicalabstract}
+%\begin{graphicalabstract}
 %\includegraphics{grabs}
-\end{graphicalabstract}
+%\end{graphicalabstract}
 
 \begin{highlights}
-    \item @Christian fill this
+    \item Pool model framework partitions bacterial populations into discrete metabolic states
+    \item Lag phase, dormancy, death, and resource dependence are incorporated systematically
+    \item Dormancy via Maxwell stress-strain relation captures asymmetric temperature response
+    \item Resource competition reduces exactly to the generalized Lotka-Volterra equations
+    \item Toxin production, mutual inhibition, and mutualism extend the two-species framework
 \end{highlights}
 
 \begin{keyword}
@@ -158,160 +162,118 @@
 \end{keyword}
 
 \maketitle
-\linenumbers
 %
 % ================================================================================================
 \section{Introduction}
-
-Bacterial consortia are highly complex systems which consist of multiple distinct cell types.
-The underlying processes are interconnected with each other and occur on all scales, ranging from
-population-based dynamics of colony growth over molecular processes such as metabolism to gene
-expression.
-Bacterial communities are ubiquitous and even able to survive under extreme conditions, making them
-virtually omnipresent around any living system.
-In particular, food matrices represent highly relevant microbial ecosystems, where these communities
+Bacterial consortia are highly complex systems that consist of multiple distinct cell types.
+The underlying processes are interconnected and occur on all scales, ranging from
+population-based dynamics of colony growth through molecular processes such as metabolism to gene
+expression. In particular, food matrices represent highly relevant and complex microbial ecosystems, where these communities
 play a key role in both food safety and spoilage as well as fermentation processes.
-Biofilms are biological structures formed by complex and dynamic microbial communities adhered to
-surfaces that develop different communication mechanisms (e.g. quorum sensing), and coordinate to
+In this domain, biofilms represent an important source of contamination and an increased risk of infection. These biological structures are formed by complex and dynamic microbial communities that adhere to
+surfaces, develop various communication mechanisms (e.g., quorum sensing), and coordinate to
 improve nutrient accessibility and provide protection against antimicrobial chemicals and physical
-stress~\citep{Zhao2023}.
-These structures are an important problem in food environments, and healthcare settings, being a
-source of contamination and increased risk of infection.
-% Furthermore, effects such as biofilm formation can hinder drug treatment by shielding the bacterial
-% colony from antibiotic substances or immune response of the organism.
-In addition, the natural bacterial processes are a crucial part of our planet's ecosystem, being
-responsible for tasks such as nutrient cycling, decomposition of organic matter and oxygen production.
-It is of great interest to understand the dynamics of these various processes.\\
+stress~\citep{Zhao2023}.\\
 %
-In order to achieve a comprehensive description of the target system, it is important to incorporate
-all relevant biological phenomena arising in these bacterial systems.
-% During their reproductive process, bacteria undergo multiple phases~\citep{buchanan_when_1997}, starting in a lag phase which
-% is necessary to adapt to new environments and initially impedes the overall growth~\citep{rolfe_lag_2012, monod_growth_1949}.
+Due to their enormous practical importance, bacterial systems have been studied in detail. 
 During the growth process, bacteria undergo different physiological and metabolic
-states~\citep{buchanan_when_1997}, that determine growth dynamics and response to the environment.
+states~\citep{buchanan_when_1997} that determine growth dynamics and response to the environment.
 Typically, when bacteria colonize a new environment, they enter an adaptation phase, commonly
-referred to as lag time~\citep{rolfe_lag_2012, monod_growth_1949}.
-Under this phase, bacteria prepare the enzymatic and metabolic machinery to initiate cell division
+referred to as lag time~\citep{monod_growth_1949, swinnen_predictive_2004, rolfe_lag_2012}.
+During this phase, bacteria prepare the enzymatic and metabolic machinery to initiate cell division
 and multiplication.
-According to Baranyi and Roberts~\citep{baranyi_dynamic_1994}, lag time can
-be defined as a function of the concentration of a limiting component that cells should synthesise
-in order to start growing.
-Additionally, bacteria are able to cooperate, e.g., via complementary metabolic processes or inhibit
-each other, e.g., by means of waste production as a metabolic byproduct~\citep{west_social_2007, rainey_evolution_2003, hibbing_bacterial_2010, stubbendieck_bacterial_2016}.
+According to \cite{baranyi_dynamic_1994}, lag time can be defined as a function of the concentration of a limiting component that cells must synthesize
+to start growing. Additionally, bacteria can cooperate, e.g., via complementary metabolic processes, or inhibit
+each other, e.g., by means of waste production as a metabolic byproduct~\citep{west_social_2007, rainey_evolution_2003, hibbing_bacterial_2010, stubbendieck_bacterial_2016}. A food-relevant example is the inhibition of \textit{Listeria monocytogenes} by bacteriocin-producing lactic acid bacteria in fermented meat and dairy products~\citep{cotterBacteriocinsDeveloping2005, rileyBacteriocinsEvolution2002}.
 A limited supply of nutrients will also affect the overall reproductive capacity of the colony~\citep{monod_growth_1949}.
-Bacteria have thus devised various survival strategies to ensure sufficient access to nutrients.
-Effects on a single-cell level such as adhesion~\citep{htuson_bacteriasurface_2013}, migration~\cite{decoene_microscopic_2011} and chemotaxis can lead to complex
-phenomena on a population-based level which can aid in the goal of survival.
-Cell signaling, e.g., in the form of quorum-sensing can lead to collective emergent phenomena such as
-biofilm formation which play an important role for many mature microbial communities~\citep{Jin2020,ng_bacterial_2009}.\\
+Bacteria have thus devised various survival strategies to ensure sufficient access to nutrients. Effects at the single-cell level, such as adhesion~\citep{htuson_bacteriasurface_2013}, migration~\citep{decoene_microscopic_2011}, and chemotaxis, can lead to complex phenomena at the population level that contribute to colony survival.
+
+Cell signaling, e.g., in the form of quorum-sensing, can lead to collective emergent phenomena such as
+biofilm formation that play an important role in many mature microbial communities~\citep{Jin2020,ng_bacterial_2009}.\\
 %
 The first step in the construction of any mathematical model is to determine the required level of
 detail with respect to the description scale and consequently which effects to include.
-The bacterial growth curves let us describe the dynamics of the overall abundance of various
-species.
-The field of predictive microbiology has developed a variety of ODE-based models to capture
-bacterial growth dynamics~\citep{perez-rodriguez_predictive_2012, gaindrik_experimental_2025}.
-Various \acp{ode} \textit{primary models} describe the bacterial growth curve under constant
+Bacterial growth curves allow us to describe the dynamics of overall species abundance. The field of predictive microbiology has developed a variety of ordinary differential equation (ODE)-based models to
+capture bacterial growth dynamics~\citep{perez-rodriguez_predictive_2012, gaindrik_experimental_2025}.
+Various \ac{ode} \textit{primary models} describe the bacterial growth curve under constant
 environmental conditions.
 Widely used examples include the modified Gompertz model~\citep{Zwietering1990,Gompertz1825-wi,Gibson1987}, Baranyi-Roberts
-model~\citep{baranyi_modeling_1993, baranyi_dynamic_1994} and McKellar~\cite{McKellar1997} two-compartment model~\cite{buchanan_when_1997} which distinguishes between growing and non-growing bacteria.
-To take into account changing environmental conditions, so-called \textit{secondary models}
-formulate the model parameters as a function of external quantities such as temperature, pH or
-humidity.
-These can be simple polynomial models, square root-type models~\citep{ratkowsky_relationship_1982} or
+model~\citep{baranyi_modeling_1993, baranyi_dynamic_1994}, and the two-compartment model~\citep{McKellar1997} that distinguishes between growing and non-growing bacteria~\citep{buchanan_when_1997}. To take into account changing environmental conditions, so-called \textit{secondary models}
+express the model parameters as a function of external quantities such as temperature, pH, or
+humidity. Temperature fluctuations during cold-chain interruptions represent a particularly relevant scenario in food storage and transport, where
+dormancy transitions directly affect pathogen growth dynamics~\citep{swinnen_predictive_2004}.
+Secondary models can be simple polynomial models, square root-type models~\citep{ratkowsky_relationship_1982}, or
 more complex relations such as the cardinal parameter model~\citep{zwietering_decision_1992}.
-The advantage of the \ac{ode} formulation lies in the predictive power and simplicity of usage.
+The advantage of the \ac{ode} formulation lies in the predictive power and ease of use.
 However, due to their coarse-grained nature, they lack the ability to describe heterogeneity and
 other spatial effects.\\
 %
-When dealing with spatial effects such as heterogeneity, we are required to use more extensive
-modeling formulations such as \acp{pde} or \acp{abm}.
-The former represent an intermediate step between the population-based \ac{ode} models and the
-individually-based \acp{abm} and can be effective, especially when dealing with large population of
+When dealing with spatial effects such as heterogeneity, one is required to use more extensive
+modeling formulations such as \acp{pde} or \acp{abm}. Such heterogeneity is characteristic of structured food matrices, including soft cheeses, minced meat products, and biofilms on food-contact surfaces~\citep{cauchie_modeling_2020, mounier_microbial_2008}.
+\acp{pde} represent an intermediate step between the population-based \ac{ode} models and the
+individual-based \acp{abm} and can be effective, especially when dealing with large populations of
 cells that can be approximated as a continuum.
-On the other hand, \acp{abm} excel at describing the individual behavior of cells which can then
-lead to more complex collective phenomena.
-Tools such as BSim~\citep{Gorochowski2012,Dang2020}, AgentCell~\cite{emonet_agentcell_2005}, BacSim~\cite{kreft_bacsim_1998} or \texttt{cellular\_raza}~\cite{Pleyer2025} are
-capable to describe large amounts of bacteria, performing various intracellular and extracellular
-processes.
-The latter has been used to adapt \ac{pde}-based models into an \ac{abm} formulation which describe
+On the other hand, \acp{abm} excel at describing the individual behavior of cells that can then lead to more complex collective phenomena.
+Tools such as BSim~\citep{Gorochowski2012,Dang2020}, AgentCell~\citep{emonet_agentcell_2005}, BacSim~\citep{kreft_bacsim_1998}, or \texttt{cellular\_raza}~\citep{Pleyer2025} are
+capable of describing large numbers of bacteria, performing various intracellular and extracellular
+processes. The latter has been used to adapt \ac{pde}-based models into an \ac{abm} formulation that describes
 bacterial branching patterns~\citep{Kawasaki1997,Matsushita1998}.\\
 %
-In this work, we introduce a new \ac{ode}-based modeling framework which describes different
-bacterial species, their metabolic states and external quantities such as nutrients as individual
-pools.
+In this work, we introduce a new \ac{ode}-based modeling framework that describes various
+bacterial species, their metabolic states, and external quantities such as nutrients as individual pools.
 The dynamics of bacterial growth can be understood in terms of transitions between the different
-bacterial states, i.e., pools.
-Our model also allows us to capture interactions between these bacterial states and the external
-microenvironment.
-Compared against the aforementioned methods, this approach turns out to be less complex with general
-applicability, low number of parameters and greater explainability for the underlying biological
-reality.
-To illustrate the generality of the model, multiple examples are reported.
-We analyze the spatial limitations of an interacting two-species model and show that it can be fully
-understood on an individual-based level in terms of single-cell processes.
-Furthermore, we assess how spatial heterogeneity~\citep{mckellar_heterogeneous_1997} can impact the shape of the growth curves.
-%
+bacterial states, i.e., pools. Our model allows us to capture interactions between these bacterial states and the external
+microenvironment. Compared with the aforementioned methods, this approach turns out to be less complex with general
+applicability, a low number of parameters, and greater interpretability of the underlying biology.
+To illustrate the generality of the model, multiple examples are reported. We analyze the spatial limitations of an interacting two-species model and show that it can be fully
+understood on an individual-based level in terms of single-cell processes. Furthermore, we assess how spatial heterogeneity~\citep{mckellar_heterogeneous_1997} can impact the shape of the growth curves.
 %
 % ================================================================================================
 \section{One species modeling}
 % ------------------------------------------------------------------------------------------------
 \subsection{Three-pool model}
 \label{sec:three-pool-model}
-We begin our discussion by considering a simplistic system where only one species is present $N=1$.
-Bacterial growth undergoes different consecutive phases~\citep{buchanan_when_1997}, starting with the so called lag-phase, which is a specific case of quiescence, during which no increase in the bacterial count occurs.
-This phenomenon appears due to adaptations of the microbial community, for example, to the new environmental conditions.
-This so-called preparation before the exponential growth includes synthesis of the needed compounds, initiation of the transcription~\citep{rolfe_lag_2012} and other physiological and regulatory mechanisms~\citep{monod_growth_1949}.
-After this, the bacteria which have succeeded in this adaptation stage enter the exponential growth phase, where the process of cell division is predominant.
-When the levels of nutrition are exhausted by the growing bacteria, the stationary state of the growth curve occurs.
-In this state the cultures accumulate waste products of metabolic activity that lead to cell death in the bacterial colony.
-At the same time dying cells release the nutrients for survivors to continue growing.
-As a result the balance between the growing and dying processes leads to a constant bacterial count~\citep{navarro_llorens_stationary_2010}.
-In the described simplified version of the real-life system three possible bacterial states are mentioned, corresponding to the underlying processes: adaptation, growth or death.
-Motivated by this we divide a bacterial population into three pools (states) (Figure~\ref{fig:SchematicRep}), defining the fraction of the population in the lag phase $L(t)$, growing and dividing $G(t)$ and undergoing cell death $D(t)$.
-\begin{figure}[t]
+We begin our analysis by considering a simple system where only one species is present. Bacteria undergo different consecutive growth phases~\citep{buchanan_when_1997}, starting with the lag phase, which is a specific case of quiescence, during which no increase in the bacterial count occurs. This quiescent period arises from the microbial community's need to adapt, for example, to the new environmental conditions. This so-called preparation before the exponential growth includes synthesis of the necessary compounds, initiation of transcription~\citep{rolfe_lag_2012}, and other physiological and regulatory mechanisms~\citep{monod_growth_1949}. After this, the bacteria that have succeeded in this adaptation stage enter the exponential growth phase, where the process of cell division is predominant. When nutrient levels are exhausted by the growing bacteria, the stationary state of the growth curve occurs. In this state, the cultures accumulate waste products of metabolic activity that lead to cell death in the bacterial colony. At the same time, dying cells release the nutrients for survivors to continue growing. As a result, the balance between the growing and dying processes leads to a constant bacterial count~\citep{navarro_llorens_stationary_2010}. In the described simplified version of the real-life system, three distinct bacterial states can be identified, corresponding to the underlying processes: adaptation, growth, or death. Motivated by this, we divide a bacterial population into three pools (states) (Figure~\ref{fig:SchematicRep}), defining the fraction of the population in the lag phase $L(t)$, growing and dividing $G(t)$, and undergoing cell death $D(t)$.
+\begin{figure}[H]
     \begin{center}
-    \includegraphics[width=0.9\columnwidth]{Figures-TPM_fig.pdf}
+    \includegraphics[width=0.95\columnwidth]{Figures-TPM_fig.pdf}
     \caption{Schematic representation of exchange between three states or pools.}
     \label{fig:SchematicRep}
     \end{center}
 \end{figure}
-To determine the equations which describe the system's dynamics, we consider the flows between the different states.
-The pools $G$ and $D$ are unidirectionally connected with the pool $L$.
-For now, we assume no back flow from the growth state $G$ to the lag-state $L$.
-It is a logical assumption of the speicific case of cell adaption if environmental conditions do not
-change.
-The suggested model can be cast in the following reactions:
+To determine the equations that describe the system's dynamics, we consider the flows between the different states.
+The pools $G$ and $D$ are unidirectionally connected to the pool $L$. For now, we assume no backflow from the growth state $G$ to the lag-state $L$.
+This is a reasonable assumption for conditions that remain constant. The proposed model can be cast in the following reactions:
 \begin{align}
+\begin{split}
     L &\stackrel{\lambda}{\longrightarrow} G\\
     L &\stackrel{\omega}{\longrightarrow} D\\
     G &\stackrel{\mu}{\longrightarrow} 2G\\
-    G &\stackrel{\omega'}{\longrightarrow} D
+    G &\stackrel{\omega'}{\longrightarrow} D.
+\end{split}
 \end{align}
 Then the \acp{ode} describing such a model can be written as
 \begin{align}\begin{split}
     \dot{L} &= -(\omega + \lambda) L\\
     \dot{G} &= \lambda L + \mu G - \omega' G\\
-    \dot{D} &= \omega  L + \omega' G
+    \dot{D} &= \omega  L + \omega' G,
 \end{split}\end{align}
 with the initial conditions $L(0)=N_0$, $G(0)=0$, and $D(0)=0$, where $N_0$ is the initial bacterial population.
 %
-Based on experimental observations, it was shown that the bacterial growth is strongly influenced by the limiting resource.
-According to the works of \citet{monod_growth_1949} in the system where all needed nutrients are in excess except for one, the total growth is linear to the concentration of this limiting nutrient resource.
+
+\subsection{Dependence on external resources}
+Experimental observations have shown that the bacterial growth is strongly influenced by the limiting resource.
+According to the works of \citet{monod_growth_1949} and \citet{vanimpeNovelClass2005}, in the system where all needed nutrients are in excess except for one, the total growth is proportional to the concentration of this limiting nutrient resource.
 % The control of the population density with respect to the available nutrition by means of cell communication is called quorum sensing.
-We choose a minimalistic approach to describe the dependence of growth on the nutrient availability.
-We include a resource pool which is consumed by the growing bacteria using the second order kinetic reaction:
+We choose a minimal approach to describe the dependence of growth on the nutrient availability.
+We include a resource pool that is consumed by the growing bacteria using the second-order kinetic reaction:
 \begin{equation}
-    G + R  \stackrel{\mu_0}{\longrightarrow} 2G
+    G + R  \stackrel{\mu_0}{\longrightarrow} 2G,
 \end{equation}
 allowing us to keep a minimal number of parameters.
-Note that the pools $L$, $G$ and $D$ represent the number of bacteria (or number of bacteria per unit area/volume) while $R$ represents an abstract resource pool.
-Let's say $G=N_B/V$ and $[G]=\unit{1/V}$, where $N_B$ is the number of bacteria and $V$ is the volume.
-Then $R=N_R/V$ and $[R]=\unit{1/V}$, where $N_R$ is the number of resource molecules (or any appropriate unit, e.g., \unit{mol}).
-Then $[\mu_0]=\unit{V/h}$, $[N_t]=\unit{1/V}$, and $[\mu]= \unit{1/h}$.
-$N_t$ denotes the maximal size of the total bacterial population due to environmental limitations.
-
-For simplicity, we make a transition to the constant $\mu:=\mu_0 N_t$ and the dimensionless resource pool $\tilde{R}(t) = R/ N_t$ ($0 \leqslant \tilde{R} \leqslant 1$).
+Note that the pools $L$, $G$, and $D$ represent the number of bacteria (or number of bacteria per unit area/volume) while $R$ represents an abstract resource pool. $R=N_R/V$ and $[R]=1/V$, where $N_R$ is the number of resource molecules (or any appropriate unit, e.g., \unit{mol}).
+Then $[\mu_0]=\unit{V/h}$, $[N_t]=1/V$, and $[\mu]= 1/h$.
+$N_t$ denotes the maximal size of the total bacterial population due to environmental limitations. For simplicity, we introduce the constant $\mu:=\mu_0 N_t$ and the dimensionless resource pool $\tilde{R}(t) = R/ N_t$ ($0 \leqslant \tilde{R}(t) \leqslant 1, \, \forall t$).
 Here the full capacity of the resource pool $N_t$ was used as a scaling constant.
 In this case the growth term can be simply written as $\mu G \tilde{R}$ and the model is fully formulated in the following way:
 \begin{align}
@@ -319,16 +281,16 @@ In this case the growth term can be simply written as $\mu G \tilde{R}$ and the 
         \dot{L} &= -(\omega + \lambda) L\\
         \dot{G} &= \lambda L + \mu \tilde{R} G-\omega' G\\
         \dot{D} &= \omega  L + \omega' G\\
-        \dot{\tilde{R}} &= - \frac{\mu}{N_t} \tilde{R} G
+        \dot{\tilde{R}} &= - \frac{\mu}{N_t} \tilde{R} G.
     \end{split}
 \label{eq:ode_3pool_resource}
 \end{align}
 %
-This can be simplified by exploiting the conservation of the resource pool
+This can be simplified by exploiting the conservation of the resource pool:
 \begin{equation}
-    \tilde{R} = 1 - \frac{L+G+D}{N_t}
+    \tilde{R} = 1 - \frac{L+G+D}{N_t}, 
 \end{equation}
-and, hence, the full system can be written as
+and, hence, the full system can be written as:
 \begin{align}
     \begin{split}
         \dot{L} &= -(\omega + \lambda) L\\
@@ -339,54 +301,53 @@ and, hence, the full system can be written as
 \end{align}
 %
 %
-\begin{figure}
+\begin{figure}[H]
     \begin{center}
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_3pools_resource.pdf}
     \caption{
-        The time dependence of the bacterial count $N(t) = L(t) + G(t) $ is shown calculated using the model (\ref{eq:ode_3pool_resource2}) with parameters $\mu=2.5~\mathrm{h}^{-1}$, $\omega=0~\mathrm{h}^{-1}$, $N_t = 10^4$.
+        The time dependence of the bacterial count $L(t) + G(t) $ is shown calculated using the model (\ref{eq:ode_3pool_resource2}) with parameters $\mu=2.5~\mathrm{h}^{-1}$, $\omega=0~\mathrm{h}^{-1}$, $N_t = 10^4$,  $N_0 = 10$.
         The blue dashed curve shows the case of no cell death $\omega' = 0~\mathrm{h}^{-1}$ and thus exhibits a steady state without the decrease of the bacterial population.
-        Other curves represent the growing bacteria dying with the rate $\omega'=0.1~\mathrm{h}^{-1}$ and different lengths of lag phases: short $\lambda=10^{-2}~\mathrm{h}^{-1}$ (dark green), intermediate $\lambda=10^{-3}~\mathrm{h}^{-1}$ (light green) and long one $\lambda=10^{-4}~\mathrm{h}^{-1}$ (yellow).
-        Note that the steady state for $N(t)$ and $D(t)$ is for this model $\lim_{t\to\infty} N(t)=0$ and $\lim_{t\to\infty} D(t)=N_t$, because of the depletion of the resource pool.
+        Other curves represent the growing bacteria dying with the rate $\omega'=0.1~\mathrm{h}^{-1}$ and different lengths of lag phases: short $\lambda=10^{-2}~\mathrm{h}^{-1}$ (dark green), intermediate $\lambda=10^{-3}~\mathrm{h}^{-1}$ (light green), and a long one $\lambda=10^{-4}~\mathrm{h}^{-1}$ (yellow).
+        Note that the steady state for $L(t)+G(t)$ and $D(t)$ is for this model $\lim_{t\to\infty} L(t)+G(t)=0$ and $\lim_{t\to\infty} D(t)=N_t$.
     }
     \label{fig:3pool_resource_plots}
     \end{center}
 \end{figure}
-The resulting growth curves for the three pool case are presented in Figure~\ref{fig:3pool_resource_plots}.
-Here we can see that the value of the transition constant $\lambda$ determines how long the bacteria stays in its lag-phase.
-The larger this rate, the shorter is the lag-time.
-Moreover, by including the flow of living bacteria to the death pool, we can model a greater variety of effects by allowing a decrease in the bacterial count.
+The resulting growth curves for the three-pool case are presented in Figure~\ref{fig:3pool_resource_plots}.
+The value of the transition rate $\lambda$ determines the duration of the lag phase.
+The larger this rate is, the shorter the lag time. Moreover, by including the flow of living bacteria to the death pool, we can model a greater variety of effects by allowing a decrease in the bacterial count.
 %
 % ------------------------------------------------------------------------------------------------
-\subsection{Lag-time estimation}
-Note that the previously introduced model could be further simplified to a two pool or state model by omitting the pool $D$ and removing cells directly from pools $L$ and $G$.
-The relevant question here is whether cells in the pool $D$ provide any significant impact on resource availability, e.g., by freeing previously occupied spaces or releasing previously consumed nutrients.
-If yes, the three pool model would be advantageous, if not the two pool model is sufficient with the benefit of having one parameter less.\\
+\subsection{Lag time estimation}
+Note that the previously introduced model could be further simplified to a two-pool model by omitting the pool $D$ and removing cells directly from pools $L$ and $G$.
+The relevant question here is whether cells in the pool $D$ have any significant impact on resource availability, e.g., by freeing previously occupied spaces or releasing previously consumed nutrients.
+If yes, the three-pool model would be advantageous, if not, the two-pool model is sufficient with the benefit of having one fewer parameter.\\
 %
-The dynamics of the three pool model is captured by equations~\ref{eq:ode_3pool_resource2} which can be used to derive the two pool model simply by omitting $D$.
+The dynamics of the three-pool model are captured by equations~(\ref{eq:ode_3pool_resource2}) that can be used to derive the two-pool model simply by omitting $D$.
 Moreover, for $\omega'=0$ the equations for $L$ and $D$ can be readily integrated resulting in:
 \begin{align}
     \begin{split}
         L(t) &= N_0 e^{-(\omega+\lambda)t}\\
         D(t) &= N_0 \omega \frac{1-e^{-(\omega+\lambda)t}}{\omega+\lambda
-       }
-    \end{split}.
+       }.
+    \end{split}
 \end{align}
-For constant parameters $\omega$ and $\lambda$ the integrals for $L$ and $D$ can be inserted into the differential equation for $G$.
-However, in the case of time dependent parameters, e.g., for a dependence on a non-static, dynamic temperature, it appears to be not advantageous to use the analytical results for $L$ and $D$ and work instead with all three equations for $L$, $G$, and $D$.
+For constant parameters $\omega$ and $\lambda$, the integrals for $L$ and $D$ can be inserted into the differential equation for $G$.
+However, in the case of time-dependent parameters, e.g., for a dependence on a non-static, dynamic temperature, it is not advantageous to use the analytical results for $L$ and $D$; instead one should work with all three equations for $L$, $G$, and $D$.
 It is interesting to see what type of equations result for the total bacterial population $\mathcal{N}=L+G+D$:
 \begin{align}
     \begin{split}
         \dot{G} &= \lambda L + \mu G\left(1-\frac{\mathcal{N}}{N_t}\right)\\
-        \dot{\mathcal{N}} &= \mu G\left(1-\frac{\mathcal{N}}{N_t}\right)
+        \dot{\mathcal{N}} &= \mu G\left(1-\frac{\mathcal{N}}{N_t}\right),
     \end{split}
 \end{align}
 with initial conditions $G(0)=0$ and $\mathcal{N}(0)=N_0$.
-These equations have a clear interpretation, are derived from first principles, and are not identical to the popular Barayni-Roberts and modified-Gompertz models.
-A notable difference is that the growth rate $\mu$ is time independent.
+These equations have a clear interpretation, are derived from first principles, and are not identical to the popular Baranyi-Roberts and modified-Gompertz models.
+A notable difference is that the growth rate $\mu$ is time-independent.
 For the functions $L$ and $D$ it holds: $\lim_{t\to\infty} L(t) = 0$ and  $\lim_{t\to\infty} D(t) =  N_0\frac{\omega}{\omega+\lambda} $.
 It follows immediately that $\lim_{t\to\infty} G(t) = N_t-N_0\frac{\omega}{\omega+\lambda}$.
 The lag time $t_L$ can be approximated by the time at which half of the initial population is in the growth phase, i.e., $N_0=2G(t_L)$.
-This approach differs to other concepts of lag time such as the one by Gompertz (visual lag time) or Baranyi (work to be done).
+This approach differs from other concepts of lag time such as the one by Gompertz (geometric lag time) or Baranyi (time of adjustment).
 
 Assuming $L\ll N_t$, we can ignore the non-linear term in the equation for $G$, which gives rise to:
 \begin{align}
@@ -397,81 +358,82 @@ For $\mu > \omega+\lambda$  we can approximate $t_L$ by:
 \begin{align}
     t_L &\approx -\frac{1}{\mu}\ln\left(\frac{2\lambda}{\omega+\lambda+\mu}\right).
 \end{align}
-The lag time $t_L$ diverges very slowly, logarithmically with $\lambda\to 0$.
+The lag time $t_L$ diverges very slowly, logarithmically, with $\lambda\to 0$.
 %
 %
 % ------------------------------------------------------------------------------------------------
 \subsection{Dormancy}
-Bacteria which have lived under rather unfavorable conditions have developed different survival mechanisms, one of which is adapting their metabolism and transitioning into a dormant state.
-Dormancy in bacteria is a reversible state where cells continue living with low metabolic activity while the cell division stops~\citep{kaprelyants_dormancy_1993}.
-This survival strategy can appear in response to different external stresses, e.g., nutrient deficiency, temperature stress or extreme fluctuations of microenvironment parameters.
-Having survived these "difficult times" bacteria can continue growing and dividing~\citep{kell_viability_1998}.
-There exists a variety of models which include transitions of bacteria to the dormant state were proposed by \citet{bar_modelling_2002} and \citet{jones_dormancy_2010}.
+To demonstrate the flexibility of the proposed modeling approach, we consider the transition from the growth to the dormant state. Bacteria that have lived under unfavorable conditions have developed different survival mechanisms, one of which involves adapting their metabolism and transitioning into a dormant state. 
+Dormancy in bacteria is a reversible state in which cells maintain low metabolic activity while cell division ceases~\citep{kaprelyants_dormancy_1993}.
+This survival strategy can arise in response to various external stresses, e.g., nutrient deficiency, temperature stress, or extreme fluctuations in microenvironmental parameters.
+Having survived periods of stress, bacteria can continue growing and dividing~\citep{kell_viability_1998}.
+A variety of models that include transitions of bacteria to the dormant state were proposed by \citet{bar_modelling_2002} and \citet{jones_dormancy_2010}.
 %
 We now aim to investigate the case where parts of the population $G$ enter a dormant state under stress conditions.
-Within the framework of our pool model, this means that we define a new metabolic state $S$ corresponding to the bacterial stress.
+Within the framework of the pool model, we define a new metabolic state $S$ corresponding to the bacterial stress:
 \begin{align}
+\begin{split}
     L &\stackrel{\lambda}{\longrightarrow} G\\
-    G &\stackrel{\mu}{\longrightarrow} 2G\\
+    G+R &\stackrel{\mu_0}{\longrightarrow} 2G\\
     G &\stackrel{\omega'}{\longrightarrow} D\\
     G &\stackrel{\gamma(t)}{\longrightarrow} S\\
-    S &\stackrel{\xi}{\longrightarrow} G
+    S &\stackrel{\xi}{\longrightarrow} G.
+    \end{split}
 \end{align}
-The transition rate of the growing bacteria to the stress state $\gamma(t)$ depends on the change of the environment.
-Stronger and quicker changes will lead to a higher rate $\gamma$, but the effect will relax to zero after some time~\citep{lennon_microbial_2011}.
-After the extreme conditions are overcome the bacteria return to normal exponential growth with the transition rate $\xi$.
+We set $\omega=0$ for simplicity. The transition rate of the growing bacteria to the stress state $\gamma(t)$ depends on the change of the environment.
+Stronger and more rapid changes will lead to a higher rate $\gamma$, but the effect will relax to zero after some time~\citep{lennon_microbial_2011}.
+After the extreme conditions are overcome, the bacteria return to normal exponential growth with the transition rate $\xi$.
 %
 %
-\paragraph{Maxwell type of stress - strain relation}
-One of the reasons that bacteria enter the dormant state can be a shift in temperature conditions, e.g., to low temperatures, unfavorable for bacterial growth~\citep{oliver_viable_1995}.
-To model this, we propose a kind of viscoelastic Maxwell type of stress-strain relation and write down the ordinary differential equation for $\gamma$ to be:
+\paragraph{Maxwell-type stress-strain relation}
+One of the reasons that bacteria enter the dormant state can be a shift in temperature conditions, e.g., to low temperatures, unfavorable for bacterial growth~\citep{oliver_viable_1995}. The impact of temperature shifts on the physiological state of bacteria has been reported previously. Both increasing and decreasing temperatures can induce an intermediate dormant lag phase, due to the cell adjustment to the new conditions~\citep{swinnen_predictive_2004}.  To model this, we propose a viscoelastic Maxwell-type stress-strain relation and write down the ordinary differential equation for $\gamma$ to be:
 \begin{equation}
-    \dot{\gamma} = \sigma f\left(\zeta\dot{T}\right)-\delta \gamma.
+    \dot{\gamma} = \beta f\left(\zeta\dot{T}\right)-\delta \gamma.
 \end{equation}
 The dimensionless function $f$, with $f(0)=0$ and $f: \mathbb{R}\to\mathbb{R}_{\ge 0}$, evaluates the effect of a temperature change.
-Note that here the direction of the temperature change is important, an increase from $T=2^\circ C$ to $T=12^\circ C$ has a different effect than a decrease from $T=14^\circ C$ to $T=4^\circ C$.
-$\zeta$ is a scaling factor, $\sigma$ resembles a stiffness which quantifies how strongly the bacteria react to temperature stress.
+Note that the direction of the temperature change matters here: an increase from $T=2~\unit{\degreeCelsius}$ to $T=12~\unit{\degreeCelsius}$ has a different effect than a decrease from $T=14~\unit{\degreeCelsius}$ to $T=4~\unit{\degreeCelsius}$.
+$\zeta$ is a scaling factor, $\beta$ represents a stiffness that quantifies how strongly the bacteria react to temperature stress.
 Finally, $\delta^{-1}$ is the relaxation time for the temperature disturbance.
 Integration of this equation yields (with $\gamma(0)=0$):
 \begin{equation}
-    \gamma(t) = \sigma\int_0^t f\left(\zeta\dot{T}(t^{\prime})\right)e^{-\delta (t-t^{\prime})}dt^{\prime}.
+    \gamma(t) = \beta\int_0^t f\left(\zeta\dot{T}(t^{\prime})\right)e^{-\delta (t-t^{\prime})}dt^{\prime}.
 \end{equation}
-The simplest model choice to account for directional temperature changes is to use a non-symmetrical linear function:
+The simplest model choice to account for directional temperature changes is to use an asymmetric linear function:
 \begin{align}
 f(x)&=\begin{cases}\alpha x& x\ge 0\\ -(1-\alpha) x& x < 0,\end{cases}
 \label{eq:f_stress}
 \end{align}
-where $\alpha\in [0,1]$. For $\alpha=0.5$ it follows $f(x)=\frac{1}{2}|x|$ which represents the case where the direction of the temperature change does not matter.
-Using this choice for $f$ we find after some manipulation:
+where $\alpha\in [0,1]$. For $\alpha=0.5$, it follows $f(x)=\frac{1}{2}|x|$, which represents the case where the direction of the temperature change does not matter.
+Using this choice for $f$, we find after some manipulation:
 \begin{equation}
-    \gamma(t) = \sigma\alpha\zeta\left [T(t)-T(0)e^{-\delta t}-\delta
+    \gamma(t) = \alpha\beta\zeta\left [T(t)-T(0)e^{-\delta t}-\delta
         \int\limits_0^t T(t^{\prime})e^{-\delta (t-t^{\prime})}dt^{\prime}\right ],
 \end{equation}
-for $\dot{T}\ge 0, \,\forall t$ and
+for $\dot{T}\ge 0, \,\forall t$ and:
 \begin{equation}
-    \gamma(t) = \sigma(1-\alpha)\zeta\left [T(0)e^{-\delta t}-T(t)+\delta
-        \int\limits_0^t T(t^{\prime})e^{-\delta (t-t^{\prime})}dt^{\prime}\right ].
+    \gamma(t) = (1-\alpha)\beta\zeta\left [T(0)e^{-\delta t}-T(t)+\delta
+        \int\limits_0^t T(t^{\prime})e^{-\delta (t-t^{\prime})}dt^{\prime}\right ]
 \end{equation}
 for $\dot{T}< 0, \,\forall t$.
 This representation of the rate $\gamma(t)$ has the advantage that it only involves $T(t)$ and does not require the calculation of a derivative.
 If $T$ exhibits $n$ temperature jumps, one finds:
 \begin{eqnarray}
-    \gamma(t) &=& \sigma\sum_{i=1}^n f\left(\zeta\Delta T_i \right)\theta(t-t_i)e^{-\delta(t-t_i)}.
+    \gamma(t) &=& \beta\sum_{i=1}^n f\left(\zeta\Delta T_i \right)\theta(t-t_i)e^{-\delta(t-t_i)}.
 \label{eq:gamma_tempshift}
 \end{eqnarray}
 %
-The ordinary differential equations for the pool model with back-flow then read:
+The ordinary differential equations for the pool model with back-flow then read ($\mathcal{N}=L+G+D+S$):
 \begin{align}
     \begin{split}
         \dot{L} &= - \lambda L\\
-        \dot{G} &= \lambda L + \mu G\left(1-\frac{L+G+D}{N_t}\right)-\gamma(t) G + \xi S - \omega' G\\
+        \dot{G} &= \lambda L + \mu G\left(1-\frac{\mathcal{N}}{N_t}\right)-\gamma(t) G + \xi S - \omega' G\\
         \dot{D} &= \omega' G\\
-        \dot{S} &= \gamma(t) G - \xi S
+        \dot{S} &= \gamma(t) G - \xi S.
     \end{split}
     \label{eq:ode_tempshift_backlag}
 \end{align}
-Here the transition rates between different states can also be temperature-dependent.
-For simplicity, we assume a linear dependence of the growth and lag-phase rates with respect to the temperature: 
+Here, the transition rates between different states can also be temperature-dependent.
+For simplicity, we assume a linear dependence of the growth and lag-phase rates on the temperature:
 \begin{align}
     \begin{split}
         \mu(T)  &= \mu_1 T\\
@@ -479,80 +441,79 @@ For simplicity, we assume a linear dependence of the growth and lag-phase rates 
     \end{split}
     \label{eq:rates_temp_linear}
 \end{align}
-\begin{figure}[t]
+\begin{figure}[H]
     \begin{center}
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_3pools_resource_tempshift1.pdf}\\
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_3pools_resource_tempshift2.pdf}
     \caption{
-        (A) The time dependence of the total bacterial count $N$ for the model including the transition to dormant state due to temperature stress~(\ref{eq:ode_tempshift_backlag}-\ref{eq:rates_temp_linear}).
+        (A) The time dependence of the total bacterial count $\mathcal{N}$ for the model including the transition to dormant state due to temperature stress~(\ref{eq:ode_tempshift_backlag}-\ref{eq:rates_temp_linear}).
         (B) The value of the corresponding flow rate $\gamma$ calculated according to (\ref{eq:gamma_tempshift}) and function~(\ref{eq:f_stress}) with $\alpha=0.05$.
-        The curves represent no temperature shift (green), two temperature jumps $\Delta T = -5^\circ C, -5^\circ C$ at times $t=1~\mathrm{h}$ and $t=5~\mathrm{h}$ (orange)
-        and the series of different temperature shifts of value $10^\circ C$, $-10^\circ C$ and $-5^\circ C$ at the time points $1~\mathrm{h}, 3~\mathrm{h}$ and $7~\mathrm{h}$, respectively (rose).
-        The parameters associated with dormancy are $\zeta=1~\mathrm{h}/^\circ C $ and $\delta=5~\mathrm{h}^{-1}$, $\sigma=2~\mathrm{h}^{-2}$, $\xi=10^{-3}~\mathrm{h}^{-1}$.
-        The growth and lag-phase rate linearly depend on the temperature $T$ and defined as $\mu(T)=0.2 T~\mathrm{h}^{-1}$, $\lambda(T)=10^{-2} T~\mathrm{h}^{-1}$.
-        The other model parameters are $\omega'=0.1~\mathrm{h}^{-1}$, $N_t=10^4$.
+        The curves represent no temperature shift (green), two temperature jumps of $\Delta T = -5~\unit{\degreeCelsius}$ each at times $t=1~\mathrm{h}$ and $t=5~\mathrm{h}$ (orange),
+        and the series of different temperature shifts of value $10~\unit{\degreeCelsius}$, $-10~\unit{\degreeCelsius}$, and $-5~\unit{\degreeCelsius}$ at the time points $1~\mathrm{h}$, $3~\mathrm{h}$, and $7~\mathrm{h}$, respectively (rose).
+        The parameters associated with dormancy are $\zeta=1~\unit{\hour\per\degreeCelsius}$ and $\delta=5~\mathrm{h}^{-1}$, $\beta=2~\mathrm{h}^{-2}$, $\xi=10^{-3}~\mathrm{h}^{-1}$.
+        The growth and lag phase rate linearly depend on the temperature $T$ and are defined as $\mu(T)=0.2 T~\mathrm{h}^{-1}$, $\lambda(T)=10^{-2} T~\mathrm{h}^{-1}$.
+        The other model parameters are $\omega'=0.1~\mathrm{h}^{-1}$, $N_t=10^4$, $N_0=10$.
     }
     \label{fig:TempJump}
     \end{center}
 \end{figure}
-The effect of the temperature shift on the total bacterial count is shown in Figure~\ref{fig:TempJump}.
-There we can see the asymmetric behavior of the rate $\gamma$ depending on the direction of the temperature change (at $t=1~\mathrm{h}$).
-Due to the rapid temperature decrease, the general growth slows down till the dormant bacteria migrate back to the growth pool.
-Upon increasing the temperature, the transition into the dormant state is less pronounced ($\alpha=0.05$) such that the effect is not noticeable while in addition the division of bacteria is stimulated by more preferable conditions.
+Figure~\ref{fig:TempJump} shows the effect of the temperature shift on the total bacterial count. 
+Here, we can observe the asymmetric behavior of the rate $\gamma$ depending on the direction of the temperature change (at $t=1~\mathrm{h}$).
+Due to the rapid temperature decrease, the overall growth slows down until dormant bacteria return to the growth pool.
+Upon increasing the temperature, the transition into the dormant state is less pronounced ($\alpha=0.05$), such that the effect is negligible; in addition, cell division is stimulated by more favorable conditions~\citep{hamillMicrobialLag2020}.
 %
 % ================================================================================================
 \section{Interaction between species}
-As mentioned above, bacteria usually coexist in large interacting communities of multiple species whose growth is vastly determined by the developed survival mechanisms.
-These mechanisms mostly aim to secure a constant availability of nutrition which leads to competitive strategies or, if it is advantageous, to cooperative ones~\citep{hibbing_bacterial_2010, stubbendieck_bacterial_2016}.
-Further we show that the model can be readily extended to the systems with more than one bacterium and describe more complex relationships between species.
+As mentioned above, bacteria usually coexist in large interacting communities of multiple species whose growth is largely determined by the survival mechanisms they have developed.
+These mechanisms mostly aim to secure a constant availability of nutrients, which leads to competitive strategies or, if it is advantageous, to cooperative ones~\citep{hibbing_bacterial_2010, stubbendieck_bacterial_2016}. Furthermore, we demonstrate that the model can easily be extended to systems with multiple bacterial species in order to describe more complex interspecies relationships.
 %
 % ------------------------------------------------------------------------------------------------
 \subsection{Resource competition}
-One of the ways to describe competition between bacterial populations is as a function of the limiting resource ratio~\citep{tilman_resource_1977, smith_effects_2002,ghoul_ecology_2016}.
-To this end we consider for simplicity only one common limiting resource pool.
-The simplest pool model for bacterial species $A$ and $B$ encompassing lag-phases, growth-phases (no back-flow to the lag-pool) and a common resource pool is given by:
+Competition between bacterial populations can be described in terms of the limiting resource ratio~\citep{tilman_resource_1977, smith_effects_2002,ghoul_ecology_2016}.
+To this end, we consider for simplicity only one common limiting resource pool. The simplest pool model for bacterial species $A$ and $B$ encompassing lag phases, growth phases (no back-flow to the lag phase), and a common resource pool is given by:
 \begin{align}
     \begin{split}
-        \dot{L}_A &= - \lambda_A R L_A\\
-        \dot{L}_B &= - \lambda_B R L_B \\
-        \dot{G}_A &= \lambda_A R L_A +\mu_A R G_A\\
-        \dot{G}_B &= \lambda_B R L_B +\mu_B R G_B\\
-        \dot{R} &=-\frac{\mu_A}{N_t} R G_A-\frac{\mu_B}{N_t} R G_B.
+        \dot{L}_A &= - \lambda_A \tilde{R} L_A\\
+        \dot{L}_B &= - \lambda_B \tilde{R} L_B \\
+        \dot{G}_A &= \lambda_A \tilde{R} L_A +\mu_A \tilde{R} G_A\\
+        \dot{G}_B &= \lambda_B \tilde{R} L_B +\mu_B \tilde{R} G_B\\
+        \dot{\tilde{R}} &=-\frac{\mu_A}{N_t} \tilde{R} G_A-\frac{\mu_B}{N_t} \tilde{R} G_B.
     \end{split}
     \label{eq:model_2sp_resource_comp}
 \end{align}
-We again rescaled the resource pool with its total capacity $N_t$ and find
+We again rescale the resource pool with its total capacity $N_t$ and find
 \begin{equation}
-    R =1-\frac{L_A+G_A+L_B+G_B}{N_t}
+    \tilde{R} =1-\frac{L_A+G_A+L_B+G_B}{N_t}.
     \label{eq:Resource}
 \end{equation}
-Inserting equation~\ref{eq:Resource} into system~\ref{eq:model_2sp_resource_comp} yields:
+Inserting equation~(\ref{eq:Resource}) into system~(\ref{eq:model_2sp_resource_comp}) yields:
 \begin{align}
-    \dot{L}_A &= -\lambda_A  L_A + \frac{\lambda_A}{N_t}L_AN\\
-    \dot{L}_B &= -\lambda_B L_B + \frac{\lambda_B}{N_t}L_B N\\
-    \dot{G}_A &=  \lambda_A  L_A + \mu_A G_A - \frac{\lambda_A L_A + \mu_A G_A}{N_t} N\\
-    \dot{G}_B &=  \lambda_B L_B + \mu_B G_B - \frac{\lambda_B L_B + \mu_B G_B}{N_t}N
+\begin{split}
+    \dot{L}_A &= -\lambda_A  L_A + \frac{\lambda_A}{N_t}L_A\mathcal{N}\\
+    \dot{L}_B &= -\lambda_B L_B + \frac{\lambda_B}{N_t}L_B\mathcal{N}\\
+    \dot{G}_A &=  \lambda_A  L_A + \mu_A G_A - \frac{\lambda_A L_A + \mu_A G_A}{N_t}\mathcal{N}\\
+    \dot{G}_B &=  \lambda_B L_B + \mu_B G_B - \frac{\lambda_B L_B + \mu_B G_B}{N_t}\mathcal{N},
+    \end{split}
 \end{align}
-where we used the total bacterial count $N=(L_A+G_A+L_B+G_B)$.
-These equations have the structure of a \ac{glv} model expanded with different internal states for one species.
-As one can see in Figure~\ref{fig:2pool_resource_2sp} even without any direct interaction between species the bacterial growth was inhibited due to the limitation of the resource.
-Here species $A$ has a longer lag-phase than $B$ but the exponential growth of $A$ is faster compared to $B$.
-As a result, species $A$ was able to suppress $B$, consuming the larger amount of nutrients and reaching a larger bacterial count at the end.
-\begin{figure}
+where we used the total bacterial count $\mathcal{N}=(L_A+G_A+L_B+G_B)$.
+These equations have the structure of a \ac{glv} model augmented with multiple internal states per species and a resource pool.
+As shown in Figure~\ref{fig:2pool_resource_2sp}, even without any direct interaction between species, the bacterial growth was inhibited due to the limitation of the resource. Here species $A$ has a longer lag phase than $B$, but the exponential growth of $A$ is faster than that of $B$.
+As a result, species $A$ was able to suppress $B$, by consuming a larger amount of nutrients and reaching a larger bacterial count at steady state.
+\begin{figure}[H]
     \begin{center}
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2pools_resource_competition.pdf}
     \caption{
         The competition of the two bacterial species due to the common limiting resource calculated using equations~(\ref{eq:model_2sp_resource_comp}).
         The red curve describes the growth of the bacteria $A$ ($N_A = L_A+G_A$) with model parameters $\lambda_A=10^{-2}~\mathrm{h}^{-1}$, $\mu_A=3.0~\mathrm{h}^{-1}$.
         The blue curve describes the growth of the bacteria $B$ ($N_B = L_B+G_B$) with model parameters $\lambda_B=5\cdot 10^{-2}~\mathrm{h}^{-1}$, $\mu_B=2.5~\mathrm{h}^{-1}$.
-        The purple line shows the total bacterial count of the system  $N(t)=N_A+N_B$.
-        The gray line denotes the dynamic of the resource pool scaled with its capacity $N_t=10^4$.
+        The purple line shows the total bacterial count of the system  $\mathcal{N}(t)=N_A+N_B$.
+        The gray line denotes the dynamics of the resource pool scaled with its capacity $N_t=10^4$. Initial conditions are $L_A(0)=L_B(0) = 10$, $\tilde{R}(0)=1$.
     }
     \label{fig:2pool_resource_2sp}
     \end{center}
 \end{figure}
 %
-In order to get the commonly used form of the \ac{glv}, we need to simply omit the bacterial states $L_A=L_B=0$:
+To obtain the standard form of the \ac{glv}, we omit the bacterial states $L_A=L_B=0$:
 \begin{align}
     \begin{split}
         \dot{G}_A &= \mu_A G_A\left(1 - \frac{G_A}{N_t}\right) - \frac{\mu_A}{N_t}G_AG_B\\
@@ -562,89 +523,86 @@ In order to get the commonly used form of the \ac{glv}, we need to simply omit t
 \end{align}
 %
 Equations (\ref{eq:LV_simple}) can be understood as competitive Lotka-Volterra equations that are widely used in ecological studies and show the principle of competitive exclusion.
-That principle claims that two species which compete for the same resource cannot coexist~\citep{wangersky_lotka-volterra_1978}.
-In previous studies it was shown that \ac{glv} equations with one bacterial state can be successfully applied to predict the microbial community dynamics and determine different types of the pairwise interspecies interactions~\citep{dedrick_when_2023, stein_ecological_2013, venturelli_deciphering_2018, hoffmann_power_2007}.
-In food studies the \ac{glv} was applied by \citet{mounier_microbial_2008} to study interactions of six bacterial species influenced by yeast omissions in cheese.
-\citet{cauchie_modeling_2020} applied the Lotka-Volterra model in their study of the three-species bacterial system of minced pork meat.\\
+This principle states that species competing for the same resource cannot coexist~\citep{wangersky_lotka-volterra_1978}.
+Previous studies have shown that \ac{glv} equations with one bacterial state can be successfully applied to predict microbial community dynamics and determine different types of pairwise interspecies interactions~\citep{dedrick_when_2023, stein_ecological_2013, venturelli_deciphering_2018, hoffmann_power_2007}.
+In food studies, the \ac{glv} was applied by \citet{mounier_microbial_2008} to study interactions of six bacterial species influenced by yeast omissions in cheese.
+\citet{cauchie_modeling_2020} applied the Lotka-Volterra model in their study of the three-species bacterial system in minced pork meat.\\
 %
 However, in contrast to the classical Lotka-Volterra approach, the introduced pool model allows for far more flexibility in tuning properties of the bacterial interactions within and between species.
 For further comparison of the derived model with the matrix formulation of the \ac{glv} we refer the reader to the Appendix~\ref{ssec:supplement1}.
 %
 %
-%
 % ------------------------------------------------------------------------------------------------
-\subsection{Interspecies competition}
-Mutual inhibition is often a result of active competition mechanisms which have been developed by bacteria to contend for a shared resource.
-Some examples of such mechanisms are the production of antimicrobial compounds, inhibitors (section~\ref{section:toxin-production}) or toxins~\citep{wloch-salamon_effect_2008, chao_structured_1981}.
-On the other hand, some bacteria can produce public goods, the compounds that benefit growth of other species.
+\subsection{Interspecies interaction}
+Mutual inhibition often results from active competition mechanisms developed by bacteria to compete for a shared resource.
+Examples of such mechanisms include the production of antimicrobial compounds, toxins~\citep{wloch-salamon_effect_2008, chao_structured_1981} (section~\ref{section:toxin-production}), or inhibitors~\citep{lenski_coexistence_1986} (section~\ref{section:inhibition}).
+On the other hand, some bacteria can produce public goods, the compounds that benefit the growth of other species.
 In this way, they can suppress the non-preferred species by helping their competitors~\citep{hibbing_bacterial_2010}.
 %
-%
 % ................................................................................................
-\subsubsection{Toxin production}
+\subsubsection{Amensalism, Toxin production}
 \label{section:toxin-production}
-One direct form of inhibition is the production of toxins.
-To introduce active competitive mechanisms, we extend our model with one of the species, producing the toxic compounds $T$ during its growth:
+One direct form of inhibition is the production of toxins~\citep{cotterBacteriocinsDeveloping2005, rileyBacteriocinsEvolution2002}.
+To introduce active competitive mechanisms, we extend our model by having one of the species produce the toxic compounds $\mathcal{T}$ during its growth:
 \begin{equation}
-    \dot{T} = \mathcal{F}(R,G).
+    \dot{\mathcal{T}} = \mathcal{F}(\tilde{R},G).
 \end{equation}
 The function $\mathcal{F}$ denotes the model for the toxin production rate.
-One example is the accumulation of bacterial waste which is responsible for the spoilage of food products and suppressing growth of other species.
-Consider the system of two species competing for resource $R$ with the production of the toxin $T$ by species $B$.
-We assume that the toxin causes the death of the species $A$ with rate $\omega$.
+One example is the accumulation of bacterial waste that is responsible for the spoilage of food products and suppression of growth of other species.
+Consider the system of two species competing for resource $\tilde{R}$ with the production of the toxin $\mathcal{T}$ by species $B$.
+We assume that the toxin causes the death of the species $A$ with rate $\omega'$.
 Then the full \ac{ode} system is
 \begin{align}
     \begin{split}
-        \dot{L}_A &= - \lambda_A R L_A\\
-        \dot{L}_B &= - \lambda_B R L_B \\
-        \dot{G}_A &= \lambda_A R L_A + \mu_A R G_A - \frac{\omega}{N_t} T G_A\\
-        \dot{G}_B &= \lambda_B R L_B + \mu_B R G_B\\
-        \dot{R} &= -\frac{\mu_A}{N_t} R G_A-\frac{\mu_B}{N_t} R G_B\\
-        \dot{T}_{B}^{1,2} &= \mathcal{F}^{1,2} (R, G_B) \\
+        \dot{L}_A &= - \lambda_A \tilde{R} L_A\\
+        \dot{L}_B &= - \lambda_B \tilde{R} L_B \\
+        \dot{G}_A &= \lambda_A \tilde{R} L_A + \mu_A \tilde{R} G_A - \frac{\omega'}{N_t} \mathcal{T}_B G_A\\
+        \dot{G}_B &= \lambda_B \tilde{R} L_B + \mu_B \tilde{R} G_B\\
+        \dot{\tilde{R}} &= -\frac{\mu_A}{N_t} \tilde{R} G_A-\frac{\mu_B}{N_t} \tilde{R} G_B\\
+        \dot{\mathcal{T}}_{B}^{1,2} &= \mathcal{F}^{1,2} (\tilde{R}, G_B),
     \end{split}
     \label{eq:model_2sp_toxin}
 \end{align}
 %
-where we consider two possible models of the toxin production
+where we consider two possible models of the toxin production:
 \begin{align}
-    \mathcal{F}^1(R,G)&=\kappa G_B\\
-    \mathcal{F}^2(R,G)&=\kappa R G_B.
+    \mathcal{F}^1(\tilde{R},G_B)&=\kappa G_B\\
+    \mathcal{F}^2(\tilde{R},G_B)&=\kappa \tilde{R} G_B
 \end{align}
-with $\kappa$ as the toxin production rate.
-The difference in the solutions of the given \acp{ode} between the two toxin production models is presented in Figure~\ref{fig:2pool_2sp_toxin}.
+with $\kappa$ as the toxin production rate. The difference in the solutions of the given \acp{ode} between the two toxin production models is presented in Figure~\ref{fig:2pool_2sp_toxin}.
 %
 %
-\begin{figure}
+\begin{figure}[H]
     \begin{center}
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2pools_toxin1.pdf}\\
-    \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2pools_toxin2.pdf}
+    \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2pools_toxin2.pdf} 
     \caption{
-        The two species system competing for the common nutrient $R$ with production of the toxin $T_B$ (brown line) calculated using equations~(\ref{eq:model_2sp_toxin}).
-        The growing bacteria $B$ produces toxin $T_B$ (A) constantly $\dot{T}_B^1 = \mathcal{F}^1 = \kappa G_B$ or (B) only during growth process $\dot{T}_B^2 = \mathcal{F}^2 = \kappa R G_B$ 
+        The two-species system with competition for the common nutrient $\tilde{R}$ and production of the toxin $\mathcal{T}_B$ (brown line) calculated using equations~(\ref{eq:model_2sp_toxin}).
+        The growing bacteria $B$ produces toxin $\mathcal{T}_B$ (A) constantly $\dot{\mathcal{T}}_B^1 = \mathcal{F}^1 = \kappa G_B$ or (B) only during the growth process $\dot{\mathcal{T}}_B^2 = \mathcal{F}^2 = \kappa \tilde{R} G_B$ 
         with production rate $\kappa=0.2~\mathrm{h}^{-1}$.
-        The toxin $T_B$ causes the cell death of bacteria $A$ with rate constant $\omega = 1~\mathrm{h}^{-1}$.
+        The toxin $\mathcal{T}_B$ causes the cell death of bacteria $A$ with rate constant $\omega' = 1~\mathrm{h}^{-1}$.
         The red curve describes the growth of the bacteria $A$ ($N_A = L_A+G_A$) with model parameters $\lambda_A=10^{-2}~\mathrm{h}^{-1}$, $\mu_A=3.0~\mathrm{h}^{-1}$.
         The blue curve describes the growth of the bacteria $B$ ($N_B = L_B+G_B$) with model parameters $\lambda_B=5\cdot 10^{-2}~\mathrm{h}^{-1}$, $\mu_B=2.5~\mathrm{h}^{-1}$.
-        The gray line denotes the dynamic of the resource pool scaled with its capacity $N_t=10^4$.
+        The gray line denotes the dynamics of the resource pool scaled with its capacity $N_t=10^4$. Initial conditions are $L_A(0)=L_B(0) = 10$, $\tilde{R}(0)=1$.
     }
     \label{fig:2pool_2sp_toxin}
     \end{center}
 \end{figure}
 %
-Model $\mathcal{F}^1$ results in toxin concentration $T_B^1(t)=\kappa\int_{t_0}^tG(t')dt'$.
+Model $\mathcal{F}^1$ results in toxin concentration $\mathcal{T}_B^1(t)=\kappa\int_{0}^tG_B(t')dt'$.
 The production of toxin only depends on the presence of bacteria $G_B$ and is independent of their growth dynamics.
-On the other hand, model $\mathcal{F}^2$ assumes that toxin is only produced during bacterial growth and division, hence depends on the growth dynamics of $B$.
-This leads to a toxin accumulation in the steady state $T_B^{2s}=\lim_{t\to\infty}T_B^2(t)=\kappa/\mu_B(G_B^s-N_{B0})$.
-To see this we note $\dot{T}_B^2=\kappa/\mu_B(\dot{L_B}+\dot{G_B})$, which yields: $T_B^2(t)=\kappa/\mu_B(L_B(t)+G_B(t)-N_{B0})$ where we used $T_B^2(0)=G_B(0)=0$, $L_B(0)=N_{B0}$.
+On the other hand, model $\mathcal{F}^2$ assumes that toxin is only produced during bacterial growth and division, and therefore depends on the growth dynamics of $B$.
+This leads to a toxin accumulation in the steady state $\mathcal{T}_B^{2s}=\lim_{t\to\infty}\mathcal{T}_B^2(t)=(\kappa/\mu_B)(G_B^s-N_{B0})$; $G_B^s$ denotes the steady state of $G_B$ and $N_{B0}$ the initial concentration of bacteria $B$.
+To see this, we note $\dot{\mathcal{T}}_B^2=(\kappa/\mu_B)(\dot{L}_B+\dot{G}_B)$, which yields: $\mathcal{T}_B^2(t)=(\kappa/\mu_B)(L_B(t)+G_B(t)-N_{B0})$ where we used $\mathcal{T}_B^2(0)=G_B(0)=0$, $L_B(0)=N_{B0}$.
 %
 % ................................................................................................
-\subsubsection{Mutual inhibition}
-Another special case of interspecies competition is when the produced toxin does not cause the death of the bacteria but rather inhibit their growth.
-Such a situation with 2 bacteria species, a shared resource and produced inhibitor was modeled by \citet{lenski_coexistence_1986}.
-The same effect can be modeled by utilizing our pool-based approach.
-In our case, we would like to look at a rather simplified case reducing the number of variables in the system.
-The easiest way to introduce inhibition of species $A$ by species $B$ is by assuming that the growth rate of species $A$ depends on the abundance of species $B$.
-For the sake of simplicity we ignore the lag pool and describe the growth components via:
+\subsubsection{Amensalism, Mutual inhibition}
+\label{section:inhibition}
+Another special case of interspecies competition arises when the toxin produced does not cause the death of the bacteria but rather inhibits their growth.
+Such a situation with two bacterial species, a shared resource, and a secreted inhibitor was modeled by \citet{lenski_coexistence_1986}.
+The same effect can be modeled by our pool model. We consider a simplified case that reduces the number of variables.
+The simplest approach is to assume that the growth rate of species $A$ depends on the abundance of species $B$, and vice versa.
+For the sake of simplicity, we ignore the lag pool and describe the growth components via:
 \begin{align}
     \dot{G}_A &= \mathcal{B}_A(G_B)G_A\left(1 - \frac{G_A+G_B}{N_t}\right)\\
     \dot{G}_B &= \mathcal{B}_B(G_A) G_B\left(1-\frac{G_A+G_B}{N_t}\right)
@@ -661,18 +619,18 @@ This leads to
     \dot{G}_A &= \frac{\mu_A G_A}{1+K_BG_B}\left(1 - \frac{G_A+G_B}{N_t}\right)\\
     \dot{G}_B &= \frac{\mu_B G_B}{1+K_AG_A}\left(1-\frac{G_A+G_B}{N_t}\right).
 \end{split}\end{align}
-% Note that if the toxin accumulates, i.e., $\dot I \sim G$,  one needs to replace $G$ by $\int G dt$.
+
 One can distinguish two limiting cases: {\it i}) $K_{A/B}\ll N_t$ and {\it ii}) $K_{A/B}\gg N_t$.
-In the first case the inhibition is of minor importance and could be ignored while in the latter case one can simplify the equations, given $G_A$ and $G_B$ are non-zero:
+In the first case, the inhibition is of minor importance and could be ignored, while in the latter case one can simplify the equations, given $G_A$ and $G_B$ are non-zero:
 \begin{align}\begin{split}
-    \dot{G}_A &=\tilde{\mu}_A\frac{G_A}{G_B}\left(1 - G_A-G_B\right)\\
-    \dot{G}_B &= \tilde{\mu}_B\frac{G_B}{G_A}\left(1 - G_A-G_B\right).
+    \dot{\tilde{G}}_A &=\tilde{\mu}_A\frac{\tilde{G}_A}{\tilde{G}_B}\left(1 - \tilde{G}_A-\tilde{G}_B\right)\\
+    \dot{\tilde{G}}_B &= \tilde{\mu}_B\frac{\tilde{G}_B}{\tilde{G}_A}\left(1 - \tilde{G}_A-\tilde{G}_B\right).
 \end{split}\end{align}
 We introduced the rescaled growth rates $\tilde{\mu}_A=\mu_A/(N_tK_B)$ and $\tilde{\mu}_B=\mu_B/(N_tK_A)$ and rescaled $\tilde{G}_A=G_A/N_t$ and $\tilde{G}_B=G_B/N_t$.
 Note that $[\tilde{\mu}_{A/B}]=\mathrm{h}^{-1}$.
 We further rescale time with $\tilde{\mu}_A$ and define the dimensionless parameter
 \begin{equation}
-    \psi = \tilde{\mu}_B/\tilde{\mu}_A = \frac{K_B\mu_B}{K_A\mu_A}
+    \psi = \tilde{\mu}_B/\tilde{\mu}_A = \frac{K_B\mu_B}{K_A\mu_A},
 \end{equation}
 which results in
 \begin{align}
@@ -686,423 +644,351 @@ We can separate three cases:
 \begin{align}
     \psi&=1:\quad\text{A and B are equivalent}\\
     \psi&>1:\quad\text{B grows faster/inhibits A}\\
-    \psi&<1:\quad\text{A grows faster/inhibits B}
+    \psi&<1:\quad\text{A grows faster/inhibits B},
 \end{align}
 which are displayed in Figure~\ref{fig:1pool_2sp_inhibit}.
 The advantage of this system is its simplicity, allowing us to describe the effect of mutual inhibition between two bacterial species with only a single parameter.
 %
-\begin{figure}
+\begin{figure}[H]
     \begin{center}
-    \includegraphics[width=0.9\columnwidth]{Figures-pool_model_1pool_inhib1.pdf}\\
-    \includegraphics[width=0.9\columnwidth]{Figures-pool_model_1pool_inhib2.pdf}\\
-    \includegraphics[width=0.9\columnwidth]{Figures-pool_model_1pool_inhib3.pdf}
+    \includegraphics[width=0.32\textwidth]{Figures-pool_model_1pool_inhib1.pdf}
+    \includegraphics[width=0.32\textwidth]{Figures-pool_model_1pool_inhib2.pdf}
+    \includegraphics[width=0.32\textwidth]{Figures-pool_model_1pool_inhib3.pdf}\\
+    \includegraphics[width=0.32\textwidth]{Figures-pool_model_2sp_1pool_coop1.pdf}
+    \includegraphics[width=0.32\textwidth]{Figures-pool_model_2sp_1pool_coop2.pdf}
+    \includegraphics[width=0.32\textwidth]{Figures-pool_model_2sp_1pool_coop3.pdf}
     \caption{
-        The two-species system mutually inhibiting each other is defined with equations~(\ref{eq:2sp_1pool_inhibit_unitless}).
-        Here the red lines describes the evolution of the species $A$ and blue lines correspond to species $B$.
-        The relation between inhibition strength of species $B$ and $A$ are defined by control parameter value (A) $\psi$ = 1, (B) $\psi$ = 0.5 or (C) $\psi$ = 2.
+        (A) - (C) The two-species system mutually inhibiting each other, described by equations~(\ref{eq:2sp_1pool_inhibit_unitless}).
+        Here the red lines describe the evolution of species $A$ and the blue lines correspond to species $B$.
+        The relation between the inhibition strength of species $B$ and $A$ is defined by the control parameter value (A) $\psi$ = 1, (B) $\psi$ = 0.5, or (C) $\psi$ = 2.\\
+        (D) - (F) The two-species system where each of the species releases public goods $P$, described by equations~(\ref{eq:1pool_2sp_cooper}) and calculated for different parameters:
+        (D) $\chi=1, \phi=1$, (E) $\chi=1, \phi=2$, and (F) $\chi=2, \phi=1$.
+        Here the red lines describe the evolution of species $A$ and the blue lines correspond to species $B$.
+        The light brown curve corresponds to the public good released by species $A$ ($\tilde{P}_A$) and the brown curve shows the public goods produced by species $B$ ($\tilde{P}_B$). Initial conditions are
+        $\tilde{G}_A(0)=\tilde{G} _B(0)=0.1$ and $\tilde{P}_A(0)=\tilde{P}_B(0)=0.01$. Note the different time scales in panels (A)–(C) and (D)–(F).
     }
     \label{fig:1pool_2sp_inhibit}
     \end{center}
 \end{figure}
 %
-%
-%
 % ------------------------------------------------------------------------------------------------
-\subsection{Interspecies cooperation}
-On the other hand, one can also observe some cooperative behaviors between species in cases when it facilitates the competition with others.
-This phenomenon occurs due to complementary metabolic pathways, i.e., production of so-called public goods which are beneficial for the growth of other species.
-It is most often observed between species which are close relatives or clonal populations.
-This process is called kin selection~\citep{west_social_2007}.
-Furthermore, neighbors can also benefit from a behavior which does not require any action on an expression level, so-called 'social cheaters'~\citep{rainey_evolution_2003}.
-This mutual activation benefits all involved species and can be easily included in our mathematical framework.
-For the sake of clarity we omit again the lag pool and write
+\subsection{Mutualism, Interspecies cooperation}
+On the other hand, one can also observe some cooperative behaviors between species in cases where cooperation facilitates competition with others.
+This phenomenon occurs due to complementary metabolic pathways, i.e., the production of so-called public goods that benefit the growth of other species. It is most often observed between closely related species or clonal populations, a process called kin selection~\citep{west_social_2007}.
+Furthermore, neighbors can also benefit from a behavior that does not require any action at the gene expression level, the so-called 'social cheaters'~\citep{rainey_evolution_2003}.
+This mutual activation benefits all participating species and can be easily included in our mathematical framework.
+For the sake of clarity, we again omit the lag pool and write:
 \begin{align}
-    \dot{G}_A &= \mathcal{B}_A(P_B,R)G_A\\
-    \dot{G}_B &= \mathcal{B}_B(P_A,R)G_B\\
-    \dot{R} &=-\mathcal{B}_A(P_B,R)G_A-\mathcal{B}_B(P_A,R)G_B\\
-    \dot{P}_A &= \mathcal{F}_A(R,G_A)\\
-    \dot{P}_B &= \mathcal{F}_B(R,G_B)
+	\begin{split}
+    \dot{G}_A &= \mathcal{B}_A(P_B,\tilde{R})G_A\\
+    \dot{G}_B &= \mathcal{B}_B(P_A,\tilde{R})G_B\\
+    \dot{\tilde{R}} &=-\mathcal{B}_A(P_B,\tilde{R})G_A-\mathcal{B}_B(P_A,\tilde{R})G_B\\
+    \dot{P}_A &= \mathcal{F}_A(\tilde{R},G_A)\\
+    \dot{P}_B &= \mathcal{F}_B(\tilde{R},G_B),
+    \end{split}
 \end{align}
 where $P_A$ and $P_B$ denote the substance produced by species A and B, respectively.
-The functions $\mathcal{B}_A(P_B,R)$ and $\mathcal{B}_B(P_A,R)$ capture the resource dependent growth.
-Setting $\mathcal{B}_A(P_B,R)=\mu_A P_BR$, $\mathcal{B}_B(P_A,R)=\mu_B P_A R$, $\mathcal{F}_A(R,G_A)=\kappa_A RG_A$, $\mathcal{F}_B(R,G_B)=\kappa_B RG_B$, rescaling $G_A$, $G_B$, and $P_B$ with $N_t$, $P_A$ with $\kappa_A/\mu_A$, time with $\mu_AN_t^2$, defining $\psi=\kappa_A\mu_B/(\mu_A^2N_t)$, and $\phi=\kappa_B/(\mu_A N_t)$ results in
+The functions $\mathcal{B}_A(P_B,\tilde{R})$ and $\mathcal{B}_B(P_A,\tilde{R})$ capture the resource-dependent growth.
+We set $\mathcal{B}_A(P_B,\tilde{R})=(\mu_A/N_t) P_B\tilde{R}$, $\mathcal{B}_B(P_A,\tilde{R})=(\mu_B/N_t) P_A \tilde{R}$, $\mathcal{F}_A(\tilde{R},G_A)=\kappa_A \tilde{R}G_A$, $\mathcal{F}_B(\tilde{R},G_B)=\kappa_B \tilde{R}G_B$.\\
+
+Exploiting $N_t \tilde{R}(t)+G_A(t)+G_B(t)=N_t$ (note, $[\tilde{R}]=1$), rescaling $G_A$, $G_B$, and $P_B$ with $N_t$, $P_A$ with $\kappa_A/\mu_A$, time with $\mu_A N_t$, defining $\chi=\kappa_A\mu_B/(\mu_A^2N_t)$, and $\phi=\kappa_B/(\mu_A N_t)$ results in:
 \begin{align}
     \begin{split}
-        \dot{G}_A &= P_B G_A\left(1 - G_A-G_B\right)\\
-        \dot{G}_B &= \psi P_A G_B\left(1 - G_A-G_B\right)\\
-        \dot{P}_A &= G_A\left(1 - G_A-G_B\right)\\
-        \dot{P}_B &=\phi G_B\left(1 - G_A-G_B\right).
+        \dot{\tilde{G}}_A &= \tilde{P}_B \tilde{G}_A\left(1 - \tilde{G}_A-\tilde{G}_B\right)\\
+        \dot{\tilde{G}}_B &= \chi \tilde{P}_A \tilde{G}_B\left(1 - \tilde{G}_A-\tilde{G}_B\right)\\
+        \dot{\tilde{P}}_A &= \tilde{G}_A\left(1 - \tilde{G}_A-\tilde{G}_B\right)\\
+        \dot{\tilde{P}}_B &=\phi \tilde{G}_B\left(1 - \tilde{G}_A-\tilde{G}_B\right).
     \end{split}
     \label{eq:1pool_2sp_cooper}
 \end{align}
 %
-The solution of the system~\ref{eq:1pool_2sp_cooper} is presented in Figure~\ref{fig:1pool_2sp_cooper}.
-Here we can see that if $\psi=1$ and $\phi=1$ (see Figure~\ref{fig:1pool_2sp_cooper}~A) the production rate of the public goods of both species is identical to the growth rate of bacteria.
-Increasing the production rate of the public good (see Figure~\ref{fig:1pool_2sp_cooper}~B), leads to an increase in the growth of species $A$ that profit from the presence of $B$.
-On the other hand, choosing $\psi=2$ (see Figure~\ref{fig:1pool_2sp_cooper}~C), we increase the profit that species $B$ has from public goods $P_A$.
-That indirectly leads to larger amount of $P_B$ produced by species $B$.
-\begin{figure}
-    \begin{center}
-    %\includegraphics[width=0.9\columnwidth]{Figures-pool_model_2sp_1pool_coop.pdf}
-    \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2sp_1pool_coop1.pdf}
-    \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2sp_1pool_coop2.pdf}
-    \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2sp_1pool_coop3.pdf}
-    \caption{
-        The two-species system where each of the species release public goods $P$ is defined with equations~(\ref{eq:1pool_2sp_cooper}) and calculated for different parameters:
-        (A) $\psi=1, \phi=1$, (B) $\psi=1, \phi=2$ and (C) $\psi=2, \phi=1$.
-        Here the red lines describes the evolution of the species $G_A$ and blue lines correspond to species $G_B$.
-        Light brown curve corresponds to public good released by species $A$ ($P_A$) and brown curve shows public goods produced by species $B$ ($P_B$).
-    }
-    \label{fig:1pool_2sp_cooper}
-    \end{center}
-\end{figure}
-
+The solution of the system~(\ref{eq:1pool_2sp_cooper}) is presented in Figure~\ref{fig:1pool_2sp_inhibit}.
+Here we can see that if $\chi=1$ and $\phi=1$, the production rate of the public goods of both species is identical to the growth rate of bacteria (see Figure~\ref{fig:1pool_2sp_inhibit}D).
+Increasing the production rate of the public good (see Figure~\ref{fig:1pool_2sp_inhibit}E) leads to an increase in the growth of species $A$ that profits from the presence of $B$.
+On the other hand, choosing $\chi=2$ (see Figure~\ref{fig:1pool_2sp_inhibit}F), we increase the profit that species $B$ has from public goods $\tilde{P}_A$.
+This indirectly leads to a larger amount of $\tilde{P}_B$ produced by species $B$.
 % ================================================================================================
 \section{Spatial effects}
-As described above, the proposed model operates with the total number of the bacterial counts for
-different species and states in the system, not accounting for their spatial distributions.
-Assuming that the bacterial system is uniformly distributed (sometimes also called 'well-stirred')
-we expect the \ac{ode} description to be valid.
-However, in reality spatial effects can play a significant role for population survival forcing some
-species to develop competitive mechanisms such as cell adhesion to surfaces in the areas rich with
+The pool model does not account for the spatial bacterial distribution. Assuming that the bacterial system is uniformly distributed (sometimes also called 'well-stirred'),
+we expect the \ac{ode} description to be valid. However, in reality, spatial effects can play a significant role in population survival, forcing some
+species to develop competitive mechanisms such as cell adhesion to surfaces in areas rich in
 nutrients~\citep{htuson_bacteriasurface_2013}.
-Another mechanism is the motility of bacteria, e.g., the flagellates of \textit{E. coli} or
-\textit{B. subtilis} which are capable of chemotactic motion driven by oxygen
-concentrations~\citep{decoene_microscopic_2011}.
-The bacterial social interactions such as release of toxins or public goods can also
-significantly affect the spatial structure of the community~\citep{blanchard_bacterial_2015}.
-These effects can only be treated within a spatial framework that is able to describe the observed
-effects.\\
+Another mechanism is the motility of bacteria, e.g., flagellated \textit{E. coli} or
+\textit{B. subtilis}, which are capable of chemotactic motion driven by oxygen
+concentrations~\citep{decoene_microscopic_2011}. Bacterial social interactions such as the release of toxins or public goods can also significantly affect the spatial structure of the community~\citep{blanchard_bacterial_2015}. These effects can only be treated within a spatial framework capable of capturing them.\\
 
 Compared to other modeling techniques such as \acp{pde}, \acp{abm}~\citep{nagarajan_agent-based_2022-1} force researchers to think in
-terms of cellular processes, thus bridging the gap from a collective (bulk) model to an individual-based (single-cell) description. Our goal is to provide an \ac{abm} which can be used to derive the given \ac{ode} model as a coarse-grained approximation. In this way, we can show that the bulk-based \ac{ode} model is directly related to the mechanistic
-single-cell behavior of the bacteria. To this end, we consider a system consisting of two bacterial species that can be described by the two internal states: lag and growth phase.
+terms of cellular processes, thus bridging the gap from a collective (bulk) model to an individual-based (single-cell) description. Our goal is to provide an \ac{abm} that can be used to derive the given \ac{ode} model as a coarse-grained approximation. In this way, we can show that the bulk-based \ac{ode} model is directly related to the mechanistic
+single-cell behavior of the bacteria. To this end, we consider a system consisting of two bacterial species that can each be described by the two internal states: lag and growth phase.
 
-Both of these species grow using the same resource pool $R$ but with different growth constants
+Both of these species grow using the same resource pool $\tilde{R}$ but with different growth constants
 $\mu_{A/B}$ and different lag phase transition rates $\lambda_{A/B}$.
 Moreover, species $A$ is able to release a certain antimicrobial component $I$ that shows an
-inhibitory effect on species $B$ (amensalism).
-
-We assume that $L,G$ are measured in terms of the overall volume and $R,I$ are measured as total
-amount.  dThe \acp{ode} system of the bacterial population can be written as:
-%
+inhibitory effect on species $B$ (amensalism). The \acp{ode} system of the bacterial population can be written as:
 %
 \begin{align}
     \begin{split}
-        \dot{L}_A &= -\lambda_A R L_A\\
-        \dot{G}_A &= \lambda_A R L_A + \mu_A R G_A\\
-        \dot{L}_B &= -\lambda_B R L_B\\
-        \dot{G}_B &= \lambda_B R L_B + \frac{\mu_B}{1 + K_I I} R G_B.
+        \dot{L}_A &= -\lambda_A \tilde{R} L_A\\
+        \dot{G}_A &= \lambda_A \tilde{R} L_A + \mu_A \tilde{R} G_A\\
+        \dot{L}_B &= -\lambda_B \tilde{R} L_B\\
+        \dot{G}_B &= \lambda_B \tilde{R} L_B + \frac{\mu_B}{1 + K_I I} \tilde{R} G_B.
     \end{split}
     \label{eq:spatial_limit_F}
 \end{align}
 %
-Moreover, the microenvironment of our system contains the resource and the inhibitor molecules
+Moreover, the microenvironment of our system contains both the resource and inhibitor molecules
 \begin{align}
     \begin{split}
-        \dot{R} &= -\frac{\mu_A}{N_t} R G_A-\frac{\mu_B}{(1 + K_I I) N_t} R G_B \\
+        \dot{\tilde{R}} &= -\frac{\mu_A}{N_t} \tilde{R} G_A-\frac{\mu_B}{(1 + K_I I) N_t} \tilde{R} G_B \\
         \dot{I} &= \kappa G_A.
     \end{split}
     \label{eq:spatial_limit_H}
 \end{align}
-
-
+%
 % ------------------------------------------------------------------------------------------------
 \subsection{Constructing an agent-based pool model}
-The following sections will demonstrate how a given \ac{ode} system can be translated into a
-custom-built \ac{abm} which has only a few more overall parameters.
-This procedure is a blueprint which can be followed to construct \acp{abm} for similar
-\ac{ode}-based systems.\\
+The following sections will demonstrate how a given \ac{ode} system can be translated into a custom-built \ac{abm} that requires only a few additional parameters.
+This procedure is a blueprint that can be followed to construct \acp{abm} for similar \ac{ode}-based systems.\\
 
 To construct our \ac{abm}, we use the modeling framework \texttt{cellular\_raza}~\citep{Pleyer2025} that allows us to define our bacterial agents from a clean slate.
-With this flexibility, researchers are able to construct minimal models using only as many parameters which are necessary.
-This ability, to precisely define and control the exact behavior of our cell-agents, enables the following parts.
+With this flexibility, researchers are able to construct minimal models using only as many parameters as are necessary. This ability to precisely define and control the exact behavior of the cell-agents enables the developments described below.
 %
 \subsubsection{Cellular reactions}
-To construct an \ac{abm} which resembles the given \ac{ode} system of equations~\eqref{eq:spatial_limit_F} and \eqref{eq:spatial_limit_H}, we consider multiple cellular reactions.
-We denote quantities of cellular species $A,B$ with the subscript $c_{A/B}$, respectively, and indicate shared cellular behavior by the subscript $c$.
-% The equations stated below are motivated and obtained in greater detail in the supplementary material (section~\ref{ssec:supplement2}).
-Nutrients or resources in the microenvironment with the concentration $R$ diffuse freely with the diffusion constant $D_R$.
+To construct an \ac{abm} that resembles the given \ac{ode} system of equations~\eqref{eq:spatial_limit_F} and \eqref{eq:spatial_limit_H}, we consider multiple cellular reactions.
+We denote quantities of cellular species $A,B$ with the subscript $c_{A/B}$, respectively. Cells go from the lag phase $L$ to the growth-phase with a given transition probability, modeled as a Markovian process (no memory).  The nutrient concentration $R(x)$ in the microenvironment is potentially spatially inhomogeneous and nutrients diffuse freely with diffusion constant $D_R$. $R(x)$ denotes the non-rescaled resource pool with $[R]=V^{-1}$ in contrast to the rescaled homogeneous pool $\tilde{R}$ in \eqref{eq:spatial_limit_F} and \eqref{eq:spatial_limit_H}. 
 Cells take up extracellular resources $R$ and convert them into biomass, which is measured in terms of cellular volume.
 Cells of type $A$ release a diffusible molecule into the microenvironment with concentration $I$ and diffusion constant $D_I$, which inhibits the growth of the cells of type $B$.
-%
-% Cells $c_A$ of species $A$ take up extracellular resources $R$ into the cell $R_{i,c_A}$ with rate $u$ in \unit{\per\second}.
-% The uptake only occurs at the position of the cell $x_{c_A}$.
-% Furthermore, we let cells of species $A$ produce a freely diffusible inhibitor $I$ with production rate $b$ and diffusion constant $D_I$ which inhibits cells of species $B$ in their uptake of nutrients.
-% \begin{equation}
-%     \dot{I} = b\frac{V_{c_A}}{V_D}\delta(x-x_{c_A}) + D_I \Delta I
-% \end{equation}
-% We model this inhibiting effect by modifying the uptake term of species $B$ with a factor of $\frac{1}{1+\nu I}$.
-% Note that we do not need to distinguish between the two species because we can set parameters individually on agent-level.
-% To distinguish between the two species, it suffices to set parameters for every individual agent accordingly.
-% This means, we can implement the most general version of the equations and by choosing appropriate parameters, this defines the species of the respective cell-agent.
-% \begin{alignat}{3}
-%     \dot{R_{i,c_A}} &=& u &R(x_{c_A}) - aR_{i,c_A}
-%     \label{eq:spatial-intracellular-a}\\
-%     \dot{R_{i,c_B}} &=& \frac{u}{1+\nu I} &R(x_{c_B}) - aR_{i,c_B}
-%     \label{eq:spatial-intracellular-b}\\
-%     \label{eq:spatial-extracellular-resources-pde}
-%     \dot{R}(x) &=& -u &\sum\limits_{c_A}\frac{V_{c_A}}{V_D} R(x) \delta(x-x_{c_A})\nonumber\\
-%         &&-\frac{u}{1+\nu I} &\sum\limits_{c_B}\frac{V_{c_B}}{V_D} R(x) \delta(x-x_{c_B})\nonumber\\
-%         &&+D_R\Delta R(x)
-% \end{alignat}
-% where equations~\eqref{eq:spatial-intracellular-a} and \eqref{eq:spatial-intracellular-b} describe the change of intracellular resources for every individual cell of of species $A,B$ and the equation~\eqref{eq:spatial-extracellular-resources-pde} contains extracellular resources coupled to each individual agent.
-% They contain the uptake of resources and term used grow the cell, converting resources into volume which will be explained below.
-% We use the Dirac delta-distribution $\delta(x-x_c)$ to enforce exchange of nutrients at the positions of the cells $x_{c}$.
-% Note that $R=R(x)$ explicitly depends on the spatial coordinate but we choose to omit its notation.
-% In equation~\eqref{eq:spatial-extracellular-resources-pde} we need to account for the ratio of cellular $V_c$ and domain volume $V_D$ to calculate the correct exchange.
-% In addition, we want to modify the cellular volume by growing it increasingly with rate $u$.
-% Therefore, we need to specify how many resource molecules are turned into volumetric units $\sigma$ in \unit{\micro\metre\cubed\per\mole}.
-% The total amount of resource molecules present inside the cell is given by the current concentration multiplied by the cell-volume $V_c R_{i,c}$.
-% With a rate $a$ and conversion $\sigma$, the cell takes up and converts the resource molecules into volume.
-% In order to simplify this system, we can assume that the internal resources are constantly being depleted by the growth and the limiting process is the uptake of the resource.
-% This means, we can effectively set $\dot{R_{i,c}}=0$.
-% Therefore, we obtain the relations $\frac{u}{1+\nu I}R(x_{c_B}) = aR_{i,c_B}$ and $u R(x_{c_A})=a R_{i,c_A}$ which we can use to eliminate the variable monitoring internal resource concentrations $R_{i,c}$.
-Additionally, we also require the nutrients to be freely diffusible with constants $D_R$.
-When combining all of the listed effects and considering multiple cells of the two species $A/B$, we obtain the system
-% With these considerations, we can update equations~\eqref{eq:spatial-intracellular-a} to \eqref{eq:spatial-extracellular-resources-pde} and obtain:
+When combining all of the listed effects and considering multiple cells of the two species $A/B$, we obtain the system:
 \begin{alignat}{5}
-    \dot{V}_{c_B} &=& u \sigma &RV_c
+	\text{Prob}(L\to G) &= \lambda \frac{R(x)}{N_t}\Delta t\\
+    \dot{V}_{c_A} &= u_A \sigma R(x_{c_A})V_{c_A}
     \label{eq:spatial-full-system-simplified-begin}\\
-    \dot{V}_{c_A} &=& \frac{u}{1+\nu I} \sigma &R V_c\\
-    \dot{R}_e &=& -u \sum\limits_{c_A}V_{c_A} &R(x) \delta(x-x_{c_A})\\
-        &&-\frac{u}{1+\nu I} \sum\limits_{c_B}V_{c_B} &R(x) \delta(x-x_{c_B}) &+& D_R \Delta R(x)\nonumber\\
-    \dot{I} &=&b\sum\limits_{c_A} V_{c_A}&\delta(x-x_c) &+& D_I\Delta I
+    \dot{V}_{c_B} &= \frac{u_B}{1+K_I I(x_{c_B})} \sigma R(x_{c_B}) V_{c_B}\\
+    \dot{R}(x) &= -u_A \sum\limits_{c_A}V_{c_A} R(x) \delta(x-x_{c_A})\\
+        &\quad- u_B \sum\limits_{c_B}V_{c_B}\frac{R(x) }{1+ K_I I(x)}\delta(x-x_{c_B})\nonumber\\
+    \dot{I}(x) &=b\sum\limits_{c_A} V_{c_A}\delta(x-x_{c_A}) + D_I\Delta I(x).
     \label{eq:spatial-full-system-simplified-end}
 \end{alignat}
 For the diffusion, we require Neumann (zero-flux) boundary conditions.
-It has to be noted that the sums $\sum_{c_{A/B}}$ range over all individual cells of the respective species at any given time point.
-This means explicitly, that the number of summands varies in time and is part of the overall dynamics.
-We indicate individual-based behavior with indices of types $X_c,X_{c_{A/B}}$ whereas macroscopic quantities related to a whole species are labelled with $X_{A/B}$.
-% Since, we will not explicitly model intracellular concentrations $R_{i,c}$, we will drop the index entirely, only considering the extracellular resource.
-%
-%
-% ................................................................................................
+Note that the sums $\sum_{c_{A/B}}$ range over all cells that are in the growth phase at a given time point. This means explicitly that the number of summands varies in time and is part of the overall dynamics.
+
 \subsubsection{Physical mechanics \& interactions}
-We model cells as spherical objects in 2D space.
-They can be represented by their position $x_c$ and radius $r_c$ which is related to their (2D) volume $V_c = \pi r_c^2$.
+We model cells as spherical objects in 2D space. They can be represented by their position $x_c$ and radius $r_c$, which is related to their (2D) volume $V_c = \pi r_c^2$.
 As the coupled reactions from equations~\eqref{eq:spatial-full-system-simplified-begin} change $V_c$, we also automatically adapt the cell radius accordingly.
-% Notice however, that how the radius is updated does not correspond to the cellular reactions defined previously but is a purely mechanical consideration.
-The dimensionality of the problem does not find its way into the cellular reactions but only manifests itself in these mechanical considerations.
-The dynamics are described by Newton's law of motion for particle damping.
+The dynamics are described by Newton's law of motion with viscous damping:
 \begin{equation}
     m \ddot{\mathbf{x}} = -\eta\dot{\mathbf{x}} + \mathbf{F}.
 \end{equation}
-Cells are interacting via a point-like interaction potential.
-We can calculate the interaction strength via
+Cells interact via a point-like interaction potential. We can calculate the interaction strength via:
 \begin{alignat}{3}
-    \mathbf{z} &= \mathbf{x_1} - \mathbf{x_2} \hspace{2em}&& r = ||\mathbf{z}||\\
-    \sigma &= \frac{r}{r_1+r_2} && q=0.2\\
-    \mathbf{F} &= \epsilon \frac{1+q}{q+\sigma} \theta(\sigma - 1) \frac{1}{r}\mathbf{z}
+    \mathbf{z} &= \mathbf{x}_1 - \mathbf{x}_2 \hspace{2em}&& r = ||\mathbf{z}||\\
+    \rho &= \frac{r}{r_1+r_2} && q=0.2\\
+    \mathbf{F} &= \epsilon \frac{1+q}{q+\rho} \theta(1 - \rho) \frac{\mathbf{z}}{r}.
 \end{alignat}
-We assume that the cells are not sticky and consider only a repulsive interaction potential, leaving out any possible attractive forces~\citep{Garrett2008}.
+The distance between cells is given by $r$; the radii of the cells are $r_1$ and $r_2$, respectively. The parameter $q$ determines the slope of $||\mathbf{F}||$ at $\rho=1$; the larger $q$ is, the shallower the slope. $\epsilon$ denotes the strength of the force at $\rho=1$. 
+We ignore any attractive force between the cells and consider only a repulsive interaction potential~\citep{Garrett2008}.
 These mechanisms will result in the overall expansion of the colony as individual cells push each other further apart.
-%
-% \begin{figure}
-%     \centering
-%     \includegraphics[width=0.6\textwidth]{Figures-interaciton_potential.png}
-%     \caption{
-%         Overall form of the interaction force between two cells.
-%         A value $\sigma<1$ indicates that cells are overlapping which results in a positive force outwards.
-%         Conversely, as long as cells are apart $\sigma>=1$, no force is acting.
-%     }
-%     \label{fig:spatial-interaction-potential}
-% \end{figure}
-%
-%
-% ................................................................................................
+
 \subsubsection{Cell cycle}
-Typically the cycle of a cell consist of multiple phases~\citep{Cooper2000_fn}. Since our goal is to include only the necessary details of the underlying biological problem, we drastically simplify the description of the cell cycle. Cell growth is already being described by the system of coupled \acp{ode} given in equations~\eqref{eq:spatial-full-system-simplified-begin}-\eqref{eq:spatial-full-system-simplified-end}.
+Typically, the cycle of a cell consists of multiple phases~\citep{Cooper2000_fn}. Since our goal is to include only the necessary details of the underlying biological problem, we drastically simplify the description of the cell cycle. Cell growth is already being described by the system of coupled \acp{ode} given in equations~\eqref{eq:spatial-full-system-simplified-begin}-\eqref{eq:spatial-full-system-simplified-end}.
 Thus, we introduce an additional rule that performs the division process when a certain volume threshold is reached.
-The volume of the cell is divided equally between the new and old cell and both are assigned new random positions close to each other such that their radii do touch but without any overlap.
-\begin{figure}
+The volume of the cell is divided equally between the new and old cells, and both are assigned new random positions close to each other such that their radii touch without overlap (see Figure ~\ref{fig:cell_division}).
+\begin{figure}[H]
     \begin{center}
-    \begin{tikzonimage}[width=0.49\columnwidth]
+    \begin{tikzonimage}[width=0.49\textwidth]
         {Figures-snapshot-2-cells-before-division.png}%
         \node at (0.01, 0.99)[anchor=north west]{\textbf{A}};
     \end{tikzonimage}%
     \hspace{0.01\columnwidth}%
-    \begin{tikzonimage}[width=0.49\columnwidth]
+    \begin{tikzonimage}[width=0.49\textwidth]
         {Figures-snapshot-2-cells-after-division.png}
         \node at (0.01, 0.99)[anchor=north west]{\textbf{B}};
     \end{tikzonimage}
     \caption{
         (A) A cell right before and (B) after a division event.
         The volume is equally distributed between the two cells and the new positions are picked
-        random but at opposing sides on a circle around the original center of the single cell.
+        randomly but at opposing sides on a circle around the original center of the single cell.
     }
+     \label{fig:cell_division}
     \end{center}
 \end{figure}
-In addition to modeling division events, the cells are subject to the lag-phase which delays their ability to proliferate.
-We model this by assigning a transition rate to each cell.
-For each time point of the simulation, we generate a boolean value from a random number generator with probability
-\begin{equation}
-    P(\text{transition}) = \Delta t \lambda \frac{R}{R_0}.
-\end{equation}
-If this boolean is true, we move the cell from the inactive state to the active state where it starts to consume nutrients and grow.
-The concatenation of many such stochastic processes on a population-based level converges identically to the lag-phase behavior of the \ac{ode} model.
 %
 %
 % ------------------------------------------------------------------------------------------------
 \subsection{Comparing \acs{abm} and \acs{ode} models}
-The \ac{abm} model should be considered to be more fundamental compared to the \ac{ode} description in the sense that it incorporates more biological aspects and maps them closer to the actual behavior of the bacteria.
-We are thus able to derive the \ac{ode} pool model from its \ac{abm} version via a process of homogenization (see Appendix~\ref{sec:supplement-abm-derivation}).
-We can formulate the resulting \ac{ode} in terms of volumetric quantities of the \ac{abm}.
-By doing so, we find a mapping between parameters from the \ac{abm} to parameters used in the \ac{ode} description.
-The derived equations read
-\begin{alignat}{9}
-    \dot{V}_{L,A} &= &&&&&-\lambda_A V_{L,A} &\bar{R}\\
-    \dot{V}_{L,B} &= &&&&&-\lambda_B V_{L,B} &\bar{R}\\
-    \dot{V}_A &= &u_A\sigma N_t\bar{R} &V_A &&&+ \lambda_A V_{L,A} &\bar{R}\\
-    \dot{V}_B &= &&&\frac{u_B\sigma}{1+\nu I}N_t \bar{R} &V_B &+ \lambda_B V_{L,B} &\bar{R}\\
-    \dot{\bar{R}} &= &-u_A\frac{V_A}{V_D} &\bar{R} &-\frac{u_B}{1+\nu I} \frac{V_B}{V_D} &\bar{R}\\
-    \dot{I} &= b \frac{V_A}{V_D}
-\end{alignat}
-where we have already introduced the non-dimensional, rescaled nutrient concentration $\bar{R}$.
-The previous \ac{ode} equations are
-\begin{align}
-    \dot{L}_A &= -\lambda_A R L_A\\
-    \dot{L}_B &= -\lambda_B R L_B\\
-    \dot{G}_A &= \mu_A R G_A + \lambda_A R L_A\\
-    \dot{G}_B &= \frac{\mu_B}{1 + K_I I} R G_B + \lambda_B R L_B\\
-    \dot{R} &= -\frac{\mu_A}{N_t} R G_A-\frac{\mu_B}{(1 + K_I I) N_t} R G_B\\
-    \dot{I} &= \kappa G_A.
-\end{align}
-When comparing these equations, we can map them onto each other via the relations
+\label{subsec:comparigon-abm-and-ode}
+The \ac{ode} model can only approximate the \ac{abm} model and becomes asymptotically correct in the limit of fast diffusion and high cell density. The \ac{abm} model is more closely linked to the biology of cells because it incorporates more biological aspects.
+By comparing the \ac{ode} model derived from the \ac{abm} with the \ac{ode} equations~\eqref{eq:spatial_limit_F} and \eqref{eq:spatial_limit_H} we find the following relation between the parameters (see Appendix~\ref{sec:supplement-abm-derivation}):
 \begin{align}
     \begin{split}
-        G_{A/B} &= \frac{1}{\sigma}\frac{V_{A/B}}{V_D}\\
-        L_{A/B} &= \frac{1}{\sigma}\frac{V_{L,A/B}}{V_D}\\
+        G_{A/B} &= \frac{1}{\sigma V_D}V_{A/B}\\
         \frac{\mu_{A/B}}{N_t} &= u_{A/B}\sigma\\
-        \kappa &= \sigma b\\
-        K_I &= \nu
+        \kappa &= \sigma b. 
     \end{split}
     \label{eq:ode-abm-mappings}
 \end{align}
-Furthermore, we can use these mappings to numerically compare both approaches.
-Table~\ref{tab:spatial_limit_init} shows an example comparison of parameters of the \ac{ode} and \ac{abm} which have been mapped onto each other.
-Figure~\ref{fig:spatial-snapshots} shows snapshots of a numerical simulation of the described system.
-The initial bacteria have been ordered on a grid such that only every diagonal neighbor is of the same species, thus resulting in a more homogenous initial distribution.
+We can use these mappings to numerically compare both approaches. Table~\ref{tab:spatial_limit_init} shows an example comparison of parameters of the \ac{ode} and \ac{abm}. Figure~\ref{fig:spatial-snapshots} shows snapshots of a numerical simulation of the described system. The bacteria are initially ordered on a grid to achieve a more homogeneous initial distribution.
 %
-\begin{figure}
-    \begin{tikzonimage}[width=0.49\columnwidth]
+\begin{figure}[H]
+    \begin{tikzonimage}[width=0.49\textwidth]
         {Figures-abm-homogenous-images-snapshot_00024000.pdf}
         \node at (0.01, 0.99)[anchor=north west]{\textbf{A}};
     \end{tikzonimage}%
     \hspace{0.01\columnwidth}%
-    \begin{tikzonimage}[width=0.49\columnwidth]
+    \begin{tikzonimage}[width=0.49\textwidth]
         {Figures-abm-homogenous-images-snapshot_00048000.pdf}
         \node at (0.01, 0.99)[anchor=north west]{\textbf{B}};
     \end{tikzonimage}\\
-    \begin{tikzonimage}[width=0.49\columnwidth]
+    \begin{tikzonimage}[width=0.49\textwidth]
         {Figures-abm-homogenous-images-snapshot_00072000.pdf}
         \node at (0.01, 0.99)[anchor=north west, white]{\textbf{C}};
     \end{tikzonimage}%
     \hspace{0.01\columnwidth}%
-    \begin{tikzonimage}[width=0.49\columnwidth]
+    \begin{tikzonimage}[width=0.49\textwidth]
         {Figures-abm-homogenous-images-snapshot_00096000.pdf}
         \node at (0.01, 0.99)[anchor=north west, white]{\textbf{D}};
     \end{tikzonimage}%
     \caption{
-        Simulation snapshots at $\SI{100}{\minute},\SI{200}{\minute},\SI{300}{\minute}$ and $\SI{400}{\minute}$
-        corresponding to the parameters given in Table~\ref{tab:spatial_limit_init}.
-        Species $B$ is colored blue while species $A$ is colored in red.
-        The background shows the resource concentration $R$.
-        Darker colors indicate that less nutrients are present.
+        \ac{abm} simulation snapshots at $\SI{100}{\minute}$, $\SI{200}{\minute}$, $\SI{300}{\minute}$, and $\SI{400}{\minute}$
+        using the parameters given in Table~\ref{tab:spatial_limit_init}. Species $A$ is colored in red while species $B$ is colored in blue. The background shows the resource concentration $R$.
+        Darker colors indicate lower nutrient concentration.
     }
     \label{fig:spatial-snapshots}
 \end{figure}
 %
 %
-Figure~\ref{fig:spatial-growth-curve} shows multiple results for various configurations of the \ac{abm}, differing only in their initial spatial configuration and diffusivity.
-We see that in the highly-diffusive homogenous case of subfigure (A), the pool model is a good fit to the \ac{abm} model.
-It means that ODE could still be suitable for aqueous environments, where homogeneity is more probable.
+Figure~\ref{fig:spatial-growth-curve} shows results for various configurations of the \ac{abm}, differing only in their initial spatial configuration and diffusivity.
+We see that in the highly-diffusive homogeneous case of subfigure (A), the pool model is a good fit for the \ac{abm} model.
+This suggests that the ODE model remains suitable for aqueous environments, where homogeneity is more likely.
 Heterogeneity and slower diffusion cause larger differences between the two models as can be seen in subfigures (B) and (C).
 The combination of the two effects shows the largest difference between model outputs.
-In subfigure (C), due to the heterogeneous cell distribution (see Appendix~\ref{fig:supplement-spatial-initial-config-cells}), overall inhibition of species $B$ is significantly reduced.
-Subfigure (D) shows how a randomized homogenous initial distribution can lead to even more notable effects of inhibition.
-In contrast to the other results, here the final values of species $A$ and $B$ have larger/smaller counts respectively.
-This illustrates that spatial effects can shift the final results of growth curves towards both directions, leading to an overall increase/decrease of one species.
-We furthermore note that the total bacteria volume of the \ac{abm} model is always smaller or equal compared to the \ac{ode} model.
-This is expected, since processes such as diffusion and cells growing outward introduce another time component which is simply assumed to be instantaneous in the \ac{ode} model.
-From studies surrounding the branching patterns of bacterial colonies~\citep{Kawasaki1997,Matsushita1998}, we know that the diffusivity of
-nutrients is of the order of the spatial extension rate of the bacterial colony.
-The chosen diffusion constants $D_I=D_R=\{5,20\}~\unit{\micro\metre\squared\per\second}$ mimick a behavior of a fast and slowly diffusing system respectively.
-\begin{figure*}
+In subfigure (C), due to the heterogeneous cell distribution (see Figure~\ref{fig:supplement-spatial-initial-config-cells}), overall inhibition of species $B$ is significantly reduced.
+Subfigure (D) shows how a randomized homogeneous initial distribution can lead to even more pronounced effects of inhibition.
+In contrast to the other results, here the final values of species $A$ and $B$ have larger or smaller counts, respectively. This illustrates that spatial effects can shift the final results of growth curves toward both directions, leading to an overall increase/decrease of one species. We furthermore note that the total bacterial volume of the \ac{abm} is always less than or equal to that of the \ac{ode} model. This is expected, since processes such as diffusion and cells growing outward introduce an additional time component that is simply assumed to be instantaneous in the \ac{ode} model.
+From studies on the branching patterns of bacterial colonies~\citep{Kawasaki1997,Matsushita1998}, we know that the diffusivity of
+nutrients is of the order of the spatial extension rate of the bacterial colony. The chosen diffusion constants $D_I=D_R\in\{2, 20\}~\unit{\micro\metre\squared\per\second}$ are representative of fast- and slow-diffusing systems, respectively.
+\begin{figure}[H]
     \centering
-    \begin{tikzonimage}[width=\columnwidth]
+    \begin{tikzonimage}[width=0.49\textwidth]
         {Figures-abm-homogenous-abm_ode_comparison.pdf}
         \node at (0, 1)[anchor=north west]{\textbf{A}};
     \end{tikzonimage}%
-    \begin{tikzonimage}[width=\columnwidth]
+    \begin{tikzonimage}[width=0.49\textwidth]
         {Figures-abm-homogenous-low-diffusion-abm_ode_comparison.pdf}
         \node at (0, 1)[anchor=north west]{\textbf{B}};
     \end{tikzonimage}\\
-    \begin{tikzonimage}[width=\columnwidth]
+    \begin{tikzonimage}[width=0.49\textwidth]
         {Figures-abm-inhomogenous-abm_ode_comparison.pdf}
         \node at (0, 1)[anchor=north west]{\textbf{C}};
     \end{tikzonimage}%
-    \begin{tikzonimage}[width=\columnwidth]
+    \begin{tikzonimage}[width=0.49\textwidth]
         {Figures-abm-random-abm_ode_comparison.pdf}
         \node at (0, 1)[anchor=north west]{\textbf{D}};
     \end{tikzonimage}
     \caption{
-        (A-D) Comparison of the \ac{ode} and \ac{abm} model for different configurations.
-        (A) Homogeneous, fast diffusion
-        (B) Homogeneous, slow diffusion
-        (C) Heterogeneous, fast diffusion
-        (D) Random, fast diffusion
-        The diffusion constants are chosen such that $D_R=D_I=D={5,20}~\unit{\micro\metre\squared\per\second}$.
-        Snapshots of the spatial configurations of cells are included in the Appendix~\ref{fig:supplement-spatial-initial-config-cells}.
+        (A-D) Comparison of the \ac{ode} (solid lines) and \ac{abm} (dashed lines) model for different configurations.
+        (A) Homogeneous, fast diffusion, 
+        (B) Homogeneous, slow diffusion, 
+        (C) Heterogeneous, fast diffusion, 
+        (D) Random, fast diffusion.
+        The diffusion constants are chosen such that $D_R=D_I\in\{2, 20\}~\unit{\micro\metre\squared\per\second}$.
+        Snapshots of the spatial configurations of cells are shown in Figure~\ref{fig:supplement-spatial-initial-config-cells}.
     }
     \label{fig:spatial-growth-curve}
-\end{figure*}
-These results show how variations in properties that can not be described by simple \ac{ode} models can lead to large deviations in the growth curves of the species.
-Furthermore, it was shown that the utilized pool model can be derived from first principles by performing a homogenization of the mechanistic bacterial properties.
-%
+\end{figure}
+These results show how variations in properties that cannot be described by \ac{ode} models can lead to large deviations in the growth curves of the species.
 %
 % ================================================================================================
 \section{Discussion}
 %
-The presented pool model was used to describe the dynamics of one- and two-species systems containing the main growth stages and interactions between bacteria in the form of cooperation and competition.
-Our approach produces results which exhibit similarities to other well-known predictive microbiology models such as the Baranyi-Roberts model while providing better explainability.
-The inclusion of additional metabolic processes or larger number of cell-species can be achieved by extending the list of possible states and defining transitions between them.
-As an example, the description of the quorum sensing phenomena can be modelled by adding the equation for the released autoinducer molecules as a part of the microenvironment.
-By releasing these extracellular signalling molecules (autoinducers) it is possible for the bacteria to synchronize the gene expression of the whole group~\citep{ng_bacterial_2009}.
-These molecules then affect the same-species bacteria growth controlling the size of the population.
-The approach described above provides a primary predictive model with transition rates between different pools as parameters.
-To include the influence of external factors, i.e., temperature, pH, pressure, etc., one can simply use the secondary models for the transition rates, e.g., the square-root temperature dependence~\citep{ratkowsky_relationship_1982}.\\
-By constructing an \ac{abm}, we have exemplified how close the devised model is to the individual biological 
-processes that occur within the bacteria.
-This mechanistic single-cell level of understanding of our \ac{abm} is a perspective which can not be easily replicated by other spatial models such as \acp{pde}.
-We have investigated the impact of spatial effects in the form of varying diffusion parameters and different initial spatial distributions of bacteria.
-Our findings reinforce that the \ac{ode} model is a good simplification in the highly-diffusive regime within a mostly homogenous spatial bacterial distribution.
-However, deviations to these assumptions can lead to non-negligible effects, influencing the growth of the colony.
+The pool model introduced in this work provides a flexible, mechanistic framework
+for describing bacterial growth and interspecies interactions at the population level.
+By partitioning the bacterial population into discrete metabolic states and defining
+biologically motivated transitions between them, a wide range of phenomena can be
+captured with a minimal and interpretable set of parameters.
+
+The three-pool model with a limiting resource yields growth curves qualitatively
+comparable to established primary models in predictive microbiology, including the
+Baranyi-Roberts model~\citep{baranyi_dynamic_1994} and the McKellar
+two-compartment model~\citep{McKellar1997}, while offering a clearer mechanistic interpretation of each parameter.
+
+The dormancy extension illustrates a key strength of the pool model: new biological
+states can be incorporated systematically without restructuring the existing equations.
+The proposed Maxwell-type relation for the stress rate reproduces the
+experimentally observed asymmetric response of bacteria to temperature increases and
+decreases~\citep{swinnen_predictive_2004, hamillMicrobialLag2020}.
+
+The multi-species extensions show that the pool model subsumes several established
+model classes. Omitting the lag pool causes the resource competition equations to reduce exactly to the generalized Lotka-Volterra equations~\eqref{eq:LV_simple}. This establishes a direct mathematical connection between the pool framework and one of the most widely used formalisms in microbial ecology~\citep{wangersky_lotka-volterra_1978,
+stein_ecological_2013, venturelli_deciphering_2018}.
+The two toxin production models highlight how different biological assumptions lead to
+qualitatively distinct dynamics. The mutual inhibition model further demonstrates that complex competitive exclusion
+dynamics can be captured with a single dimensionless parameter, greatly
+reducing model complexity without sacrificing mechanistic interpretability. Furthermore, the mutualism model shows that cooperative interspecies dynamics, 
+such as the cross-feeding of public goods observed in mixed-culture fermentations, can be described with only two dimensionless parameters, which quantify the asymmetry of the mutualistic benefit between the two species.
+
+The \ac{abm} analysis reveals the conditions under which the \ac{ode} approximation
+is valid. In the highly-diffusive, homogeneous case (Figure~\ref{fig:spatial-growth-curve}A),
+\ac{ode} and \ac{abm} agree closely, supporting the use of \ac{ode} models in aqueous
+environments with rapid nutrient transport.
+Slower diffusion or heterogeneous initial cell distributions introduce systematic
+deviations: in particular, a heterogeneous cell distribution
+(Figure~\ref{fig:spatial-growth-curve}C) significantly reduces the inhibition of
+species $B$ by the antimicrobial compound of species $A$, since spatial separation
+limits exposure.
+Conversely, a random initial distribution (Figure~\ref{fig:spatial-growth-curve}D) can
+amplify inhibition effects relative to the \ac{ode} prediction.
+In all configurations, the total bacterial volume of the \ac{abm} is less than or equal to
+that of the \ac{ode} model, as diffusion and outward colony expansion introduce
+delays that the \ac{ode} formulation treats as instantaneous.
+
+Several limitations of the current framework should be noted.
+The \ac{ode} model assumes a well-mixed population, which may not hold in biofilms or
+spatially confined food matrices.
+The stress-rate parameters of the dormancy model are
+phenomenological and may be difficult to determine from standard plate-count
+experiments without dedicated temperature-shift protocols.
+Finally, stochastic effects -- relevant at low cell numbers, for example during early
+colonization of a food surface -- are not captured by the \ac{ode} formulation.
 %
 % ------------------------------------------------------------------------------------------------
 \section{Conclusion}
 %
-We introduced the pool model as a framework to unify existing approaches and allow researchers to follow a mechanistic approach during model development.
-It is able to capture the effects of many established models and provides a lens which is useful to generalize existing systems and results in better overall explainability.
-By modeling effects such as mutual inhibition on a single-cell level within an \ac{abm}, we have exemplified that the pool model directly builds on these more fundamental concepts.
-It can thus aid in the mechanistic understanding of the underlying processes, allowing researchers to deepen their knowledge about microbial growth within food science.
-Going forward, this framework can provide a starting point for a more abstract mathematical formulation which should be able to cover a much wider class of systems.
-
-\onecolumn
+We introduced the pool model as a unifying, mechanistic framework for modeling
+bacterial consortia in food science.
+The framework describes bacterial populations in terms of discrete metabolic states
+and transitions between them, providing a systematic route from first-principles
+assumptions about single-cell behavior to population-level \acp{ode}.
+Applied to one- and two-species systems, it reproduces the growth dynamics of
+established primary models while remaining more interpretable, and it naturally
+generalizes the \ac{glv} equations as a special case.
+By deriving the pool model equations from an explicit \ac{abm}, we have shown that the
+framework directly reflects individual cell-level biological processes, bridging the
+gap between mechanistic single-cell descriptions and coarse-grained population models.
+Going forward, the framework can be extended to additional internal states and
+environmental drivers -- such as pH, water activity, or quorum sensing -- by including
+new pools and secondary models for the transition rates, providing a flexible starting
+point for predictive microbiology in food safety applications.
 
 \newpage
 \section*{Data availability \& reproducibility}
-
-The data and simulation code which are presented in this study are publicly available in
+The data and simulation code that are presented in this study are publicly available at
 \url{https://github.com/polinagaindrik/pool_model_paper}.
+
+\section*{Declaration of competing interest}
+The authors declare no conflict of interest.
+
+\section*{Acknowledgements}
+P.G. and C.F. received funding from the FutureLab program (grant 281K126A20) of the Federal Ministry of Food and Agriculture (Bundesministerium für Ernährung und Landwirtschaft, BMEL). J.P. and C.F. received funding from a FET-Open research and innovation actions grant under the European Union's Horizon 2020 program (CyGenTiG; grant agreement 801041).
 
 \section*{Author Contributions}
 \begin{tabularx}{\textwidth}{l @{\hspace{0.5cm}} l}
-    \textbf{Conceptualization}              & Christian Fleck, Polina Gaindrik, Jonas Pleyer, Fernando Pérez Rodríguez\\
-    \textbf{Analysis - \acs{ode} Models}    & Polina Gaindrik, Christian Fleck\\
-    \textbf{Analysis - Spatial effects}     & Jonas Pleyer, Christian Fleck\\
-    \textbf{Writing}                        & Christian Fleck, Polina Gaindrik, Jonas Pleyer, Fernando Pérez Rodríguez\\
-    \textbf{Supervision}                    & Christian Fleck
+    \textbf{Conceptualization}              	& Christian Fleck, Matthias Brunner\\
+    \textbf{Analysis - \acs{ode} Models}	& Polina Gaindrik, Christian Fleck\\
+    \textbf{Analysis - Spatial effects}		& Jonas Pleyer, Christian Fleck\\
+    \textbf{Writing}                        		& Christian Fleck, Polina Gaindrik, Jonas Pleyer, Fernando Pérez Rodríguez, Matthias Brunner\\
+    \textbf{Supervision}                  		& Christian Fleck\\
+    \textbf{Funding acquisition} 	    		& Christian Fleck, Matthias Brunner
 \end{tabularx}
 
 % \printbibliography
@@ -1122,17 +1008,10 @@ The data and simulation code which are presented in this study are publicly avai
 % \renewcommand{\theequation}{S\arabic{suppequation}}%
 
 \let\oldsection\section
-% \let\oldequation\equation
-% \let\oldalign\align
-% \let\oldalignat\alignat
 \let\oldtable\table
 \let\oldfigure\figure
-% \renewcommand{\section}{\@ifstar{\@oldsection}{\@stepcounter{suppsection}\@oldsection}}
 \makeatletter
 \renewcommand{\section}{\@ifstar{\oldsection*}{\stepcounter{suppsection}\oldsection}}
-% \renewcommand{\equation}{\@ifstar{\oldequation*}{\stepcounter{suppequation}\oldequation}}
-% \renewcommand{\align}{\@ifstar{\oldalign*}{\stepcounter{suppequation}\oldalign}}
-% \renewcommand{\alignat}{\@ifstar{\oldalignat*}{\stepcounter{suppequation}\oldalignat}}
 \renewcommand{\table}{\@ifstar{\oldtable*}{\stepcounter{supptable}\oldtable}}
 \renewcommand{\figure}{\@ifstar{\oldfigure*}{\stepcounter{suppfigure}\oldfigure}}
 \makeatother
@@ -1143,258 +1022,178 @@ The data and simulation code which are presented in this study are publicly avai
 \section{General mathematical formalism}
 \label{ssec:supplement1}
 Consider the system consisting of $N$ species in $M$ different states.
-In the general representation, all discussed in the main part systems  can be described with the Ordinary Differential Equations (\acp{ode}) using a non-linear function $\mbF$:
+In the general representation, all systems discussed in the main part can be described by the Ordinary Differential Equations (\acp{ode}) using a non-linear function $\mbF$:
 \begin{equation}
    \dot{\mbx} = \mbF(\mbx, \mbm, \mbp, \mbu),
 \label{eq:model_ODE_x}
 \end{equation}
 where  $\mbx \in \mathbb{R}^{N}  \otimes \mathbb{R}^{M}$ is a vector describing bacterial count.
-In matrix form it can be written as
+In matrix form it can be written as:
 \begin{equation}
     \mbx = \begin{pmatrix}
         x^1_1  & \dots & x^1_N  \\
         \vdots &       & \vdots \\
         x^M_1  & \dots & x^M_N  \\
-            \end{pmatrix}
+            \end{pmatrix},
     \label{eq:model_bact}
 \end{equation}
 with $x_{j}^{i}$ describing the bacterial counts for species $i$ in state $j$.
-$\mbu$ is the vector of different inputs of the model, e.g., temperature, pressure etc.
-The vector $\mbm \in \mathbb{R}^{K}$ includes all variables corresponding to the microenvironment of the system which can be concentration of the inhibitors or activators:
+$\mbu$ is the vector of various inputs into the model, e.g., temperature, pressure, etc.
+The vector $\mbm \in \mathbb{R}^{K}$ includes all variables corresponding to the microenvironment of the system that can be, e.g., concentrations of inhibitors or activators:
 \begin{equation}
     \dot{\mbm} = \mbH (\mbx, \mbm, \mbp, \mbu).
     \label{eq:model_microenv}
 \end{equation}
-Here function $\mbH$ is in general case also non-linear.\\
+The function $\mbH$ is in the general case also non-linear.\\
 %
-The advantage of the following formulation is its generality.
-Depending on the knowledge about the system as well as the needed level of accuracy one can define an arbitrary number of states $M$ and control the complexity of the model.
-Moreover, opposite to the already known Predictive Microbiology like Baranyi and Roberts one can easily change.\\
+The advantage of this formulation is its generality. Depending on the knowledge about the system as well as the needed level of accuracy, one can control the complexity of the model by defining an appropriate number $M$ of internal states.\\
 %
-To calculate the bacterial count for one species $i$, we simply need to sum the tensor/vector $\mbx$ over all possible states:
+To obtain the bacterial count for one species $i$, we simply need to sum the tensor $\mbx$ over all possible states:
 \begin{equation}
     N_i = \sum_k \mbx_i^k.
 \label{eq:N_pro_species}
 \end{equation}
-While the total bacterial count of all species of our system is
+The total bacterial count of all species of our system is given by:
 \begin{equation}
-    N = \sum_i \sum_k \mbx_i^k.
+    \mathcal{N} = \sum_i \sum_k \mbx_i^k.
 \label{eq:N_total}
 \end{equation}
 %
 %
 %
-Using such matrix representation of the bacterial system, we can rewrite, for example, the three-pool model with limiting resource described with equations~\ref{eq:ode_3pool_resource} in a more compact form.
-The concentrations of the pools are then the components of our variable vector $\mbx (t) = (L(t), G(t), D(t))^T$.
+Using such matrix representation of the bacterial system, we can rewrite, for example, the three-pool model with limited resources described by equation~(\ref{eq:ode_3pool_resource}) in a more compact form. The concentrations of the pools are then the components of our variable vector $\mbx (t) = (L(t), G(t), D(t))^T$.
 %
 \begin{align}
     \dot \mbx  &= \mbF(\mbx, \mbm, \mbp, \mbu) = \begin{pmatrix}
         -(\omega + \lambda) & 0               & 0      \\
-        \lambda          & \mu R - \omega' & 0      \\
-        \omega              & \omega'            & -\beta
+        \lambda          & \mu \tilde{R} - \omega' & 0      \\
+        \omega              & \omega'            & 0
     \end{pmatrix} \mbx\\
-    \dot \mbm &= \mbH (\mbx, \mbm, \mbp, \mbu) = -\frac{\mu}{N_t} R G.
+    \dot \mbm &= \mbH (\mbx, \mbm, \mbp, \mbu) = -\frac{\mu}{N_t} \tilde{R} G.
 \end{align}
-Separating linear and non-linear parts in two terms yields
+Or using equation~(\ref{eq:ode_3pool_resource2}) and separating linear and non-linear parts yields:
 \begin{equation}
     \dot \mbx = \begin{pmatrix}
         -(\omega + \lambda) & 0       & 0 \\
-         \lambda         & \mu  & 0 \\
-         \omega &  \omega'& - \beta
+         \lambda         & \mu - \omega' & 0 \\
+         \omega &  \omega'& 0
     \end{pmatrix} 
-    \mbx + \frac{\mu}{N_t} x^2 \sum_i^3 x^i \begin{pmatrix} 0 \\ 1 \\ 0  \end{pmatrix}.
+    \mbx - \begin{pmatrix} 0 \\1\\ 0  \end{pmatrix} \frac{\mu}{N_t} x^2 \sum_{i=1}^3 x^i .
 \label{eq:x_repres_3pools_resource2}
 \end{equation}
-Here the first term is the linear part and the second term define the quadratic behavior of the system.
-%
-\paragraph{Generalized Lotka-Volterra}
-
-Likewise, the multispecies system with resource competition present described by equations~\ref{eq:model_2sp_resource_comp} can be represented in the same way by defining
-\begin{equation}
-    \mbm = R, \hspace{1cm}
-    \mbx = \begin{pmatrix}
-        L_A & L_B \\
-        G_A & G_B 
-    \end{pmatrix}.
-\label{eq:gLV_x_m}
-\end{equation}
-
-The simpler version of one state per species (equation~\ref{eq:LV_simple}) can be simply written in a general mathematical form as generalized Lotka-Volterra:
-\begin{equation}
-    \frac{d x_i}{d t} = x_i f_i (\mbx), \hspace{3mm} \mathbf{f} = \mathbf{r} + A \mbx.
-\label{eq:gLV}
-\end{equation}
-%
-%
+Here the first term is the linear part and the second term defines the quadratic behavior of the system.
 \vfill
 \pagebreak
 \section{Deriving the pool model from the \acs{abm}}
 \label{sec:supplement-abm-derivation}
 \paragraph{Reactions}
-Since the \ac{abm} can be considered more fundamental than the \ac{ode} model, we should be able to derive the latter one from the former.
-We recall equations \eqref{eq:spatial-full-system-simplified-begin} to \eqref{eq:spatial-full-system-simplified-end} related to nutrient uptake, growth and inhibition
+Since the \ac{abm} can be considered more fundamental than the \ac{ode} model, we should be able to derive the latter from the former.
+We recall equations \eqref{eq:spatial-full-system-simplified-begin} to \eqref{eq:spatial-full-system-simplified-end} related to nutrient uptake, growth, and inhibition. We distinguish between cells in the lag phase ($L$) and cells in the growth phase ($G$): 
 \begin{alignat}{3}
-    \dot{V}_{c_B} &=& u_B \sigma &RV_c\\
-    \dot{V}_{c_A} &=& \frac{u_A}{1+\nu I} \sigma &R V_c\\
-    \dot{R}_e &=& -u_A \sum\limits_{c_A}V_{c_A} &R(x) \delta(x-x_{c_A})\\
-        &&-\frac{u_B}{1+\nu I} \sum\limits_{c_B}V_{c_B} &R(x) \delta(x-x_{c_B}) &+& D_R \Delta R(x)\nonumber\\
-    \dot{I} &=&b\sum\limits_{c_A} V_{c_A}&\delta(x-x_c) &+& D_I\Delta I.
+	\text{Prob}(L\to G) &= \lambda \frac{R(x)}{N_t}\Delta t\\
+    \dot{V}_{c_A} &=u_A \sigma R(x_{c_A})V_{c_A}\\
+    \dot{V}_{c_B} &=\frac{u_B}{1+K_I I(x_{c_B})} \sigma R(x_{c_B}) V_{c_B}\\
+    \dot{R}(x) &= -u_A \sum\limits_{c_A}V_{c_A} R(x) \delta(x-x_{c_A})\\
+        &\quad-u_B\sum\limits_{c_B}V_{c_B} \frac{R(x)}{1+K_I I(x)}\delta(x-x_{c_B}) + D_R \Delta R(x)\nonumber\\
+    \dot{I}(x) &=b\sum\limits_{c_A} V_{c_A}\delta(x-x_{c_A}) + D_I\Delta I(x), 
 \end{alignat}
-We integrate the spatial equations over the total domain starting with the resource concentration $R$.
+where we suppress, for notational simplicity, the time dependence. The indices $c_A$ and $c_B$ include only those cells in the growth-phase $G$. By defining the spatially averaged (and thus homogeneous) resource concentration $R=V_D^{-1}\int_D R(x) \text{dVol}$, we can rewrite the equation for $R(x)$:
 \begin{alignat}{8}
-    \int\limits_D\dot{R}\text{dVol}
-    &= \int\limits_D\bigg[&-&u_A \sum\limits_{c_A}V_{c_A} R \delta(x-x_{c_A})
-        &-&\frac{u_B}{1+\nu I} \sum\limits_{c_B}V_{c_B} R \delta(x-x_{c_B})
-        +D_R \Delta R\bigg]\text{dVol}\\
-    &= &-&u_A\sum\limits_{c_A}V_{c_A}\int\limits_D R \delta(x-x_{c_A}) \text{dVol}
-        &-&\frac{u_B}{1+\nu I} \sum\limits_{c_B}V_{c_B} \int\limits_D R \delta(x-x_{c_B})\text{dVol}
-        +D_R \int\limits_{\partial D} \nabla R\text{dVol}\\
-    &= &-&u_A\sum\limits_{c_A} V_{c_A} R_{x=x_{c_A}}
-        &-& \frac{u_B}{1+\nu I} \sum\limits_{c_B} V_{c_B} R_{x=x_{c_B}}
+    \frac{1}{V_D}\int\limits_D\dot{R}(x)\text{dVol}
+    &= \int\limits_D\bigg[-u_A \sum\limits_{c_A} \frac{V_{c_A}}{V_D} R(x)\, \delta(x-x_{c_A})\nonumber\\
+        &-u_B\sum\limits_{c_B} \frac{V_{c_B}}{V_D} \frac{R(x)}{1+K_I I(x)} \, \delta(x-x_{c_B})
+        +\frac{D_R}{V_D} \Delta R(x)\bigg]\text{dVol}\\
+    \dot{R}&= -u_A\sum\limits_{c_A} \frac{V_{c_A}}{V_D}\int\limits_D R(x)\, \delta(x-x_{c_A}) \text{dVol}\nonumber\\
+        &-u_B \sum\limits_{c_B} \frac{V_{c_B}}{V_D} \int\limits_D \frac{R(x)}{1+K_I I(x)} \, \delta(x-x_{c_B})\text{dVol}
+        +\frac{D_R}{V_D}  \int\limits_{\partial D} \nabla R(x)\text{dA}\\
+    \dot{R}&= -u_A\sum\limits_{c_A}  \frac{V_{c_A}}{V_D} R(x_{c_A})
+        -u_B  \sum\limits_{c_B}  \frac{V_{c_B}}{V_D} \frac{R(x_{c_B})}{1+K_I I(x_{c_B})}.
 \end{alignat}
-We can split up the integral into three parts.
-The last part can then be transformed into an integral over the flux of the resource along the boundary.
-Since we chose Neumann boundary conditions, this contribution vanishes identically.
-Afterwards, the remaining parts can be evaluated by using the delta-distribution.
-We now evaluate the resource concentration $R$ at the position of the individual cells and sum over all contributions.
-By defining the spatially averaged (and thus homogeneous) resource concentration $\hat{R}=V_D^{-1}\int_D R \text{dVol}$, we can rewrite the previous eqations to
+The diffusion term vanishes identically under Neumann boundary conditions. So far, the equation is exact, but in order to arrive at an \ac{ode}, we need to remove the explicit dependence on spatial coordinates. To this end, we assume $\sum\limits_{c_A} V_{c_A}R(x_{c_A})\approx V_AR$ and $\sum\limits_{c_B} V_{c_B}\frac{R(x_{c_B})}{1+K_I I(x_{c_B})}\approx  V_B\frac{R}{1+K_I I}$. $V_{A/B}=\sum_{c_{A/B}} V_{c_{A/B}}$ denotes the total cellular volume of cells in the growth-phase. Division by the total resource capacity $N_t$ ($\tilde{R}=R/N_t$) finally yields:
 \begin{alignat}{8}
-    \frac{\text{d}}{\text{d}t} \frac{1}{V_D}\int\limits_D R\text{dVol}
-        &= &-&u_A\sum\limits_{c_A} \frac{V_{c_A}}{V_D} R_{x=x_{c_A}}
-        &-& \frac{u_B}{1+\nu I} \sum\limits_{c_B} \frac{V_{c_B}}{V_D} R_{x=x_{c_B}}\\
-        &= &-&u_A\sum\limits_{c_A} \frac{V_{c_A}}{V_D} \hat{R}
-        &-& \frac{u_B}{1+\nu I} \sum\limits_{c_B} \frac{V_{c_B}}{V_D} \hat{R}\\
-    \frac{\text{d}}{\text{d}t}\hat{R}
-        &= &-&u_A\frac{V_A}{V_D} \hat{R} &-&\frac{u_B}{1+\nu I} \frac{V_B}{V_D} \hat{R}.
+        \dot{\tilde{R}}&\approx -u_A\frac{V_A}{V_D} \tilde{R} -\frac{u_B}{1+K_I I} \frac{V_B}{V_D} \tilde{R}.
 \end{alignat}
-Using the spatially averaged resource concentration $\hat{R}$, we can drop the point of evaluation, i.e. $\hat{R}_{x=x_c}=\hat{R}$.
-% Now we assume homogeneity in the sense, that we can reduce $R$ to only a variable with time-dependence, with homogeneous spatial distribution.
-% This means that every contribution does not depend on the position at which it was evaluated, i.e., $R_{x=x_c}=R$.
-Finally, we can perform the sum to gain the total volume of all cells $V_{A/B}=\sum_{c_{A/B}} V_{c_{A/B}}$.
-In order to achieve the same normalization as used in the \ac{ode} version, we also divide by the total resource capacity $N_t$ and denote the resulting quantity as $\bar{R}=\hat{R}/N_t$.
-\begin{equation}
-    \frac{\text{d}}{\text{d}t}\bar{R} = -u_A\frac{V_A}{V_D} \bar{R} -\frac{u_B}{1+\nu I} \frac{V_B}{V_D} \bar{R}
-\end{equation}
-Following the same principle as before, we can integrate the inhibitor equation.
+
+Following the same principle as before, we can integrate the inhibitor equation:
 \begin{alignat}{7}
-    \int\limits_D\dot{I} &= \int\limits_D \bigg[&&\sum\limits_{c_A} b V_{c_A}&&\delta(x-x_{c_A}) &&+ D_I\Delta I\bigg]\text{dVol}\\
+   \dot{I}=\frac{1}{V_D}\int\limits_D\dot{I}(x)\text{dVol} &= \int\limits_D \bigg[\sum\limits_{c_A} b  \frac{V_{c_A}}{V_D} \delta(x-x_{c_A}) + \frac{D_I}{V_D} \Delta I(x)\bigg]\text{dVol}\\
     % &= \int\limits_D&&\sum\limits_{c_A} b V_{c_A}&&\delta(x-x_{c_A}) \text{dVol} &&+ \int\limits_D D_I\Delta I\text{dVol}\\
-    &= \int\limits_D&&\sum\limits_{c_A} b V_{c_A}&&\delta(x-x_{c_A}) \text{dVol} &&+ \int\limits_{\partial D} D_I\nabla I\mathbf{\text{dA}}\\
-    &= &&\sum\limits_{c_A} b V_{c_A}\int\limits_D &&\delta(x-x_{c_A}) \text{dVol}\\
-    &= b V_A
+   \dot{I} &= \int\limits_D\sum\limits_{c_A} b  \frac{V_{c_A}}{V_D} \delta(x-x_{c_A}) \text{dVol} + \frac{D_I}{V_D}\int\limits_{\partial D} \nabla I(x)\mathbf{\text{dA}}\\
+   \dot{I} &= b \frac{V_A}{V_D}.
 \end{alignat}
-By again using the spatially averaged inhibitor concentration $\hat{I}=V_D^{-1}\int_D I\text{dVol}$, we arrive at
-\begin{equation}
-    \frac{\text{d}}{\text{d}t} \hat{I} = b \frac{V_A}{V_D}
-\end{equation}
+Note that unlike in the case of $\tilde{R}$, this equation holds exactly.
 %
-\paragraph{Lag-Phase}
-Cells are initially assumed to be in a lag-phase which they leave with probability $P(\text{transition})$.
-Dividing this probability by the time increment $\Delta t$, gives us the rate at which the transition is occuring.
-This expression can be transfered to a collective rate of change by multiplying with the cells in lag-phase $L_{A/B}$.
+\paragraph{Lag phase}
+Cells are initially assumed to be in a lag phase. In what follows, we do not distinguish between cell types to avoid cumbersome notation. For clarity, we make the time dependence explicit. As the transition is stochastic, one can only talk about the probability of finding an individual cell in the lag phase. To arrive at the probability $P(N_L,t)$ of finding $N_L$ cells at time $t$ in the lag phase, one would need to
+sum over all possible configurations, e.g., cell one and two are in lag phase, cell three not, etc. To avoid lengthy derivations, we write:
 \begin{align}
-    P(\text{transition}) &= \Delta t \lambda_{A/B} \frac{R}{N_t}\\
-    \frac{1}{\Delta t}P(\text{transition}) &= \lambda_{A/B} \frac{R}{N_t}\\
-    \frac{L_{A/B}}{\Delta t}P(\text{transition}) &= \lambda_{A/B} L_{A/B}\frac{R}{N_t}\\
-    \frac{\text{d}}{\text{d}t} L_{A/B} &= -\lambda_{A/B} L_{A/B}\frac{R}{N_t}
+    \text{Prob}(L\to G) &\approx \Delta t \lambda \tilde{R}(t),
 \end{align}
-In the last step, we take the expectation value and equate it with the negative of its derivative $\text{d}/\text{d}t L_{A/B}$.
-When switching to a fully homogeneous system, we exchange $R$ with its spatially averaged counterpart $\hat{R}$.
-Taking into account the normalization via $\bar{R}=\hat{R}/N_t$, we can write
-\begin{equation}
-    \frac{\text{d}}{\text{d}t}L_{A/B} = - \lambda_{A/B}L_{A/B}\bar{R}.
-\end{equation}
+i.e., the transition probability is independent of the spatial position $x$. With this approximation, the increment at $t+\Delta t$ of $P(N_L,t)$ is given by the following balance equation~\citep{baranyiComparisonStochastic1998, vankampenStochasticProcesses2011}:
+ \begin{align}
+    P(N_L,t+\Delta t) &\approx P(N_L,t) +\Delta t \lambda \tilde{R}(t)(N_L+1)P(N_L+1,t)-\Delta t \lambda \tilde{R}(t)N_LP(N_L,t).
+\end{align}
+Rearranging this, division by $\Delta t$ and taking the limit $\Delta t\to 0$ yields:
+ \begin{align}
+    \dot{P}(N_L,t) &\approx  \lambda \tilde{R}(t)(N_L+1)P(N_L+1,t)- \lambda \tilde{R}(t)N_L P(N_L,t).
+\end{align}
+Multiplication by $N_L$, summing over $N_L$ and defining $L(t)=\sum_{N_L=0}^{N_L^0}N_L P(N_L,t) $ results in:
+\begin{align}
+    \dot{L}=\sum_{N_L=0}^{N_L^0}N_L\dot{P}(N_L,t) &\approx \lambda \tilde{R}(t)\sum_{N_L=0}^{N_L^0}N_L(N_L+1)P(N_L+1,t)- \lambda \tilde{R}(t)\sum_{N_L=0}^{N_L^0}N_L^2P(N_L,t)\\
+    \dot{L}&\approx\lambda \tilde{R}(t)\sum_{N_L=1}^{N_L^0+1}(N_L-1)N_LP(N_L,t)- \lambda \tilde{R}(t)\sum_{N_L=0}^{N_L^0}N_L^2P(N_L,t)\\
+     \dot{L}&\approx\lambda \tilde{R}(t)\sum_{N_L=0}^{N_L^0}(N_L-1)N_LP(N_L,t)- \lambda \tilde{R}(t)\sum_{N_L=0}^{N_L^0}N_L^2P(N_L,t).
+\end{align}
+$N_L^0$ is the initial number of cells in the lag phase and in the last step we used $P(N_L^0+1,t)=0,\, \forall t$. We finally arrive at:
+\begin{align}
+     \dot{L}&\approx-\lambda \tilde{R}(t)\sum_{N_L=0}^{N_L^0}N_LP(N_L,t)\\
+     \dot{L}&\approx-\lambda \tilde{R}(t)L(t).
+\end{align}
 %
 %
 \paragraph{Growth}
-The equations describing the overall growth of the bacteria is governed by two distinct effects:
-Bacteria are leaving the lag phase and starting to grow, thus adding them to this pool and bacteria already in the growth pool consume nutrients, thus growing and dividing.
-For the equation describing growth of the cell volume due to nutrient uptake, we simply add up cells for the respective species to obtain their total volume.
+Bacteria leave the lag phase, grow while consuming nutrients, and divide. The rate of change of the cellular volume is given by:
 \begin{alignat}{9}
-    \dot{V}_{A,R} &= \sum\limits_{c_A}\dot{V}_{c_A} &=& &u_A\sigma\sum\limits_{c_A} &R V_{c_A} &=& &u_A\sigma& R V_A\\
-    \dot{V}_{B,R} &= \sum\limits_{c_B}\dot{V}_{c_B} &=& &\frac{u_B\sigma}{1+\nu I} \sum\limits_{c_B} & R V_{c_B} &=& &\frac{u_B\sigma}{1+\nu I} &R V_B
+    \dot{V}_{A} &= \sum\limits_{c_A}\dot{V}_{c_A} &=&u_A\sigma\sum\limits_{c_A} V_{c_A} R(x_{c_A})&\approx& u_A\sigma R V_A\\
+    \dot{V}_{B} &= \sum\limits_{c_B}\dot{V}_{c_B} &=&u_B\sum\limits_{c_B} V_{c_B}\frac{\sigma R(x_{c_B})}{1+K_I I(x_{c_B})}&\approx& \frac{u_B\sigma}{1+K_I I}RV_B. 
 \end{alignat}
-We can see that this equation can be easily rescaled with appropriate constants such that we can use the same notion defined in section~\ref{sec:three-pool-model}
-\begin{alignat}{3}
-    \dot{G}_{A,R} &=& u_A\sigma R G_A\\
-    \dot{G}_{B,R} &=& \frac{u_B\sigma}{1+\nu I} R G_B.
-\end{alignat}
-We combine this with the result obtained for the lag phase to obtain the complete dynamics
-\begin{alignat}{5}
-    \dot{G}_A &=& u_A\sigma N_t \bar{R} G_A &+ \lambda_A L_A &\bar{R}\\
-    \dot{G}_B &=& \frac{u_B\sigma}{1+\nu I}N_t \bar{R} G_B &+ \lambda_B L_B &\bar{R}
-\end{alignat}
-where we have again introduced the rescaled and spatially averaged resource concenration $\bar{R}$.
-These terms only apply to bacteria which are in a growing state and not in the lag phase.
-We can thus summarize the equations obtained
+We used again the approximation $\sum\limits_{c_A} V_{c_A}R(x_{c_A})\approx V_AR$ and $\sum\limits_{c_B} V_{c_B}\frac{R(x_{c_B})}{1+K_I I(x_{c_B})}\approx  V_B\frac{R}{1+K_I I}$. In the \ac{ode} model, the growth pool $G$ denotes the density of cells, which increase due to an inflow from the lag phase and cellular division. The rate of change of the cellular density resulting from the cellular division must be proportional to the increase in the total cellular volume, i.e., $\dot{G}_{A/B}\sim\dot{V}_{A/B}$. Combined with the result obtained for the lag phase, we obtain altogether:
 \begin{alignat}{9}
-    \dot{L}_A &= &&&&&-\lambda_A L_A &\bar{R}\\
-    \dot{L}_B &= &&&&&-\lambda_B L_B &\bar{R}\\
-    \dot{G}_A &= &u_A\sigma N_t\bar{R} &G_A &&&+ \lambda_A L_A &\bar{R}\\
-    \dot{G}_B &= &&&\frac{u_B\sigma}{1+\nu I}N_t \bar{R} &G_B &+ \lambda_B L_B &\bar{R}\\
-    \dot{\bar{R}} &= &-u_A\frac{V_A}{V_D} &\bar{R} &-\frac{u_B}{1+\nu I} \frac{V_B}{V_D} &\bar{R}\\
-    \dot{I} &= b \frac{V_A}{V_D}
+    \dot{L}_A &\approx -\lambda_A \tilde{R} L_A\\
+    \dot{L}_B &\approx -\lambda_B \tilde{R} L_B\\
+    \dot{G}_A &\approx \lambda_A \tilde{R} L_A+u_A\sigma N_t \tilde{R} G_A \\
+    \dot{G}_B &\approx\lambda_B \tilde{R} L_B+\frac{u_B\sigma}{1+K_I I}N_t \tilde{R} G_B \\
+    \dot{\tilde{R}} &\approx -u_A\frac{G_A}{\theta V_D} \tilde{R} -\frac{u_B}{1+K_I I} \frac{G_B}{\theta V_D} \tilde{R}\\
+    \dot{I} &= b \frac{G_A}{\theta V_D},
 \end{alignat}
-Comparing these equations with the \ac{ode} version defined by \eqref{eq:spatial_limit_F} and \eqref{eq:spatial_limit_H}, we can identify
+where we have introduced a proportionality constant $\theta$ ($G=\theta V$). We would like to emphasize that these equations represent a homogenized version of the \acs{abm} and hold only approximately, as indicated by the $\approx$ sign. However, in the limit of large systems with sufficiently fast diffusion of the resource pool, the equation will become asymptotically exact. Comparing these equations with the \ac{ode} version defined by \eqref{eq:spatial_limit_F} and \eqref{eq:spatial_limit_H}, we can identify:
 \begin{align}
     \mu_{A/B} &= u_{A/B}\sigma N_t\\
-    \frac{\mu_{A/B}}{N_t}G_{A/B} &= u_{A/B}\frac{V_{A/B}}{V_D}\\
-    \kappa G_A &= b \frac{V_A}{V_D}
-\end{align}
-which can be combined to yield
-\begin{align}
-    G_{A/B} &= \frac{1}{\sigma}\frac{V_{A/B}}{V_D}\\
+    \theta &= \frac{1}{\sigma V_D}\\
     \kappa &= \sigma b.
 \end{align}
-Checking the units of these quantities, we have $[\sigma^{-1}]=[R]=1/V$ which matches the definition of section~\ref{sec:three-pool-model}.
-Furthermore, we have $[b]=[R/t]=1/V/T$ and thus $[\kappa]=[\sigma b]=[1/t]$ which also matches equation~\eqref{eq:spatial_limit_H}.
-Expressing the obtained equations again in terms of volumes $V_{A/B}$, we obtain
-\begin{alignat}{9}
-    \dot{V}_{L,A} &= &&&&&-\lambda_A V_{L,A} &\bar{R}\\
-    \dot{V}_{L,B} &= &&&&&-\lambda_B V_{L,B} &\bar{R}\\
-    \dot{V}_A &= &u_A\sigma N_t\bar{R} &V_A &&&+ \lambda_A V_{L,A} &\bar{R}\\
-    \dot{V}_B &= &&&\frac{u_B\sigma}{1+\nu I}N_t \bar{R} &V_B &+ \lambda_B V_{L,B} &\bar{R}\\
-    \dot{\bar{R}} &= &-u_A\frac{V_A}{V_D} &\bar{R} &-\frac{u_B}{1+\nu I} \frac{V_B}{V_D} &\bar{R}\\
-    \dot{I} &= b \frac{V_A}{V_D}
-\end{alignat}
-where we introduced the quantities $V_{L,A/B}$ which correspond to the volume encapsulated by the lag state of species $A/B$.
-These equations can now be converted directly to the original \ac{ode} via
-\begin{align}
-    G_{A/B} &= \frac{1}{\sigma}\frac{V_{A/B}}{V_D}\\
-    L_{A/B} &= \frac{1}{\sigma}\frac{V_{L,A/B}}{V_D}\\
-    \frac{\mu_{A/B}}{N_t} &= u_{A/B}\sigma\\
-    \kappa &= \sigma b\\
-    K_I &= \nu
-\end{align}
-where we have related \ac{ode}-specific parameters on the left side with \ac{abm}-specific ones on the right side.
-%
+
 %
 % ................................................................................................
-\vfill
-\pagebreak
 \section{Parameter Values and Initial Conditions of the \acs{abm}}
 \paragraph{Parameter Values}
-We utilize the calculate mappings (see equations~\eqref{eq:ode-abm-mappings}) between the \ac{ode} formulation and \ac{abm} to compare values for parameters which serve a similar purpose within the two simulations.
-Table~\ref{tab:spatial_limit_init} lists these parameters together with their values.
-Most parameters have clear $1:1$ mappings to ones within the other model.
-However, some such as the ones related to spatial dynamics (damping $\eta$, mass $m$, potential
-strength $\epsilon$, diffusion $D_R,D_I$) do not.
+We use the calculated mappings (see equations~\eqref{eq:ode-abm-mappings}) between the \ac{ode} formulation and \ac{abm} to compare values for parameters that serve a similar purpose within the two simulations. Table~\ref{tab:spatial_limit_init} lists these parameters together with their values. Most parameters have a clear mapping between the \ac{ode} and the \ac{abm} models. However, some, such as the spatial dynamics parameters (damping $\eta$, mass $m$, potential
+strength $\epsilon$, diffusion $D_R,D_I$), do not.
 \begin{table}[H]
-    \centering
-    % \begin{tabularx}{\textwidth}{@{} X c @{\hspace{0.5cm}} r l @{\hspace{1cm}} X c @{\hspace{0.5cm}} r l @{}}
-    \begin{tabularx}{0.9\textwidth}{@{}l *1{>{\centering\arraybackslash}X} r l @{\hspace{1cm}} l *1{>{\centering\arraybackslash}X} r l @{}}
+    \centering\small
+    %\begin{tabularx}{\textwidth}{@{} X c @{\hspace{0.5cm}} r l @{\hspace{1cm}} X c @{\hspace{0.5cm}} r l @{}}
+    \begin{tabularx}{\linewidth}{@{}l *1{>{\centering\arraybackslash}X} r l @{\hspace{0.3 cm}} l *1{>{\centering\arraybackslash}X} r l @{}}
         \multicolumn{4}{c}{\textbf{\acs{ode}}} & \multicolumn{4}{c}{\textbf{\acs{abm}}}\\
         \toprule
         \multicolumn{8}{c}{\textbf{Cellular Reactions}}\\
         \toprule
-        Production $G_A$            & $\mu_A$       & $6.25\cdot10^{-5}$  & \unit{\per\second}
-        & Uptake                    & $u_A$         & $0.0025$  & \unit{\per\second}\\
-        Production $G_B$            & $\mu_B$       & $6.25\cdot10^{-5}$  & \unit{\per\second}
-        & Uptake                    & $u_B$         & $0.0025$  & \unit{\per\second}\\
-        Production $I$              & $\kappa$      & $0.0250$  & \unit{\per\second}
-        & Production $I$            & $b$           & $1.0$     & \unit{\mol\per\micro\metre\cubed\per\second}\\
-        Inhibition                  & $K_I$         & $0.025$   & \unit{\micro\metre\cubed\per\mol}
-        & Inhibition                & $\nu$         & $0.025$   & \unit{\micro\metre\cubed\per\mol}\\
+        Production $G_A$            & $\mu_A$     & $0.0000625$  	& \unit{\per\second}
+        & Uptake                    & $u_A$         	& $0.0025$  			& \unit{\per\second}\\
+        Production $G_B$            & $\mu_B$      	& $0.0000625$  	& \unit{\per\second}
+        & Uptake                    & $u_B$           	& $0.0025$  			& \unit{\per\second}\\
+        Production $I$              & $\kappa$      	& $0.0250$  & \unit{\per\second}
+        & Production $I$            & $b$           	& $1.0$   & \unit{\mol\per\micro\metre\cubed\per\second}\\
+        Inhibition                  & $K_I$             & $0.025$   & \unit{\micro\metre\cubed\per\mol}
+        & Inhibition                & $K_I$            & $0.025$   & \unit{\micro\metre\cubed\per\mol}\\
         &&
         && Conversion               & $\sigma$      & $0.025$   & \unit{\micro\metre\cubed\per\mol}\\
         Total nutrient capacity     & $N_t$         & $1.0$     & \unit{\mol\per\micro\metre\cubed}\\
@@ -1439,9 +1238,7 @@ strength $\epsilon$, diffusion $D_R,D_I$) do not.
     \end{tabularx}
     \caption{
         Comparison of the parameters for the \ac{ode} model and \ac{abm}.
-        % To view, how these parameters are stored inside a cell-agent, we refer to the supplementary
-        % material~\ref{sec:supplement-full-parameters}.
-    }
+     }
     \label{tab:spatial_limit_init}
 \end{table}
 
@@ -1474,128 +1271,29 @@ $1/\u_A=\SI{400}{\second}$.
 %
 \paragraph{Homogeneous and inhomogeneous initial cell distributions}
 To clarify what we mean by homogeneous and inhomogeneous initial configurations, we include snapshots of the simulation.
-At this point, cells have already grown such that the sizes of cell-clumps are better visible by the naked eye.
+At this point, cells have already grown such that the sizes of cell-clumps are more clearly visible.
 The snapshots were taken after $\SI{100}{\minute}$.
-\begin{figure}[H]
-    \centering
-    \begin{subfigure}[c]{0.5\textwidth}
-        \includegraphics[width=\textwidth]{Figures-abm-homogenous-images-snapshot_00024000.pdf}
-        \subcaption{Homogeneous initial cell distribution, $D_R=D_I=20.0$~\unit{\micro\metre\squared\per\second}}
-    \end{subfigure}%
-    \begin{subfigure}[c]{0.5\textwidth}
-        \includegraphics[width=\textwidth]{Figures-abm-homogenous-low-diffusion-images-snapshot_00024000.pdf}
-        \subcaption{Homogeneous initial cell distribution, $D_R=D_I=2.0$~\unit{\micro\metre\squared\per\second}}
-    \end{subfigure}\\
-    \begin{subfigure}[c]{0.5\textwidth}
-        \includegraphics[width=\textwidth]{Figures-abm-inhomogenous-images-snapshot_00024000.pdf}%
-        \subcaption{Heterogeneous initial cell distribution, $D_R=D_I=20.0$~\unit{\micro\metre\squared\per\second}}
-    \end{subfigure}%
-    \begin{subfigure}[c]{0.5\textwidth}
-        \includegraphics[width=\textwidth]{Figures-abm-random-images-snapshot_00024000.pdf}%
-        \subcaption{Random initial cell distribution, $D_R=D_I=20.0$~\unit{\micro\metre\squared\per\second}}
-    \end{subfigure}
-    \caption{
-        Spatial configuration of cells corresponding to the pictures shown in Figure~\ref{fig:spatial-growth-curve}.
-    }
-    \label{fig:supplement-spatial-initial-config-cells}
-\end{figure}
-%
-%
-% ................................................................................................
-\vfill
-\pagebreak
-\section{Remarks on comparing ABM and ODE results}
-In order to compare the quantities defined by the \ac{abm} and the \ac{ode}, we can use the
-conversion relations \eqref{eq:ode-abm-mappings}.
-This allows us to understand the quantities $G_{A/B},L_{A,B},R$ in terms of the cellular quantities
-defined by the \ac{abm}.
-We have introduced the growth pools $G_{A/B}$ in such a way that they can be directly compared with
-the resource pool $R$ which is immediately clear by looking at equations
-\eqref{eq:ode_3pool_resource} to \eqref{eq:ode_3pool_resource2}.
-Therefore we can not simply interpret $G_A$ as the cell density defined by the cell number divided
-by the total volume of the domain.
-However, equations \eqref{eq:ode-abm-mappings} allow us to investigate this matter further.
-
-We start by expressing the total volume of species $A$ in terms of the total amount of cells.
-To this end, we introduce the average cell volume $\bar{V}_c$ which can be assumed to be constant
-for large enough populations.
-We thus obtain
-\begin{equation}
-    V_A = N_A \bar{V}_c
-\end{equation}
-which we plug into equation~\ref{eq:ode-abm-mappings} and obtain
-\begin{equation}
-    G_A = \frac{1}{\sigma} N_A \frac{\bar{V}_c}{V_D}.
-\end{equation}
-We rearrange this equation and additionally assume that $G_A$ is proportional to the cell number
-$N_A$ via
-\begin{equation}
-    G_A = a N_A
-\end{equation}
-and thus obtain
-\begin{equation}
-    a = \frac{1}{\sigma}\frac{\bar{V}_c}{V_D}.
-\end{equation}
-We consider the case in which we want to consume nutrients to add a single bacterium
-($\Delta N_A=1$) of average volume $\bar{V}_c$ to $G_A$.
-For this scenario, we calculate the difference in resources $\Delta R$ and $\Delta G_A$ to be
-\begin{equation}
-    - \Delta R = \Delta G_A = \frac{1}{\sigma}\frac{\bar{V}_c}{V_D}.
-\end{equation}
-
-We can apply these observations to the numerical results oft the \ac{abm} and \ac{ode} and thus
-estimate quantities such as the cell number $N_{A/B}$ over the course of the simulation via
-different methods.
-First and foremost, the \ac{abm} tracks the total amount of bacteria and thus we can simply read out
-this quantity.
-Secondly, we can estimate this quantity by via the total volume $V_{A/B}$ and the average volume
-$\bar{V}_c$ via
-\begin{equation}
-    N_A = \frac{V_A}{\bar{V}_c}.
-\end{equation}
-And lastly, we can use the results $G_A$ of the \ac{ode} and calculate $N_A$ via
-\begin{equation}
-    N_A = \sigma G_A \frac{V_D}{\bar{V}_c}.
-\end{equation}
-Figure~\ref{fig:spatial-growth-curve-cellcount} shows the numerical values for these approaches.
-When comparing this plot with the volumetric-based one (Figure~\ref{fig:spatial-growth-curve}), we
-see that the cell number is subject to fluctuations due to the low overall cellcount.
-These fluctuations will be less noticable in larger systems containing significantly more bacterial
-agents but show here.
-In contrast, the volumetric plot presents a smooth curve, since individual jumps in cellcount do not
-affect the overall amount of volume.
-Therefore, the volumetric comparison was chosen since these curves are expected to be better
-representative of a larger system.
 
 \begin{figure}[H]
     \centering
-    \begin{tikzonimage}[width=0.5\textwidth]
-        {Figures-abm-homogenous-abm_ode_comparison-cellcount.pdf}
+    \begin{tikzonimage}[width=0.49\textwidth]
+        {Figures-abm-homogenous-images-snapshot_00024000.pdf}
         \node at (0, 1)[anchor=north west]{\textbf{A}};
     \end{tikzonimage}%
-    \begin{tikzonimage}[width=0.5\textwidth]
-        {Figures-abm-homogenous-low-diffusion-abm_ode_comparison-cellcount.pdf}
+    \begin{tikzonimage}[width=0.49\textwidth]
+        {Figures-abm-homogenous-low-diffusion-images-snapshot_00024000.pdf}
         \node at (0, 1)[anchor=north west]{\textbf{B}};
     \end{tikzonimage}\\
-    \begin{tikzonimage}[width=0.5\textwidth]
-        {Figures-abm-inhomogenous-abm_ode_comparison-cellcount.pdf}
+    \begin{tikzonimage}[width=0.49\textwidth]
+        {Figures-abm-inhomogenous-images-snapshot_00024000.pdf}
         \node at (0, 1)[anchor=north west]{\textbf{C}};
     \end{tikzonimage}%
-    \begin{tikzonimage}[width=0.5\textwidth]
-        {Figures-abm-random-abm_ode_comparison-cellcount.pdf}
+    \begin{tikzonimage}[width=0.49\textwidth]
+        {Figures-abm-random-images-snapshot_00024000.pdf}
         \node at (0, 1)[anchor=north west]{\textbf{D}};
     \end{tikzonimage}
     \caption{
-        (A-D) Comparison of the \ac{ode} and \ac{abm} model for different configurations.
-        We plot the celcount $N_{A/B/\text{Total}}$ obtained via different methods.
-        (A) Homogeneous, fast diffusion
-        (B) Homogeneous, slow diffusion
-        (C) Heterogeneous, fast diffusion
-        (D) Random, fast diffusion
-        The diffusion constants are chosen such that $D_R=D_I=D={5,20}~\unit{\micro\metre\squared\per\second}$.
-        Snapshots of the spatial configurations of cells are included in the Appendix~\ref{fig:supplement-spatial-initial-config-cells}.
-    }
-    \label{fig:spatial-growth-curve-cellcount}
+        Spatial configuration of cells corresponding to the pictures shown in Figure~\ref{fig:spatial-growth-curve}. (A) Homogeneous initial cell distribution, $D_R=D_I=20.0$~\unit{\micro\metre\squared\per\second}. (B) Homogeneous initial cell distribution, $D_R=D_I=2.0$~\unit{\micro\metre\squared\per\second}. (C) Heterogeneous initial cell distribution, $D_R=D_I=20.0$~\unit{\micro\metre\squared\per\second}. (D) Random initial cell distribution, $D_R=D_I=20.0$~\unit{\micro\metre\squared\per\second}.    }
+    \label{fig:supplement-spatial-initial-config-cells}
 \end{figure}
-
 \end{document}
