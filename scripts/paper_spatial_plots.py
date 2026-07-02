@@ -36,9 +36,11 @@ def calculate_results(diffusion_constant, randomness, homogenous):
     meta_params.dt = SECOND / precision
     meta_params.n_times = 40_000 * precision + 1
     meta_params.save_interval = 1_000 * precision
-    meta_params.n_threads = 8
+    meta_params.n_threads = 32
 
     cell = crp.BacteriaTemplate()
+
+    AVERAGE_RADIUS = 0.5 * MICRON
 
     # Cellular Reactions
     cell.cellular_reactions.uptake_rate = 0.0025 / SECOND
@@ -48,7 +50,7 @@ def calculate_results(diffusion_constant, randomness, homogenous):
 
     # Interaction
     cell.cellular_reactions.potential_strength = 0.125 * PICO_GRAM * MICRON / SECOND
-    cell.cellular_reactions.cell_volume = np.pi * (1.5 * MICRON) ** 2
+    cell.cellular_reactions.cell_volume = np.pi * AVERAGE_RADIUS**2
     cell.mechanics.damping_constant = 0.125 / SECOND
     cell.mechanics.mass = 1.09 * cell.cellular_reactions.cell_volume * PICO_GRAM / MICRON**2
     cell.cellular_reactions.potential_strength = 0.03125 * PICO_GRAM * MICRON / SECOND**2
@@ -56,7 +58,7 @@ def calculate_results(diffusion_constant, randomness, homogenous):
     # Cell Cycle
     cell.cycle.lag_phase_transition_rate_1 = 0.001250 / SECOND
     cell.cycle.lag_phase_transition_rate_2 = 0.000625 / SECOND
-    cell.cycle.volume_division_threshold = 2 * np.pi * (1.5 * MICRON) ** 2
+    cell.cycle.volume_division_threshold = 2 * np.pi * AVERAGE_RADIUS**2
 
     cells = crp.generate_cells(
         18, 18, domain, randomness, homogenous=homogenous, template=cell, seed=2
