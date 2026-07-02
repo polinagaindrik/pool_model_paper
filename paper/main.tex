@@ -1410,8 +1410,8 @@ strength $\epsilon$, diffusion $D_R,D_I$) do not.
         \multicolumn{8}{c}{\textbf{Physical Mechanics \& Interactions}}\\
         \toprule
         &&&& Damping                 & $\eta$        & $0.125$   & \unit{\per\second}\\
-        &&&& Mass                    & $m$           & $7.70$    & \unit{\pico\gram}\\
-        &&&& Potential               & $\epsilon$    & $0.03125$ & \unit{\pico\gram\micro\metre\per\second\squared}\\
+        &&&& Mass                    & $m$           & $0.71$    & \unit{\pico\gram}\\
+        &&&& Force strength          & $\epsilon$    & $0.03125$ & \unit{\pico\gram\micro\metre\per\second\squared}\\
         \toprule
         \multicolumn{8}{c}{\textbf{Cell Cycle}}\\
         \toprule
@@ -1419,7 +1419,7 @@ strength $\epsilon$, diffusion $D_R,D_I$) do not.
         &                           & $\lambda_A$   & $0.001250$ & \unit{\per\second}\\
         Rate $L_B\rightarrow G_B$   & $\lambda_B$   & $0.000625$ & \unit{\per\second}
         &                           & $\lambda_B$   & $0.000625$ & \unit{\per\second}\\
-        &&&& Division Vol.          & $V_t$         & $14.14$    & \unit{\micro\metre\cubed}\\
+        &&&& Division Vol.          & $V_t$         & $1.57$     & \unit{\micro\metre\cubed}\\
         \toprule
         \multicolumn{8}{c}{\textbf{Initial Values}}\\
         \toprule
@@ -1428,10 +1428,10 @@ strength $\epsilon$, diffusion $D_R,D_I$) do not.
         Lag phase species $B$       & $L_B$         & $0.0051$  & \unit{\mol\per\micro\metre\cubed}
         & Cell Number               & $C_B$         & 18\\
         Growth phase species $A$    & $G_A$         & $0.0$     & \unit{\mol\per\micro\metre\cubed}
-        & Cell Volume               & $V_{c,A}$     & $7.07$    & \unit{\micro\metre\cubed}\\
+        & Cell Volume               & $V_{c_A}$     & $0.78$    & \unit{\micro\metre\cubed}\\
         Growth phase species $B$    & $G_B$         & $0.0$     & \unit{\mol\per\micro\metre\cubed}
-        & Cell Volume               & $V_{c,B}$     & $7.07$    & \unit{\micro\metre\cubed}\\
-        Relative Nutrients          & $R$           & $1.0$
+        & Cell Volume               & $V_{c_B}$     & $0.78$    & \unit{\micro\metre\cubed}\\
+        Relative Nutrients          & $\tilde{R}$   & $1.0$
         && Nutrients                & $R_0$         & $1.0$     & \unit{\mol\per\micro\metre\cubed}\\
         Inhibitor                   & $I_0$         & $0.0$     & \unit{\mol\per\micro\metre\cubed}
         & Inhibitor                 & $I_0$         & $0.0$     & \unit{\mol\per\micro\metre\cubed}\\
@@ -1444,6 +1444,33 @@ strength $\epsilon$, diffusion $D_R,D_I$) do not.
     }
     \label{tab:spatial_limit_init}
 \end{table}
+
+Every parameter of Table~\ref{tab:spatial_limit_init} which is present in the \ac{ode} version of
+the model was converted directly to the \ac{abm} analogon.
+The values of these parameters are adopted from the previous analyses of the \ac{ode} model (see
+Figure~\ref{fig:3pool_resource_plots}).
+The remaining parameters are the conversion factor $\sigma$, the diffusion constants $D_X$, the
+mechanical \& interaction parameters and the division volume $V_t$.
+The values of diffusion constants were justified in the main text (see
+Subsection~\ref{subsec:comparigon-abm-and-ode}).
+The values of the initial cell size is based on a generic cylindrical cell with radius
+$r=\SI{0.5}{\micro\metre}$ and height $h=\SI{1}{\micro\metre}$ which captures the rough dimension of
+bacteria such as \textit{E. Coli}~\cite{Volkmer2011} or
+\textit{Pseudomonas aeruginosa}~\cite{Furchtgott2011}.
+Subsequently, the division volume is simply assumed to be double of this initial volume and the mass
+can be obtained, utilizing an average density estimate of $\SI{1.1}{\pico\gram\per\micro\metre}$
+\cite{LofererKrobacher1998}.
+
+It should be noted explicitly that these sizes do not meaningfully alter the results calculated by
+the \ac{abm} since we report our findings in units of volume as opposed to cellular count.
+This ensures a wider compatibility and does not restrict our model to any particular type.
+As a result, the parameters $\eta,\epsilon$, describing the dynamics should be understood as
+effective parameters which are chosen to model the coarse-grained repulsion of the individual agents
+rather than the molecular interactions which standard practice in the realm of computational
+biology~\cite{Volfson2008}.
+The important property is that the mechanical relaxation which acts on time-scales of order
+$1/\eta=\SI{8}{\second}$ is much quicker compared to the cellular processes at time scales
+$1/\u_A=\SI{400}{\second}$.
 %
 \paragraph{Homogeneous and inhomogeneous initial cell distributions}
 To clarify what we mean by homogeneous and inhomogeneous initial configurations, we include snapshots of the simulation.
