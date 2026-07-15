@@ -1,0 +1,218 @@
+\documentclass[10pt,1p,authoryear]{elsarticle}
+\usepackage[utf8]{inputenc}
+
+\setlength{\tabcolsep}{1.3pt}
+\setlength{\columnsep}{0.4cm}
+\usepackage{acronym}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage[aboveskip=1pt,labelfont=bf,labelsep=period,justification=raggedright,singlelinecheck=off, font=small]{caption}
+\usepackage{diagbox}
+\usepackage{float}
+\usepackage[T1]{fontenc}
+% \usepackage[a4paper,inner=2cm,outer=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{graphicx}% Include figure files
+\usepackage{here}
+\usepackage{hyperref}
+%\usepackage{lipsum}
+\usepackage{lineno}
+\usepackage{setspace}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{multirow}
+\usepackage{newfloat}
+\usepackage{onimage}
+\usepackage{siunitx}
+\usepackage{subcaption}
+\usepackage{tabularx}
+\usepackage{tikz}
+%\usepackage[dvipsnames]{xcolor}
+\usepackage{xpatch}
+\usepackage{orcidlink}
+
+% Ensure that subcaptions have capital letter
+\renewcommand{\thesubfigure}{\Alph{subfigure}}
+
+% Must be loaded after tikz
+\usepackage{ctable}
+
+% Define new column type with multirow
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+
+\bibliographystyle{elsarticle-harv}
+
+\restylefloat{table}
+
+% Remove indent across the whole document
+\setlength\parindent{0pt}
+
+% Define equation numbering
+\numberwithin{equation}{section}
+
+
+\newcommand{\mbx}{\mathbf{x}}
+\newcommand{\mbm}{\mathbf{m}}
+\newcommand{\mbp}{\mathbf{p}}
+\newcommand{\mbu}{\mathbf{u}}
+\newcommand{\mbF}{\mathbf{F}}
+\newcommand{\mbH}{\mathbf{H}}
+\newcommand{\cmt}[1]{\textcolor{red} {[#1]}}
+\newcommand{\etal}{{\textit{et al. }}}
+
+\newacro{ode}[ODE]{Ordinary Differential Equation}
+\newacro{pde}[PDE]{Partial Differential Equation}
+\newacro{glv}[gLV]{generalized Lotka-Volterra}
+\newacro{abm}[ABM]{Agent-Based Model}
+
+
+% Define new style for json listings
+% Copied from https://www.latex4technics.com/?note=3QTU
+\colorlet{punct}{red!60!black}
+\definecolor{background}{HTML}{EEEEEE}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+
+\title{The Pool Model: A Mechanistic ODE Framework for Bacterial Consortia in Food Science}
+\author[1]{Polina Gaindrik\orcidlink{0000-0003-0928-3951}}
+\author[1]{Jonas Pleyer\orcidlink{0009-0001-0613-7978}}
+\author[2]{Matthias Brunner}
+\author[3]{Fernando Pérez Rodríguez}
+\author[1]{Christian Fleck\orcidlink{0000-0002-6371-4495}\corref{cor1}}
+\ead{christian.fleck@fdm.uni-freiburg.de}
+
+\cortext[cor1]{Corresponding Author\\ \textit{E-mail address:} christian.fleck@fdm.uni-freiburg.de}
+\affiliation[1]{
+    organization={Freiburg Center for Data Analysis and Modeling and AI},
+    addressline={Ernst-Zermelo Str. 1},
+    city={Freiburg im Breisgau},
+    postcode={79104},
+    country={Germany},
+}
+\affiliation[2]{
+    organization={tsenso GmbH},
+    addressline={Nöllenstr. 32},
+    city={Stuttgart},
+    postcode={70195},
+    country={Germany},
+}
+\affiliation[3]{
+    organization={Department of Food Science and Technology, UIC Zoonosis y Enfermedades Emergentes ENZOEM, ceiA3, Universidad de Córdoba},
+    addressline={Campus Rabanales s/n. Darwin building- Annex},
+    city={Córdoba},
+    postcode={14014},
+    country={Spain},
+}
+\date{
+    \footnotesize
+    \textsuperscript{\textbf{1}}
+}
+
+% Force double spacing in abstract (elsarticle overrides \doublespacing there)
+\makeatletter
+\let\els@abstract\abstract
+\renewcommand{\abstract}{\els@abstract\setstretch{2}}
+\makeatother
+
+\begin{document}
+\doublespacing
+\linenumbers
+%\maketitle
+%
+% ================================================================================================% ================================================================================================
+\section{Case Study}
+
+%@article{ferrer-bustinsAntilisterialEffect2024,
+%	title = {The Antilisterial Effect of Latilactobacillus sakei {CTC}494 in Relation to Dry Fermented Sausage Ingredients and Temperature in Meat Simulation Media},
+%	volume = {10},
+%	rights = {http://creativecommons.org/licenses/by/3.0/},
+%	issn = {2311-5637},
+%	url = {http://dx.doi.org/10.3390/fermentation10060326},
+%	doi = {10.3390/fermentation10060326},
+%	pages = {326},
+%	number = {6},
+%	journaltitle = {Fermentation},
+%	publisher = {Multidisciplinary Digital Publishing Institute},
+%	author = {Ferrer-Bustins, N鷕ia and Costa, Jean Carlos Correia Peres and P閞ez-Rodr韌uez, Fernando and Mart韓, Bel閚 and Bover-Cid, Sara and Jofr�, Anna},
+%	urldate = {2026-06-18},
+%	date = {2024-06},
+%	langid = {english},
+%   year={2024}
+%}
+
+%@article{leroyModelingBacteriocin2005,
+%	title = {Modeling Bacteriocin Resistance and Inactivation of Listeria innocua {LMG} 13568 by Lactobacillus sakei {CTC} 494 under Sausage Fermentation Conditions},
+%	volume = {71},
+%	issn = {0099-2240},
+%	url = {http://dx.doi.org/10.1128/AEM.71.11.7567-7570.2005},
+%	doi = {10.1128/AEM.71.11.7567-7570.2005},
+%	pages = {7567--7570},
+%	number = {11},
+%	journaltitle = {Applied and Environmental Microbiology},
+%	shortjournal = {Appl Environ Microbiol},
+%	author = {Leroy, Frédéric and Lievens, Kristoff and De Vuyst, Luc},
+%	date = {2005-11},
+%    year={2005}
+%}
+
+To demonstrate the efficacy of the proposed approach using real experimental data, we consider a two-species system representative of a food-based scenario.
+As described by~\citet{ferrer-bustinsAntilisterialEffect2024} the dynamics between \textit{Listeria monocytogenes} CTC1034 (Lm-CTC1034), a pathogen common in dry fermented sausages, and two strains of  \textit{Latilactobacillus sakei} were studied using a central composite design in meat simulation media.
+These strains included CTC494 (Ls-CTC494), known for its production of the bacteriocin sakasin K, which exhibits strong antimicrobial activity against \textit{Listeria spp.}, and 23K (Ls-23K), which does not produce bacteriocins.
+Growth curves were measured for each species (Lm-CTC1034, Ls-CTC494, Ls-23K) in monoculture, as well as in cocultures combining \textit{L. monocytogenes} with each \textit{L. sakei} strain.
+Furthermore, time-series data were collected for bacteriocin activity, pH values, and the concentration of lactic acid produced by both species.
+Accordingly, we propose the two-species model for \textit{L. sakei} and \textit{L. monocytogenes}.
+Based on the experimental data, we assume that the bacteria had already passed the lag phase and entered the growth phase.
+So the transition from the lag pool is omitted from our model. 
+Both species compete for a common resource pool $\tilde{R}$ with capacity $N_t$.
+Moreover, the toxin produced during the growth of Ls-CTC494 at rate $\kappa_T^{\text{Ls } \delta}$ induces the death of Lm-CTC1034 cells via a Hill-function dependence with a rate $\omega'_\text{Lm}$.
+As it was observed in works with \textit{L. innocua}, e.g., by~\citet{leroyModelingBacteriocin2005}, small number of \textit{Listeria spp.} cells is resistant to sakasin K.
+Given that we divide the Lm-CTC1034 population into two groups: sensitive ($x^\text{sens}_\text{Lm}$) and resistant ($x^\text{res}_\text{Lm}$) to it.
+For simplicity, we assume identical growth dynamics ($\mu^\text{res}_\text{Lm} = \mu^\text{res}_\text{Lm} = \mu_\text{Lm}$) for both groups, with the toxin-induced death term applying only to the sensitive population.
+Both species continuously produce lactic acid at rates $\kappa_{LA}^{\text{Ls } \delta}$ and $\kappa_{LA}^\text{Lm}$,  while \textit{L. sakei} also exhibits growth-associated production at a rate $\kappa_{LA/G}^{\text{Ls } \delta}$.
+Based on experimental observations of lactic acid concentration, we assume that metabolic differences between the Ls-23K and Ls-CTC494 strains lead to different production rates.
+Thus, the index $\delta$ is used to differentiate parameters between the two \textit{L. sakei} strains. 
+Note that the toxin production rate $\kappa_T^{\text{Ls } \delta}$  also depends on the strain of \textit{L. sakei}: for Ls-23K it equals zero and for Ls-CTC494 it is positive value.
+The growth rates for two \textit{L. sakei} strains are assumed to be equal.
+\begin{align}
+    \begin{split}
+        \dot x^\delta_\text{Ls} &= \mu_\text{Ls} \tilde{R} x^\delta_\text{Ls} \\%- \omega_\text{Ls} x_\text{Ls} \\
+        \dot x^\text{sens}_\text{Lm} &= \mu_\text{Lm} \tilde{R} x^\text{sens}_\text{Lm} - \omega'_\text{Lm} \frac{\mathcal{T}^n_\text{Ls}}{\mathcal{T}^n_\text{Ls} + K^n} x^\text{sens}_\text{Lm} \\ %  - \omega_\text{Lm} x_\text{Lm}
+        \dot x^\text{res}_\text{Lm} &= \mu_\text{Lm} \tilde{R} x^\text{res}_\text{Lm} \\
+        \dot {\tilde{R}} &= - \frac{1}{N_t} (\mu_\text{Ls} \tilde{R} x^\delta_\text{Ls} + \mu_\text{Lm} \tilde{R} x^\text{sens}_\text{Lm} + \mu_\text{Lm} \tilde{R} x^\text{res}_\text{Lm}) \\
+        \dot{\mathcal{T}_\text{Ls}} &= \kappa_T^{\text{Ls } \delta} \tilde{R} x^\delta_\text{Ls} \\
+        \dot {LA} &= (\kappa_{LA}^{\text{Ls } \delta} + \kappa_{LA/G}^{\text{Ls } \delta} \tilde{R}) x^\delta_\text{Ls} + \kappa_{LA}^\text{Lm} (x^\text{sens}_\text{Lm} + x^\text{res}_\text{Lm})%\\
+        %\dot {pH} &= q(t) \dot {LA}.
+        \label{eq:case_study_ode}
+    \end{split}
+\end{align}
+Furthermore, the accumulation of lactic acid precipitates a decrease in the pH of the microenvironment, which in turn alters the growth dynamics.
+To account for this effect, we incorporate a term from the gamma model proposed by~\citet{zwietering_decision_1992}:
+\begin{equation}
+    \mu (pH) = \mu_\text{opt} \gamma(pH) =  \mu_\text{opt} \frac{pH - pH_\text{min}}{pH_\text{opt} - pH_\text{min}},
+    \label{eq:case_study_mu_pH}
+\end{equation}
+where $\mu_\text{opt}$ is the growth rate at optimum conditions.
+Based on the experimental data we estimated parameter of the model (see Fig.~\ref{fig:case_study}). 
+%
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=0.8\columnwidth]{Figures-pool_model_real_data_all_count.pdf}\\
+    \includegraphics[width=0.8\columnwidth]{Figures-pool_model_real_data_LA_pH.pdf} 
+    \caption{
+        The model~(\ref{eq:case_study_ode})  is shown with parameters estimated based on experimental data (represented by scatter plots). Dashed lines denote model solutions for monoculture experiments, while solid lines denote coculture experiments.
+        (A) Bacterial counts for monocultures of \textit{L. sakei} 23K (Ls-23K, light green), \textit{L. sakei} CTC494 (Ls-CTC494, light blue), and \textit{L. monocytogenes} CTC1034 (Lm-CTC1034, orange).
+        Cocultures are shown for Lm-CTC1034 with Ls-23K (Ls-23K in dark green, Lm-CTC1034 in pink) and Lm-CTC1034 with Ls-CTC494 (Ls-CTC494 in dark blue, Lm-CTC1034 in red). The activity of the bacteriocin produced by Ls-CTC494 is indicated by the brown dotted line.
+        (B) Lactic acid concentrations for monocultures of Ls-23K (light green), Ls-CTC494 (light blue), and Lm-CTC1034 (orange), as well as cocultures of Lm-CTC1034 with Ls-23K (purple) and Lm-CTC1034 with Ls-CTC494 (yellow). Measured pH values, used as an external condition, are represented by crosses; colors correspond to the respective lactic acid curves.
+    }
+    \label{fig:case_study}
+    \end{center}
+\end{figure}
+% ================================================================================================
+% \printbibliography
+%\bibliography{references.bib}
+
+% ================================================================================================
+\newpage
+\end{document}
