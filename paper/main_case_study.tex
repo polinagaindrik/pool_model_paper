@@ -209,6 +209,43 @@ Based on the experimental data we estimated parameter of the model (see Fig.~\re
     \label{fig:case_study}
     \end{center}
 \end{figure}
+
+% Add values + units
+\begin{table}[H]
+    \centering\small
+    \begin{tabular}{ccccc}
+        \textbf{Parameters} \hspace{5mm}& \textbf{Ls-23K} \hspace{5mm}& \textbf{Ls-CTC494} \hspace{5mm}& \textbf{Lm-CTC1034(sens)} \hspace{5mm}& \textbf{Lm-CTC1034(res)} \\
+    \toprule
+    \multicolumn{5}{c}{Growth associated parameters}\\
+    \midrule
+    $\mu_\text{opt}$ &  \multicolumn{2}{c}{ - } & \multicolumn{2}{c}{ - }\\
+    $pH_\text{min}$ &  \multicolumn{2}{c}{ - } & \multicolumn{2}{c}{ - }\\
+    $pH_\text{opt}$ &  \multicolumn{2}{c}{ - } & \multicolumn{2}{c}{ - }\\
+    $N_t$ & \multicolumn{4}{c}{-}\\
+    \midrule
+    \multicolumn{5}{c}{Lactic acid production}\\
+    \midrule
+    $\kappa_\text{LA}$ & - & -  &\multicolumn{2}{c}{ - } \\
+    $\kappa_\text{LA/G}$ & - & -  &\multicolumn{2}{c}{ 0 } \\
+    \midrule
+    \multicolumn{5}{c}{Bacteriocin associated parameters}\\
+    \midrule
+    $\kappa_T^{\text{Ls} \delta}$ & \multicolumn{4}{c}{ - } \\
+    $\omega'_\text{Lm}$ & \multicolumn{4}{c}{-}\\
+    $K$ & \multicolumn{4}{c}{-}\\
+    \midrule
+    \multicolumn{5}{c}{Initial conditions}\\
+    \midrule
+    Monoculture         & - & - & - & - \\
+    Coculture (23K)     & - & 0 & - & - \\
+    Coculture (CTC494)  & 0 & - & - & - \\
+    \end{tabular}
+    \caption{
+        Model parameters estimated form the experimental data.
+     }
+    \label{tab:case_study_parameters}
+\end{table}
+
 % ================================================================================================
 % \printbibliography
 %\bibliography{references.bib}
