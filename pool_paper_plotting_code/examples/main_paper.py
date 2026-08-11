@@ -31,26 +31,26 @@ def pool_model_3pools_resource(t, x, param, x0, const):
         omega1 * L + omega2 * G
         ]
 
-def pool_model_2pools_resource_lag(t, x, param, x0, const):
-    (lambd, mu, N_t, ) = const
-    (L0, G0, R0, ) = x0
-    (L, G, R ) = x
+#def pool_model_2pools_resource_lag(t, x, param, x0, const):
+#    (lambd, mu, N_t, ) = const
+#    (L0, G0, R0, ) = x0
+#    (L, G, R ) = x
+#
+#    return [
+#        - lambd * R * L,
+#        lambd * R * L + mu * R * G,
+#        - (mu / N_t) * R * G
+#        ]
 
-    return [
-        - lambd * R * L,
-        lambd * R * L + mu * R * G,
-        - (mu / N_t) * R * G
-        ]
-
-def pool_model_2pools_resource_lag2(t, x, param, x0, const):
-    (lambd, mu, N_t, ) = const
-    (L0, G0, ) = x0
-    (L, G, ) = x
-    r_term = 1 - (L+G)/N_t
-    return [
-        - lambd * r_term * L,
-        lambd * r_term * L + mu * r_term * G,
-        ]
+#def pool_model_2pools_resource_lag2(t, x, param, x0, const):
+#    (lambd, mu, N_t, ) = const
+#    (L0, G0, ) = x0
+#    (L, G, ) = x
+#    r_term = 1 - (L+G)/N_t
+#    return [
+#        - lambd * r_term * L,
+#        lambd * r_term * L + mu * r_term * G,
+#        ]
 
 def pool_model_dormant(t, x, param, x0, const):
     T_const = 12.
@@ -72,17 +72,17 @@ def pool_model_dormant(t, x, param, x0, const):
         gamma * G - xi * S
         ]
 
-def pool_model_tempstress(t, x, param, x0, const):
-    (lambd, omega1, mu, omega2, N_t, sigma, delta, zeta, alpha, shift_cnd,) = const
-    (L0, G0, D0, ) = x0
-    (L, G, D, ) = x
-
-    gamma = temp_stress(t, sigma, delta, zeta, alpha, shift_cnd)
-    return [
-        - (omega1 + lambd) * L + gamma * G,
-        lambd * L + (mu - mu * ((L + G + D)/N_t) - omega2 - gamma) * G,
-        omega1 * L + omega2 * G
-        ]
+#def pool_model_tempstress(t, x, param, x0, const):
+#    (lambd, omega1, mu, omega2, N_t, sigma, delta, zeta, alpha, shift_cnd,) = const
+#    (L0, G0, D0, ) = x0
+#    (L, G, D, ) = x
+#
+#    gamma = temp_stress(t, sigma, delta, zeta, alpha, shift_cnd)
+#    return [
+#        - (omega1 + lambd) * L + gamma * G,
+#        lambd * L + (mu - mu * ((L + G + D)/N_t) - omega2 - gamma) * G,
+#        omega1 * L + omega2 * G
+#        ]
 
 def temp_stress(t, sigma, delta, zeta, alpha, shift_cnd):
     #shift_cnd = ((t, T), (t, T))
@@ -295,7 +295,7 @@ if __name__ == "__main__":
     plt.close(fig)
 
 #################################### Resource competition ################################################3
-    x0_gLV = [[10.], [0.], [10.], [0.], [1.]]
+    x0_gLV = [[10.], [0.], [10.], [0.], [1. - 20./Nt]]
     const_gLV = [.01, 3., .05, 2.5, Nt] # (lambd1, lambd2, alph1, alph2, Nt, )
     data_gLV = generate_insilico_data(pool_model_resource_comp, [np.linspace(0, 10, 100)], [], [[]], x0_gLV,
                                       const=const_gLV, n_traj=1, obs_func=observable_2pool_2species_resource)
@@ -319,7 +319,7 @@ if __name__ == "__main__":
 
 ######################## Interspecies competition (Waste/inhibitor production) #############################
 ####################################### Toxin Production ##############################################
-    x0_tox = [[10.], [0.], [10.], [0.], [1.], [0.]]
+    x0_tox = [[10.], [0.], [10.], [0.],  [1. - 20./Nt], [0.]]
     const_tox = [.01, 3., .05, 2.5, Nt, 0.2, 1.] # (lambd1, lambd2, alph1, alph2, Nt, k, omega)
     data_tox1 = generate_insilico_data(pool_model_2sp_comp_toxin1, [np.linspace(0, 10, 100)], [], [[]], x0_tox,
                                        const=const_tox, n_traj=1, obs_func=observable_2pool_2species_resource_toxin)
