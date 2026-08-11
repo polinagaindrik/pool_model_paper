@@ -747,6 +747,144 @@ Increasing the production rate of the public good (see Fig.~\ref{fig:1pool_2sp_i
 On the other hand, choosing $\chi=2$ (see Fig.~\ref{fig:1pool_2sp_inhibit}F), we increase the profit that species $B$ has from public goods $\tilde{P}_A$.
 This indirectly leads to a larger amount of $\tilde{P}_B$ produced by species $B$.
 % ================================================================================================
+\section{Case study}
+To demonstrate the efficacy of the proposed approach using real experimental data, we consider a two-species system representative of a food-based scenario.
+As described by~\citet{ferrer-bustinsAntilisterialEffect2024}, the dynamics between \textit{Listeria monocytogenes} CTC1034 (Lm-CTC1034), a pathogen common in dry fermented sausages, and two strains of \textit{Latilactobacillus sakei} were studied using a central composite design in meat simulation media.
+These strains included CTC494 (Ls-CTC494), known for its production of the bacteriocin sakasin K, which exhibits strong antimicrobial activity against \textit{Listeria spp.}, and 23K (Ls-23K), which does not produce bacteriocins.
+Growth curves were measured for each species (Lm-CTC1034 and Ls-CTC494 strains, and Ls-23K) in monoculture, as well as in cocultures combining \textit{L. monocytogenes} with each \textit{L. sakei} strain.
+Furthermore, time-series data were collected for bacteriocin activity, pH values, and the concentration of lactic acid produced by both species.
+Accordingly, we considered three different scenarios and developed corresponding ODE models: a single-species model for monoculture experiments, a two-species model with resource competition for Lm-CTC1034 and Ls-23K, and a generalized two-species model incorporating both resource competition and toxin production, which is suitable for all the strains mentioned above.
+Using a combination of the global optimization Differential Evolution technique~\citep{stornDifferentialEvolutionSimple1997} and the local Limited-memory Broyden-Fletcher-Goldfarb-Shanno with Box constraints (L-BFGS-B)~\citep{doi:10.1137/0916069} minimization, we estimated the parameters for each model and the initial conditions for each experiment.
+%
+\subsection{Single-species monoculture models}
+First, the growth of each bacterial strain was measured in a monoculture setup that can be simply described by a single-species ODE system.
+Based on the experimental data, we assume that the bacteria had already passed the lag phase and entered the exponential growth phase.
+Therefore, the transition from the lag pool is omitted from our model.
+We consider a common resource $\tilde R$, however, unlike previous resource-competition models, each species requires a different amount to complete binary division.
+The ODE system for monoculture for bacterium $i$ can be written as follows:
+\begin{align}\begin{split}
+    \dot G_i &= \mu_i G_i {\tilde R} \\
+    \dot{\tilde R} &= - \frac{1}{N^i_t} \mu_i G_i {\tilde R}\\
+    \dot{LA} &= \kappa_\text{LA}^i G_i + \kappa_\text{LA/G}^i G_i \tilde R.
+    \label{eq:case_study_ode_monoculture}
+\end{split}\end{align}
+Here, the term $\kappa_\text{LA}^i G_i$ describes the constant production of lactic acid, while the term $\kappa_\text{LA/G}^i G_i \tilde R$ corresponds to growth-associated production.
+The parameter $N^i_t$ is the bacterium-specific capacity of the resource pool, i.e., the maximum increase of bacteria that can be supported by the available resource (see Appendix~\ref{ssec:supplement0}).
+Furthermore, the accumulation of lactic acid precipitates a decrease in the pH of the microenvironment, which in turn alters the growth dynamics.
+To account for this effect, we incorporate a term from the gamma model proposed by~\citet{zwietering_decision_1992}:
+\begin{equation}
+    \mu (pH) = \mu_\text{opt} \gamma(pH) =  \mu_\text{opt} \frac{(pH - pH_\text{min})(pH_\text{max} - pH)}{(pH_\text{opt} - pH_\text{min})(pH_\text{max} - pH_\text{opt})},
+    \label{eq:case_study_mu_pH}
+\end{equation}
+where $\mu_\text{opt}$ is the growth rate at optimum conditions, $pH_\text{min}$ and $pH_\text{max}$ are the minimum and maximum pH bounds, outside which bacteria cannot grow, and $pH_\text{opt}$ is the optimal pH value, where the microorganism achieves its maximum growth rate.
+A model was calibrated for each of the three strains using the experimental data from the monoculture experiments, with the resulting parameter values shown in Table~\ref{tab:case_study_parameters_3_estimations} and initial conditions shown in Table~\ref{tab:case_study_init_conditions}.
+The resulting one-species models are presented in Fig.~\ref{fig:case_study_monoculture}.
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=0.45\columnwidth]{Figures-pool_model_real_data_exp_Ls23K_localopt_mono.pdf} 
+    \includegraphics[width=0.45\columnwidth]{Figures-pool_model_real_data_exp_LsCTC494_localopt_mono.pdf}
+    \includegraphics[width=0.45\columnwidth]{Figures-pool_model_real_data_exp_LmCTC1034_localopt_mono.pdf}
+    \caption{
+        The monoculture model~(\ref{eq:case_study_ode_monoculture}) is presented with parameters estimated from measured data.
+        The experimental data are represented by scattered dots for bacterial counts, triangles for lactic acid concentrations, and crosses for pH values.
+        Model predictions are shown as solid lines for bacterial counts, and as yellow dashed lines for lactic acid concentrations.
+        (A) \textit{L. sakei} 23K (Ls-23K, light blue),
+        (B) \textit{L. sakei} CTC494 (Ls-CTC494, dark blue),
+        (C) \textit{L. monocytogenes} CTC1034 (Lm-CTC1034, red).
+    }
+    \label{fig:case_study_monoculture}
+    \end{center}
+\end{figure}
+As we can see from the figure, the model is able to predict the dynamics for bacterial counts and lactic acid production, except for the outliers caused by measurement errors (e.g., the data points at 18 hours for Ls-23K).
+%
+\subsection{Two-species resource competition model}
+As the next step, we aim to extend the model to multi-species cases, first considering the simple scenario of two species competing for a common resource $\tilde{R}$:
+\begin{align}\begin{split}
+    \dot G_i &= \mu_i G_i {\tilde R}\\
+    \dot{\tilde R} &= - \sum_j \frac{1}{N_t^j} \mu_j G_j {\tilde R}\\
+    \dot{LA} &= \sum_j^N (\kappa_\text{LA}^j G_j + \kappa_\text{LA/G}^j G_j \tilde R),
+    \label{eq:case_study_ode_coculture_Ls23K-Lm}
+\end{split}\end{align}
+where $i \in \{\text{Ls-23K}, \text{Lm-CTC1034}\}$.
+This model is applicable to the coculture experiments of Ls-23K and Lm-CTC1034 growing together, as well as to the monoculture experiments of each strain by simply setting the initial value of the other species to zero.
+The model parameters were estimated using the experimental data from two monoculture experiments (Ls-23K and Lm-CTC1034) together with one coculture experiment (Ls-23K with Lm-CTC1034).
+The resulting model provides predictions for the dynamics of all the experiments, which are presented in Fig.~\ref{fig:case_study_coculture_Ls23K-Lm}. Parameter values are shown in Table~\ref{tab:case_study_parameters_3_estimations} and initial conditions are shown in Table~\ref{tab:case_study_init_conditions}.
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=0.45\columnwidth]{Figures-pool_model_real_data_exp_Ls23K_localopt_monoco_3exps.pdf}
+    \includegraphics[width=0.45\columnwidth]{Figures-pool_model_real_data_exp_LmCTC1034_localopt_monoco_3exps.pdf}
+    \includegraphics[width=0.45\columnwidth]{Figures-pool_model_real_data_exp_Ls23K-LmCTC1034_localopt_monoco_3exps.pdf}
+    \caption{
+        The two-species model~(\ref{eq:case_study_ode_coculture_Ls23K-Lm}) for Ls-23K and Lm-CTC1034 is presented with parameters estimated using experimental data from monoculture and coculture experiments.
+        The experimental data are represented by scattered dots for bacterial counts, triangles for lactic acid concentrations, and crosses for pH values.
+        Model predictions are shown as solid lines (light blue for Ls-23K and red for Lm-CTC1034) for bacterial counts, and as yellow dashed lines for lactic acid concentrations.
+        (A) Monoculture experiment for \textit{L. sakei} 23K,
+        (B) Monoculture experiment for \textit{L. monocytogenes} CTC1034 (Lm-CTC1034, red),
+        (C) Coculture experiment for Ls-23K and Lm-CTC1034.
+    }
+    \label{fig:case_study_coculture_Ls23K-Lm}
+    \end{center}
+\end{figure}
+The model is now able to predict not only data from monoculture experiments, but also to describe the dynamics where bacterial competition lowers the maximum population size, especially for Lm-CTC1034, which had smaller initial values and is outcompeted by Ls-23K.
+%%
+\subsection{Two-species with toxin production model}
+As mentioned previously, the Ls-CTC494 strain produces the bacteriocin sakasin K, which has a strong antimicrobial effect on Lm-CTC1034.
+To describe this effect, we extend the two-species model~(\ref{eq:case_study_ode_coculture_Ls23K-Lm}) to include a toxin pool $\mathcal{T}_\text{Ls}$.
+The toxin produced during the growth of Ls-CTC494 at rate $\kappa_\text{T/G}^{\delta}$ induces the death of Lm-CTC1034 cells via a Hill-function dependence with rate $\omega'_\text{Lm}$, Hill coefficient $n$, and $K$ the amount of toxin needed to reach half-maximal response.
+However, as observed in studies with \textit{L. innocua} by~\citet{leroyModelingBacteriocin2005}, not all bacteria are equally susceptible to the toxin, and some \textit{Listeria spp.} cells are resistant to sakasin K.
+Based on this observation in another species of the same genus, we assume that the same holds for Lm-CTC1034 and divide the population into two groups: sensitive ($G^\text{sens}_\text{Lm}$) and resistant ($G^\text{res}_\text{Lm}$).
+For simplicity, we keep identical growth dynamics ($\mu^\text{res}_\text{Lm} = \mu^\text{sens}_\text{Lm} = \mu_\text{Lm}$) for both groups, with the toxin-induced death term applying only to the sensitive population.
+The resulting model is as follows:
+\begin{align}
+    \begin{split}
+        \dot G_\delta &= \mu_\delta \tilde{R} G_\delta\\
+        \dot G^\text{sens}_\text{Lm} &= \mu_\text{Lm} \tilde{R} G^\text{sens}_\text{Lm} - \omega'_\text{Lm} \frac{\mathcal{T}^n_\text{Ls}}{\mathcal{T}^n_\text{Ls} + K^n} G^\text{sens}_\text{Lm}\\
+        \dot G^\text{res}_\text{Lm} &= \mu_\text{Lm} \tilde{R} G^\text{res}_\text{Lm}\\
+        \dot {\tilde{R}} &= - \sum_j^\delta \frac{1}{N_t^j} \mu_j \tilde{R} G_j - \frac{1}{N_t^\text{Lm}}\mu_\text{Lm}(\tilde{R} G^\text{sens}_\text{Lm} + \tilde{R} G^\text{res}_\text{Lm})\\
+        \dot{\mathcal{T}_\text{Ls}} &= \kappa_\text{T/G}^\delta \tilde{R} G_\delta \\
+        \dot {LA} &= (\kappa_\text{LA}^\delta + \kappa_\text{LA/G}^\delta \tilde{R}) G_\delta + (\kappa_{LA}^\text{Lm} + \kappa_\text{LA/G}^\text{Lm} \tilde{R}) (G^\text{sens}_\text{Lm} + G^\text{res}_\text{Lm}).
+        \label{eq:case_study_ode_coculture_LsCTC494-LmCTC1034}
+    \end{split}
+\end{align}
+Here $\delta = \{\text{Ls-23K}, \text{Ls-CTC494}\}$ is used to differentiate parameters between the two \textit{L. sakei} strains.
+Note that the toxin production rate $\kappa_\text{T/G}^{\delta}$ also depends on the \textit{L. sakei} strain: for Ls-23K it is zero, and for Ls-CTC494 it is a positive value.
+The introduced model~(\ref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034}) is a generalized model that can be applied to all the experiments, including monocultures of Ls-23K, Ls-CTC494, and Lm-CTC1034, as well as cocultures of Ls-23K with Lm-CTC1034 and Ls-CTC494 with Lm-CTC1034. 
+Based on this, we estimated the parameters of the model using all five experiments provided together (3 monoculture and 2 coculture experiments) and obtained the model predictions presented in Fig.~\ref{fig:case_study_coculture_LsCTC494-LmCTC1034} (see parameter values in Table~\ref{tab:case_study_parameters_3_estimations} and initial conditions in Table~\ref{tab:case_study_init_conditions}).
+%
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=0.47\columnwidth]{Figures-pool_model_real_data_exp_Ls23K_localopt_co_5exps.pdf}
+    \includegraphics[width=0.47\columnwidth]{Figures-pool_model_real_data_exp_LsCTC494_localopt_co_5exps.pdf}\\
+    \includegraphics[width=0.47\columnwidth]{Figures-pool_model_real_data_exp_LmCTC1034_localopt_co_5exps.pdf}
+    \includegraphics[width=0.47\columnwidth]{Figures-pool_model_real_data_exp_Ls23K-LmCTC1034_localopt_co_5exps.pdf}
+    \includegraphics[width=0.47\columnwidth]{Figures-pool_model_real_data_exp_LsCTC494-LmCTC1034_localopt_co_5exps.pdf}
+    \includegraphics[width=0.47\columnwidth]{Figures-pool_model_real_data_BAC_LsCTC494-LmCTC1034_localopt_co_5exps.pdf}
+    \caption{
+        The two-species model~(\ref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034}) for Ls-23K, Ls-CTC494 and Lm-CTC1034 is presented with parameters estimated from all experimental data.
+        The experimental data are represented by scattered dots for bacterial counts, triangles for lactic acid concentrations, and crosses for pH values.
+        Model predictions are shown as solid lines (light blue for Ls-23K, dark blue for Ls-CTC494 and red for Lm-CTC1034) for bacterial counts, and as yellow dashed lines for lactic acid concentrations.
+        (A) Monoculture experiment for \textit{L. sakei} 23K,
+        (B) Monoculture experiment for \textit{L. sakei} CTC494,
+        (C) Monoculture experiment for \textit{L. monocytogenes} CTC1034 (Lm-CTC1034),
+        (D) Coculture experiment for Ls-23K and Lm-CTC1034,
+        (E) Coculture experiment for Ls-CTC494 and Lm-CTC1034.
+        (F) Bacteriocin activity in the coculture experiment of Ls-CTC494 and Lm-CTC1034.
+    }
+    \label{fig:case_study_coculture_LsCTC494-LmCTC1034}
+    \end{center}
+\end{figure}
+As we can see, the model is able to predict the decrease in the population of Lm-CTC1034 in the coculture with Ls-CTC494 (see Fig.~\ref{fig:case_study_coculture_LsCTC494-LmCTC1034}E).
+The resistant bacteria contribute to the small remaining populations of Lm-CTC1034 at later times (after 45 hours).
+This tailing effect we would not be able to capture without the introduction of the resistant pool.
+The predicted Hill coefficient value $n = 0.34$ provides an interesting insight into the bacteria-toxin interaction.
+As the Hill coefficient parameter is smaller than 1, it indicates negative cooperativity: small toxin concentrations cause an immediate strong effect on the sensitive population, while the effect of higher toxin concentrations is less pronounced.
+Moreover, the negative values of $\kappa_\text{LA}^\text{Lm}$ could either reflect lactic acid consumption by Lm-CTC1034 in coculture, or be a compensation artifact, as lactic acid production by the Ls strains may be partially misattributed to Lm-CTC1034 during fitting.\\
+%
+Comparing parameter values across the three models, we can see that the introduction of the new experimental data changes the estimated parameters, thus improving the model's predictive capabilities.
+However, the estimated upper bound of the pH range increases substantially for the multi-experimental fits compared to the single-species model, which may warrant reconsideration of the pH-model formulation in future work.
+%
+\label{section:casestudy}
+% ================================================================================================
 \section{Spatial effects}
 The pool model does not account for the spatial bacterial distribution.
 Assuming that the bacterial system is uniformly distributed (sometimes also called 'well-stirred'),
@@ -1179,6 +1317,101 @@ Or using Eq.~(\ref{eq:ode_3pool_resource2}) and separating linear and non-linear
 Here the first term is the linear part and the second term defines the quadratic behavior of the system.
 \vfill
 \pagebreak
+\section{Case study parameter values}
+\label{sec:supplement-case-study-parameters}
+The parameter values estimated for the case study using experimental data for the single-species model~(\ref{eq:case_study_ode_monoculture}-\ref{eq:case_study_mu_pH}), two-species resource model~(\ref{eq:case_study_ode_coculture_Ls23K-Lm}, \ref{eq:case_study_mu_pH}), and two-species toxin model~(\ref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034}, \ref{eq:case_study_mu_pH}) are summarized in Table~\ref{tab:case_study_parameters_3_estimations}.
+\begin{table}[H]
+    \centering\small
+    {\renewcommand{\arraystretch}{1.15}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\arraybackslash}p{#1}}
+\begin{tabular}{R{2cm}|C{3cm}C{3cm}C{3cm}}
+\textbf{Parameter}  \hspace{5mm}& \textbf{Single-species model}  \hspace{5mm}& \textbf{Two-species resource model} \hspace{5mm}& \textbf{Two-species toxin model}  \hspace{5mm}\\
+\toprule
+\multicolumn{4}{c}{\textbf{Ls-23K}} \\
+\midrule
+$\mu_\text{opt}^\text{Ls23K}$ & 0.79 & 0.95 & 0.79 \\
+$pH_\text{min}^\text{Ls23K}$ & 1.38 & 3.56 & 1.79 \\
+$pH_\text{opt}^\text{Ls23K}$ & 5.87 & 7.10 & 7.54 \\
+$pH_\text{max}^\text{Ls23K}$ & 8.99 & 9.12 & 12.32 \\
+$N_t^\text{Ls23K}$ & $1.83\times 10^{8}$ & $2.05\times 10^{8}$ & $1.91\times 10^{8}$ \\
+$\kappa_\text{LA}^\text{Ls23K}$ & $6.26\times 10^{-10}$ & $2.25\times 10^{-10}$ & $4.55\times 10^{-10}$ \\
+$\kappa_\text{LA/G}^\text{Ls23K}$ & $2.88\times 10^{-9}$ & $3.29\times 10^{-9}$ & $3.24\times 10^{-9}$ \\
+\midrule
+\multicolumn{4}{c}{\textbf{Ls-CTC494}} \\
+\midrule
+$\mu_\text{opt}^\text{LsCTC494}$ & 0.77 & - & 0.92 \\
+$pH_\text{min}^\text{LsCTC494}$ & 3.24 & - & 2.37 \\
+$pH_\text{opt}^\text{LsCTC494}$ & 5.91 & - & 7.50 \\
+$pH_\text{max}^\text{LsCTC494}$ & 8.95 & - & 12.48 \\
+$N_t^\text{LsCTC494}$ & $2.53\times 10^{8}$ & - & $2.15\times 10^{8}$ \\
+$\kappa_\text{LA}^\text{LsCTC494}$ & $7.72\times 10^{-11}$ & - & $1.94\times 10^{-10}$ \\
+$\kappa_\text{LA/G}^\text{LsCTC494}$ & $3.53\times 10^{-9}$& - & $4.13\times 10^{-9}$ \\
+\midrule
+\multicolumn{4}{c}{\textbf{Lm-CTC1034}} \\
+\midrule
+$\mu_\text{opt}^\text{Lm}$ & 0.94 & 0.89 & 0.66 \\
+$pH_\text{min}^\text{Lm}$ & 1.00 & 3.99 & 3.90 \\
+$pH_\text{opt}^\text{Lm}$ & 6.04 & 7.63 & 6.66 \\
+$pH_\text{max}^\text{Lm}$ & 9.00 & 13.97 & 13.22 \\
+$N_t^\text{Lm}$ & $5.90\times 10^{8}$ & $7.17\times 10^{8}$ & $6.95\times 10^{8}$ \\
+$\kappa_\text{LA}^\text{Lm}$ & $2.48\times 10^{-11}$ & $-3.95\times 10^{-10}$ & $-2.68\times 10^{-10}$ \\
+$\kappa_\text{LA/G}^\text{Lm}$ & $4.95\times 10^{-10}$ & $4.62\times 10^{-10}$ & $4.49\times 10^{-10}$ \\
+\midrule
+\multicolumn{4}{c}{\textbf{Toxin Effect}} \\
+\midrule
+$\omega_T^\text{Lm}$ & - & - & 1.03 \\
+$K$ & - & - & 4441.17 \\
+$n$ & - & - & 0.34 \\
+$\kappa^\text{LsCTC494}_\text{T/G}$ & -& - & $4.63\times 10^{-6}$ \\
+\bottomrule
+\end{tabular}}
+\caption{
+      Estimated model parameters in the three optimization scenarios: monoculture-fits for the \textit{Single-species model}, the combined monocultures and coculture fit of Lm-CTC1034 and Ls-23K for the \textit{Two-species resource model}, the fit combining all experiments for the \textit{Two-species toxin model}.
+     }
+\label{tab:case_study_parameters_3_estimations}
+\end{table}
+%
+\begin{table}[H]
+\centering\small
+    {\renewcommand{\arraystretch}{1.15}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\arraybackslash}p{#1}}
+\begin{tabular}{R{2.7cm}R{2cm}|C{2.5cm}C{2.5cm}C{2.5cm}}
+\textbf{Experiment} & \textbf{Variable} & \textbf{Single-species model} & \textbf{Two-species resource model} & \textbf{Two-species toxin model}\\
+\toprule
+                & $G_\text{Ls23K}(0)$ & $2.43\times 10^{5}$ & $1.91\times 10^{5}$ & $2.43\times 10^{5}$ \\
+Mono.           & $G_\text{LsCTC494}(0)$ & 0 & 0 & 0 \\           
+(Ls-23K)        & $G_\text{Lm}^\text{sens}(0)$ & 0 & 0 & 0 \\
+                & $G_\text{Lm}^\text{res}(0)$ & 0 & 0 & 0 \\
+\midrule
+                & $G_\text{Ls23K}(0)$ & 0 & - & 0 \\
+Mono.           & $G_\text{LsCTC494}(0)$ & $1.04\times 10^{5}$ & - & $1.04\times 10^{5}$ \\
+(Ls-CTC494)     & $G_\text{Lm}^\text{sens}(0)$ & 0 & - & 0 \\
+                & $G_\text{Lm}^\text{res}(0)$ & 0 & - & 0 \\
+\midrule
+                & $G_\text{Ls23K}(0)$ & 0 & 0 & 0 \\
+Mono.           & $G_\text{LsCTC494}(0)$ & 0 & 0 & 0 \\
+(Lm-CTC1034)    & $G_\text{Lm}^\text{sens}(0)$ & $1.01\times 10^{3}$ & $1.21\times 10^{3}$ & $1.01\times 10^{3}$ \\
+                & $G_\text{Lm}^\text{res}(0)$ & 0 & 0 & 0 \\
+\midrule
+                & $G_\text{Ls23K}(0)$ & - & $2.25\times 10^{5}$ & $2.90\times 10^{5}$ \\
+Co.             & $G_\text{LsCTC494}(0)$ & - & 0 & 0 \\
+(Lm/Ls-23K)     & $G_\text{Lm}^\text{sens}(0)$ & - & $1.68\times 10^{3}$ & $1.68\times 10^{3}$ \\
+                & $G_\text{Lm}^\text{res}(0)$ & - & 0 & 0 \\
+\midrule
+                & $G_\text{Ls23K}(0)$ & - & - & 0 \\
+Co.             & $G_\text{LsCTC494}(0)$ & - & - & $1.06\times 10^{5}$ \\
+(Lm/Ls-CTC494)  & $G_\text{Lm}^\text{sens}(0)$ & - & - & $1.94\times 10^{3}$ \\
+                & $G_\text{Lm}^\text{res}(0)$ & - & - & $5.85\times 10^{-5}$ \\
+\bottomrule
+\end{tabular}}
+\caption{
+      Initial conditions for each variable of $\textbf{G}$ vector in each experiment used in the three optimization scenarios: monoculture-fits for the \textit{Single-species model}, the combined monocultures and coculture fit of Lm-CTC1034 and Ls-23K for the \textit{Two-species resource model}, the fit combining all experiments for the \textit{Two-species toxin model}.
+     }
+\label{tab:case_study_init_conditions}
+\end{table}
+%
 \section{Deriving the pool model from the \acs{abm}}
 \label{sec:supplement-abm-derivation}
 \paragraph{Reactions}
