@@ -22,6 +22,6 @@ rand_chacha = { version = "0.9", features = ["serde"] }
 rayon = "1.11.0"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = { version = "1.0.143", features = ["arbitrary_precision", "float_roundtrip", "preserve_order", "std"] }
-rand_distr = "0.5.1"
+rand_distr = "0.6.0"
 short_default = "0.1.1"
 glob = "0.3.3"
