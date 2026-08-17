@@ -120,24 +120,28 @@
 \doublespacing
 \linenumbers
 
-\begin{abstract}
-Predictive microbiology in food science requires models that are both mechanistically
-interpretable and flexible enough to describe the diversity of bacterial behaviors in
-complex food matrices. We introduce the pool model, an \ac{ode}-based framework in which bacterial populations
-are partitioned into discrete metabolic states -- pools -- with biologically motivated
-transitions between them. The framework systematically incorporates single-cell processes such as lag phase
-adaptation, growth, death, and dormancy, and extends naturally to multi-species consortia. For a single species, the three-pool model with a limiting resource reproduces the
-characteristic sigmoidal growth curve. A dormancy extension based on a Maxwell-type
-stress-strain relation captures the experimentally observed asymmetric response of
-bacteria to temperature shifts. For two-species systems, the framework encompasses resource competition, which
-reduces exactly to the generalized Lotka-Volterra equations as a special case, as
-well as toxin production, mutual inhibition, and mutualism. To assess the validity of the \ac{ode} approximation, we derive the pool model
-analytically from an Agent-Based-Model, demonstrating that it arises naturally from individual
-cell-level behavior. Numerical comparisons across four spatial configurations show that the \ac{ode}
-description holds in the well-mixed limit with fast nutrient diffusion, while spatial
-heterogeneity and slow diffusion introduce systematic deviations in the predicted
-growth curves. The pool model thus provides a unified, mechanistically interpretable starting point
-for modeling bacterial consortia in food safety applications.
+\begin{abstract}    
+Predictive microbiology requires models that are mechanistically interpretable yet flexible
+enough to describe diverse bacterial behaviors in complex food matrices. We introduce the
+pool model, an \ac{ode}-based framework in which bacterial populations are partitioned into discrete
+metabolic states -- pools -- with biologically motivated transitions between them. The framework
+systematically incorporates single-cell processes such as lag phase adaptation, growth, death, and
+dormancy, and extends to multi-species consortia. For a single species, the three-pool
+model with a limiting resource reproduces the characteristic sigmoidal growth curve. A dormancy
+extension based on a Maxwell-type stress-strain relation captures the experimentally observed
+asymmetric response of bacteria to temperature shifts. For two-species systems, the framework
+encompasses resource competition, which reduces exactly to the generalized Lotka-Volterra equations,
+as well as toxin production, mutual inhibition, and mutualism. We validate the framework against
+published growth data for \textit{Listeria monocytogenes} and two \textit{Latilactobacillus sakei}
+strains in meat simulation media, fitting three monoculture and two coculture experiments
+simultaneously with a single set of parameters. The model reproduces bacterial counts, lactic acid
+production, and pH, and captures the bacteriocin-mediated inactivation of
+\textit{L.~monocytogenes}, including the residual tailing that requires an explicit resistant
+subpopulation. We further derive the pool model analytically from an agent-based model and identify
+numerically where the \ac{ode} description holds: in the well-mixed limit with fast nutrient
+diffusion, whereas spatial heterogeneity and slow diffusion introduce systematic deviations. The
+pool model thus provides a unified, mechanistically interpretable starting point for predictive
+microbiology in food safety.
 \end{abstract}
 
 %%Graphical abstract
@@ -146,11 +150,11 @@ for modeling bacterial consortia in food safety applications.
 %\end{graphicalabstract}
 
 \begin{highlights}
-    \item Pool model framework partitions bacterial populations into discrete metabolic states
-    \item Lag phase, dormancy, death, and resource dependence are incorporated systematically
+    \item Pool model partitions bacterial populations into discrete metabolic states
     \item Dormancy via Maxwell stress-strain relation captures asymmetric temperature response
     \item Resource competition reduces exactly to the generalized Lotka-Volterra equations
-    \item Toxin production, mutual inhibition, and mutualism extend the two-species framework
+    \item Five mono- and coculture experiments fitted with one shared parameter set
+    \item Sensitive and resistant pools reproduce Listeria tailing under bacteriocin stress
 \end{highlights}
 
 \begin{keyword}
@@ -162,6 +166,9 @@ for modeling bacterial consortia in food safety applications.
 \end{keyword}
 
 \maketitle
+% Acronyms are expanded once in the abstract; reset so that they are also introduced
+% at their first occurrence in the body text.
+\acresetall
 %
 % ================================================================================================
 \section{Introduction}
@@ -193,7 +200,7 @@ Cell signaling, e.g., in the form of quorum-sensing, can lead to collective emer
 The first step in the construction of any mathematical model is to determine the required level of
 detail with respect to the description scale and consequently which effects to include.
 Bacterial growth curves allow us to describe the dynamics of overall species abundance.
-The field of predictive microbiology has developed a variety of ordinary differential equation (ODE)-based models to capture bacterial growth dynamics~\citep{perez-rodriguez_predictive_2012, gaindrik_experimental_2025}.
+The field of predictive microbiology has developed a variety of \ac{ode}-based models to capture bacterial growth dynamics~\citep{perez-rodriguez_predictive_2012, gaindrik_experimental_2025}.
 Various \ac{ode} \textit{primary models} describe the bacterial growth curve under constant environmental conditions.
 Widely used examples include the modified Gompertz model~\citep{Zwietering1990,Gompertz1825-wi,Gibson1987}, Baranyi-Roberts
 model~\citep{baranyi_modeling_1993, baranyi_dynamic_1994}, and the two-compartment model~\citep{McKellar1997} that distinguishes between growing and non-growing bacteria~\citep{buchanan_when_1997}.
@@ -209,7 +216,7 @@ However, due to their coarse-grained nature, they lack the ability to describe h
 other spatial effects.\\
 %
 When dealing with spatial effects such as heterogeneity, one is required to use more extensive
-modeling formulations such as \acp{pde} or Agent-Based Models \acp{abm}.
+modeling formulations such as \acp{pde} or \acp{abm}.
 Such heterogeneity is characteristic of structured food matrices, including soft cheeses, minced meat products, and biofilms on food-contact surfaces~\citep{cauchie_modeling_2020, mounier_microbial_2008}.
 \acp{pde} represent an intermediate step between the population-based \ac{ode} models and the
 individual-based \acp{abm} and can be effective, especially when dealing with large populations of
@@ -335,7 +342,7 @@ and, hence, the full system can be written as:
     \begin{center}
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_3pools_resource.pdf}
     \caption{
-        The time dependence of the bacterial count $L(t) + G(t) $ is shown calculated using the model in Eq.~(\ref{eq:ode_3pool_resource2}) with parameters $\mu=2.5~\mathrm{h}^{-1}$, $\omega=0~\mathrm{h}^{-1}$, $N_t = 10^4$,  $N_0 = 10$.
+        The time dependence of the bacterial count $L(t) + G(t) $ is shown calculated using the model in Eq.~\eqref{eq:ode_3pool_resource2} with parameters $\mu=2.5~\mathrm{h}^{-1}$, $\omega=0~\mathrm{h}^{-1}$, $N_t = 10^4$,  $N_0 = 10$.
         The blue dashed curve shows the case of no cell death $\omega' = 0~\mathrm{h}^{-1}$ and thus exhibits a steady state without the decrease of the bacterial population.
         Other curves represent the growing bacteria dying with the rate $\omega'=0.1~\mathrm{h}^{-1}$ and different lengths of lag phases: short $\lambda=10^{-2}~\mathrm{h}^{-1}$ (dark green), intermediate $\lambda=10^{-3}~\mathrm{h}^{-1}$ (light green), and a long one $\lambda=10^{-4}~\mathrm{h}^{-1}$ (yellow).
         Note that the steady state for $L(t)+G(t)$ and $D(t)$ is for this model $\lim_{t\to\infty} L(t)+G(t)=0$ and $\lim_{t\to\infty} D(t)=N_t$.
@@ -353,7 +360,7 @@ Note that the previously introduced model could be further simplified to a two-p
 The relevant question here is whether cells in the pool $D$ have any significant impact on resource availability, e.g., by freeing previously occupied spaces or releasing previously consumed nutrients.
 If yes, the three-pool model would be advantageous, if not, the two-pool model is sufficient with the benefit of having one fewer parameter.\\
 %
-The dynamics of the three-pool model are captured by Eq.~(\ref{eq:ode_3pool_resource2}) that can be used to derive the two-pool model simply by omitting $D$.
+The dynamics of the three-pool model are captured by Eq.~\eqref{eq:ode_3pool_resource2} that can be used to derive the two-pool model simply by omitting $D$.
 Moreover, for $\omega'=0$ the equations for $L$ and $D$ can be readily integrated resulting in:
 \begin{align}
     \begin{split}
@@ -437,7 +444,7 @@ f(x)&=\begin{cases}\alpha x& x\ge 0\\ -(1-\alpha) x& x < 0,\end{cases}
 \label{eq:f_stress}
 \end{align}
 where $\alpha\in [0,1]$. For $\alpha=0.5$, it follows $f(x)=\frac{1}{2}|x|$, which represents the case where the direction of the temperature change does not matter.
-Using this choice for $f$, we find after some manipulation of Eq.~(\ref{eq:gamma}):
+Using this choice for $f$, we find after some manipulation of Eq.~\eqref{eq:gamma}:
 \begin{equation}
     \gamma(t) = \alpha\beta\zeta\left [T(t)-T(0)e^{-\delta t}-\delta
         \int\limits_0^t T(t^{\prime})e^{-\delta (t-t^{\prime})}dt^{\prime}\right ],
@@ -479,8 +486,8 @@ For simplicity, we assume a linear dependence of the growth and lag-phase rates 
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_3pools_resource_tempshift1.pdf}\\
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_3pools_resource_tempshift2.pdf}
     \caption{
-        (A) The time dependence of the total bacterial count $\mathcal{N}$ for the model including the transition to dormant state due to temperature stress, Eqs.~(\ref{eq:ode_tempshift_backlag})--(\ref{eq:rates_temp_linear}).
-        (B) The value of the corresponding flow rate $\gamma$ calculated according to Eq.~(\ref{eq:gamma_tempshift}) and the function in Eq.~(\ref{eq:f_stress}) with $\alpha=0.05$.
+        (A) The time dependence of the total bacterial count $\mathcal{N}$ for the model including the transition to dormant state due to temperature stress, Eqs.~\eqref{eq:ode_tempshift_backlag}--\eqref{eq:rates_temp_linear}.
+        (B) The value of the corresponding flow rate $\gamma$ calculated according to Eq.~\eqref{eq:gamma_tempshift} and the function in Eq.~\eqref{eq:f_stress} with $\alpha=0.05$.
         The curves represent constant 12 $^\circ C$ temperature with no shift (green), two temperature jumps of $\Delta T = -5~\unit{\degreeCelsius}$ each at times $t=1~\mathrm{h}$ and $t=5~\mathrm{h}$ (orange),
         and the series of different temperature shifts of value $10~\unit{\degreeCelsius}$, $-10~\unit{\degreeCelsius}$, and $-5~\unit{\degreeCelsius}$ at the time points $1~\mathrm{h}$, $3~\mathrm{h}$, and $7~\mathrm{h}$, respectively (rose).
         The parameters associated with dormancy are $\zeta=1~\unit{\hour\per\degreeCelsius}$ and $\delta=5~\mathrm{h}^{-1}$, $\beta=2~\mathrm{h}^{-2}$, $\xi=10^{-3}~\mathrm{h}^{-1}$.
@@ -523,7 +530,7 @@ Note that in this example the total number $N_t$ is the same for both species. F
     \tilde{R} =1-\frac{L_A+G_A+L_B+G_B}{N_t}.
     \label{eq:Resource}
 \end{equation}
-Inserting Eq.~(\ref{eq:Resource}) into Eq.~(\ref{eq:model_2sp_resource_comp}) yields:
+Inserting Eq.~\eqref{eq:Resource} into Eq.~\eqref{eq:model_2sp_resource_comp} yields:
 \begin{align}
 \begin{split}
     \dot{L}_A &= -\lambda_A  L_A + \frac{\lambda_A}{N_t}L_A\mathcal{N}\\
@@ -540,7 +547,7 @@ As a result, species $A$ was able to suppress $B$, by consuming a larger amount 
     \begin{center}
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2pools_resource_competition.pdf}
     \caption{
-        The competition of the two bacterial species due to the common limiting resource calculated using Eq.~(\ref{eq:model_2sp_resource_comp}).
+        The competition of the two bacterial species due to the common limiting resource calculated using Eq.~\eqref{eq:model_2sp_resource_comp}.
         The red curve describes the growth of the bacteria $A$ ($N_A = L_A+G_A$) with model parameters $\lambda_A=10^{-2}~\mathrm{h}^{-1}$, $\mu_A=3.0~\mathrm{h}^{-1}$.
         The blue curve describes the growth of the bacteria $B$ ($N_B = L_B+G_B$) with model parameters $\lambda_B=5\cdot 10^{-2}~\mathrm{h}^{-1}$, $\mu_B=2.5~\mathrm{h}^{-1}$.
         The purple line shows the total bacterial count of the system  $\mathcal{N}(t)=N_A+N_B$.
@@ -559,7 +566,7 @@ To obtain the standard form of the \ac{glv}, we omit the bacterial states $L_A=L
     \end{split}
 \end{align}
 %
-Eq.~(\ref{eq:LV_simple}) can be understood as competitive Lotka-Volterra equations that are widely used in ecological studies and show the principle of competitive exclusion.
+Eq.~\eqref{eq:LV_simple} can be understood as competitive Lotka-Volterra equations that are widely used in ecological studies and show the principle of competitive exclusion.
 This principle states that species competing for the same resource cannot coexist~\citep{wangersky_lotka-volterra_1978}.
 Previous studies have shown that \ac{glv} equations with one bacterial state can be successfully applied to predict microbial community dynamics and determine different types of pairwise interspecies interactions~\citep{dedrick_when_2023, stein_ecological_2013, venturelli_deciphering_2018, hoffmann_power_2007}.
 In food studies, the \ac{glv} was applied by \citet{mounier_microbial_2008} to study interactions of six bacterial species influenced by yeast omissions in cheese.
@@ -615,13 +622,13 @@ The difference in the solutions of the given \acp{ode} between the two toxin pro
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2pools_toxin1.pdf}\\
     \includegraphics[width=0.9\columnwidth]{Figures-pool_model_2pools_toxin2.pdf} 
     \caption{
-        The two-species system with competition for the common nutrient $\tilde{R}$ and production of the toxin $\mathcal{T}_B$ (brown line) calculated using Eq.~(\ref{eq:model_2sp_toxin}).
+        The two-species system with competition for the common nutrient $\tilde{R}$ and production of the toxin $\mathcal{T}_B$ (brown line) calculated using Eq.~\eqref{eq:model_2sp_toxin}.
         The growing bacteria $B$ produces toxin $\mathcal{T}_B$ (A) constantly $\dot{\mathcal{T}}_B^1 = \mathcal{F}^1 = \kappa G_B$ or (B) only during the growth process $\dot{\mathcal{T}}_B^2 = \mathcal{F}^2 = \kappa \tilde{R} G_B$ 
         with production rate $\kappa=0.2~\mathrm{h}^{-1}$.
         The toxin $\mathcal{T}_B$ causes the cell death of bacteria $A$ with rate constant $\omega' = 1~\mathrm{h}^{-1}$.
         The red curve describes the growth of the bacteria $A$ ($N_A = L_A+G_A$) with model parameters $\lambda_A=10^{-2}~\mathrm{h}^{-1}$, $\mu_A=3.0~\mathrm{h}^{-1}$.
         The blue curve describes the growth of the bacteria $B$ ($N_B = L_B+G_B$) with model parameters $\lambda_B=5\cdot 10^{-2}~\mathrm{h}^{-1}$, $\mu_B=2.5~\mathrm{h}^{-1}$.
-        The gray line denotes the dynamics of the resource pool scaled with its capacity $N_t=10^4$. Initial conditions are $L_A(0)=L_B(0) = 10$, $\tilde{R}(0)=1$.
+        The gray line denotes the dynamics of the resource pool scaled with its capacity $N_t=10^4$. Initial conditions are $L_A(0)=L_B(0) = 10$, $\tilde{R}(0)=0.998$.
     }
     \label{fig:2pool_2sp_toxin}
     \end{center}
@@ -674,7 +681,7 @@ which results in
 \begin{align}
     \begin{split}
         \dot{\tilde{G}}_A &=\frac{\tilde{G}_A}{\tilde{G}_B}\left(1 - \tilde{G}_A-\tilde{G}_B\right)\\
-        \dot{\tilde{G}}_B &=\psi\frac{\tilde{G}_B}{\tilde{G}_A}\left(1-\tilde{G}_A-\tilde{G}_B\right). 
+        \dot{\tilde{G}}_B &=\psi\frac{\tilde{G}_B}{\tilde{G}_A}\left(1-\tilde{G}_A-\tilde{G}_B\right).
     \end{split}
 \label{eq:2sp_1pool_inhibit_unitless}
 \end{align}
@@ -696,10 +703,10 @@ The advantage of this system is its simplicity, allowing us to describe the effe
     \includegraphics[width=0.32\textwidth]{Figures-pool_model_2sp_1pool_coop2.pdf}
     \includegraphics[width=0.32\textwidth]{Figures-pool_model_2sp_1pool_coop3.pdf}
     \caption{
-        (A) - (C) The two-species system mutually inhibiting each other, described by Eq.~(\ref{eq:2sp_1pool_inhibit_unitless}).
+        (A) - (C) The two-species system mutually inhibiting each other, described by Eq.~\eqref{eq:2sp_1pool_inhibit_unitless}.
         Here the red lines describe the evolution of species $A$ and the blue lines correspond to species $B$.
         The relation between the inhibition strength of species $B$ and $A$ is defined by the control parameter value (A) $\psi$ = 1, (B) $\psi$ = 0.5, or (C) $\psi$ = 2.\\
-        (D) - (F) The two-species system where each of the species releases public goods $P$, described by Eq.~(\ref{eq:1pool_2sp_cooper}) and calculated for different parameters:
+        (D) - (F) The two-species system where each of the species releases public goods $P$, described by Eq.~\eqref{eq:1pool_2sp_cooper} and calculated for different parameters:
         (D) $\chi=1, \phi=1$, (E) $\chi=1, \phi=2$, and (F) $\chi=2, \phi=1$.
         Here the red lines describe the evolution of species $A$ and the blue lines correspond to species $B$.
         The light brown curve corresponds to the public good released by species $A$ ($\tilde{P}_A$) and the brown curve shows the public goods produced by species $B$ ($\tilde{P}_B$).
@@ -741,42 +748,43 @@ Exploiting $N_t \tilde{R}(t)+G_A(t)+G_B(t)=N_t$ (note, $[\tilde{R}]=1$), rescali
     \label{eq:1pool_2sp_cooper}
 \end{align}
 %
-The solution of the system in Eq.~(\ref{eq:1pool_2sp_cooper}) is presented in Fig.~\ref{fig:1pool_2sp_inhibit}.
+The solution of the system in Eq.~\eqref{eq:1pool_2sp_cooper} is presented in Fig.~\ref{fig:1pool_2sp_inhibit}.
 Here we can see that if $\chi=1$ and $\phi=1$, the production rate of the public goods of both species is identical to the growth rate of bacteria (see Fig.~\ref{fig:1pool_2sp_inhibit}D).
 Increasing the production rate of the public good (see Fig.~\ref{fig:1pool_2sp_inhibit}E) leads to an increase in the growth of species $A$ that profits from the presence of $B$.
 On the other hand, choosing $\chi=2$ (see Fig.~\ref{fig:1pool_2sp_inhibit}F), we increase the profit that species $B$ has from public goods $\tilde{P}_A$.
 This indirectly leads to a larger amount of $\tilde{P}_B$ produced by species $B$.
 % ================================================================================================
 \section{Case study}
-To demonstrate the efficacy of the proposed approach using real experimental data, we consider a two-species system representative of a food-based scenario.
+\label{section:casestudy}
+To demonstrate the applicability of the proposed approach to real experimental data, we consider a two-species system representative of a food-relevant scenario.
 As described by~\citet{ferrer-bustinsAntilisterialEffect2024}, the dynamics between \textit{Listeria monocytogenes} CTC1034 (Lm-CTC1034), a pathogen common in dry fermented sausages, and two strains of \textit{Latilactobacillus sakei} were studied using a central composite design in meat simulation media.
-These strains included CTC494 (Ls-CTC494), known for its production of the bacteriocin sakasin K, which exhibits strong antimicrobial activity against \textit{Listeria spp.}, and 23K (Ls-23K), which does not produce bacteriocins.
+These strains included CTC494 (Ls-CTC494), known for its production of the bacteriocin sakacin K, which exhibits strong antimicrobial activity against \textit{Listeria}~spp., and 23K (Ls-23K), which does not produce bacteriocins.
 Growth curves were measured for each species (Lm-CTC1034 and Ls-CTC494 strains, and Ls-23K) in monoculture, as well as in cocultures combining \textit{L. monocytogenes} with each \textit{L. sakei} strain.
 Furthermore, time-series data were collected for bacteriocin activity, pH values, and the concentration of lactic acid produced by both species.
-Accordingly, we considered three different scenarios and developed corresponding ODE models: a single-species model for monoculture experiments, a two-species model with resource competition for Lm-CTC1034 and Ls-23K, and a generalized two-species model incorporating both resource competition and toxin production, which is suitable for all the strains mentioned above.
-Using a combination of the global optimization Differential Evolution technique~\citep{stornDifferentialEvolutionSimple1997} and the local Limited-memory Broyden-Fletcher-Goldfarb-Shanno with Box constraints (L-BFGS-B)~\citep{doi:10.1137/0916069} minimization, we estimated the parameters for each model and the initial conditions for each experiment.
+Accordingly, we considered three different scenarios and developed corresponding \ac{ode} models: a single-species model for monoculture experiments, a two-species model with resource competition for Lm-CTC1034 and Ls-23K, and a generalized two-species model incorporating both resource competition and toxin production, which is suitable for all the strains mentioned above.
+Parameters and experiment-specific initial conditions were estimated for each model using a global search with Differential Evolution~\citep{stornDifferentialEvolutionSimple1997}, followed by local refinement with the limited-memory Broyden-Fletcher-Goldfarb-Shanno algorithm with box constraints~\citep{doi:10.1137/0916069}.
 %
 \subsection{Single-species monoculture models}
-First, the growth of each bacterial strain was measured in a monoculture setup that can be simply described by a single-species ODE system.
+First, we consider the monoculture experiments of~\citet{ferrer-bustinsAntilisterialEffect2024}, in which the growth of each bacterial strain was measured separately and which can be described by a single-species \ac{ode} system.
 Based on the experimental data, we assume that the bacteria had already passed the lag phase and entered the exponential growth phase.
 Therefore, the transition from the lag pool is omitted from our model.
-We consider a common resource $\tilde R$, however, unlike previous resource-competition models, each species requires a different amount to complete binary division.
-The ODE system for monoculture for bacterium $i$ can be written as follows:
+We consider a common resource $\tilde{R}$; however, unlike previous resource-competition models, each species requires a different amount to complete binary division (see Appendix~\ref{ssec:supplement0}).
+The \ac{ode} system for monoculture for bacterium $i$ can be written as follows:
 \begin{align}\begin{split}
-    \dot G_i &= \mu_i G_i {\tilde R} \\
-    \dot{\tilde R} &= - \frac{1}{N^i_t} \mu_i G_i {\tilde R}\\
-    \dot{LA} &= \kappa_\text{LA}^i G_i + \kappa_\text{LA/G}^i G_i \tilde R.
+    \dot G_i &= \mu_i G_i \tilde{R} \\
+    \dot{\tilde{R}} &= - \frac{1}{N^i_t} \mu_i G_i \tilde{R}\\
+    \dot{\mathrm{LA}} &= \kappa_\text{LA}^i G_i + \kappa_\text{LA/G}^i G_i \tilde{R}.
     \label{eq:case_study_ode_monoculture}
 \end{split}\end{align}
-Here, the term $\kappa_\text{LA}^i G_i$ describes the constant production of lactic acid, while the term $\kappa_\text{LA/G}^i G_i \tilde R$ corresponds to growth-associated production.
+Here, the term $\kappa_\text{LA}^i G_i$ describes the constant production of lactic acid, while the term $\kappa_\text{LA/G}^i G_i \tilde{R}$ corresponds to growth-associated production.
 The parameter $N^i_t$ is the bacterium-specific capacity of the resource pool, i.e., the maximum increase of bacteria that can be supported by the available resource (see Appendix~\ref{ssec:supplement0}).
 Furthermore, the accumulation of lactic acid precipitates a decrease in the pH of the microenvironment, which in turn alters the growth dynamics.
 To account for this effect, we incorporate a term from the gamma model proposed by~\citet{zwietering_decision_1992}:
 \begin{equation}
-    \mu (pH) = \mu_\text{opt} \gamma(pH) =  \mu_\text{opt} \frac{(pH - pH_\text{min})(pH_\text{max} - pH)}{(pH_\text{opt} - pH_\text{min})(pH_\text{max} - pH_\text{opt})},
+    \mu(\mathrm{pH}) = \mu_\text{opt}\, \gamma(\mathrm{pH}) =  \mu_\text{opt} \frac{(\mathrm{pH} - \mathrm{pH}_\text{min})(\mathrm{pH}_\text{max} - \mathrm{pH})}{(\mathrm{pH}_\text{opt} - \mathrm{pH}_\text{min})(\mathrm{pH}_\text{max} - \mathrm{pH}_\text{opt})},
     \label{eq:case_study_mu_pH}
 \end{equation}
-where $\mu_\text{opt}$ is the growth rate at optimum conditions, $pH_\text{min}$ and $pH_\text{max}$ are the minimum and maximum pH bounds, outside which bacteria cannot grow, and $pH_\text{opt}$ is the optimal pH value, where the microorganism achieves its maximum growth rate.
+where $\mu_\text{opt}$ is the growth rate under optimal conditions, $\mathrm{pH}_\text{min}$ and $\mathrm{pH}_\text{max}$ are the minimum and maximum pH bounds, outside which bacteria cannot grow, and $\mathrm{pH}_\text{opt}$ is the optimal pH value, where the microorganism achieves its maximum growth rate.
 A model was calibrated for each of the three strains using the experimental data from the monoculture experiments, with the resulting parameter values shown in Table~\ref{tab:case_study_parameters_3_estimations} and initial conditions shown in Table~\ref{tab:case_study_init_conditions}.
 The resulting one-species models are presented in Fig.~\ref{fig:case_study_monoculture}.
 \begin{figure}[H]
@@ -785,9 +793,9 @@ The resulting one-species models are presented in Fig.~\ref{fig:case_study_monoc
     \includegraphics[width=0.45\columnwidth]{Figures-pool_model_real_data_exp_LsCTC494_localopt_mono.pdf}
     \includegraphics[width=0.45\columnwidth]{Figures-pool_model_real_data_exp_LmCTC1034_localopt_mono.pdf}
     \caption{
-        The monoculture model~(\ref{eq:case_study_ode_monoculture}) is presented with parameters estimated from measured data.
+        The monoculture model~\eqref{eq:case_study_ode_monoculture} is presented with parameters estimated from measured data.
         The experimental data are represented by scattered dots for bacterial counts, triangles for lactic acid concentrations, and crosses for pH values.
-        Model predictions are shown as solid lines for bacterial counts, and as yellow dashed lines for lactic acid concentrations.
+        Model fits are shown as solid lines for bacterial counts, and as yellow dashed lines for lactic acid concentrations.
         (A) \textit{L. sakei} 23K (Ls-23K, light blue),
         (B) \textit{L. sakei} CTC494 (Ls-CTC494, dark blue),
         (C) \textit{L. monocytogenes} CTC1034 (Lm-CTC1034, red).
@@ -795,29 +803,29 @@ The resulting one-species models are presented in Fig.~\ref{fig:case_study_monoc
     \label{fig:case_study_monoculture}
     \end{center}
 \end{figure}
-As we can see from the figure, the model is able to predict the dynamics for bacterial counts and lactic acid production, except for the outliers caused by measurement errors (e.g., the data points at 18 hours for Ls-23K).
+The model reproduces the dynamics of bacterial counts and lactic acid production, except for individual outlying data points (e.g., at 18 hours for Ls-23K).
 %
 \subsection{Two-species resource competition model}
 As the next step, we aim to extend the model to multi-species cases, first considering the simple scenario of two species competing for a common resource $\tilde{R}$:
 \begin{align}\begin{split}
-    \dot G_i &= \mu_i G_i {\tilde R}\\
-    \dot{\tilde R} &= - \sum_j \frac{1}{N_t^j} \mu_j G_j {\tilde R}\\
-    \dot{LA} &= \sum_j^N (\kappa_\text{LA}^j G_j + \kappa_\text{LA/G}^j G_j \tilde R),
+    \dot G_i &= \mu_i G_i \tilde{R}\\
+    \dot{\tilde{R}} &= - \sum_j \frac{1}{N_t^j} \mu_j G_j \tilde{R}\\
+    \dot{\mathrm{LA}} &= \sum_j (\kappa_\text{LA}^j G_j + \kappa_\text{LA/G}^j G_j \tilde{R}),
     \label{eq:case_study_ode_coculture_Ls23K-Lm}
 \end{split}\end{align}
-where $i \in \{\text{Ls-23K}, \text{Lm-CTC1034}\}$.
-This model is applicable to the coculture experiments of Ls-23K and Lm-CTC1034 growing together, as well as to the monoculture experiments of each strain by simply setting the initial value of the other species to zero.
+where $i, j \in \{\text{Ls-23K}, \text{Lm-CTC1034}\}$.
+This model is applicable to the coculture experiments of Ls-23K and Lm-CTC1034, as well as to the monoculture experiments of each strain by simply setting the initial value of the other species to zero.
 The model parameters were estimated using the experimental data from two monoculture experiments (Ls-23K and Lm-CTC1034) together with one coculture experiment (Ls-23K with Lm-CTC1034).
-The resulting model provides predictions for the dynamics of all the experiments, which are presented in Fig.~\ref{fig:case_study_coculture_Ls23K-Lm}. Parameter values are shown in Table~\ref{tab:case_study_parameters_3_estimations} and initial conditions are shown in Table~\ref{tab:case_study_init_conditions}.
+The resulting model reproduces the dynamics of all the experiments, which are presented in Fig.~\ref{fig:case_study_coculture_Ls23K-Lm}. Parameter values are shown in Table~\ref{tab:case_study_parameters_3_estimations} and initial conditions are shown in Table~\ref{tab:case_study_init_conditions}.
 \begin{figure}[H]
     \begin{center}
     \includegraphics[width=0.45\columnwidth]{Figures-pool_model_real_data_exp_Ls23K_localopt_monoco_3exps.pdf}
     \includegraphics[width=0.45\columnwidth]{Figures-pool_model_real_data_exp_LmCTC1034_localopt_monoco_3exps.pdf}
     \includegraphics[width=0.45\columnwidth]{Figures-pool_model_real_data_exp_Ls23K-LmCTC1034_localopt_monoco_3exps.pdf}
     \caption{
-        The two-species model~(\ref{eq:case_study_ode_coculture_Ls23K-Lm}) for Ls-23K and Lm-CTC1034 is presented with parameters estimated using experimental data from monoculture and coculture experiments.
+        The two-species model~\eqref{eq:case_study_ode_coculture_Ls23K-Lm} for Ls-23K and Lm-CTC1034 is presented with parameters estimated using experimental data from monoculture and coculture experiments.
         The experimental data are represented by scattered dots for bacterial counts, triangles for lactic acid concentrations, and crosses for pH values.
-        Model predictions are shown as solid lines (light blue for Ls-23K and red for Lm-CTC1034) for bacterial counts, and as yellow dashed lines for lactic acid concentrations.
+        Model fits are shown as solid lines (light blue for Ls-23K and red for Lm-CTC1034) for bacterial counts, and as yellow dashed lines for lactic acid concentrations.
         (A) Monoculture experiment for \textit{L. sakei} 23K,
         (B) Monoculture experiment for \textit{L. monocytogenes} CTC1034 (Lm-CTC1034, red),
         (C) Coculture experiment for Ls-23K and Lm-CTC1034.
@@ -825,13 +833,13 @@ The resulting model provides predictions for the dynamics of all the experiments
     \label{fig:case_study_coculture_Ls23K-Lm}
     \end{center}
 \end{figure}
-The model is now able to predict not only data from monoculture experiments, but also to describe the dynamics where bacterial competition lowers the maximum population size, especially for Lm-CTC1034, which had smaller initial values and is outcompeted by Ls-23K.
+The model now reproduces not only the data from monoculture experiments, but also the dynamics where bacterial competition lowers the maximum population size, especially for Lm-CTC1034, which had smaller initial values and was outcompeted by Ls-23K.
 %%
 \subsection{Two-species with toxin production model}
-As mentioned previously, the Ls-CTC494 strain produces the bacteriocin sakasin K, which has a strong antimicrobial effect on Lm-CTC1034.
-To describe this effect, we extend the two-species model~(\ref{eq:case_study_ode_coculture_Ls23K-Lm}) to include a toxin pool $\mathcal{T}_\text{Ls}$.
-The toxin produced during the growth of Ls-CTC494 at rate $\kappa_\text{T/G}^{\delta}$ induces the death of Lm-CTC1034 cells via a Hill-function dependence with rate $\omega'_\text{Lm}$, Hill coefficient $n$, and $K$ the amount of toxin needed to reach half-maximal response.
-However, as observed in studies with \textit{L. innocua} by~\citet{leroyModelingBacteriocin2005}, not all bacteria are equally susceptible to the toxin, and some \textit{Listeria spp.} cells are resistant to sakasin K.
+As mentioned previously, the Ls-CTC494 strain produces the bacteriocin sakacin K, which has a strong antimicrobial effect on Lm-CTC1034.
+To describe this effect, we extend the two-species model~\eqref{eq:case_study_ode_coculture_Ls23K-Lm} to include a toxin pool $\mathcal{T}_\text{Ls}$.
+The toxin produced during the growth of Ls-CTC494 at rate $\kappa_\text{T/G}^{\delta}$ induces the death of Lm-CTC1034 cells via a Hill-function dependence with rate $\omega'_\text{Lm}$, Hill coefficient $n$, and $K$, the amount of toxin needed to reach a half-maximal response.
+However, as observed in studies with \textit{L. innocua} by~\citet{leroyModelingBacteriocin2005}, not all bacteria are equally susceptible to the toxin, and some \textit{Listeria}~spp. cells are resistant to sakacin K.
 Based on this observation in another species of the same genus, we assume that the same holds for Lm-CTC1034 and divide the population into two groups: sensitive ($G^\text{sens}_\text{Lm}$) and resistant ($G^\text{res}_\text{Lm}$).
 For simplicity, we keep identical growth dynamics ($\mu^\text{res}_\text{Lm} = \mu^\text{sens}_\text{Lm} = \mu_\text{Lm}$) for both groups, with the toxin-induced death term applying only to the sensitive population.
 The resulting model is as follows:
@@ -840,16 +848,16 @@ The resulting model is as follows:
         \dot G_\delta &= \mu_\delta \tilde{R} G_\delta\\
         \dot G^\text{sens}_\text{Lm} &= \mu_\text{Lm} \tilde{R} G^\text{sens}_\text{Lm} - \omega'_\text{Lm} \frac{\mathcal{T}^n_\text{Ls}}{\mathcal{T}^n_\text{Ls} + K^n} G^\text{sens}_\text{Lm}\\
         \dot G^\text{res}_\text{Lm} &= \mu_\text{Lm} \tilde{R} G^\text{res}_\text{Lm}\\
-        \dot {\tilde{R}} &= - \sum_j^\delta \frac{1}{N_t^j} \mu_j \tilde{R} G_j - \frac{1}{N_t^\text{Lm}}\mu_\text{Lm}(\tilde{R} G^\text{sens}_\text{Lm} + \tilde{R} G^\text{res}_\text{Lm})\\
-        \dot{\mathcal{T}_\text{Ls}} &= \kappa_\text{T/G}^\delta \tilde{R} G_\delta \\
-        \dot {LA} &= (\kappa_\text{LA}^\delta + \kappa_\text{LA/G}^\delta \tilde{R}) G_\delta + (\kappa_{LA}^\text{Lm} + \kappa_\text{LA/G}^\text{Lm} \tilde{R}) (G^\text{sens}_\text{Lm} + G^\text{res}_\text{Lm}).
+        \dot{\tilde{R}} &= - \sum_\delta \frac{1}{N_t^\delta} \mu_\delta \tilde{R} G_\delta - \frac{1}{N_t^\text{Lm}}\mu_\text{Lm}(\tilde{R} G^\text{sens}_\text{Lm} + \tilde{R} G^\text{res}_\text{Lm})\\
+        \dot{\mathcal{T}}_\text{Ls} &= \sum_\delta \kappa_\text{T/G}^\delta \tilde{R} G_\delta \\
+        \dot{\mathrm{LA}} &= \sum_\delta (\kappa_\text{LA}^\delta + \kappa_\text{LA/G}^\delta \tilde{R}) G_\delta + (\kappa_\text{LA}^\text{Lm} + \kappa_\text{LA/G}^\text{Lm} \tilde{R}) (G^\text{sens}_\text{Lm} + G^\text{res}_\text{Lm}).
         \label{eq:case_study_ode_coculture_LsCTC494-LmCTC1034}
     \end{split}
 \end{align}
-Here $\delta = \{\text{Ls-23K}, \text{Ls-CTC494}\}$ is used to differentiate parameters between the two \textit{L. sakei} strains.
+Here $\delta \in \{\text{Ls-23K}, \text{Ls-CTC494}\}$ indexes the two \textit{L. sakei} strains, and the equation for $\dot G_\delta$ holds for each of them. In any given experiment, the initial value of a strain that is not present is set to zero, so that the same system describes all monoculture and coculture experiments.
 Note that the toxin production rate $\kappa_\text{T/G}^{\delta}$ also depends on the \textit{L. sakei} strain: for Ls-23K it is zero, and for Ls-CTC494 it is a positive value.
-The introduced model~(\ref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034}) is a generalized model that can be applied to all the experiments, including monocultures of Ls-23K, Ls-CTC494, and Lm-CTC1034, as well as cocultures of Ls-23K with Lm-CTC1034 and Ls-CTC494 with Lm-CTC1034. 
-Based on this, we estimated the parameters of the model using all five experiments provided together (3 monoculture and 2 coculture experiments) and obtained the model predictions presented in Fig.~\ref{fig:case_study_coculture_LsCTC494-LmCTC1034} (see parameter values in Table~\ref{tab:case_study_parameters_3_estimations} and initial conditions in Table~\ref{tab:case_study_init_conditions}).
+The introduced model~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034} is a generalized model that can be applied to all the experiments, including monocultures of Ls-23K, Ls-CTC494, and Lm-CTC1034, as well as cocultures of Ls-23K with Lm-CTC1034 and Ls-CTC494 with Lm-CTC1034. 
+Based on this, we estimated the parameters of the model using all five experiments provided together (3 monoculture and 2 coculture experiments) and obtained the model fits presented in Fig.~\ref{fig:case_study_coculture_LsCTC494-LmCTC1034} (see parameter values in Table~\ref{tab:case_study_parameters_3_estimations} and initial conditions in Table~\ref{tab:case_study_init_conditions}).
 %
 \begin{figure}[H]
     \begin{center}
@@ -860,9 +868,9 @@ Based on this, we estimated the parameters of the model using all five experimen
     \includegraphics[width=0.47\columnwidth]{Figures-pool_model_real_data_exp_LsCTC494-LmCTC1034_localopt_co_5exps.pdf}
     \includegraphics[width=0.47\columnwidth]{Figures-pool_model_real_data_BAC_LsCTC494-LmCTC1034_localopt_co_5exps.pdf}
     \caption{
-        The two-species model~(\ref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034}) for Ls-23K, Ls-CTC494 and Lm-CTC1034 is presented with parameters estimated from all experimental data.
+        The two-species model~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034} for Ls-23K, Ls-CTC494 and Lm-CTC1034 is presented with parameters estimated from all experimental data.
         The experimental data are represented by scattered dots for bacterial counts, triangles for lactic acid concentrations, and crosses for pH values.
-        Model predictions are shown as solid lines (light blue for Ls-23K, dark blue for Ls-CTC494 and red for Lm-CTC1034) for bacterial counts, and as yellow dashed lines for lactic acid concentrations.
+        Model fits are shown as solid lines (light blue for Ls-23K, dark blue for Ls-CTC494 and red for Lm-CTC1034) for bacterial counts, and as yellow dashed lines for lactic acid concentrations.
         (A) Monoculture experiment for \textit{L. sakei} 23K,
         (B) Monoculture experiment for \textit{L. sakei} CTC494,
         (C) Monoculture experiment for \textit{L. monocytogenes} CTC1034 (Lm-CTC1034),
@@ -873,17 +881,10 @@ Based on this, we estimated the parameters of the model using all five experimen
     \label{fig:case_study_coculture_LsCTC494-LmCTC1034}
     \end{center}
 \end{figure}
-As we can see, the model is able to predict the decrease in the population of Lm-CTC1034 in the coculture with Ls-CTC494 (see Fig.~\ref{fig:case_study_coculture_LsCTC494-LmCTC1034}E).
-The resistant bacteria contribute to the small remaining populations of Lm-CTC1034 at later times (after 45 hours).
-This tailing effect we would not be able to capture without the introduction of the resistant pool.
-The predicted Hill coefficient value $n = 0.34$ provides an interesting insight into the bacteria-toxin interaction.
-As the Hill coefficient parameter is smaller than 1, it indicates negative cooperativity: small toxin concentrations cause an immediate strong effect on the sensitive population, while the effect of higher toxin concentrations is less pronounced.
-Moreover, the negative values of $\kappa_\text{LA}^\text{Lm}$ could either reflect lactic acid consumption by Lm-CTC1034 in coculture, or be a compensation artifact, as lactic acid production by the Ls strains may be partially misattributed to Lm-CTC1034 during fitting.\\
+The model captures the decrease in the population of Lm-CTC1034 in the coculture with Ls-CTC494 (see Fig.~\ref{fig:case_study_coculture_LsCTC494-LmCTC1034}E).
+The resistant bacteria contribute to the small remaining populations of Lm-CTC1034 at later times (after 45 hours). This tailing effect we would not be able to capture without the introduction of the resistant pool. The estimated Hill coefficient value $n = 0.34$ provides an interesting insight into the bacteria-toxin interaction.
+As the Hill coefficient parameter is smaller than 1, it indicates negative cooperativity: small toxin concentrations cause an immediate strong effect on the sensitive population, while the effect of higher toxin concentrations is less pronounced. Moreover, the negative values of $\kappa_\text{LA}^\text{Lm}$ could either reflect lactic acid consumption by Lm-CTC1034 in coculture, or be a compensation artifact, as lactic acid production by the Ls strains may be partially misattributed to Lm-CTC1034 during fitting. The parameter values across the three models are given in \ref{sec:supplement-case-study-parameters}.
 %
-Comparing parameter values across the three models, we can see that the introduction of the new experimental data changes the estimated parameters, thus improving the model's predictive capabilities.
-However, the estimated upper bound of the pH range increases substantially for the multi-experimental fits compared to the single-species model, which may warrant reconsideration of the pH-model formulation in future work.
-%
-\label{section:casestudy}
 % ================================================================================================
 \section{Spatial effects}
 The pool model does not account for the spatial bacterial distribution.
@@ -993,12 +994,12 @@ The volume of the cell is divided equally between the new and old cells, and bot
 \begin{figure}[H]
     \begin{center}
     \begin{tikzonimage}[width=0.49\textwidth]
-        {Figures-snapshot-2-cells-before-division.jpg}%
+        {Figures-snapshot-2-cells-before-division.png}%
         \node at (0.01, 0.99)[anchor=north west]{\textbf{A}};
     \end{tikzonimage}%
     \hspace{0.01\columnwidth}%
     \begin{tikzonimage}[width=0.49\textwidth]
-        {Figures-snapshot-2-cells-after-division.jpg}
+        {Figures-snapshot-2-cells-after-division.png}
         \node at (0.01, 0.99)[anchor=north west]{\textbf{B}};
     \end{tikzonimage}
     \caption{
@@ -1013,6 +1014,7 @@ The volume of the cell is divided equally between the new and old cells, and bot
 %
 % ------------------------------------------------------------------------------------------------
 \subsection{Comparing \acs{abm} and \acs{ode} models}
+\label{subsec:comparison-abm-and-ode}
 The \ac{ode} model can only approximate the \ac{abm} and becomes asymptotically correct in the limit of fast diffusion and high cell density. The \ac{abm} is more closely linked to the biology of cells because it incorporates more biological aspects.
 By comparing the \ac{ode} derived from the \ac{abm} with the \ac{ode} of Eqs.~\eqref{eq:spatial_limit_F} and \eqref{eq:spatial_limit_H} we find the following relation between the parameters (see Appendix~\ref{sec:supplement-abm-derivation}):
 \begin{align}
@@ -1055,7 +1057,7 @@ We can use these mappings to numerically compare both approaches. Table~\ref{tab
 %
 Fig.~\ref{fig:spatial-growth-curve} shows results for various configurations of the \ac{abm}, differing only in their initial spatial configuration and diffusivity.
 We see that in the highly-diffusive homogeneous case of subfigure (A), the pool model is a good fit for the \ac{abm}.
-This suggests that the ODE model remains suitable for aqueous environments, where homogeneity is more likely.
+This suggests that the \ac{ode} model remains suitable for aqueous environments, where homogeneity is more likely.
 Heterogeneity and slower diffusion cause larger differences between the two models as can be seen in subfigures (B) and (C).
 The combination of the two effects shows the largest difference between model outputs.
 In subfigure (C), due to the heterogeneous cell distribution (see Fig.~\ref{fig:supplement-spatial-initial-config-cells}), overall inhibition of species $B$ is significantly reduced.
@@ -1294,7 +1296,7 @@ The total bacterial count of all species of our system is given by:
 \end{equation}
 %
 %
-Using such matrix representation of the bacterial system, we can rewrite, for example, the three-pool model with limited resources described by Eq.~(\ref{eq:ode_3pool_resource}) in a more compact form. The concentrations of the pools are then the components of our variable vector $\mbx (t) = (L(t), G(t), D(t))^T$.
+Using such matrix representation of the bacterial system, we can rewrite, for example, the three-pool model with limited resources described by Eq.~\eqref{eq:ode_3pool_resource} in a more compact form. The concentrations of the pools are then the components of our variable vector $\mbx (t) = (L(t), G(t), D(t))^T$.
 %
 \begin{align}
     \dot \mbx  &= \mbF(\mbx, \mbm, \mbp, \mbu) = \begin{pmatrix}
@@ -1304,7 +1306,7 @@ Using such matrix representation of the bacterial system, we can rewrite, for ex
     \end{pmatrix} \mbx\\
     \dot \mbm &= \mbH (\mbx, \mbm, \mbp, \mbu) = -\frac{\mu}{N_t} \tilde{R} G.
 \end{align}
-Or using Eq.~(\ref{eq:ode_3pool_resource2}) and separating linear and non-linear parts yields:
+Or using Eq.~\eqref{eq:ode_3pool_resource2} and separating linear and non-linear parts yields:
 \begin{equation}
     \dot \mbx = \begin{pmatrix}
         -(\omega + \lambda) & 0       & 0 \\
@@ -1317,9 +1319,10 @@ Or using Eq.~(\ref{eq:ode_3pool_resource2}) and separating linear and non-linear
 Here the first term is the linear part and the second term defines the quadratic behavior of the system.
 \vfill
 \pagebreak
+
 \section{Case study parameter values}
 \label{sec:supplement-case-study-parameters}
-The parameter values estimated for the case study using experimental data for the single-species model~(\ref{eq:case_study_ode_monoculture}-\ref{eq:case_study_mu_pH}), two-species resource model~(\ref{eq:case_study_ode_coculture_Ls23K-Lm}, \ref{eq:case_study_mu_pH}), and two-species toxin model~(\ref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034}, \ref{eq:case_study_mu_pH}) are summarized in Table~\ref{tab:case_study_parameters_3_estimations}.
+The parameter values estimated for the case study using experimental data for the single-species model~\eqref{eq:case_study_ode_monoculture}--\eqref{eq:case_study_mu_pH}, two-species resource model~\eqref{eq:case_study_ode_coculture_Ls23K-Lm} and \eqref{eq:case_study_mu_pH}, and two-species toxin model~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034} and \eqref{eq:case_study_mu_pH} are summarized in Table~\ref{tab:case_study_parameters_3_estimations}.
 \begin{table}[H]
     \centering\small
     {\renewcommand{\arraystretch}{1.15}
@@ -1331,9 +1334,9 @@ The parameter values estimated for the case study using experimental data for th
 \multicolumn{4}{c}{\textbf{Ls-23K}} \\
 \midrule
 $\mu_\text{opt}^\text{Ls23K}$ & 0.79 & 0.95 & 0.79 \\
-$pH_\text{min}^\text{Ls23K}$ & 1.38 & 3.56 & 1.79 \\
-$pH_\text{opt}^\text{Ls23K}$ & 5.87 & 7.10 & 7.54 \\
-$pH_\text{max}^\text{Ls23K}$ & 8.99 & 9.12 & 12.32 \\
+$\mathrm{pH}_\text{min}^\text{Ls23K}$ & 1.38 & 3.56 & 1.79 \\
+$\mathrm{pH}_\text{opt}^\text{Ls23K}$ & 5.87 & 7.10 & 7.54 \\
+$\mathrm{pH}_\text{max}^\text{Ls23K}$ & 8.99 & 9.12 & 12.32 \\
 $N_t^\text{Ls23K}$ & $1.83\times 10^{8}$ & $2.05\times 10^{8}$ & $1.91\times 10^{8}$ \\
 $\kappa_\text{LA}^\text{Ls23K}$ & $6.26\times 10^{-10}$ & $2.25\times 10^{-10}$ & $4.55\times 10^{-10}$ \\
 $\kappa_\text{LA/G}^\text{Ls23K}$ & $2.88\times 10^{-9}$ & $3.29\times 10^{-9}$ & $3.24\times 10^{-9}$ \\
@@ -1341,9 +1344,9 @@ $\kappa_\text{LA/G}^\text{Ls23K}$ & $2.88\times 10^{-9}$ & $3.29\times 10^{-9}$ 
 \multicolumn{4}{c}{\textbf{Ls-CTC494}} \\
 \midrule
 $\mu_\text{opt}^\text{LsCTC494}$ & 0.77 & - & 0.92 \\
-$pH_\text{min}^\text{LsCTC494}$ & 3.24 & - & 2.37 \\
-$pH_\text{opt}^\text{LsCTC494}$ & 5.91 & - & 7.50 \\
-$pH_\text{max}^\text{LsCTC494}$ & 8.95 & - & 12.48 \\
+$\mathrm{pH}_\text{min}^\text{LsCTC494}$ & 3.24 & - & 2.37 \\
+$\mathrm{pH}_\text{opt}^\text{LsCTC494}$ & 5.91 & - & 7.50 \\
+$\mathrm{pH}_\text{max}^\text{LsCTC494}$ & 8.95 & - & 12.48 \\
 $N_t^\text{LsCTC494}$ & $2.53\times 10^{8}$ & - & $2.15\times 10^{8}$ \\
 $\kappa_\text{LA}^\text{LsCTC494}$ & $7.72\times 10^{-11}$ & - & $1.94\times 10^{-10}$ \\
 $\kappa_\text{LA/G}^\text{LsCTC494}$ & $3.53\times 10^{-9}$& - & $4.13\times 10^{-9}$ \\
@@ -1351,9 +1354,9 @@ $\kappa_\text{LA/G}^\text{LsCTC494}$ & $3.53\times 10^{-9}$& - & $4.13\times 10^
 \multicolumn{4}{c}{\textbf{Lm-CTC1034}} \\
 \midrule
 $\mu_\text{opt}^\text{Lm}$ & 0.94 & 0.89 & 0.66 \\
-$pH_\text{min}^\text{Lm}$ & 1.00 & 3.99 & 3.90 \\
-$pH_\text{opt}^\text{Lm}$ & 6.04 & 7.63 & 6.66 \\
-$pH_\text{max}^\text{Lm}$ & 9.00 & 13.97 & 13.22 \\
+$\mathrm{pH}_\text{min}^\text{Lm}$ & 1.00 & 3.99 & 3.90 \\
+$\mathrm{pH}_\text{opt}^\text{Lm}$ & 6.04 & 7.63 & 6.66 \\
+$\mathrm{pH}_\text{max}^\text{Lm}$ & 9.00 & 13.97 & 13.22 \\
 $N_t^\text{Lm}$ & $5.90\times 10^{8}$ & $7.17\times 10^{8}$ & $6.95\times 10^{8}$ \\
 $\kappa_\text{LA}^\text{Lm}$ & $2.48\times 10^{-11}$ & $-3.95\times 10^{-10}$ & $-2.68\times 10^{-10}$ \\
 $\kappa_\text{LA/G}^\text{Lm}$ & $4.95\times 10^{-10}$ & $4.62\times 10^{-10}$ & $4.49\times 10^{-10}$ \\
@@ -1502,8 +1505,7 @@ where we have introduced a proportionality constant $\theta$ ($G=\theta V$). We 
 % ................................................................................................
 \section{Parameter Values and Initial Conditions of the \acs{abm}}
 \paragraph{Parameter Values}
-We use the calculated mappings (see Eq.~\eqref{eq:ode-abm-mappings}) between the \ac{ode} formulation and \ac{abm} to compare values for parameters that serve a similar purpose within the two simulations. Table~\ref{tab:spatial_limit_init} lists these parameters together with their values. Most parameters have a clear mapping between the \ac{ode} and the \ac{abm}. However, some, such as the spatial dynamics parameters (damping $\eta$, mass $m$, potential
-strength $\epsilon$, diffusion $D_R,D_I$), do not.
+We use the calculated mappings, see Eq.~\eqref{eq:ode-abm-mappings}, between the \ac{ode} formulation and \ac{abm} to compare values for parameters that serve a similar purpose within the two simulations. Table~\ref{tab:spatial_limit_init} lists these parameters together with their values.
 \begin{table}[H]
     \centering\small
     %\begin{tabularx}{\textwidth}{@{} X c @{\hspace{0.5cm}} r l @{\hspace{1cm}} X c @{\hspace{0.5cm}} r l @{}}
@@ -1535,8 +1537,8 @@ strength $\epsilon$, diffusion $D_R,D_I$), do not.
         \multicolumn{8}{c}{\textbf{Physical Mechanics \& Interactions}}\\
         \toprule
         &&&& Damping               & $\eta$        & $0.125$   & \unit{\per\second}\\
-        &&&& Mass                    & $m$           & $7.70$    & \unit{\pico\gram}\\
-        &&&& Force strength      & $\epsilon$    & $0.03125$ & \unit{\pico\gram\micro\metre\per\second\squared}\\
+        &&&& Mass                    & $m$           & $0.856$   & \unit{\pico\gram}\\
+        &&&& Force strength          & $\epsilon$    & $0.03125$ & \unit{\pico\gram\micro\metre\per\second\squared}\\
         \toprule
         \multicolumn{8}{c}{\textbf{Cell Cycle}}\\
         \toprule
@@ -1544,7 +1546,7 @@ strength $\epsilon$, diffusion $D_R,D_I$), do not.
         &                           & $\lambda_A$   & $0.001250$ & \unit{\per\second}\\
         Rate $L_B\rightarrow G_B$   & $\lambda_B$   & $0.000625$ & \unit{\per\second}
         &                           & $\lambda_B$   & $0.000625$ & \unit{\per\second}\\
-        &&&& Division Vol.          & $V_t$         & $14.14$    & \unit{\micro\metre\cubed}\\
+        &&&& Division Vol.          & $V_t$         & $1.571$    & \unit{\micro\metre\cubed}\\
         \toprule
         \multicolumn{8}{c}{\textbf{Initial Values}}\\
         \toprule
@@ -1553,10 +1555,10 @@ strength $\epsilon$, diffusion $D_R,D_I$), do not.
         Lag phase species $B$       & $L_B$         & $0.0051$  & \unit{\mol\per\micro\metre\cubed}
         & Cell Number               & $C_B$         & 18\\
         Growth phase species $A$    & $G_A$         & $0.0$     & \unit{\mol\per\micro\metre\cubed}
-        & Cell Volume               & $V_{c_A}$     & $7.07$    & \unit{\micro\metre\cubed}\\
+        & Cell Volume               & $V_{c_A}$     & $0.785$   & \unit{\micro\metre\cubed}\\
         Growth phase species $B$    & $G_B$         & $0.0$     & \unit{\mol\per\micro\metre\cubed}
-        & Cell Volume               & $V_{c_B}$     & $7.07$    & \unit{\micro\metre\cubed}\\
-        Relative Nutrients          & $\tilde{R}$           & $1.0$
+        & Cell Volume               & $V_{c_B}$     & $0.785$   & \unit{\micro\metre\cubed}\\
+        Relative Nutrients          & $\tilde{R}$   & $1.0$
         && Nutrients                & $R_0$         & $1.0$     & \unit{\mol\per\micro\metre\cubed}\\
         Inhibitor                   & $I_0$         & $0.0$     & \unit{\mol\per\micro\metre\cubed}
         & Inhibitor                 & $I_0$         & $0.0$     & \unit{\mol\per\micro\metre\cubed}\\
@@ -1564,9 +1566,44 @@ strength $\epsilon$, diffusion $D_R,D_I$), do not.
     \end{tabularx}
     \caption{
         Comparison of the parameters for the \ac{ode} model and \ac{abm}.
+        Parameters that appear in both formulations are related by the mappings of
+        Eq.~\eqref{eq:ode-abm-mappings}, and their values are those used in the \ac{ode} analyses
+        shown in Fig.~\ref{fig:3pool_resource_plots}.
+        The parameters specific to the \ac{abm} are the conversion factor $\sigma$, the diffusion
+        constants $D_R$ and $D_I$, the mechanical parameters $\eta$, $m$ and $\epsilon$, and the
+        division volume $V_t$.
+        Cell volume and mass follow from a generic rod-shaped cell of radius \SI{0.5}{\micro\metre}
+        and height \SI{1}{\micro\metre}~\citep{Volkmer2011,Furchtgott2011} together with a buoyant
+        density of \SI{1.09}{\pico\gram\per\micro\metre\cubed}~\citep{Kubitschek1986};
+        the diffusion constants are justified in Subsection~\ref{subsec:comparison-abm-and-ode},
+        and $\eta$ and $\epsilon$ are effective coarse-grained parameters~\citep{Volfson2008}.
+        See the text below for details.
      }
     \label{tab:spatial_limit_init}
 \end{table}
+%
+Every parameter of Table~\ref{tab:spatial_limit_init} that is present in the \ac{ode} version of the
+model was converted directly to its \ac{abm} analogon, and its value was adopted from the previous
+analyses of the \ac{ode} model (see Fig.~\ref{fig:3pool_resource_plots}). The remaining parameters
+are the conversion factor $\sigma$, the diffusion constants $D_X$, the mechanical and interaction
+parameters, and the division volume $V_t$. The values of the diffusion constants were justified in
+the main text (see Subsection~\ref{subsec:comparison-abm-and-ode}). The initial cell size is based
+on a generic cylindrical cell with radius $r=\SI{0.5}{\micro\metre}$ and height
+$h=\SI{1}{\micro\metre}$, which captures the rough dimensions of bacteria such as
+\textit{E.~coli}~\citep{Volkmer2011} or \textit{Pseudomonas aeruginosa}~\citep{Furchtgott2011}. The
+division volume is assumed to be twice this initial volume, and the mass follows from an average
+buoyant density of $\SI{1.09}{\pico\gram\per\micro\metre\cubed}$, which is essentially constant over
+the division cycle~\citep{Kubitschek1986}.
+%
+It should be noted explicitly that these sizes do not meaningfully alter the results calculated by
+the \ac{abm}, since we report our findings in units of volume rather than cell count. This ensures
+wider compatibility and does not restrict our model to any particular cell type. Accordingly, the
+parameters $\eta$ and $\epsilon$ describing the mechanical dynamics should be understood as
+effective parameters, chosen to model the coarse-grained repulsion between individual agents rather
+than the underlying molecular interactions, which is standard practice in computational
+biology~\citep{Volfson2008}. The important property is that the mechanical relaxation, which acts on
+time scales of order $1/\eta=\SI{8}{\second}$, is much faster than the cellular processes at time
+scales of order $1/u_A=\SI{400}{\second}$.
 %
 \paragraph{Homogeneous and inhomogeneous initial cell distributions}
 To clarify what we mean by homogeneous and inhomogeneous initial configurations, we include snapshots of the simulation.
