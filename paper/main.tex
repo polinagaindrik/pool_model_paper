@@ -134,8 +134,8 @@ encompasses resource competition, which reduces exactly to the generalized Lotka
 as well as toxin production, mutual inhibition, and mutualism. We validate the framework against
 published growth data for \textit{Listeria monocytogenes} and two \textit{Latilactobacillus sakei}
 strains in meat simulation media, fitting three monoculture and two coculture experiments
-simultaneously with a single set of parameters. The model reproduces bacterial counts, lactic acid
-production, and pH, and captures the bacteriocin-mediated inactivation of
+simultaneously with a single set of parameters. The model reproduces bacterial counts and lactic
+acid production, and captures the bacteriocin-mediated inactivation of
 \textit{L.~monocytogenes}, including the residual tailing that requires an explicit resistant
 subpopulation. We further derive the pool model analytically from an agent-based model and identify
 numerically where the \ac{ode} description holds: in the well-mixed limit with fast nutrient
@@ -189,7 +189,7 @@ Typically, when bacteria colonize a new environment, they enter an adaptation ph
 referred to as lag time~\citep{monod_growth_1949, swinnen_predictive_2004, rolfe_lag_2012}.
 During this phase, bacteria prepare the enzymatic and metabolic machinery to initiate cell division
 and multiplication.
-According to \cite{baranyi_dynamic_1994}, lag time can be defined as a function of the concentration of a limiting component that cells must synthesize
+According to \citet{baranyi_dynamic_1994}, lag time can be defined as a function of the concentration of a limiting component that cells must synthesize
 to start growing. Additionally, bacteria can cooperate, e.g., via complementary metabolic processes, or inhibit
 each other, e.g., by means of waste production as a metabolic byproduct~\citep{west_social_2007, rainey_evolution_2003, hibbing_bacterial_2010, stubbendieck_bacterial_2016}.
 A food-relevant example is the inhibition of \textit{Listeria monocytogenes} by bacteriocin-producing lactic acid bacteria in fermented meat and dairy products~\citep{cotterBacteriocinsDeveloping2005, rileyBacteriocinsEvolution2002}.
@@ -211,8 +211,8 @@ Temperature fluctuations during cold-chain interruptions represent a particularl
 dormancy transitions directly affect pathogen growth dynamics~\citep{swinnen_predictive_2004}.
 Secondary models can be simple polynomial models, square root-type models~\citep{ratkowsky_relationship_1982}, or
 more complex relations such as the cardinal parameter model~\citep{zwietering_decision_1992}.
-The advantage of the \ac{ode} formulation lies in the predictive power and ease of use.
-However, due to their coarse-grained nature, they lack the ability to describe heterogeneity and
+The advantage of the \ac{ode} formulation lies in its predictive power and ease of use.
+However, due to its coarse-grained nature, it lacks the ability to describe heterogeneity and
 other spatial effects.\\
 %
 When dealing with spatial effects such as heterogeneity, one is required to use more extensive
@@ -233,6 +233,11 @@ The dynamics of bacterial growth can be understood in terms of transitions betwe
 bacterial states, i.e., pools. Our model allows us to capture interactions between these bacterial states and the external microenvironment.
 Compared with the aforementioned methods, this approach turns out to be less complex with general applicability, a low number of parameters, and greater interpretability of the underlying biology.
 To illustrate the generality of the model, multiple examples are reported.
+We then apply the framework to published growth data for \textit{Listeria monocytogenes} and two
+\textit{Latilactobacillus sakei} strains in meat simulation media~\citep{ferrer-bustinsAntilisterialEffect2024}.
+A single parameter set describes monoculture and coculture experiments simultaneously, including
+the bacteriocin-mediated inactivation of the pathogen. This shows that the framework can be
+calibrated against the kind of data routinely collected in food-safety studies.
 We analyze the spatial limitations of an interacting two-species model and show that it can be fully understood on an individual-based level in terms of single-cell processes.
 Furthermore, we assess how spatial heterogeneity~\citep{mckellar_heterogeneous_1997} can impact the shape of the growth curves.\\
 %
@@ -759,8 +764,8 @@ This indirectly leads to a larger amount of $\tilde{P}_B$ produced by species $B
 To demonstrate the applicability of the proposed approach to real experimental data, we consider a two-species system representative of a food-relevant scenario.
 As described by~\citet{ferrer-bustinsAntilisterialEffect2024}, the dynamics between \textit{Listeria monocytogenes} CTC1034 (Lm-CTC1034), a pathogen common in dry fermented sausages, and two strains of \textit{Latilactobacillus sakei} were studied using a central composite design in meat simulation media.
 These strains included CTC494 (Ls-CTC494), known for its production of the bacteriocin sakacin K, which exhibits strong antimicrobial activity against \textit{Listeria}~spp., and 23K (Ls-23K), which does not produce bacteriocins.
-Growth curves were measured for each species (Lm-CTC1034 and Ls-CTC494 strains, and Ls-23K) in monoculture, as well as in cocultures combining \textit{L. monocytogenes} with each \textit{L. sakei} strain.
-Furthermore, time-series data were collected for bacteriocin activity, pH values, and the concentration of lactic acid produced by both species.
+Growth curves were measured for each strain (Lm-CTC1034, Ls-CTC494, and Ls-23K) in monoculture, as well as in cocultures combining \textit{L. monocytogenes} with each \textit{L. sakei} strain.
+Furthermore, time-series data were collected for bacteriocin activity, pH values, and the concentration of lactic acid produced by the bacteria.
 Accordingly, we considered three different scenarios and developed corresponding \ac{ode} models: a single-species model for monoculture experiments, a two-species model with resource competition for Lm-CTC1034 and Ls-23K, and a generalized two-species model incorporating both resource competition and toxin production, which is suitable for all the strains mentioned above.
 Parameters and experiment-specific initial conditions were estimated for each model using a global search with Differential Evolution~\citep{stornDifferentialEvolutionSimple1997}, followed by local refinement with the limited-memory Broyden-Fletcher-Goldfarb-Shanno algorithm with box constraints~\citep{doi:10.1137/0916069}.
 %
@@ -772,19 +777,28 @@ We consider a common resource $\tilde{R}$; however, unlike previous resource-com
 The \ac{ode} system for monoculture for bacterium $i$ can be written as follows:
 \begin{align}\begin{split}
     \dot G_i &= \mu_i G_i \tilde{R} \\
-    \dot{\tilde{R}} &= - \frac{1}{N^i_t} \mu_i G_i \tilde{R}\\
+    \dot{\tilde{R}} &= - \frac{1}{N_t^i} \mu_i G_i \tilde{R}\\
     \dot{\mathrm{LA}} &= \kappa_\text{LA}^i G_i + \kappa_\text{LA/G}^i G_i \tilde{R}.
     \label{eq:case_study_ode_monoculture}
 \end{split}\end{align}
 Here, the term $\kappa_\text{LA}^i G_i$ describes the constant production of lactic acid, while the term $\kappa_\text{LA/G}^i G_i \tilde{R}$ corresponds to growth-associated production.
-The parameter $N^i_t$ is the bacterium-specific capacity of the resource pool, i.e., the maximum increase of bacteria that can be supported by the available resource (see Appendix~\ref{ssec:supplement0}).
-Furthermore, the accumulation of lactic acid precipitates a decrease in the pH of the microenvironment, which in turn alters the growth dynamics.
+The parameter $N_t^i$ is the bacterium-specific capacity of the resource pool, i.e., the maximum increase in bacterial concentration that can be supported by the available resource (see Appendix~\ref{ssec:supplement0}).
+Furthermore, the accumulation of lactic acid causes a decrease in the pH of the microenvironment, which in turn alters the growth dynamics.
 To account for this effect, we incorporate a term from the gamma model proposed by~\citet{zwietering_decision_1992}:
 \begin{equation}
     \mu(\mathrm{pH}) = \mu_\text{opt}\, \gamma(\mathrm{pH}) =  \mu_\text{opt} \frac{(\mathrm{pH} - \mathrm{pH}_\text{min})(\mathrm{pH}_\text{max} - \mathrm{pH})}{(\mathrm{pH}_\text{opt} - \mathrm{pH}_\text{min})(\mathrm{pH}_\text{max} - \mathrm{pH}_\text{opt})},
     \label{eq:case_study_mu_pH}
 \end{equation}
 where $\mu_\text{opt}$ is the growth rate under optimal conditions, $\mathrm{pH}_\text{min}$ and $\mathrm{pH}_\text{max}$ are the minimum and maximum pH bounds, outside which bacteria cannot grow, and $\mathrm{pH}_\text{opt}$ is the optimal pH value, where the microorganism achieves its maximum growth rate.
+%
+The factor $\gamma(\mathrm{pH})$ requires the pH as a function of time.
+We do not model the acidification itself, but use the measured pH time series, interpolated between sampling points, as an input to the model.
+The reason is that the relation between the acid produced and the resulting pH is not one-to-one: it is set by the buffer capacity of the matrix, which is determined by proteins, inorganic phosphate, carnosine and other small constituents, differs between matrices, and depends on the pH itself~\citep{puolanne2000buffering, kylapuhju2004buffering, salaun2005buffering}.
+For post-rigor muscle, buffer capacities determined from the accumulated lactate and the simultaneous pH decline range from about 32 to 49~mmol per pH unit and kilogram, with standard deviations of 20--35\%~\citep{kylapuhju2004buffering}, so this conversion cannot be obtained from stoichiometry.
+Undefined buffering components make estimates of pH from acid production unreliable unless the buffer capacity of the medium has been titrated~\citep{breidt2022buffer}.
+Lactic acid therefore enters our model as a predicted observable that is compared with the measurements, while the growth rates respond to the measured acidification, i.e., $\mu_i = \mu_i(\mathrm{pH})$ in Eq.~\eqref{eq:case_study_ode_monoculture} and in the two-species models below.
+Closing this loop -- predicting the pH from $\mathrm{LA}$ instead of prescribing it -- requires the titration curve of the medium and is a natural extension whenever that curve is available~\citep{breidt2022buffer, anthony2025synthetic}.
+%
 A model was calibrated for each of the three strains using the experimental data from the monoculture experiments, with the resulting parameter values shown in Table~\ref{tab:case_study_parameters_3_estimations} and initial conditions shown in Table~\ref{tab:case_study_init_conditions}.
 The resulting one-species models are presented in Fig.~\ref{fig:case_study_monoculture}.
 \begin{figure}[H]
@@ -794,7 +808,7 @@ The resulting one-species models are presented in Fig.~\ref{fig:case_study_monoc
     \includegraphics[width=0.45\columnwidth]{Figures-pool_model_real_data_exp_LmCTC1034_localopt_mono.pdf}
     \caption{
         The monoculture model~\eqref{eq:case_study_ode_monoculture} is presented with parameters estimated from measured data.
-        The experimental data are represented by scattered dots for bacterial counts, triangles for lactic acid concentrations, and crosses for pH values.
+        The experimental data are represented by scattered dots for bacterial counts, triangles for lactic acid concentrations, and crosses for pH values. The pH values are not predicted by the model but serve as its input, interpolated between sampling points.
         Model fits are shown as solid lines for bacterial counts, and as yellow dashed lines for lactic acid concentrations.
         (A) \textit{L. sakei} 23K (Ls-23K, light blue),
         (B) \textit{L. sakei} CTC494 (Ls-CTC494, dark blue),
@@ -806,7 +820,7 @@ The resulting one-species models are presented in Fig.~\ref{fig:case_study_monoc
 The model reproduces the dynamics of bacterial counts and lactic acid production, except for individual outlying data points (e.g., at 18 hours for Ls-23K).
 %
 \subsection{Two-species resource competition model}
-As the next step, we aim to extend the model to multi-species cases, first considering the simple scenario of two species competing for a common resource $\tilde{R}$:
+As the next step, we extend the model to multi-species cases, first considering the simple scenario of two species competing for a common resource $\tilde{R}$:
 \begin{align}\begin{split}
     \dot G_i &= \mu_i G_i \tilde{R}\\
     \dot{\tilde{R}} &= - \sum_j \frac{1}{N_t^j} \mu_j G_j \tilde{R}\\
@@ -824,7 +838,7 @@ The resulting model reproduces the dynamics of all the experiments, which are pr
     \includegraphics[width=0.45\columnwidth]{Figures-pool_model_real_data_exp_Ls23K-LmCTC1034_localopt_monoco_3exps.pdf}
     \caption{
         The two-species model~\eqref{eq:case_study_ode_coculture_Ls23K-Lm} for Ls-23K and Lm-CTC1034 is presented with parameters estimated using experimental data from monoculture and coculture experiments.
-        The experimental data are represented by scattered dots for bacterial counts, triangles for lactic acid concentrations, and crosses for pH values.
+        The experimental data are represented by scattered dots for bacterial counts, triangles for lactic acid concentrations, and crosses for pH values. The pH values are not predicted by the model but serve as its input, interpolated between sampling points.
         Model fits are shown as solid lines (light blue for Ls-23K and red for Lm-CTC1034) for bacterial counts, and as yellow dashed lines for lactic acid concentrations.
         (A) Monoculture experiment for \textit{L. sakei} 23K,
         (B) Monoculture experiment for \textit{L. monocytogenes} CTC1034 (Lm-CTC1034, red),
@@ -834,7 +848,7 @@ The resulting model reproduces the dynamics of all the experiments, which are pr
     \end{center}
 \end{figure}
 The model now reproduces not only the data from monoculture experiments, but also the dynamics where bacterial competition lowers the maximum population size, especially for Lm-CTC1034, which had smaller initial values and was outcompeted by Ls-23K.
-%%
+%
 \subsection{Two-species with toxin production model}
 As mentioned previously, the Ls-CTC494 strain produces the bacteriocin sakacin K, which has a strong antimicrobial effect on Lm-CTC1034.
 To describe this effect, we extend the two-species model~\eqref{eq:case_study_ode_coculture_Ls23K-Lm} to include a toxin pool $\mathcal{T}_\text{Ls}$.
@@ -854,10 +868,10 @@ The resulting model is as follows:
         \label{eq:case_study_ode_coculture_LsCTC494-LmCTC1034}
     \end{split}
 \end{align}
-Here $\delta \in \{\text{Ls-23K}, \text{Ls-CTC494}\}$ indexes the two \textit{L. sakei} strains, and the equation for $\dot G_\delta$ holds for each of them. In any given experiment, the initial value of a strain that is not present is set to zero, so that the same system describes all monoculture and coculture experiments.
+Here $\delta \in \{\text{Ls-23K}, \text{Ls-CTC494}\}$ indexes the two \textit{L. sakei} strains, and the equation for $\dot G_\delta$ holds for each of them. In any given experiment, the initial value of a strain that is not present is set to zero, so that the same system describes all monoculture and coculture experiments. Since none of the experiments combines the two \textit{L. sakei} strains, at most one of the two contributions to the sums over $\delta$ is non-zero in any individual fit.
 Note that the toxin production rate $\kappa_\text{T/G}^{\delta}$ also depends on the \textit{L. sakei} strain: for Ls-23K it is zero, and for Ls-CTC494 it is a positive value.
 The introduced model~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034} is a generalized model that can be applied to all the experiments, including monocultures of Ls-23K, Ls-CTC494, and Lm-CTC1034, as well as cocultures of Ls-23K with Lm-CTC1034 and Ls-CTC494 with Lm-CTC1034. 
-Based on this, we estimated the parameters of the model using all five experiments provided together (3 monoculture and 2 coculture experiments) and obtained the model fits presented in Fig.~\ref{fig:case_study_coculture_LsCTC494-LmCTC1034} (see parameter values in Table~\ref{tab:case_study_parameters_3_estimations} and initial conditions in Table~\ref{tab:case_study_init_conditions}).
+Based on this, we estimated the parameters of the model using all five experiments simultaneously (three monoculture and two coculture experiments) and obtained the model fits presented in Fig.~\ref{fig:case_study_coculture_LsCTC494-LmCTC1034} (see parameter values in Table~\ref{tab:case_study_parameters_3_estimations} and initial conditions in Table~\ref{tab:case_study_init_conditions}).
 %
 \begin{figure}[H]
     \begin{center}
@@ -869,21 +883,20 @@ Based on this, we estimated the parameters of the model using all five experimen
     \includegraphics[width=0.47\columnwidth]{Figures-pool_model_real_data_BAC_LsCTC494-LmCTC1034_localopt_co_5exps.pdf}
     \caption{
         The two-species model~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034} for Ls-23K, Ls-CTC494 and Lm-CTC1034 is presented with parameters estimated from all experimental data.
-        The experimental data are represented by scattered dots for bacterial counts, triangles for lactic acid concentrations, and crosses for pH values.
+        The experimental data are represented by scattered dots for bacterial counts, triangles for lactic acid concentrations, and crosses for pH values. The pH values are not predicted by the model but serve as its input, interpolated between sampling points.
         Model fits are shown as solid lines (light blue for Ls-23K, dark blue for Ls-CTC494 and red for Lm-CTC1034) for bacterial counts, and as yellow dashed lines for lactic acid concentrations.
         (A) Monoculture experiment for \textit{L. sakei} 23K,
         (B) Monoculture experiment for \textit{L. sakei} CTC494,
         (C) Monoculture experiment for \textit{L. monocytogenes} CTC1034 (Lm-CTC1034),
         (D) Coculture experiment for Ls-23K and Lm-CTC1034,
-        (E) Coculture experiment for Ls-CTC494 and Lm-CTC1034.
+        (E) Coculture experiment for Ls-CTC494 and Lm-CTC1034,
         (F) Bacteriocin activity in the coculture experiment of Ls-CTC494 and Lm-CTC1034.
     }
     \label{fig:case_study_coculture_LsCTC494-LmCTC1034}
     \end{center}
 \end{figure}
 The model captures the decrease in the population of Lm-CTC1034 in the coculture with Ls-CTC494 (see Fig.~\ref{fig:case_study_coculture_LsCTC494-LmCTC1034}E).
-The resistant bacteria contribute to the small remaining populations of Lm-CTC1034 at later times (after 45 hours). This tailing effect we would not be able to capture without the introduction of the resistant pool. The estimated Hill coefficient value $n = 0.34$ provides an interesting insight into the bacteria-toxin interaction.
-As the Hill coefficient parameter is smaller than 1, it indicates negative cooperativity: small toxin concentrations cause an immediate strong effect on the sensitive population, while the effect of higher toxin concentrations is less pronounced. Moreover, the negative values of $\kappa_\text{LA}^\text{Lm}$ could either reflect lactic acid consumption by Lm-CTC1034 in coculture, or be a compensation artifact, as lactic acid production by the Ls strains may be partially misattributed to Lm-CTC1034 during fitting. The parameter values across the three models are given in \ref{sec:supplement-case-study-parameters}.
+The resistant bacteria account for the small residual population of Lm-CTC1034 at later times (after 45 hours); we would not be able to capture this tailing effect without introducing the resistant pool. The estimated Hill coefficient is $n = 0.34$, i.e. below unity, so that the response saturates early: most of the effect on the sensitive population is already reached at low toxin concentrations, and further increases add comparatively little. We return to the interpretation of this value in the Discussion. Moreover, the constant lactic acid production rate of Lm-CTC1034 is estimated to be negative in the two multi-experiment fits. Since the pH is prescribed rather than computed from $\mathrm{LA}$, lactic acid does not act back on any other variable, and it is therefore constrained only by its own measurements. In the cocultures only the summed production of both strains is observable, so the split between them is weakly identified. The parameter values support this reading: the growth-associated rate $\kappa_\text{LA/G}^\text{Lm}$ is stable to within a few percent across all three fits, whereas $\kappa_\text{LA}^\text{Lm}$ is positive in the single-species fit and changes sign precisely in the two fits in which Lm-CTC1034 shares the lactic acid budget with an \textit{L. sakei} strain. We therefore regard the negative value as a compensation artifact rather than as evidence of lactic acid consumption, which would also have to appear in the monoculture fit. Note that a negative $\kappa_\text{LA}^\text{Lm}$ implies net consumption only once the resource is depleted, since the total rate $(\kappa_\text{LA}^\text{Lm} + \kappa_\text{LA/G}^\text{Lm}\tilde{R})$ remains positive as long as $\tilde{R}$ is large. The parameter values across the three models are given in Sect.~\ref{sec:supplement-case-study-parameters} of the supplementary material.
 %
 % ================================================================================================
 \section{Spatial effects}
@@ -1124,6 +1137,9 @@ qualitatively distinct dynamics. The mutual inhibition model further demonstrate
 dynamics can be captured with a single dimensionless parameter, greatly
 reducing model complexity without sacrificing mechanistic interpretability. Furthermore, the mutualism model shows that cooperative interspecies dynamics, 
 such as the cross-feeding of public goods observed in mixed-culture fermentations, can be described with only two dimensionless parameters, which quantify the asymmetry of the mutualistic benefit between the two species.\\
+The case study demonstrates that the framework is not only formally general, but also applicable to real data. When applied to the experiments in~\citet{ferrer-bustinsAntilisterialEffect2024}, a single parameter set can describe three monoculture and two coculture experiments simultaneously, reproducing bacterial counts, lactic acid production, and bacteriocin activity in the coculture, with the measured pH entering the growth rate as a prescribed input. The nested structure of the three models is informative in itself: resource competition alone accounts for the reduced maximum population of \textit{L. monocytogenes} in the presence of Ls-23K, whereas inactivation with the bacteriocin producer Ls-CTC494 requires an additional toxin pool. The fact that a single parameter set is sufficient for both monoculture and coculture conditions is a stringent constraint, given that the dynamics of cocultures are not simply a superposition of the corresponding monocultures.\\
+%
+Two features of the fitted toxin model warrant comment. First, in order to reproduce the residual \textit{L. monocytogenes} population that persists beyond approximately \SI{45}{\hour}, the pathogen must be split into bacteriocin-sensitive and bacteriocin-resistant pools. Without the resistant pool, the model drives the population to extinction, and the observed tailing cannot be recovered. This is consistent with the resistance reported for \textit{L. innocua} under comparable conditions~\citep{leroyModelingBacteriocin2005} and illustrates again that adding a pool rather than reformulating the model accommodates a qualitatively new observation. Second, the estimated Hill coefficient, $n = 0.34$, lies below unity. While this formally corresponds to negative cooperativity, in an inactivation curve a Hill coefficient smaller than one is more commonly read as a signature of heterogeneous susceptibility within the exposed population. The most sensitive cells are killed at low bacteriocin concentrations, so further increases produce progressively smaller additional effects. Since the model explicitly represents heterogeneity through the sensitive and resistant pools, the two descriptions are not independent, and $n$ should not be given a molecular interpretation here. The resistant pool accounts for the fraction that does not respond at all, whereas $n<1$ absorbs the graded variation in susceptibility that remains within the sensitive fraction. Determining the two contributions separately would require dose-response data at several bacteriocin concentrations, rather than the single, endogenously produced time course available here.\\
 %
 The \ac{abm} analysis reveals the conditions under which the \ac{ode} approximation
 is valid. In the highly-diffusive, homogeneous case (Fig.~\ref{fig:spatial-growth-curve}A),
@@ -1146,8 +1162,9 @@ spatially confined food matrices.
 The stress-rate parameters of the dormancy model are
 phenomenological and may be difficult to determine from standard plate-count
 experiments without dedicated temperature-shift protocols.
-Finally, stochastic effects -- relevant at low cell numbers, for example during early
-colonization of a food surface -- are not captured by the \ac{ode} formulation.
+Furthermore, stochastic effects -- relevant at low cell numbers, for example during early
+colonization of a food surface -- are not captured by the \ac{ode} formulation.\\
+Two further limitations concern the case study itself. First, the parameters of all three models were estimated using the same experiments that are subsequently presented, so the agreement demonstrates descriptive adequacy rather than predictive performance. Second, the estimated upper bound of the pH range increases substantially when several experiments are fitted jointly. This indicates that the gamma-model formulation of the pH dependence is only weakly constrained by these data.
 %
 % ------------------------------------------------------------------------------------------------
 \section{Conclusion}
@@ -1159,14 +1176,17 @@ and transitions between them, providing a systematic route from first-principles
 assumptions about single-cell behavior to population-level \acp{ode}.
 Applied to one- and two-species systems, it reproduces the growth dynamics of
 established primary models while remaining more interpretable, and it naturally
-generalizes the \ac{glv} equations as a special case.
+generalizes the \ac{glv} equations as a special case.\\
+When applied to published growth data for \textit{Listeria monocytogenes} and two \textit{Latilactobacillus sakei} strains in meat simulation media, a single parameter set can describe monoculture and coculture experiments simultaneously, while also capturing the bacteriocin-mediated inactivation of the pathogen, including the residual population that persists once the sensitive fraction has been eliminated.\\
+%
 By deriving the pool model equations from an explicit \ac{abm}, we have shown that the
 framework directly reflects individual cell-level biological processes, bridging the
 gap between mechanistic single-cell descriptions and coarse-grained population models.
-Going forward, the framework can be extended to additional internal states and
-environmental drivers -- such as pH, water activity, or quorum sensing -- by including
-new pools and secondary models for the transition rates, providing a flexible starting
-point for predictive microbiology in food safety applications.
+Going forward, additional internal states can be represented by further pools, and
+environmental drivers can be incorporated through secondary models for the transition rates.
+This has been demonstrated here for the pH dependence of growth. Other drivers, such as
+water activity or quorum sensing, can be added in the same way, providing a flexible
+starting point for predictive microbiology in food safety applications.
 %
 \newpage
 \section*{Data availability \& reproducibility}
