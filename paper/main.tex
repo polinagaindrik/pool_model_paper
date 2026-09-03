@@ -808,7 +808,7 @@ The resulting one-species models are presented in Fig.~\ref{fig:case_study_monoc
     \includegraphics[width=0.45\columnwidth]{Figures-pool_model_real_data_exp_LmCTC1034_localopt_mono.pdf}
     \caption{
         The monoculture model~\eqref{eq:case_study_ode_monoculture} is presented with parameters estimated from measured data.
-        The experimental data are represented by scattered dots for bacterial counts, triangles for lactic acid concentrations, and crosses for pH values. The pH values are not predicted by the model but serve as its input, interpolated between sampling points.
+        The experimental data are represented by scattered dots for bacterial counts and triangles for lactic acid concentrations.
         Model fits are shown as solid lines for bacterial counts, and as yellow dashed lines for lactic acid concentrations.
         (A) \textit{L. sakei} 23K (Ls-23K, light blue),
         (B) \textit{L. sakei} CTC494 (Ls-CTC494, dark blue),
@@ -838,7 +838,7 @@ The resulting model reproduces the dynamics of all the experiments, which are pr
     \includegraphics[width=0.45\columnwidth]{Figures-pool_model_real_data_exp_Ls23K-LmCTC1034_localopt_monoco_3exps.pdf}
     \caption{
         The two-species model~\eqref{eq:case_study_ode_coculture_Ls23K-Lm} for Ls-23K and Lm-CTC1034 is presented with parameters estimated using experimental data from monoculture and coculture experiments.
-        The experimental data are represented by scattered dots for bacterial counts, triangles for lactic acid concentrations, and crosses for pH values. The pH values are not predicted by the model but serve as its input, interpolated between sampling points.
+        The experimental data are represented by scattered dots for bacterial counts and triangles for lactic acid concentrations.
         Model fits are shown as solid lines (light blue for Ls-23K and red for Lm-CTC1034) for bacterial counts, and as yellow dashed lines for lactic acid concentrations.
         (A) Monoculture experiment for \textit{L. sakei} 23K,
         (B) Monoculture experiment for \textit{L. monocytogenes} CTC1034 (Lm-CTC1034, red),
@@ -860,7 +860,7 @@ The resulting model is as follows:
 \begin{align}
     \begin{split}
         \dot G_\delta &= \mu_\delta \tilde{R} G_\delta\\
-        \dot G^\text{sens}_\text{Lm} &= \mu_\text{Lm} \tilde{R} G^\text{sens}_\text{Lm} - \omega'_\text{Lm} \frac{\mathcal{T}^n_\text{Ls}}{\mathcal{T}^n_\text{Ls} + K^n} G^\text{sens}_\text{Lm}\\
+        \dot G^\text{sens}_\text{Lm} &= \mu_\text{Lm} \tilde{R} G^\text{sens}_\text{Lm} - \omega'_\text{Lm} \frac{\mathcal{T}_\text{Ls}}{\mathcal{T}_\text{Ls} + K} G^\text{sens}_\text{Lm}\\
         \dot G^\text{res}_\text{Lm} &= \mu_\text{Lm} \tilde{R} G^\text{res}_\text{Lm}\\
         \dot{\tilde{R}} &= - \sum_\delta \frac{1}{N_t^\delta} \mu_\delta \tilde{R} G_\delta - \frac{1}{N_t^\text{Lm}}\mu_\text{Lm}(\tilde{R} G^\text{sens}_\text{Lm} + \tilde{R} G^\text{res}_\text{Lm})\\
         \dot{\mathcal{T}}_\text{Ls} &= \sum_\delta \kappa_\text{T/G}^\delta \tilde{R} G_\delta \\
@@ -883,7 +883,7 @@ Based on this, we estimated the parameters of the model using all five experimen
     \includegraphics[width=0.47\columnwidth]{Figures-pool_model_real_data_BAC_LsCTC494-LmCTC1034_localopt_co_5exps.pdf}
     \caption{
         The two-species model~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034} for Ls-23K, Ls-CTC494 and Lm-CTC1034 is presented with parameters estimated from all experimental data.
-        The experimental data are represented by scattered dots for bacterial counts, triangles for lactic acid concentrations, and crosses for pH values. The pH values are not predicted by the model but serve as its input, interpolated between sampling points.
+        The experimental data are represented by scattered dots for bacterial counts and triangles for lactic acid concentrations.
         Model fits are shown as solid lines (light blue for Ls-23K, dark blue for Ls-CTC494 and red for Lm-CTC1034) for bacterial counts, and as yellow dashed lines for lactic acid concentrations.
         (A) Monoculture experiment for \textit{L. sakei} 23K,
         (B) Monoculture experiment for \textit{L. sakei} CTC494,
@@ -1348,49 +1348,39 @@ The parameter values estimated for the case study using experimental data for th
     {\renewcommand{\arraystretch}{1.15}
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
 \newcolumntype{R}[1]{>{\arraybackslash}p{#1}}
-\begin{tabular}{R{2cm}|C{3cm}C{3cm}C{3cm}}
-\textbf{Parameter}  \hspace{5mm}& \textbf{Single-species model}  \hspace{5mm}& \textbf{Two-species resource model} \hspace{5mm}& \textbf{Two-species toxin model}  \hspace{5mm}\\
+\begin{tabular}{R{2cm}|C{2.7cm}C{2.7cm}C{2.7cm}C{2.7cm}}
+\textbf{Parameter}  \hspace{5mm}& \textbf{Single-species model}  \hspace{5mm}& \textbf{Two-species resource model} \hspace{5mm}& \textbf{Two-species toxin model}  \hspace{5mm}& \textbf{95\% CI (toxin model)} \\
 \toprule
-\multicolumn{4}{c}{\textbf{Ls-23K}} \\
+\multicolumn{5}{c}{\textbf{Ls-23K}} \\
 \midrule
-$\mu_\text{opt}^\text{Ls23K}$ & 0.79 & 0.95 & 0.79 \\
-$\mathrm{pH}_\text{min}^\text{Ls23K}$ & 1.38 & 3.56 & 1.79 \\
-$\mathrm{pH}_\text{opt}^\text{Ls23K}$ & 5.87 & 7.10 & 7.54 \\
-$\mathrm{pH}_\text{max}^\text{Ls23K}$ & 8.99 & 9.12 & 12.32 \\
-$N_t^\text{Ls23K}$ & $1.83\times 10^{8}$ & $2.05\times 10^{8}$ & $1.91\times 10^{8}$ \\
-$\kappa_\text{LA}^\text{Ls23K}$ & $6.26\times 10^{-10}$ & $2.25\times 10^{-10}$ & $4.55\times 10^{-10}$ \\
-$\kappa_\text{LA/G}^\text{Ls23K}$ & $2.88\times 10^{-9}$ & $3.29\times 10^{-9}$ & $3.24\times 10^{-9}$ \\
+$\mu_\text{opt}^\text{Ls23K}$ & 0.33 & 0.37 & 0.36 & (--, --) \\
+$N_t^\text{Ls23K}$ & $1.83\times 10^{8}$ & $1.67\times 10^{8}$ & $1.69\times 10^{8}$ & (--, --) \\
+$\kappa_\text{LA}^\text{Ls23K}$ & $6.29\times 10^{-10}$ & $5.98\times 10^{-10}$ & $5.92\times 10^{-10}$ & (--, --) \\
+$\kappa_\text{LA/G}^\text{Ls23K}$ & $2.89\times 10^{-9}$ & $3.38\times 10^{-9}$ & $3.36\times 10^{-9}$ & (--, --) \\
 \midrule
-\multicolumn{4}{c}{\textbf{Ls-CTC494}} \\
+\multicolumn{5}{c}{\textbf{Ls-CTC494}} \\
 \midrule
-$\mu_\text{opt}^\text{LsCTC494}$ & 0.77 & - & 0.92 \\
-$\mathrm{pH}_\text{min}^\text{LsCTC494}$ & 3.24 & - & 2.37 \\
-$\mathrm{pH}_\text{opt}^\text{LsCTC494}$ & 5.91 & - & 7.50 \\
-$\mathrm{pH}_\text{max}^\text{LsCTC494}$ & 8.95 & - & 12.48 \\
-$N_t^\text{LsCTC494}$ & $2.53\times 10^{8}$ & - & $2.15\times 10^{8}$ \\
-$\kappa_\text{LA}^\text{LsCTC494}$ & $7.72\times 10^{-11}$ & - & $1.94\times 10^{-10}$ \\
-$\kappa_\text{LA/G}^\text{LsCTC494}$ & $3.53\times 10^{-9}$& - & $4.13\times 10^{-9}$ \\
+$\mu_\text{opt}^\text{LsCTC494}$ & 0.40 & - & 0.41 & (--, --) \\
+$N_t^\text{LsCTC494}$ & $2.33\times 10^{8}$ & - & $2.04\times 10^{8}$ & (--, --) \\
+$\kappa_\text{LA}^\text{LsCTC494}$ & $2.60\times 10^{-10}$ & - & $3.09\times 10^{-10}$ & (--, --) \\
+$\kappa_\text{LA/G}^\text{LsCTC494}$ & $4.09\times 10^{-9}$& - & $4.66\times 10^{-9}$ & (--, --) \\
 \midrule
-\multicolumn{4}{c}{\textbf{Lm-CTC1034}} \\
+\multicolumn{5}{c}{\textbf{Lm-CTC1034}} \\
 \midrule
-$\mu_\text{opt}^\text{Lm}$ & 0.94 & 0.89 & 0.66 \\
-$\mathrm{pH}_\text{min}^\text{Lm}$ & 1.00 & 3.99 & 3.90 \\
-$\mathrm{pH}_\text{opt}^\text{Lm}$ & 6.04 & 7.63 & 6.66 \\
-$\mathrm{pH}_\text{max}^\text{Lm}$ & 9.00 & 13.97 & 13.22 \\
-$N_t^\text{Lm}$ & $5.90\times 10^{8}$ & $7.17\times 10^{8}$ & $6.95\times 10^{8}$ \\
-$\kappa_\text{LA}^\text{Lm}$ & $2.48\times 10^{-11}$ & $-3.95\times 10^{-10}$ & $-2.68\times 10^{-10}$ \\
-$\kappa_\text{LA/G}^\text{Lm}$ & $4.95\times 10^{-10}$ & $4.62\times 10^{-10}$ & $4.49\times 10^{-10}$ \\
+$\mu_\text{opt}^\text{Lm}$ & 0.36 & 0.34 & 0.34 & (--, --) \\
+$N_t^\text{Lm}$ & $5.97\times 10^{8}$ & $6.14\times 10^{8}$ & $6.16\times 10^{8}$ & (--, --) \\
+$\kappa_\text{LA}^\text{Lm}$ & 0 & 0 & 0 & (--, --) \\
+$\kappa_\text{LA/G}^\text{Lm}$ & $5.97\times 10^{-10}$ & $5.70\times 10^{-10}$ & $5.66\times 10^{-10}$ & (--, --) \\
 \midrule
-\multicolumn{4}{c}{\textbf{Toxin Effect}} \\
+\multicolumn{5}{c}{\textbf{Toxin Effect}} \\
 \midrule
-$\omega_T^\text{Lm}$ & - & - & 1.03 \\
-$K$ & - & - & 4441.17 \\
-$n$ & - & - & 0.34 \\
-$\kappa^\text{LsCTC494}_\text{T/G}$ & -& - & $4.63\times 10^{-6}$ \\
+$\omega_T^\text{Lm}$ & - & - & 0.52 & (--, --) \\
+$K$ & - & - & 154.79 & (--, --) \\
+$\kappa^\text{LsCTC494}_\text{T/G}$ & -& - & $6.25\times 10^{-6}$ & (--, --) \\
 \bottomrule
 \end{tabular}}
 \caption{
-      Estimated model parameters in the three optimization scenarios: monoculture-fits for the \textit{Single-species model}, the combined monocultures and coculture fit of Lm-CTC1034 and Ls-23K for the \textit{Two-species resource model}, the fit combining all experiments for the \textit{Two-species toxin model}.
+      Estimated model parameters in the three optimization scenarios for the pH-independent, Michaelis--Menten toxin-inhibition model ($n=1$, fixed): monoculture-fits for the \textit{Single-species model}, the combined monocultures and coculture fit of Lm-CTC1034 and Ls-23K for the \textit{Two-species resource model}, the fit combining all experiments for the \textit{Two-species toxin model}. 95\% confidence intervals are reported only for the \textit{Two-species toxin model}.
      }
 \label{tab:case_study_parameters_3_estimations}
 \end{table}
@@ -1403,30 +1393,30 @@ $\kappa^\text{LsCTC494}_\text{T/G}$ & -& - & $4.63\times 10^{-6}$ \\
 \begin{tabular}{R{2.7cm}R{2cm}|C{2.5cm}C{2.5cm}C{2.5cm}}
 \textbf{Experiment} & \textbf{Variable} & \textbf{Single-species model} & \textbf{Two-species resource model} & \textbf{Two-species toxin model}\\
 \toprule
-                & $G_\text{Ls23K}(0)$ & $2.43\times 10^{5}$ & $1.91\times 10^{5}$ & $2.43\times 10^{5}$ \\
+                & $G_\text{Ls23K}(0)$ & $2.43\times 10^{5}$ & $1.92\times 10^{5}$ & $2.04\times 10^{5}$ \\
 Mono.           & $G_\text{LsCTC494}(0)$ & 0 & 0 & 0 \\           
 (Ls-23K)        & $G_\text{Lm}^\text{sens}(0)$ & 0 & 0 & 0 \\
                 & $G_\text{Lm}^\text{res}(0)$ & 0 & 0 & 0 \\
 \midrule
                 & $G_\text{Ls23K}(0)$ & 0 & - & 0 \\
-Mono.           & $G_\text{LsCTC494}(0)$ & $1.04\times 10^{5}$ & - & $1.04\times 10^{5}$ \\
+Mono.           & $G_\text{LsCTC494}(0)$ & $1.03\times 10^{5}$ & - & $9.77\times 10^{4}$ \\
 (Ls-CTC494)     & $G_\text{Lm}^\text{sens}(0)$ & 0 & - & 0 \\
                 & $G_\text{Lm}^\text{res}(0)$ & 0 & - & 0 \\
 \midrule
                 & $G_\text{Ls23K}(0)$ & 0 & 0 & 0 \\
 Mono.           & $G_\text{LsCTC494}(0)$ & 0 & 0 & 0 \\
-(Lm-CTC1034)    & $G_\text{Lm}^\text{sens}(0)$ & $1.01\times 10^{3}$ & $1.21\times 10^{3}$ & $1.01\times 10^{3}$ \\
+(Lm-CTC1034)    & $G_\text{Lm}^\text{sens}(0)$ & $1.01\times 10^{3}$ & $1.22\times 10^{3}$ & $1.23\times 10^{3}$ \\
                 & $G_\text{Lm}^\text{res}(0)$ & 0 & 0 & 0 \\
 \midrule
-                & $G_\text{Ls23K}(0)$ & - & $2.25\times 10^{5}$ & $2.90\times 10^{5}$ \\
+                & $G_\text{Ls23K}(0)$ & - & $2.25\times 10^{5}$ & $2.22\times 10^{5}$ \\
 Co.             & $G_\text{LsCTC494}(0)$ & - & 0 & 0 \\
-(Lm/Ls-23K)     & $G_\text{Lm}^\text{sens}(0)$ & - & $1.68\times 10^{3}$ & $1.68\times 10^{3}$ \\
+(Lm/Ls-23K)     & $G_\text{Lm}^\text{sens}(0)$ & - & $1.68\times 10^{3}$ & $1.71\times 10^{3}$ \\
                 & $G_\text{Lm}^\text{res}(0)$ & - & 0 & 0 \\
 \midrule
                 & $G_\text{Ls23K}(0)$ & - & - & 0 \\
-Co.             & $G_\text{LsCTC494}(0)$ & - & - & $1.06\times 10^{5}$ \\
-(Lm/Ls-CTC494)  & $G_\text{Lm}^\text{sens}(0)$ & - & - & $1.94\times 10^{3}$ \\
-                & $G_\text{Lm}^\text{res}(0)$ & - & - & $5.85\times 10^{-5}$ \\
+Co.             & $G_\text{LsCTC494}(0)$ & - & - & $1.11\times 10^{5}$ \\
+(Lm/Ls-CTC494)  & $G_\text{Lm}^\text{sens}(0)$ & - & - & $1.80\times 10^{3}$ \\
+                & $G_\text{Lm}^\text{res}(0)$ & - & - & $3.63\times 10^{-4}$ \\
 \bottomrule
 \end{tabular}}
 \caption{
