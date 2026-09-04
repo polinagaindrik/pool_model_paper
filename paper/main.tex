@@ -784,13 +784,13 @@ The \ac{ode} system for monoculture for bacterium $i$ can be written as follows:
 Here, the term $\kappa_\text{LA}^i G_i$ describes the constant production of lactic acid, while the term $\kappa_\text{LA/G}^i G_i \tilde{R}$ corresponds to growth-associated production.
 Note that the constant production rate of lactic acid is non-zero only for the two \textit{L. sakei} strains, while for \textit{L. monocytogenes} it is set to zero.
 The parameter $N_t^i$ is the bacterium-specific capacity of the resource pool, i.e., the maximum increase in bacterial concentration that can be supported by the available resource (see Appendix~\ref{ssec:supplement0}).
-Furthermore, the accumulation of lactic acid causes a decrease in the pH of the microenvironment, which in turn alters the growth dynamics.
-To account for this effect, we incorporate a term from the gamma model proposed by~\citet{zwietering_decision_1992}:
+\cmt{Furthermore, the accumulation of lactic acid causes a decrease in the pH of the microenvironment, which in turn alters the growth dynamics.
+To account for this effect, we incorporate a term from the gamma model proposed by~\citet{zwietering_decision_1992}:}
 \begin{equation}
     \mu(\mathrm{pH}) = \mu_\text{opt}\, \gamma(\mathrm{pH}) =  \mu_\text{opt} \frac{(\mathrm{pH} - \mathrm{pH}_\text{min})(\mathrm{pH}_\text{max} - \mathrm{pH})}{(\mathrm{pH}_\text{opt} - \mathrm{pH}_\text{min})(\mathrm{pH}_\text{max} - \mathrm{pH}_\text{opt})},
     \label{eq:case_study_mu_pH}
 \end{equation}
-where $\mu_\text{opt}$ is the growth rate under optimal conditions, $\mathrm{pH}_\text{min}$ and $\mathrm{pH}_\text{max}$ are the minimum and maximum pH bounds, outside which bacteria cannot grow, and $\mathrm{pH}_\text{opt}$ is the optimal pH value, where the microorganism achieves its maximum growth rate.
+\cmt{where $\mu_\text{opt}$ is the growth rate under optimal conditions, $\mathrm{pH}_\text{min}$ and $\mathrm{pH}_\text{max}$ are the minimum and maximum pH bounds, outside which bacteria cannot grow, and $\mathrm{pH}_\text{opt}$ is the optimal pH value, where the microorganism achieves its maximum growth rate.
 %
 The factor $\gamma(\mathrm{pH})$ requires the pH as a function of time.
 We do not model the acidification itself, but use the measured pH time series, interpolated between sampling points, as an input to the model.
@@ -798,7 +798,7 @@ The reason is that the relation between the acid produced and the resulting pH i
 For post-rigor muscle, buffer capacities determined from the accumulated lactate and the simultaneous pH decline range from about 32 to 49~mmol per pH unit and kilogram, with standard deviations of 20--35\%~\citep{kylapuhju2004buffering}, so this conversion cannot be obtained from stoichiometry.
 Undefined buffering components make estimates of pH from acid production unreliable unless the buffer capacity of the medium has been titrated~\citep{breidt2022buffer}.
 Lactic acid therefore enters our model as a predicted observable that is compared with the measurements, while the growth rates respond to the measured acidification, i.e., $\mu_i = \mu_i(\mathrm{pH})$ in Eq.~\eqref{eq:case_study_ode_monoculture} and in the two-species models below.
-Closing this loop -- predicting the pH from $\mathrm{LA}$ instead of prescribing it -- requires the titration curve of the medium and is a natural extension whenever that curve is available~\citep{breidt2022buffer, anthony2025synthetic}.
+Closing this loop -- predicting the pH from $\mathrm{LA}$ instead of prescribing it -- requires the titration curve of the medium and is a natural extension whenever that curve is available~\citep{breidt2022buffer, anthony2025synthetic}.}
 %
 A model was calibrated for each of the three strains using the experimental data from the monoculture experiments, with the resulting parameter values shown in Table~\ref{tab:case_study_parameters_3_estimations} and initial conditions shown in Table~\ref{tab:case_study_init_conditions}.
 The resulting one-species models are presented in Fig.~\ref{fig:case_study_monoculture}.
@@ -1362,28 +1362,28 @@ The parameter values estimated for the case study using experimental data for th
 \multicolumn{5}{c}{\textbf{Ls-23K}} \\
 \midrule
 $\mu_\text{opt}^\text{Ls23K}$ & 0.33 & 0.37 & 0.36 & (0.35, 0.37) \\
-$N_t^\text{Ls23K}$ & $1.83\times 10^{8}$ & $1.67\times 10^{8}$ & $1.68\times 10^{8}$ & ($1.51$, $1.84$)$\times10^{8}$ \\
-$\kappa_\text{LA}^\text{Ls23K}$ & $6.29\times 10^{-10}$ & $5.98\times 10^{-10}$ & $5.95\times 10^{-10}$ & ($5.07$, $7.21$)$\times10^{-10}$ \\
-$\kappa_\text{LA/G}^\text{Ls23K}$ & $2.89\times 10^{-9}$ & $3.38\times 10^{-9}$ & $3.36\times 10^{-9}$ & ($2.64$, $4.14$)$\times10^{-9}$ \\
+$N_t^\text{Ls23K}$ & $1.83\times 10^{8}$ & $1.67\times 10^{8}$ & $1.68\times 10^{8}$ & ($1.46$, $1.93$)$\times10^{8}$ \\
+$\kappa_\text{LA}^\text{Ls23K}$ & $6.29\times 10^{-10}$ & $5.98\times 10^{-10}$ & $5.95\times 10^{-10}$ & ($4.92$, $7.24$)$\times10^{-10}$ \\
+$\kappa_\text{LA/G}^\text{Ls23K}$ & $2.89\times 10^{-9}$ & $3.38\times 10^{-9}$ & $3.36\times 10^{-9}$ & ($2.73$, $4.12$)$\times10^{-9}$ \\
 \midrule
 \multicolumn{5}{c}{\textbf{Ls-CTC494}} \\
 \midrule
 $\mu_\text{opt}^\text{LsCTC494}$ & 0.40 & - & 0.41 & (0.39, 0.42) \\
-$N_t^\text{LsCTC494}$ & $2.33\times 10^{8}$ & - & $2.05\times 10^{8}$ & ($1.81$, $2.28$)$\times10^{8}$ \\
-$\kappa_\text{LA}^\text{LsCTC494}$ & $2.60\times 10^{-10}$ & - & $3.05\times 10^{-10}$ & ($2.46$, $3.75$)$\times10^{-10}$ \\
-$\kappa_\text{LA/G}^\text{LsCTC494}$ & $4.09\times 10^{-9}$& - & $4.63\times 10^{-9}$ & ($3.93$, $5.43$)$\times10^{-9}$ \\
+$N_t^\text{LsCTC494}$ & $2.33\times 10^{8}$ & - & $2.05\times 10^{8}$ & ($1.77$, $2.30$)$\times10^{8}$ \\
+$\kappa_\text{LA}^\text{LsCTC494}$ & $2.60\times 10^{-10}$ & - & $3.05\times 10^{-10}$ & ($2.29$, $4.03$)$\times10^{-10}$ \\
+$\kappa_\text{LA/G}^\text{LsCTC494}$ & $4.09\times 10^{-9}$& - & $4.63\times 10^{-9}$ & ($3.89$, $5.47$)$\times10^{-9}$ \\
 \midrule
 \multicolumn{5}{c}{\textbf{Lm-CTC1034}} \\
 \midrule
 $\mu_\text{opt}^\text{Lm}$ & 0.36 & 0.34 & 0.34 & (0.33, 0.35) \\
-$N_t^\text{Lm}$ & $5.97\times 10^{8}$ & $6.14\times 10^{8}$ & $6.18\times 10^{8}$ & ($4.32$, $7.82$)$\times10^{8}$ \\
-$\kappa_\text{LA/G}^\text{Lm}$ & $5.97\times 10^{-10}$ & $5.70\times 10^{-10}$ & $5.63\times 10^{-10}$ & ($3.21$, $8.57$)$\times10^{-10}$ \\
+$N_t^\text{Lm}$ & $5.97\times 10^{8}$ & $6.14\times 10^{8}$ & $6.18\times 10^{8}$ & ($4.31$, $8.09$)$\times10^{8}$ \\
+$\kappa_\text{LA/G}^\text{Lm}$ & $5.97\times 10^{-10}$ & $5.70\times 10^{-10}$ & $5.63\times 10^{-10}$ & ($3.58$, $9.37$)$\times10^{-10}$ \\
 \midrule
 \multicolumn{5}{c}{\textbf{Toxin Effect}} \\
 \midrule
 $\omega_T^\text{Lm}$ & - & - & 0.51 & (0.48, 0.56) \\
-$K$ & - & - & 138.16 & (100.0, 225.0) \\
-$\kappa^\text{LsCTC494}_\text{T/G}$ & -& - & $6.09\times 10^{-6}$ & ($4.86$, $7.71$)$\times10^{-6}$ \\
+$K$ & - & - & 138.16 & (85.26, 236.84) \\
+$\kappa^\text{LsCTC494}_\text{T/G}$ & -& - & $6.09\times 10^{-6}$ & ($4.71$, $7.66$)$\times10^{-6}$ \\
 \bottomrule
 \end{tabular}}
 \caption{
