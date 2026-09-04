@@ -1477,6 +1477,43 @@ where $\chi^2_{1,0.95} \approx 3.84$ for the standard 95\% threshold used here.
 \label{fig:case_study_profile_likelihoods}
 \end{figure}
 %
+\section{pH dependence of growth}
+Akaike Information Criterion (AIC):
+\begin{equation}
+\mathrm{AIC} = -2\log L + 2n_\text{params},
+\label{eq:AIC}
+\end{equation}
+where $\mathcal{L} = -2\log L$ is the cost function evaluated at the optimum, and $n_\text{params}$ is the number of free model parameters.\\
+%
+Bayesian Information Criterion (BIC):
+\begin{equation}
+\mathrm{BIC} = -2\log L + n_\text{params}\ln(n_{\text{data}}),
+\label{eq:BIC}
+\end{equation}
+here $n_{\text{data}}$ is the number of individual residual terms contributing to $\mathcal{L}$.\\
+%
+The result of model selection between the pH-dependent and pH-independent growth model is summarized in Table~\ref{tab:model_selection_pH}.
+\begin{table}[H]
+\centering\small
+    {\renewcommand{\arraystretch}{1.15}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\arraybackslash}p{#1}}
+\begin{tabular}{R{2.7cm}|C{2.5cm}C{2.5cm}C{2.5cm}C{2.5cm}}
+    \toprule
+    Model & $\mathcal{L}$ & $n_\text{params}$ & AIC & BIC \\
+    \midrule
+    pH-independent & 0.0404 & 16 & -37.3466 & 14.3511  \\
+    pH-dependent & 0.0376 & 25 & -33.0362 &  47.7416 \\
+    \bottomrule
+    \end{tabular}}
+    \caption{Comparison of the pH-dependent~\eqref{eq:case_study_mu_pH} and pH-independent growth model using AIC~\eqref{eq:AIC} and BIC~\eqref{eq:BIC}.
+    Both models fit to the same number of data points $n_{\text{data}}=187$ corresponding to the case of the \textit{Two-species toxin model}~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034} calibrated on all 5 experiments. The optimized cost function is denoted by $\mathcal{L}$, and $n_\text{params}$ is the number of free parameters in each model.
+    }
+    \label{tab:model_selection_pH}
+\end{table}
+The pH-dependent growth rates show smaller value of the cost function and, hence, a better fit to the data.
+However, both AIC and BIC results in the pH-independent model being preferred over introducing the pH-dependency into growth rates due to significant increase in the number of free parameters.
+%
 \section{Deriving the pool model from the \acs{abm}}
 \label{sec:supplement-abm-derivation}
 \paragraph{Reactions}
