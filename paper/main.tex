@@ -1374,13 +1374,13 @@ $\kappa_\text{LA/G}^\text{Lm}$ & $5.97\times 10^{-10}$ & $5.70\times 10^{-10}$ &
 \midrule
 \multicolumn{5}{c}{\textbf{Toxin Effect}} \\
 \midrule
-$\omega_T^\text{Lm}$ & - & - & 0.51 & (0.49, 0.54) \\
+$\omega_T^\text{Lm}$ & - & - & 0.51 & (0.48, 0.56) \\
 $K$ & - & - & 138.16 & (100.0, 225.0) \\
 $\kappa^\text{LsCTC494}_\text{T/G}$ & -& - & $6.09\times 10^{-6}$ & ($4.86$, $7.71$)$\times10^{-6}$ \\
 \bottomrule
 \end{tabular}}
 \caption{
-      Estimated model parameters in the three optimization scenarios for the pH-independent, Michaelis--Menten toxin-inhibition model ($n=1$, fixed): monoculture-fits for the \textit{Single-species model}, the combined monocultures and coculture fit of Lm-CTC1034 and Ls-23K for the \textit{Two-species resource model}, the fit combining all experiments for the \textit{Two-species toxin model}. Approximate 95\% confidence intervals are reported only for the \textit{Two-species toxin model}.
+      Estimated model parameters in the three optimization scenarios for the pH-independent, Michaelis-Menten toxin-inhibition model ($n=1$, fixed): monoculture-fits for the \textit{Single-species model}, the combined monocultures and coculture fit of Lm-CTC1034 and Ls-23K for the \textit{Two-species resource model}, the fit combining all experiments for the \textit{Two-species toxin model}. 95\% confidence intervals are reported for the \textit{Two-species toxin model} and calculated from profile likelihoods in Fig.~\ref{fig:case_study_profile_likelihoods}.
      }
 \label{tab:case_study_parameters_3_estimations}
 \end{table}
@@ -1424,6 +1424,51 @@ Co.             & $G_\text{LsCTC494}(0)$ & - & - & $1.11\times 10^{5}$ \\
      }
 \label{tab:case_study_init_conditions}
 \end{table}
+%
+\section{Profile likelihoods for the case study}
+To investigate the identifiability of the \textit{Two-species toxin model} given experimental data in the case study, we computed profile likelihoods for each parameter $p_j$.
+For each parameter $p_j$, a specific value $p_j^{(k)}$ was fixed, and the remaining parameters were re-optimized to minimize the cost function $\mathcal{L}$~\citep{kreutz_profile_2013}.
+As in~\citep{ferrer-bustinsAntilisterialEffect2024} no measurement error model was found for the used data, we assume additive Gaussian noise $\epsilon \sim \mathcal{N}(0, \sigma^2)$ with unknown variance $\sigma^2$, shared across all observables.
+Under this assumption, $-2\log L(\theta)$ is proportional to the least-squares cost function $\mathcal{L}(\theta)$ up to an additive constant that does not depend on $\theta$; consequently, differences in $-2\log L$ between parameter values are proportional to differences in cost, with $1/s$ as the proportionality factor, where $s$ is the scale defined below.
+Then the profile likelihood for this specific parameter value $p_j^{(k)}$ can be calculated as
+\begin{equation}
+\text{PL}(p_j^{(k)}) = \Delta\!\left(-2\log L\right)_j\!\left(p_j^{(k)}\right) \;\approx\; \frac{\mathcal{L}_j\!\left(p_j^{(k)}\right) - \mathcal{L}_\text{opt}}{s},
+\end{equation}
+where $\mathcal{L}_\text{opt}$ is the cost function evaluated at the full joint calibration optimum, and $\mathcal{L}_j(p_j^{(k)})$ is the minimum cost obtained by fixing $p_j$ at a grid of values $p_j^{(k)}$ and re-optimizing all remaining parameters.
+Note that the scale $s$ is not derived from an independent measurement of the noise, but estimated from the residuals of the original calibration run:
+\begin{equation}
+s = \frac{\hat\sigma^2}{n_{\text{data}}} = \frac{\mathcal{L}_{\text{opt}}}{n_{\text{data}} - n_{\text{params}}}, \qquad \hat\sigma^2 = \frac{\mathcal{L}_{\text{opt}} \cdot n_{\text{data}}}{n_{\text{data}} - n_{\text{params}}},
+\end{equation}
+where $\hat\sigma^2$ is the bias-corrected estimate of the residual variance, $n_{\text{data}}$ is the number of individual residual terms contributing to $\mathcal{L}_{\text{opt}}$, and $n_{\text{params}}$ is the number of free parameters.
+The approximate $100(1-\alpha)\%$ confidence interval for $p_j$ is then the set of grid values for which this statistic falls below the $\chi^2$ threshold with one degree of freedom:
+\begin{equation}
+\text{CI}_j(1-\alpha) \;=\; \left\{\, p_j^{(k)} \;:\; \Delta\!\left(-2\log L\right)_j\!\left(p_j^{(k)}\right) \,\le\, \chi^2_{1,\,1-\alpha} \,\right\},
+\end{equation}
+where $\chi^2_{1,0.95} \approx 3.84$ for the standard 95\% threshold used here.
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_00_mu_Ls23K.pdf}
+    \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_01_mu_LsCTC494.pdf}
+    \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_02_mu_Lm.pdf}
+    \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_05_log_10NLs23K_t.pdf}
+    \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_06_log_10NLsCTC494_t.pdf}
+    \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_07_log_10NLm_t.pdf}\\
+    \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_03_omega_TLm.pdf}
+    \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_04_K_cdot_10_2.pdf}
+    \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_08_kappa_T_cdot_10_5.pdf}\\
+    \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_09_kappa_LALs23K_cdot_10_9.pdf}
+    \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_10_kappa_LA_GLs23K_cdot_10_9.pdf}
+    \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_11_kappa_LALsCTC494_cdot_10_9.pdf}\\
+    \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_12_kappa_LA_GLsCTC494_cdot_10_9.pdf}
+    \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_14_kappa_LA_GLm_cdot_10_9.pdf}
+    \caption{
+      Profile likelihood curves for the parameters \textit{Two-species toxin model}~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034}, estimated from all five experiment.
+      (A-C) growth rates, (D-F) decimal logarithm of resource capacities, (G-H) toxin-effect parameters $\omega_T^\text{Lm}$ and $K$, (I) the bacteriocin production rate $\kappa_T$, and (J-N) lactic-acid production rates $\kappa_\text{LA}$ and $\kappa_\text{LA/G}$.
+      In each panel, the solid line shows the profile of $\Delta(-2\log L)$ relative to the global optimum as the corresponding parameter is fixed across a grid of values and all others are re-optimized; the red dashed vertical line marks the optimal estimated value. The dotted horizontal line indicates the 95\% confidence threshold ($\chi^2_{1,0.95} \approx 3.84$), and the shaded region marks the resulting approximate 95\% confidence interval.
+     }
+    \end{center}
+\label{fig:case_study_profile_likelihoods}
+\end{figure}
 %
 \section{Deriving the pool model from the \acs{abm}}
 \label{sec:supplement-abm-derivation}
