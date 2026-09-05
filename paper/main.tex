@@ -783,22 +783,12 @@ The \ac{ode} system for monoculture for bacterium $i$ can be written as follows:
 \end{split}\end{align}
 Here, the term $\kappa_\text{LA}^i G_i$ describes the constant production of lactic acid, while the term $\kappa_\text{LA/G}^i G_i \tilde{R}$ corresponds to growth-associated production.
 Note that the constant production rate of lactic acid is non-zero only for the two \textit{L. sakei} strains, while for \textit{L. monocytogenes} it is set to zero.
-The parameter $N_t^i$ is the bacterium-specific capacity of the resource pool, i.e., the maximum increase in bacterial concentration that can be supported by the available resource (see Appendix~\ref{ssec:supplement0}).
-\cmt{Furthermore, the accumulation of lactic acid causes a decrease in the pH of the microenvironment, which in turn alters the growth dynamics.
-To account for this effect, we incorporate a term from the gamma model proposed by~\citet{zwietering_decision_1992}:}
-\begin{equation}
-    \mu(\mathrm{pH}) = \mu_\text{opt}\, \gamma(\mathrm{pH}) =  \mu_\text{opt} \frac{(\mathrm{pH} - \mathrm{pH}_\text{min})(\mathrm{pH}_\text{max} - \mathrm{pH})}{(\mathrm{pH}_\text{opt} - \mathrm{pH}_\text{min})(\mathrm{pH}_\text{max} - \mathrm{pH}_\text{opt})},
-    \label{eq:case_study_mu_pH}
-\end{equation}
-\cmt{where $\mu_\text{opt}$ is the growth rate under optimal conditions, $\mathrm{pH}_\text{min}$ and $\mathrm{pH}_\text{max}$ are the minimum and maximum pH bounds, outside which bacteria cannot grow, and $\mathrm{pH}_\text{opt}$ is the optimal pH value, where the microorganism achieves its maximum growth rate.
+The parameter $N_t^i$ is the bacterium-specific capacity of the resource pool, i.e., the maximum increase in bacterial concentration that can be supported by the available resource (see Appendix~\ref{ssec:supplement0}).\\
 %
-The factor $\gamma(\mathrm{pH})$ requires the pH as a function of time.
-We do not model the acidification itself, but use the measured pH time series, interpolated between sampling points, as an input to the model.
-The reason is that the relation between the acid produced and the resulting pH is not one-to-one: it is set by the buffer capacity of the matrix, which is determined by proteins, inorganic phosphate, carnosine and other small constituents, differs between matrices, and depends on the pH itself~\citep{puolanne2000buffering, kylapuhju2004buffering, salaun2005buffering}.
-For post-rigor muscle, buffer capacities determined from the accumulated lactate and the simultaneous pH decline range from about 32 to 49~mmol per pH unit and kilogram, with standard deviations of 20--35\%~\citep{kylapuhju2004buffering}, so this conversion cannot be obtained from stoichiometry.
-Undefined buffering components make estimates of pH from acid production unreliable unless the buffer capacity of the medium has been titrated~\citep{breidt2022buffer}.
-Lactic acid therefore enters our model as a predicted observable that is compared with the measurements, while the growth rates respond to the measured acidification, i.e., $\mu_i = \mu_i(\mathrm{pH})$ in Eq.~\eqref{eq:case_study_ode_monoculture} and in the two-species models below.
-Closing this loop -- predicting the pH from $\mathrm{LA}$ instead of prescribing it -- requires the titration curve of the medium and is a natural extension whenever that curve is available~\citep{breidt2022buffer, anthony2025synthetic}.}
+The experimental data show that the accumulation of lactic acid causes a decrease in the pH of the microenvironment, which in turn can inhibit bacterial growth.
+To determine the relevance of the pH model in the description of growth curves, we performed a model selection between pH-dependent growth rates described by Zwietering's gamma model~\citep{zwietering_decision_1992} and pH-independent rates using the Akaike information criterion (AIC)~\citep{akaike1100705}.
+As a result, although pH-dependence slightly improves the model fit, the AIC values indicate that the pH-independent model is preferred due to the significant increase in the number of free parameters (see Appendix~\ref{sec:supplement-case-study-pH-dependence}).
+Thus, we will further assume that the growth rates for all strains are constant with time.\\
 %
 A model was calibrated for each of the three strains using the experimental data from the monoculture experiments, with the resulting parameter values shown in Table~\ref{tab:case_study_parameters_3_estimations} and initial conditions shown in Table~\ref{tab:case_study_init_conditions}.
 The resulting one-species models are presented in Fig.~\ref{fig:case_study_monoculture}.
@@ -853,7 +843,7 @@ The model now reproduces not only the data from monoculture experiments, but als
 \subsection{Two-species with toxin production model}
 As mentioned previously, the Ls-CTC494 strain produces the bacteriocin sakacin K, which has a strong antimicrobial effect on Lm-CTC1034.
 To describe this effect, we extend the two-species model~\eqref{eq:case_study_ode_coculture_Ls23K-Lm} to include a toxin pool $\mathcal{T}_\text{Ls}$.
-The toxin produced during the growth of Ls-CTC494 at rate $\kappa_\text{T/G}^{\delta}$ induces the death of Lm-CTC1034 cells via a Michaelis-Menten form with maximum death rate $\omega'_\text{Lm}$, and $K$, the half-saturation constant, i.e., the amount of toxin needed to reach a half-maximal response.
+The toxin produced during the growth of Ls-CTC494 at rate $\kappa_\text{T/G}^{\delta}$ induces the death of Lm-CTC1034 cells via a Michaelis-Menten form with maximum death rate $\omega'_\text{Lm}$ and half-saturation constant $K$ (i.e., the amount of toxin needed to reach a half-maximal response).
 However, as observed in studies with \textit{L. innocua} by~\citet{leroyModelingBacteriocin2005}, not all bacteria are equally susceptible to the toxin, and some \textit{Listeria}~spp. cells are resistant to sakacin K.
 Based on this observation in another species of the same genus, we assume that the same holds for Lm-CTC1034 and divide the population into two groups: sensitive ($G^\text{sens}_\text{Lm}$) and resistant ($G^\text{res}_\text{Lm}$).
 For simplicity, we keep identical growth dynamics ($\mu^\text{res}_\text{Lm} = \mu^\text{sens}_\text{Lm} = \mu_\text{Lm}$) for both groups, with the toxin-induced death term applying only to the sensitive population.
@@ -897,8 +887,7 @@ Based on this, we estimated the parameters of the model using all five experimen
     \end{center}
 \end{figure}
 The model captures the decrease in the population of Lm-CTC1034 in the coculture with Ls-CTC494 (see Fig.~\ref{fig:case_study_coculture_LsCTC494-LmCTC1034}E).
-The resistant bacteria account for the small residual population of Lm-CTC1034 at later times (after 45 hours); we would not be able to capture this tailing effect without introducing the resistant pool. %The estimated Hill coefficient is $n = 0.34$, i.e. below unity, so that the response saturates early: most of the effect on the sensitive population is already reached at low toxin concentrations, and further increases add comparatively little. We return to the interpretation of this value in the Discussion. Moreover, the constant lactic acid production rate of Lm-CTC1034 is estimated to be negative in the two multi-experiment fits.
-\cmt{Since the pH is prescribed rather than computed from $\mathrm{LA}$, lactic acid does not act back on any other variable, and it is therefore constrained only by its own measurements. In the cocultures only the summed production of both strains is observable, so the split between them is weakly identified.}
+The resistant bacteria account for the small residual population of Lm-CTC1034 at later times (after 45 hours); we would not be able to capture this tailing effect without introducing the resistant pool. %The estimated Hill coefficient is $n = 0.34$, i.e. below unity, so that the response saturates early: most of the effect on the sensitive population is already reached at low toxin concentrations, and further increases add comparatively little. We return to the interpretation of this value in the Discussion. Moreover, the constant lactic acid production rate of Lm-CTC1034 is estimated to be negative in the two multi-experiment fits. Since the pH is prescribed rather than computed from $\mathrm{LA}$, lactic acid does not act back on any other variable, and it is therefore constrained only by its own measurements. In the cocultures only the summed production of both strains is observable, so the split between them is weakly identified.
 %The parameter values support this reading: the growth-associated rate $\kappa_\text{LA/G}^\text{Lm}$ is stable to within a few percent across all three fits, whereas $\kappa_\text{LA}^\text{Lm}$ is positive in the single-species fit and changes sign precisely in the two fits in which Lm-CTC1034 shares the lactic acid budget with an \textit{L. sakei} strain. We therefore regard the negative value as a compensation artifact rather than as evidence of lactic acid consumption, which would also have to appear in the monoculture fit. Note that a negative $\kappa_\text{LA}^\text{Lm}$ implies net consumption only once the resource is depleted, since the total rate $(\kappa_\text{LA}^\text{Lm} + \kappa_\text{LA/G}^\text{Lm}\tilde{R})$ remains positive as long as $\tilde{R}$ is large.
 The parameter values across the three models are given in Sect.~\ref{sec:supplement-case-study-parameters} of the supplementary material.
 %
@@ -1427,15 +1416,16 @@ Co.             & $G_\text{LsCTC494}(0)$ & - & - & $1.11\times 10^{5}$ \\
 \bottomrule
 \end{tabular}}
 \caption{
-      Initial conditions for each variable of $\textbf{G}$ vector in each experiment used in the three optimization scenarios: monoculture-fits for the \textit{Single-species model}, the combined monocultures and coculture fit of Lm-CTC1034 and Ls-23K for the \textit{Two-species resource model}, the fit combining all experiments for the \textit{Two-species toxin model}.
+      Initial conditions for each variable of the $\textbf{G}$ vector in each experiment used in the three optimization scenarios: monoculture-fits for the \textit{Single-species model}, the combined monocultures and coculture fit of Lm-CTC1034 and Ls-23K for the \textit{Two-species resource model}, the fit combining all experiments for the \textit{Two-species toxin model}.
      }
 \label{tab:case_study_init_conditions}
 \end{table}
 %
 \section{Profile likelihoods for the case study}
+\label{sec:supplement-case-study-profile-likelihoods}
 To investigate the identifiability of the \textit{Two-species toxin model} given experimental data in the case study, we computed profile likelihoods for each parameter $p_j$.
 For each parameter $p_j$, a specific value $p_j^{(k)}$ was fixed, and the remaining parameters were re-optimized to minimize the cost function $\mathcal{L}$~\citep{kreutz_profile_2013}.
-As in~\citep{ferrer-bustinsAntilisterialEffect2024} no measurement error model was found for the used data, we assume additive Gaussian noise $\epsilon \sim \mathcal{N}(0, \sigma^2)$ with unknown variance $\sigma^2$, shared across all observables.
+As in~\citet{ferrer-bustinsAntilisterialEffect2024} no measurement error model was available for the data used for the case study, we therefore assume additive Gaussian noise $\epsilon \sim \mathcal{N}(0, \sigma^2)$ with unknown variance $\sigma^2$, shared across all observables.
 Under this assumption, $-2\log L(\theta)$ is proportional to the least-squares cost function $\mathcal{L}(\theta)$ up to an additive constant that does not depend on $\theta$; consequently, differences in $-2\log L$ between parameter values are proportional to differences in cost, with $1/s$ as the proportionality factor, where $s$ is the scale defined below.
 Then the profile likelihood for this specific parameter value $p_j^{(k)}$ can be calculated as
 \begin{equation}
@@ -1469,8 +1459,8 @@ where $\chi^2_{1,0.95} \approx 3.84$ for the standard 95\% threshold used here.
     \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_12_kappa_LA_GLsCTC494_cdot_10_9.pdf}
     \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_14_kappa_LA_GLm_cdot_10_9.pdf}
     \caption{
-      Profile likelihood curves for the parameters \textit{Two-species toxin model}~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034}, estimated from all five experiment.
-      (A-C) growth rates, (D-F) decimal logarithm of resource capacities, (G-H) toxin-effect parameters $\omega_T^\text{Lm}$ and $K$, (I) the bacteriocin production rate $\kappa_T$, and (J-N) lactic-acid production rates $\kappa_\text{LA}$ and $\kappa_\text{LA/G}$.
+      Profile likelihood curves for the parameters of the \textit{Two-species toxin model}~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034}, estimated from all five experiments.
+      (A-C) growth rates, (D-F) decimal logarithm of resource capacities, (G-H) toxin-effect parameters $\omega_T^\text{Lm}$ and $K$, (I) the toxin production rate $\kappa_\text{T/G}^\text{LsCTC494}$, and (J-N) lactic-acid production rates $\kappa_\text{LA}$ and $\kappa_\text{LA/G}$.
       In each panel, the solid line shows the profile of $\Delta(-2\log L)$ relative to the global optimum as the corresponding parameter is fixed across a grid of values and all others are re-optimized; the red dashed vertical line marks the optimal estimated value. The dotted horizontal line indicates the 95\% confidence threshold ($\chi^2_{1,0.95} \approx 3.84$), and the shaded region marks the resulting approximate 95\% confidence interval.
      }
     \end{center}
@@ -1478,21 +1468,32 @@ where $\chi^2_{1,0.95} \approx 3.84$ for the standard 95\% threshold used here.
 \end{figure}
 %
 \section{pH dependence of growth}
-Akaike Information Criterion (AIC):
+\label{sec:supplement-case-study-pH-dependence}
+The accumulation of lactic acid causes a decrease in the pH of the microenvironment, which in turn alters the growth dynamics.
+To account for this effect, we incorporate a term from the gamma model proposed by~\citet{zwietering_decision_1992}:
+\begin{equation}
+    \mu(\mathrm{pH}) = \mu_\text{opt}\, \gamma(\mathrm{pH}) =  \mu_\text{opt} \frac{(\mathrm{pH} - \mathrm{pH}_\text{min})(\mathrm{pH}_\text{max} - \mathrm{pH})}{(\mathrm{pH}_\text{opt} - \mathrm{pH}_\text{min})(\mathrm{pH}_\text{max} - \mathrm{pH}_\text{opt})},
+    \label{eq:case_study_mu_pH}
+\end{equation}
+where $\mu_\text{opt}$ is the growth rate under optimal conditions, $\mathrm{pH}_\text{min}$ and $\mathrm{pH}_\text{max}$ are the minimum and maximum pH bounds, outside which bacteria cannot grow, and $\mathrm{pH}_\text{opt}$ is the optimal pH value, where the microorganism achieves its maximum growth rate.
+%
+The factor $\gamma(\mathrm{pH})$ requires the pH as a function of time.
+We do not model the acidification itself, but use the measured pH time series, interpolated between sampling points, as an input to the model.
+The reason is that the relation between the acid produced and the resulting pH is not one-to-one: it is set by the buffer capacity of the matrix, which is determined by proteins, inorganic phosphate, carnosine and other small constituents, differs between matrices, and depends on the pH itself~\citep{puolanne2000buffering, kylapuhju2004buffering, salaun2005buffering}.
+For post-rigor muscle, buffer capacities determined from the accumulated lactate and the simultaneous pH decline range from about 32 to 49~mmol per pH unit and kilogram, with standard deviations of 20--35\%~\citep{kylapuhju2004buffering}, so this conversion cannot be obtained from stoichiometry.
+Undefined buffering components make estimates of pH from acid production unreliable unless the buffer capacity of the medium has been titrated~\citep{breidt2022buffer}.
+Lactic acid therefore enters our model as a predicted observable that is compared with the measurements, while the growth rates respond to the measured acidification, i.e., $\mu_i = \mu_i(\mathrm{pH})$ in Eq.~\eqref{eq:case_study_ode_monoculture} and in the two-species models~\eqref{eq:case_study_ode_coculture_Ls23K-Lm} and~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034}.
+Closing this loop -- predicting the pH from $\mathrm{LA}$ instead of prescribing it -- requires the titration curve of the medium and is a natural extension whenever that curve is available~\citep{breidt2022buffer, anthony2025synthetic}.\\
+%
+To investigate the necessity of including pH-dependence in the growth rates, we compared the pH-dependent growth model~\eqref{eq:case_study_mu_pH} with a pH-independent model, where $\mu_i$ is constant and does not depend on the pH, as described in the main text.
+To compare the two models, we used the Akaike Information Criterion (AIC)~\citep{akaike1100705}:
 \begin{equation}
 \mathrm{AIC} = -2\log L + 2n_\text{params},
 \label{eq:AIC}
 \end{equation}
 where $\mathcal{L} = -2\log L$ is the cost function evaluated at the optimum, and $n_\text{params}$ is the number of free model parameters.\\
 %
-Bayesian Information Criterion (BIC):
-\begin{equation}
-\mathrm{BIC} = -2\log L + n_\text{params}\ln(n_{\text{data}}),
-\label{eq:BIC}
-\end{equation}
-here $n_{\text{data}}$ is the number of individual residual terms contributing to $\mathcal{L}$.\\
-%
-The result of model selection between the pH-dependent and pH-independent growth model is summarized in Table~\ref{tab:model_selection_pH}.
+The result of model selection between the pH-dependent and pH-independent growth models is summarized in Table~\ref{tab:model_selection_pH}.
 \begin{table}[H]
 \centering\small
     {\renewcommand{\arraystretch}{1.15}
@@ -1500,19 +1501,19 @@ The result of model selection between the pH-dependent and pH-independent growth
 \newcolumntype{R}[1]{>{\arraybackslash}p{#1}}
 \begin{tabular}{R{2.7cm}|C{2.5cm}C{2.5cm}C{2.5cm}C{2.5cm}}
     \toprule
-    Model & $\mathcal{L}$ & $n_\text{params}$ & AIC & BIC \\
+    Model & $\mathcal{L}$ & $n_\text{params}$ & AIC\\
     \midrule
-    pH-independent & 0.0404 & 16 & -37.3466 & 14.3511  \\
-    pH-dependent & 0.0376 & 25 & -33.0362 &  47.7416 \\
+    pH-independent & 0.0404 & 16 & -37.3466 \\
+    pH-dependent & 0.0376 & 25 & -33.0362 \\
     \bottomrule
     \end{tabular}}
-    \caption{Comparison of the pH-dependent~\eqref{eq:case_study_mu_pH} and pH-independent growth model using AIC~\eqref{eq:AIC} and BIC~\eqref{eq:BIC}.
+    \caption{Comparison of the pH-dependent~\eqref{eq:case_study_mu_pH} and pH-independent growth model using AIC~\eqref{eq:AIC}.
     Both models fit to the same number of data points $n_{\text{data}}=187$ corresponding to the case of the \textit{Two-species toxin model}~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034} calibrated on all 5 experiments. The optimized cost function is denoted by $\mathcal{L}$, and $n_\text{params}$ is the number of free parameters in each model.
     }
     \label{tab:model_selection_pH}
 \end{table}
-The pH-dependent growth rates show smaller value of the cost function and, hence, a better fit to the data.
-However, both AIC and BIC results in the pH-independent model being preferred over introducing the pH-dependency into growth rates due to significant increase in the number of free parameters.
+The pH-dependent growth rates show a smaller value of the cost function and, hence, a better fit to the data.
+However, the AIC favors the pH-independent model over the pH-dependent one, due to the significant increase in the number of free parameters.
 %
 \section{Deriving the pool model from the \acs{abm}}
 \label{sec:supplement-abm-derivation}
