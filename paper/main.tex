@@ -1337,10 +1337,58 @@ Or using Eq.~\eqref{eq:ode_3pool_resource2} and separating linear and non-linear
 Here the first term is the linear part and the second term defines the quadratic behavior of the system.
 \vfill
 \pagebreak
-
+%
+\section{pH dependence of growth}
+\label{sec:supplement-case-study-pH-dependence}
+The accumulation of lactic acid causes a decrease in the pH of the microenvironment, which in turn alters the growth dynamics.
+To account for this effect, we incorporate a term from the gamma model proposed by~\citet{zwietering_decision_1992}:
+\begin{equation}
+    \mu(\mathrm{pH}) = \mu_\text{opt}\, \gamma(\mathrm{pH}) =  \mu_\text{opt} \frac{(\mathrm{pH} - \mathrm{pH}_\text{min})(\mathrm{pH}_\text{max} - \mathrm{pH})}{(\mathrm{pH}_\text{opt} - \mathrm{pH}_\text{min})(\mathrm{pH}_\text{max} - \mathrm{pH}_\text{opt})},
+    \label{eq:case_study_mu_pH}
+\end{equation}
+where $\mu_\text{opt}$ is the growth rate under optimal conditions, $\mathrm{pH}_\text{min}$ and $\mathrm{pH}_\text{max}$ are the minimum and maximum pH bounds, outside which bacteria cannot grow, and $\mathrm{pH}_\text{opt}$ is the optimal pH value, where the microorganism achieves its maximum growth rate.
+%
+The factor $\gamma(\mathrm{pH})$ requires the pH as a function of time.
+We do not model the acidification itself, but use the measured pH time series, interpolated between sampling points, as an input to the model.
+The reason is that the relation between the acid produced and the resulting pH is not one-to-one: it is set by the buffer capacity of the matrix, which is determined by proteins, inorganic phosphate, carnosine and other small constituents, differs between matrices, and depends on the pH itself~\citep{puolanne2000buffering, kylapuhju2004buffering, salaun2005buffering}.
+For post-rigor muscle, buffer capacities determined from the accumulated lactate and the simultaneous pH decline range from about 32 to 49~mmol per pH unit and kilogram, with standard deviations of 20--35\%~\citep{kylapuhju2004buffering}, so this conversion cannot be obtained from stoichiometry.
+Undefined buffering components make estimates of pH from acid production unreliable unless the buffer capacity of the medium has been titrated~\citep{breidt2022buffer}.
+Lactic acid therefore enters our model as a predicted observable that is compared with the measurements, while the growth rates respond to the measured acidification, i.e., $\mu_i = \mu_i(\mathrm{pH})$ in Eq.~\eqref{eq:case_study_ode_monoculture} and in the two-species models~\eqref{eq:case_study_ode_coculture_Ls23K-Lm} and~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034}.
+Closing this loop -- predicting the pH from $\mathrm{LA}$ instead of prescribing it -- requires the titration curve of the medium and is a natural extension whenever that curve is available~\citep{breidt2022buffer, anthony2025synthetic}.\\
+%
+To investigate the necessity of including pH-dependence in the growth rates, we compared the pH-dependent growth model~\eqref{eq:case_study_mu_pH} with a pH-independent model, where $\mu_i$ is constant and does not depend on the pH, as described in the main text.
+To compare the two models, we used the Akaike Information Criterion (AIC)~\citep{akaike1100705}:
+\begin{equation}
+\mathrm{AIC} = -2\log L + 2n_\text{params},
+\label{eq:AIC}
+\end{equation}
+where $\mathcal{L} = -2\log L$ is the cost function evaluated at the optimum, and $n_\text{params}$ is the number of free model parameters.\\
+%
+The result of model selection between the pH-dependent and pH-independent growth models is summarized in Table~\ref{tab:model_selection_pH}.
+\begin{table}[H]
+\centering\small
+    {\renewcommand{\arraystretch}{1.15}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\arraybackslash}p{#1}}
+\begin{tabular}{R{2.7cm}|C{2.5cm}C{2.5cm}C{2.5cm}C{2.5cm}}
+    \toprule
+    Model & $\mathcal{L}$ & $n_\text{params}$ & AIC\\
+    \midrule
+    pH-independent & 0.0404 & 16 & -37.3466 \\
+    pH-dependent & 0.0376 & 25 & -33.0362 \\
+    \bottomrule
+    \end{tabular}}
+    \caption{Comparison of the pH-dependent~\eqref{eq:case_study_mu_pH} and pH-independent growth model using AIC~\eqref{eq:AIC}.
+    Both models fit to the same number of data points $n_{\text{data}}=187$ corresponding to the case of the \textit{Two-species toxin model}~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034} calibrated on all 5 experiments. The optimized cost function is denoted by $\mathcal{L}$, and $n_\text{params}$ is the number of free parameters in each model.
+    }
+    \label{tab:model_selection_pH}
+\end{table}
+The pH-dependent growth rates show a smaller value of the cost function and, hence, a better fit to the data.
+However, the AIC favors the pH-independent model over the pH-dependent one, due to the significant increase in the number of free parameters.
+%
 \section{Case study parameter values}
 \label{sec:supplement-case-study-parameters}
-The parameter values estimated for the case study using experimental data for the single-species model~\eqref{eq:case_study_ode_monoculture}--\eqref{eq:case_study_mu_pH}, two-species resource model~\eqref{eq:case_study_ode_coculture_Ls23K-Lm} and \eqref{eq:case_study_mu_pH}, and two-species toxin model~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034} and \eqref{eq:case_study_mu_pH} are summarized in Table~\ref{tab:case_study_parameters_3_estimations}.
+The parameter values estimated for the case study using experimental data for the single-species model~\eqref{eq:case_study_ode_monoculture}, two-species resource model~\eqref{eq:case_study_ode_coculture_Ls23K-Lm}, and two-species toxin model~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034} are summarized in Table~\ref{tab:case_study_parameters_3_estimations}.
 \begin{table}[H]
     \centering\small
     {\renewcommand{\arraystretch}{1.15}
@@ -1453,7 +1501,7 @@ where $\chi^2_{1,0.95} \approx 3.84$ for the standard 95\% threshold used here.
     \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_07_log_10NLm_t.pdf}\\
     \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_03_omega_TLm.pdf}
     \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_04_K_cdot_10_2.pdf}
-    \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_08_kappa_T_cdot_10_5.pdf}\\
+    \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_08_kappa_T_GLsCTC494_cdot_10_5.pdf}\\
     \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_09_kappa_LALs23K_cdot_10_9.pdf}
     \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_10_kappa_LA_GLs23K_cdot_10_9.pdf}
     \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_11_kappa_LALsCTC494_cdot_10_9.pdf}\\
@@ -1467,54 +1515,6 @@ where $\chi^2_{1,0.95} \approx 3.84$ for the standard 95\% threshold used here.
     \end{center}
 \label{fig:case_study_profile_likelihoods}
 \end{figure}
-%
-\section{pH dependence of growth}
-\label{sec:supplement-case-study-pH-dependence}
-The accumulation of lactic acid causes a decrease in the pH of the microenvironment, which in turn alters the growth dynamics.
-To account for this effect, we incorporate a term from the gamma model proposed by~\citet{zwietering_decision_1992}:
-\begin{equation}
-    \mu(\mathrm{pH}) = \mu_\text{opt}\, \gamma(\mathrm{pH}) =  \mu_\text{opt} \frac{(\mathrm{pH} - \mathrm{pH}_\text{min})(\mathrm{pH}_\text{max} - \mathrm{pH})}{(\mathrm{pH}_\text{opt} - \mathrm{pH}_\text{min})(\mathrm{pH}_\text{max} - \mathrm{pH}_\text{opt})},
-    \label{eq:case_study_mu_pH}
-\end{equation}
-where $\mu_\text{opt}$ is the growth rate under optimal conditions, $\mathrm{pH}_\text{min}$ and $\mathrm{pH}_\text{max}$ are the minimum and maximum pH bounds, outside which bacteria cannot grow, and $\mathrm{pH}_\text{opt}$ is the optimal pH value, where the microorganism achieves its maximum growth rate.
-%
-The factor $\gamma(\mathrm{pH})$ requires the pH as a function of time.
-We do not model the acidification itself, but use the measured pH time series, interpolated between sampling points, as an input to the model.
-The reason is that the relation between the acid produced and the resulting pH is not one-to-one: it is set by the buffer capacity of the matrix, which is determined by proteins, inorganic phosphate, carnosine and other small constituents, differs between matrices, and depends on the pH itself~\citep{puolanne2000buffering, kylapuhju2004buffering, salaun2005buffering}.
-For post-rigor muscle, buffer capacities determined from the accumulated lactate and the simultaneous pH decline range from about 32 to 49~mmol per pH unit and kilogram, with standard deviations of 20--35\%~\citep{kylapuhju2004buffering}, so this conversion cannot be obtained from stoichiometry.
-Undefined buffering components make estimates of pH from acid production unreliable unless the buffer capacity of the medium has been titrated~\citep{breidt2022buffer}.
-Lactic acid therefore enters our model as a predicted observable that is compared with the measurements, while the growth rates respond to the measured acidification, i.e., $\mu_i = \mu_i(\mathrm{pH})$ in Eq.~\eqref{eq:case_study_ode_monoculture} and in the two-species models~\eqref{eq:case_study_ode_coculture_Ls23K-Lm} and~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034}.
-Closing this loop -- predicting the pH from $\mathrm{LA}$ instead of prescribing it -- requires the titration curve of the medium and is a natural extension whenever that curve is available~\citep{breidt2022buffer, anthony2025synthetic}.\\
-%
-To investigate the necessity of including pH-dependence in the growth rates, we compared the pH-dependent growth model~\eqref{eq:case_study_mu_pH} with a pH-independent model, where $\mu_i$ is constant and does not depend on the pH, as described in the main text.
-To compare the two models, we used the Akaike Information Criterion (AIC)~\citep{akaike1100705}:
-\begin{equation}
-\mathrm{AIC} = -2\log L + 2n_\text{params},
-\label{eq:AIC}
-\end{equation}
-where $\mathcal{L} = -2\log L$ is the cost function evaluated at the optimum, and $n_\text{params}$ is the number of free model parameters.\\
-%
-The result of model selection between the pH-dependent and pH-independent growth models is summarized in Table~\ref{tab:model_selection_pH}.
-\begin{table}[H]
-\centering\small
-    {\renewcommand{\arraystretch}{1.15}
-\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
-\newcolumntype{R}[1]{>{\arraybackslash}p{#1}}
-\begin{tabular}{R{2.7cm}|C{2.5cm}C{2.5cm}C{2.5cm}C{2.5cm}}
-    \toprule
-    Model & $\mathcal{L}$ & $n_\text{params}$ & AIC\\
-    \midrule
-    pH-independent & 0.0404 & 16 & -37.3466 \\
-    pH-dependent & 0.0376 & 25 & -33.0362 \\
-    \bottomrule
-    \end{tabular}}
-    \caption{Comparison of the pH-dependent~\eqref{eq:case_study_mu_pH} and pH-independent growth model using AIC~\eqref{eq:AIC}.
-    Both models fit to the same number of data points $n_{\text{data}}=187$ corresponding to the case of the \textit{Two-species toxin model}~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034} calibrated on all 5 experiments. The optimized cost function is denoted by $\mathcal{L}$, and $n_\text{params}$ is the number of free parameters in each model.
-    }
-    \label{tab:model_selection_pH}
-\end{table}
-The pH-dependent growth rates show a smaller value of the cost function and, hence, a better fit to the data.
-However, the AIC favors the pH-independent model over the pH-dependent one, due to the significant increase in the number of free parameters.
 %
 \section{Deriving the pool model from the \acs{abm}}
 \label{sec:supplement-abm-derivation}
