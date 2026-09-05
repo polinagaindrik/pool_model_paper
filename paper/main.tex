@@ -1390,7 +1390,7 @@ The result of model selection between the pH-dependent and pH-independent growth
         \bottomrule
     \end{tabular}}
     \caption{Comparison of the pH-dependent~\eqref{eq:case_study_mu_pH} and pH-independent growth model using AIC~\eqref{eq:AIC}.
-    Both models fit to the same number of data points $n_{\text{data}}=187$ corresponding to the case of the \textit{Two-species toxin model}~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034} calibrated on all 5 experiments. The negative log-likelihood is denoted by $-2\log L$, and $n_\text{params}$ is the number of free parameters in each model.
+    Both models fit to the same number of data points $n_{\text{data}}=187$ corresponding to the case of the \textit{Two-species toxin model}~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034} calibrated on all 5 experiments. The negative log-likelihood is denoted by $-2 \log L(\mathbf{p},\hat\sigma^2)$, and $n_\text{params}$ is the number of free parameters in each model.
     }
     \label{tab:model_selection_pH}
 \end{table}
@@ -1430,7 +1430,7 @@ $\kappa_\text{LA/G}^\text{Lm}$ & $5.97\times 10^{-10}$ & $5.70\times 10^{-10}$ &
 \midrule
 \multicolumn{5}{c}{\textbf{Toxin Effect}} \\
 \midrule
-$\omega'^\text{Lm}$ & - & - & 0.51 & (0.48, 0.56) \\
+$\omega'_\text{Lm}$ & - & - & 0.51 & (0.48, 0.56) \\
 $K_m$ & - & - & 138.16 & (85.26, 224.21) \\
 $\kappa_T$ & -& - & $6.09\times 10^{-6}$ & ($4.92$, $7.66$)$\times10^{-6}$ \\
 \bottomrule
@@ -1529,8 +1529,8 @@ The resulting profile likelihood curves and confidence intervals are presented i
       (A-C) growth rates, (D-F) decimal logarithm of resource capacities, (G-H) toxin-effect parameters $\omega'_\text{Lm}$ and $K_m$, (I) the toxin production rate $\kappa_\text{T/G}^\text{LsCTC494}$, and (J-N) lactic-acid production rates $\kappa_\text{LA}$ and $\kappa_\text{LA/G}$.
       In each panel, the solid line shows the profile of $\Delta(-2\log L)$ relative to the global optimum as the corresponding parameter is fixed across a grid of values and all others are re-optimized; the red dashed vertical line marks the optimal estimated value. The dotted horizontal line indicates the 95\% confidence threshold ($\chi^2_{1,0.95} \approx 3.84$), and the shaded region marks the resulting approximate 95\% confidence interval.
      }
+    \label{fig:case_study_profile_likelihoods}
     \end{center}
-\label{fig:case_study_profile_likelihoods}
 \end{figure}
 %
 \section{Deriving the pool model from the \acs{abm}}
