@@ -843,7 +843,7 @@ The model now reproduces not only the data from monoculture experiments, but als
 \subsection{Two-species with toxin production model}
 As mentioned previously, the Ls-CTC494 strain produces the bacteriocin sakacin K, which has a strong antimicrobial effect on Lm-CTC1034.
 To describe this effect, we extend the two-species model~\eqref{eq:case_study_ode_coculture_Ls23K-Lm} to include a toxin pool $\mathcal{T}_\text{Ls}$.
-The toxin produced during the growth of Ls-CTC494 at rate $\kappa_\text{T/G}^{\delta}$ induces the death of Lm-CTC1034 cells via a Michaelis-Menten form with maximum death rate $\omega'_\text{Lm}$ and half-saturation constant $K$ (i.e., the amount of toxin needed to reach a half-maximal response).
+The toxin produced during the growth of Ls-CTC494 at rate $\kappa_\text{T/G}^{\delta}$ induces the death of Lm-CTC1034 cells via a Michaelis-Menten form with maximum death rate $\omega'_\text{Lm}$ and half-saturation constant $K_m$ (i.e., the amount of toxin needed to reach a half-maximal response).
 However, as observed in studies with \textit{L. innocua} by~\citet{leroyModelingBacteriocin2005}, not all bacteria are equally susceptible to the toxin, and some \textit{Listeria}~spp. cells are resistant to sakacin K.
 Based on this observation in another species of the same genus, we assume that the same holds for Lm-CTC1034 and divide the population into two groups: sensitive ($G^\text{sens}_\text{Lm}$) and resistant ($G^\text{res}_\text{Lm}$).
 For simplicity, we keep identical growth dynamics ($\mu^\text{res}_\text{Lm} = \mu^\text{sens}_\text{Lm} = \mu_\text{Lm}$) for both groups, with the toxin-induced death term applying only to the sensitive population.
@@ -851,7 +851,7 @@ The resulting model is as follows:
 \begin{align}
     \begin{split}
         \dot G_\delta &= \mu_\delta \tilde{R} G_\delta\\
-        \dot G^\text{sens}_\text{Lm} &= \mu_\text{Lm} \tilde{R} G^\text{sens}_\text{Lm} - \omega'_\text{Lm} \frac{\mathcal{T}_\text{Ls}}{\mathcal{T}_\text{Ls} + K} G^\text{sens}_\text{Lm}\\
+        \dot G^\text{sens}_\text{Lm} &= \mu_\text{Lm} \tilde{R} G^\text{sens}_\text{Lm} - \omega'_\text{Lm} \frac{\mathcal{T}_\text{Ls}}{\mathcal{T}_\text{Ls} + K_m} G^\text{sens}_\text{Lm}\\
         \dot G^\text{res}_\text{Lm} &= \mu_\text{Lm} \tilde{R} G^\text{res}_\text{Lm}\\
         \dot{\tilde{R}} &= - \sum_\delta \frac{1}{N_t^\delta} \mu_\delta \tilde{R} G_\delta - \frac{1}{N_t^\text{Lm}}\mu_\text{Lm}(\tilde{R} G^\text{sens}_\text{Lm} + \tilde{R} G^\text{res}_\text{Lm})\\
         \dot{\mathcal{T}}_\text{Ls} &= \sum_\delta \kappa_\text{T/G}^\delta \tilde{R} G_\delta \\
@@ -1356,8 +1356,8 @@ Undefined buffering components make estimates of pH from acid production unrelia
 Lactic acid therefore enters our model as a predicted observable that is compared with the measurements, while the growth rates respond to the measured acidification, i.e., $\mu_i = \mu_i(\mathrm{pH})$ in Eq.~\eqref{eq:case_study_ode_monoculture} and in the two-species models~\eqref{eq:case_study_ode_coculture_Ls23K-Lm} and~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034}.
 Closing this loop -- predicting the pH from $\mathrm{LA}$ instead of prescribing it -- requires the titration curve of the medium and is a natural extension whenever that curve is available~\citep{breidt2022buffer, anthony2025synthetic}.\\
 %
-To investigate the necessity of including pH-dependence in the growth rates, we compared the pH-dependent growth model~\eqref{eq:case_study_mu_pH} with a pH-independent model, where $\mu_i$ is constant and does not depend on the pH, as described in the main text.
-To compare the two models, we used the Akaike Information Criterion (AIC)~\citep{akaike1100705}:
+To investigate the necessity of including pH-dependence in the growth rates, we compared the pH-dependent growth model~\eqref{eq:case_study_mu_pH} with pH-independent constant growth rates $\mu_i$, described in the main text.
+The Akaike Information Criterion (AIC)~\citep{akaike1100705} was used as follows
 \begin{equation}
 \mathrm{AIC} = -2\log L + 2n_\text{params},
 \label{eq:AIC}
@@ -1420,12 +1420,12 @@ $\kappa_\text{LA/G}^\text{Lm}$ & $5.97\times 10^{-10}$ & $5.70\times 10^{-10}$ &
 \multicolumn{5}{c}{\textbf{Toxin Effect}} \\
 \midrule
 $\omega_T^\text{Lm}$ & - & - & 0.51 & (0.48, 0.56) \\
-$K$ & - & - & 138.16 & (85.26, 236.84) \\
+$K_m$ & - & - & 138.16 & (85.26, 236.84) \\
 $\kappa^\text{LsCTC494}_\text{T/G}$ & -& - & $6.09\times 10^{-6}$ & ($4.71$, $7.66$)$\times10^{-6}$ \\
 \bottomrule
 \end{tabular}}
 \caption{
-      Estimated model parameters in the three optimization scenarios for the pH-independent, Michaelis-Menten toxin-inhibition model ($n=1$, fixed): monoculture-fits for the \textit{Single-species model}, the combined monocultures and coculture fit of Lm-CTC1034 and Ls-23K for the \textit{Two-species resource model}, the fit combining all experiments for the \textit{Two-species toxin model}. 95\% confidence intervals are reported for the \textit{Two-species toxin model} and calculated from profile likelihoods in Fig.~\ref{fig:case_study_profile_likelihoods}.
+      Estimated model parameters in the three optimization scenarios for the pH-independent, Michaelis-Menten toxin-inhibition model: monoculture-fits for the \textit{Single-species model}, the combined monocultures and coculture fit of Lm-CTC1034 and Ls-23K for the \textit{Two-species resource model}, the fit combining all experiments for the \textit{Two-species toxin model}. 95\% confidence intervals are reported for the \textit{Two-species toxin model} and calculated from profile likelihoods in Fig.~\ref{fig:case_study_profile_likelihoods}.
      }
 \label{tab:case_study_parameters_3_estimations}
 \end{table}
@@ -1490,7 +1490,7 @@ The approximate $100(1-\alpha)\%$ confidence interval for $p_j$ is then the set 
 \begin{equation}
 \text{CI}_j(1-\alpha) \;=\; \left\{\, p_j^{(k)} \;:\; \Delta\!\left(-2\log L\right)_j\!\left(p_j^{(k)}\right) \,\le\, \chi^2_{1,\,1-\alpha} \,\right\},
 \end{equation}
-where $\chi^2_{1,0.95} \approx 3.84$ for the standard 95\% threshold used here.
+The resulting profile likelihood curves and confidence intervals are presented in Fig.~\ref{fig:case_study_profile_likelihoods}.
 \begin{figure}[H]
     \begin{center}
     \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_00_mu_Ls23K.pdf}
@@ -1499,8 +1499,8 @@ where $\chi^2_{1,0.95} \approx 3.84$ for the standard 95\% threshold used here.
     \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_05_log_10NLs23K_t.pdf}
     \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_06_log_10NLsCTC494_t.pdf}
     \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_07_log_10NLm_t.pdf}\\
-    \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_03_omega_TLm.pdf}
-    \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_04_K_cdot_10_2.pdf}
+    \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_03_omega_textLm.pdf}
+    \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_04_K_m_cdot_10_2.pdf}
     \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_08_kappa_T_GLsCTC494_cdot_10_5.pdf}\\
     \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_09_kappa_LALs23K_cdot_10_9.pdf}
     \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_10_kappa_LA_GLs23K_cdot_10_9.pdf}
@@ -1509,7 +1509,7 @@ where $\chi^2_{1,0.95} \approx 3.84$ for the standard 95\% threshold used here.
     \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_14_kappa_LA_GLm_cdot_10_9.pdf}
     \caption{
       Profile likelihood curves for the parameters of the \textit{Two-species toxin model}~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034}, estimated from all five experiments.
-      (A-C) growth rates, (D-F) decimal logarithm of resource capacities, (G-H) toxin-effect parameters $\omega_T^\text{Lm}$ and $K$, (I) the toxin production rate $\kappa_\text{T/G}^\text{LsCTC494}$, and (J-N) lactic-acid production rates $\kappa_\text{LA}$ and $\kappa_\text{LA/G}$.
+      (A-C) growth rates, (D-F) decimal logarithm of resource capacities, (G-H) toxin-effect parameters $\omega'_\text{Lm}$ and $K_m$, (I) the toxin production rate $\kappa_\text{T/G}^\text{LsCTC494}$, and (J-N) lactic-acid production rates $\kappa_\text{LA}$ and $\kappa_\text{LA/G}$.
       In each panel, the solid line shows the profile of $\Delta(-2\log L)$ relative to the global optimum as the corresponding parameter is fixed across a grid of values and all others are re-optimized; the red dashed vertical line marks the optimal estimated value. The dotted horizontal line indicates the 95\% confidence threshold ($\chi^2_{1,0.95} \approx 3.84$), and the shaded region marks the resulting approximate 95\% confidence interval.
      }
     \end{center}
