@@ -1359,27 +1359,38 @@ Closing this loop -- predicting the pH from $\mathrm{LA}$ instead of prescribing
 To investigate the necessity of including pH-dependence in the growth rates, we compared the pH-dependent growth model~\eqref{eq:case_study_mu_pH} with pH-independent constant growth rates $\mu_i$, described in the main text.
 The Akaike Information Criterion (AIC)~\citep{akaike1100705} was used as follows
 \begin{equation}
-\mathrm{AIC} = -2\log L + 2n_\text{params},
+\mathrm{AIC} = -2\log L(\mathbf{p},\sigma^2) + 2(n_\text{params}+1),
 \label{eq:AIC}
 \end{equation}
-where $\mathcal{L} = -2\log L$ is the cost function evaluated at the optimum, and $n_\text{params}$ is the number of free model parameters.\\
+where $n_\text{params}$ is the number of model parameters with one additional parameter for the variance $\sigma^2$ of the residuals.
+The fit goodness is quantified by log-likelihood:
+\begin{equation}
+    -2 \log L(\mathbf{p},\sigma^2) = n_{\text{data}}\log(2\pi\sigma^2) + \frac{1}{\sigma^2}\sum_{i=1}^{n_{\text{data}}} \left(y_i - \hat y_i(\mathbf{p})\right)^2,
+\label{eq:supplement_akaike_logL}
+\end{equation}
+where $n_{\text{data}}$ is the number of data points, $y_i$ are the measured data, $\hat y_i(\mathbf{p})$ are the model predictions, and $\hat\sigma^2$ is the variance calculated as an error between the measured data and the model predictions:
+\begin{equation}
+    \hat\sigma^2 = \frac{1}{n_{\text{data}}}\sum_{i=1}^{n_{\text{data}}} \left(\frac{y_i - \hat y_i(\mathbf{p})}{y_{i,\max}}\right)^2.
+\label{eq:sigma_mle_normalized}
+\end{equation}
+Here we normalize the residuals by the maximum value of the measured data $y_{i,\max}$ to account for the different scales of the measured variables, e.g., bacterial counts, bacteriocin and lactic acid concentrations.
 %
 The result of model selection between the pH-dependent and pH-independent growth models is summarized in Table~\ref{tab:model_selection_pH}.
 \begin{table}[H]
 \centering\small
     {\renewcommand{\arraystretch}{1.15}
-\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
-\newcolumntype{R}[1]{>{\arraybackslash}p{#1}}
-\begin{tabular}{R{2.7cm}|C{2.5cm}C{2.5cm}C{2.5cm}C{2.5cm}}
-    \toprule
-    Model & $\mathcal{L}$ & $n_\text{params}$ & AIC\\
-    \midrule
-    pH-independent & 0.0404 & 16 & -37.3466 \\
-    pH-dependent & 0.0376 & 25 & -33.0362 \\
-    \bottomrule
+    \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+    \newcolumntype{R}[1]{>{\arraybackslash}p{#1}}
+    \begin{tabular}{R{2.7cm}|C{2.5cm}C{2.5cm}C{2.5cm}C{2.5cm}}
+        \toprule
+        Model & $-2 \log L(\mathbf{p},\hat\sigma^2)$ & $n_\text{params}$ & AIC\\
+        \midrule
+        pH-independent & -69.35 & 16 & -35.3466 \\
+        pH-dependent & -83.04 & 25 & -31.0362 \\
+        \bottomrule
     \end{tabular}}
     \caption{Comparison of the pH-dependent~\eqref{eq:case_study_mu_pH} and pH-independent growth model using AIC~\eqref{eq:AIC}.
-    Both models fit to the same number of data points $n_{\text{data}}=187$ corresponding to the case of the \textit{Two-species toxin model}~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034} calibrated on all 5 experiments. The optimized cost function is denoted by $\mathcal{L}$, and $n_\text{params}$ is the number of free parameters in each model.
+    Both models fit to the same number of data points $n_{\text{data}}=187$ corresponding to the case of the \textit{Two-species toxin model}~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034} calibrated on all 5 experiments. The negative log-likelihood is denoted by $-2\log L$, and $n_\text{params}$ is the number of free parameters in each model.
     }
     \label{tab:model_selection_pH}
 \end{table}
@@ -1474,21 +1485,27 @@ Co.             & $G_\text{LsCTC494}(0)$ & - & - & $1.11\times 10^{5}$ \\
 \label{sec:supplement-case-study-profile-likelihoods}
 To investigate the identifiability of the \textit{Two-species toxin model} given experimental data in the case study, we computed profile likelihoods for each parameter $p_j$.
 For each parameter $p_j$, a specific value $p_j^{(k)}$ was fixed, and the remaining parameters were re-optimized to minimize the cost function $\mathcal{L}$~\citep{kreutz_profile_2013}.
-As in~\citet{ferrer-bustinsAntilisterialEffect2024} no measurement error model was available for the data used for the case study, we therefore assume additive Gaussian noise $\epsilon \sim \mathcal{N}(0, \sigma^2)$ with unknown variance $\sigma^2$, shared across all observables.
-Under this assumption, $-2\log L(\theta)$ is proportional to the least-squares cost function $\mathcal{L}(\theta)$ up to an additive constant that does not depend on $\theta$; consequently, differences in $-2\log L$ between parameter values are proportional to differences in cost, with $1/s$ as the proportionality factor, where $s$ is the scale defined below.
+As in~\citet{ferrer-bustinsAntilisterialEffect2024} no measurement error model was available for the bacterial count data, we therefore assume additive Gaussian noise $\epsilon \sim \mathcal{N}(0, \sigma^2)$ with unknown variance $\sigma^2$, shared across all observables.
+Under this assumption, $-2\log L(\mathbf{p})$ is proportional to the least-squares cost function $\mathcal{L}(\mathbf{p})$ up to an additive constant that does not depend on $\mathbf{p}$.
+As for the parameter estimation the cost function was defined as
+\begin{equation}
+    \mathcal{L}(\mathbf{p}) = \sum_{i=1}^{n_{\text{data}}} \left(\frac{y_i - \hat y_i(\mathbf{p})}{y_{i,\max}}\right)^2,
+\end{equation}
+with $y_i$ being the measured data, $\hat y_i(\mathbf{p})$ the model predictions, and $y_{i,\max}$ the maximum value of the measured data, introduced to account for the different scales of the measured variables.
+Then the differences in $\Delta(-2\log L)$ between parameter values is proportional to differences in cost $\Delta\mathcal{L}$.
 Then the profile likelihood for this specific parameter value $p_j^{(k)}$ can be calculated as
 \begin{equation}
-\text{PL}(p_j^{(k)}) = \Delta\!\left(-2\log L\right)_j\!\left(p_j^{(k)}\right) \;\approx\; \frac{\mathcal{L}_j\!\left(p_j^{(k)}\right) - \mathcal{L}_\text{opt}}{s},
+    \text{PL}(p_j^{(k)}) = \Delta\!\left(-2\log L\right)_j\!\left(p_j^{(k)}\right) \;\approx\; \frac{\mathcal{L}_j\!\left(p_j^{(k)}\right) - \mathcal{L}_\text{opt}}{\hat\sigma^2},
 \end{equation}
 where $\mathcal{L}_\text{opt}$ is the cost function evaluated at the full joint calibration optimum, and $\mathcal{L}_j(p_j^{(k)})$ is the minimum cost obtained by fixing $p_j$ at a grid of values $p_j^{(k)}$ and re-optimizing all remaining parameters.
-Note that the scale $s$ is not derived from an independent measurement of the noise, but estimated from the residuals of the original calibration run:
+The scaling factor $\hat\sigma^2$ is the variance of the residuals, calculated as
 \begin{equation}
-s = \frac{\hat\sigma^2}{n_{\text{data}}} = \frac{\mathcal{L}_{\text{opt}}}{n_{\text{data}} - n_{\text{params}}}, \qquad \hat\sigma^2 = \frac{\mathcal{L}_{\text{opt}} \cdot n_{\text{data}}}{n_{\text{data}} - n_{\text{params}}},
+    \hat\sigma^2 = \frac{1}{n_{\text{data}}}\sum_{i=1}^{n_{\text{data}}} \left(\frac{y_i - \hat y_i(\mathbf{p})}{y_{i,\max}}\right)^2 = \frac{\mathcal{L}(\mathbf{p})}{n_{\text{data}}}.
+\label{eq:sigma_mle_normalized2}
 \end{equation}
-where $\hat\sigma^2$ is the bias-corrected estimate of the residual variance, $n_{\text{data}}$ is the number of individual residual terms contributing to $\mathcal{L}_{\text{opt}}$, and $n_{\text{params}}$ is the number of free parameters.
-The approximate $100(1-\alpha)\%$ confidence interval for $p_j$ is then the set of grid values for which this statistic falls below the $\chi^2$ threshold with one degree of freedom:
+The $100(1-\alpha)\%$ confidence interval for parameter $p_j$ was calculated as with a $\chi^2$ threshold with one degree of freedom:
 \begin{equation}
-\text{CI}_j(1-\alpha) \;=\; \left\{\, p_j^{(k)} \;:\; \Delta\!\left(-2\log L\right)_j\!\left(p_j^{(k)}\right) \,\le\, \chi^2_{1,\,1-\alpha} \,\right\},
+    \text{CI}_j(1-\alpha) \;=\; \left\{\, p_j^{(k)} \;:\; \text{PL}(p_j^{(k)}) \,\le\, \chi^2_{1,\,1-\alpha} \,\right\}.
 \end{equation}
 The resulting profile likelihood curves and confidence intervals are presented in Fig.~\ref{fig:case_study_profile_likelihoods}.
 \begin{figure}[H]
