@@ -1368,7 +1368,7 @@ The fit goodness is quantified by log-likelihood:
     -2 \log L(\mathbf{p},\sigma^2) = n_{\text{data}}\log(2\pi\sigma^2) + \frac{1}{\sigma^2}\sum_{i=1}^{n_{\text{data}}} \left(y_i - \hat y_i(\mathbf{p})\right)^2,
 \label{eq:supplement_akaike_logL}
 \end{equation}
-where $n_{\text{data}}$ is the number of data points, $y_i$ are the measured data, $\hat y_i(\mathbf{p})$ are the model predictions, and $\hat\sigma^2$ is the variance calculated as an error between the measured data and the model predictions:
+where $n_{\text{data}}$ is the number of data points, $y_i$ are the measured data, $\hat y_i(\mathbf{p})$ are the model predictions, and $\hat\sigma^2$ is the variance calculated as an error between the measured data and the model predictions~\citep{murphy_implementing_2023, simpson_profile-wise_2023}:
 \begin{equation}
     \hat\sigma^2 = \frac{1}{n_{\text{data}}}\sum_{i=1}^{n_{\text{data}}} \left(\frac{y_i - \hat y_i(\mathbf{p})}{y_{i,\max}}\right)^2.
 \label{eq:sigma_mle_normalized}
@@ -1498,7 +1498,7 @@ Then the profile likelihood for this specific parameter value $p_j^{(k)}$ can be
     \text{PL}(p_j^{(k)}) = \Delta\!\left(-2\log L\right)_j\!\left(p_j^{(k)}\right) \;\approx\; \frac{\mathcal{L}_j\!\left(p_j^{(k)}\right) - \mathcal{L}_\text{opt}}{\hat\sigma^2},
 \end{equation}
 where $\mathcal{L}_\text{opt}$ is the cost function evaluated at the full joint calibration optimum, and $\mathcal{L}_j(p_j^{(k)})$ is the minimum cost obtained by fixing $p_j$ at a grid of values $p_j^{(k)}$ and re-optimizing all remaining parameters.
-The scaling factor $\hat\sigma^2$ is the variance of the residuals, calculated as
+The scaling factor $\hat\sigma^2$ is the variance of the residuals~\citep{murphy_implementing_2023, simpson_profile-wise_2023}, calculated as
 \begin{equation}
     \hat\sigma^2 = \frac{1}{n_{\text{data}}}\sum_{i=1}^{n_{\text{data}}} \left(\frac{y_i - \hat y_i(\mathbf{p})}{y_{i,\max}}\right)^2 = \frac{\mathcal{L}(\mathbf{p})}{n_{\text{data}}}.
 \label{eq:sigma_mle_normalized2}
