@@ -889,7 +889,8 @@ Based on this, we estimated the parameters of the model using all five experimen
 The model captures the decrease in the population of Lm-CTC1034 in the coculture with Ls-CTC494 (see Fig.~\ref{fig:case_study_coculture_LsCTC494-LmCTC1034}E).
 The resistant bacteria account for the small residual population of Lm-CTC1034 at later times (after 45 hours); we would not be able to capture this tailing effect without introducing the resistant pool. %The estimated Hill coefficient is $n = 0.34$, i.e. below unity, so that the response saturates early: most of the effect on the sensitive population is already reached at low toxin concentrations, and further increases add comparatively little. We return to the interpretation of this value in the Discussion. Moreover, the constant lactic acid production rate of Lm-CTC1034 is estimated to be negative in the two multi-experiment fits. Since the pH is prescribed rather than computed from $\mathrm{LA}$, lactic acid does not act back on any other variable, and it is therefore constrained only by its own measurements. In the cocultures only the summed production of both strains is observable, so the split between them is weakly identified.
 %The parameter values support this reading: the growth-associated rate $\kappa_\text{LA/G}^\text{Lm}$ is stable to within a few percent across all three fits, whereas $\kappa_\text{LA}^\text{Lm}$ is positive in the single-species fit and changes sign precisely in the two fits in which Lm-CTC1034 shares the lactic acid budget with an \textit{L. sakei} strain. We therefore regard the negative value as a compensation artifact rather than as evidence of lactic acid consumption, which would also have to appear in the monoculture fit. Note that a negative $\kappa_\text{LA}^\text{Lm}$ implies net consumption only once the resource is depleted, since the total rate $(\kappa_\text{LA}^\text{Lm} + \kappa_\text{LA/G}^\text{Lm}\tilde{R})$ remains positive as long as $\tilde{R}$ is large.
-The parameter values across the three models are given in Sect.~\ref{sec:supplement-case-study-parameters} of the supplementary material.
+The parameter values across the three models are given in Appendix~\ref{sec:supplement-case-study-parameters} of the supplementary material.
+The identifiability of the model parameters was assessed using profile likelihoods (see Appendix~\ref{sec:supplement-case-study-profile-likelihoods}), and the 95\% confidence intervals are given in Table~\ref{tab:case_study_parameters_3_estimations}.
 %
 % ================================================================================================
 \section{Spatial effects}
@@ -1380,7 +1381,7 @@ $\kappa^\text{LsCTC494}_\text{T/G}$ & -& - & $6.09\times 10^{-6}$ & ($4.71$, $7.
      }
 \label{tab:case_study_parameters_3_estimations}
 \end{table}
-%
+%       
 \begin{table}[H]
 \centering\small
     {\renewcommand{\arraystretch}{1.15}
