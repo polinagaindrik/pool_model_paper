@@ -307,7 +307,7 @@ We include a resource pool that is consumed by the growing bacteria using the se
     G + R  \stackrel{\mu_0}{\longrightarrow} 2G,
 \end{equation}
 allowing us to keep a minimal number of parameters.
-Note that the pools $L$, $G$, and $D$ represent the number of bacteria (or number of bacteria per unit area/volume) while $R$ represents an abstract resource pool ($[R]=1/V$). Let $M$ be the amount of resource molecules per cell needed to grow and divide and let $N_R$ be the number of initially available resource molecules per volume (or any appropriate unit, e.g., \unit{mol/\ell}).
+Note that the pools $L$, $G$, and $D$ represent the number of bacteria (or number of bacteria per unit area/volume) while $R$ represents an abstract resource pool ($[R]=1/V$). Let $M$ be the number of resource molecules per cell needed to grow and divide, and let $N_R$ be the number of initially available resource molecules per volume (or any appropriate unit, e.g., \unit{mol/\ell}).
 Then $N_t=N_R/M$ is the maximal number of cells per volume ($[N_t]=1/V$) due to limited resources. We rescale $R$ by $N_R$ to arrive to a dimensionless resource pool $\tilde{R}(t) = R/N_R$ ($0 \leqslant \tilde{R}(t) \leqslant 1$ at all times). We further introduce $\mu:=\mu_0 N_R$ ($[\mu]= 1/h$), by means of which the growth term can be simply written as $\mu\tilde{R}G$ and the model is fully formulated in the following way:
 \begin{align}
     \begin{split}
@@ -430,7 +430,7 @@ After the extreme conditions are overcome, the bacteria return to normal exponen
 %
 %
 \paragraph{Maxwell-type stress-strain relation}
-One of the reasons that bacteria enter the dormant state can be a shift in temperature conditions, e.g., to low temperatures, unfavorable for bacterial growth~\citep{oliver_viable_1995}. The impact of temperature shifts on the physiological state of bacteria has been reported previously. Both increasing and decreasing temperatures can induce an intermediate dormant lag phase, due to the cell adjustment to the new conditions~\citep{swinnen_predictive_2004}.  To model this, we propose a viscoelastic Maxwell-type stress-strain relation and write down the ordinary differential equation for $\gamma$ to be:
+One of the reasons that bacteria enter the dormant state can be a shift in temperature conditions, e.g., to low temperatures, unfavorable for bacterial growth~\citep{oliver_viable_1995}. The impact of temperature shifts on the physiological state of bacteria has been reported previously. Both increasing and decreasing temperatures can induce an intermediate dormant lag phase, due to the cell adjustment to the new conditions~\citep{swinnen_predictive_2004}. To model this, we propose a viscoelastic Maxwell-type stress-strain relation and write down the ordinary differential equation for $\gamma$ to be:
 \begin{equation}
     \dot{\gamma} = \beta f\left(\zeta\dot{T}\right)-\delta \gamma.
 \end{equation}
@@ -526,7 +526,7 @@ To this end, we consider for simplicity only one common limiting resource pool. 
     \end{split}
     \label{eq:model_2sp_resource_comp}
 \end{align}
-Note that in this example the total number $N_t$ is the same for both species. For a generalization of this see \ref{ssec:supplement0} or the case study Sect. \ref{section:casestudy}. We again employ the conversation law for the system
+Note that in this example the total number $N_t$ is the same for both species. For a generalization of this, see Appendix~\ref{ssec:supplement0} or the case study in Sect.~\ref{section:casestudy}. We again employ the conservation law for the system
 \begin{align}
         \frac{1}{N_t}(\dot{L}_A + \dot{L}_B + \dot{G}_A +\dot{G}_B) +\dot{\tilde{R}} &=0,
 \end{align}
@@ -597,7 +597,7 @@ To introduce active competitive mechanisms, we extend our model by having one of
     \dot{\mathcal{T}} = \mathcal{F}(\tilde{R},G).
 \end{equation}
 The function $\mathcal{F}$ denotes the model for the toxin production rate.
-One example is the accumulation of bacterial waste that is responsible for the spoilage of food products and suppression of growth of other species.
+One example is the accumulation of bacterial waste that is responsible for the spoilage of food products and suppression of the growth of other species.
 Consider the system of two species competing for resource $\tilde{R}$ with the production of the toxin $\mathcal{T}$ by species $B$.
 We assume that the toxin causes the death of the species $A$ with rate $\omega'$.
 Then the full \ac{ode} system is
@@ -671,7 +671,7 @@ This leads to
     \dot{G}_B &= \frac{\mu_B G_B}{1+K_AG_A}\left(1-\frac{G_A+G_B}{N_t}\right).
 \end{split}\end{align}
 One can distinguish two limiting cases: {\it i}) $K_{A/B}\ll N_t$ and {\it ii}) $K_{A/B}\gg N_t$.
-In the first case, the inhibition is of minor importance and could be ignored, while in the latter case one can simplify the equations, given $G_A$ and $G_B$ are non-zero:
+In the first case, the inhibition is of minor importance and could be ignored, while in the latter case one can simplify the equations, given that $G_A$ and $G_B$ are non-zero:
 \begin{align}\begin{split}
     \dot{\tilde{G}}_A &=\tilde{\mu}_A\frac{\tilde{G}_A}{\tilde{G}_B}\left(1 - \tilde{G}_A-\tilde{G}_B\right)\\
     \dot{\tilde{G}}_B &= \tilde{\mu}_B\frac{\tilde{G}_B}{\tilde{G}_A}\left(1 - \tilde{G}_A-\tilde{G}_B\right).
@@ -715,7 +715,7 @@ The advantage of this system is its simplicity, allowing us to describe the effe
         (D) $\chi=1, \phi=1$, (E) $\chi=1, \phi=2$, and (F) $\chi=2, \phi=1$.
         Here the red lines describe the evolution of species $A$ and the blue lines correspond to species $B$.
         The light brown curve corresponds to the public good released by species $A$ ($\tilde{P}_A$) and the brown curve shows the public goods produced by species $B$ ($\tilde{P}_B$).
-        Initial conditions are $\tilde{G}_A(0)=\tilde{G} _B(0)=0.1$ and $\tilde{P}_A(0)=\tilde{P}_B(0)=0.01$.
+        Initial conditions are $\tilde{G}_A(0)=\tilde{G}_B(0)=0.1$ and $\tilde{P}_A(0)=\tilde{P}_B(0)=0.01$.
         Note the different time scales in panels (A)–(C) and (D)–(F).
     }
     \label{fig:1pool_2sp_inhibit}
@@ -911,10 +911,10 @@ population is well-mixed, so that every cell experiences the same average
 environment. An \ac{abm}, by contrast, is an \emph{individual-level} description.
 Each bacterium is represented as a discrete agent with its own internal state
 (e.g.\ lag or growth phase) that occupies a position in space, takes up nutrients
-from its local surroundings, grows, divides, and interacts with neighbouring
+from its local surroundings, grows, divides, and interacts with neighboring
 cells according to prescribed rules. Because agents act locally and often
 stochastically, an \ac{abm} naturally captures cell-to-cell variability and
-spatial structure such as nutrient gradients, local crowding, or the localised
+spatial structure such as nutrient gradients, local crowding, or the localized
 release of inhibitors, which a well-mixed \ac{ode} cannot resolve. The price for
 this detail is computational: simulating many individual cells is far more costly
 than integrating a handful of \acp{ode}. The two descriptions are not competing
@@ -959,7 +959,7 @@ With this flexibility, researchers are able to construct minimal models using on
 %
 \subsubsection{Cellular reactions}
 To construct an \ac{abm} that resembles the given \ac{ode} system of Eqs.~\eqref{eq:spatial_limit_F} and \eqref{eq:spatial_limit_H}, we consider multiple cellular reactions.
-We denote quantities of cellular species $A,B$ with the subscript $c_{A/B}$, respectively. Cells go from the lag phase $L$ to the growth-phase with a given transition probability, modeled as a Markovian process (no memory).  The nutrient concentration $R(x)$ in the microenvironment is potentially spatially inhomogeneous and nutrients diffuse freely with diffusion constant $D_R$. $R(x)$ denotes the non-rescaled resource pool with $[R]=V^{-1}$ in contrast to the rescaled homogeneous pool $\tilde{R}$ in Eqs.~\eqref{eq:spatial_limit_F} and \eqref{eq:spatial_limit_H}. 
+We denote quantities of cellular species $A,B$ with the subscript $c_{A/B}$, respectively. Cells go from the lag phase $L$ to the growth-phase with a given transition probability, modeled as a Markovian process (no memory). The nutrient concentration $R(x)$ in the microenvironment is potentially spatially inhomogeneous and nutrients diffuse freely with diffusion constant $D_R$. $R(x)$ denotes the non-rescaled resource pool with $[R]=V^{-1}$ in contrast to the rescaled homogeneous pool $\tilde{R}$ in Eqs.~\eqref{eq:spatial_limit_F} and \eqref{eq:spatial_limit_H}. 
 Cells take up extracellular resources $R$ and convert them into biomass, which is measured in terms of cellular volume.
 Cells of type $A$ release a diffusible molecule into the microenvironment with concentration $I$ and diffusion constant $D_I$, which inhibits the growth of the cells of type $B$.
 When combining all the listed effects and considering multiple cells of the two species $A/B$, we obtain the system:
@@ -1236,7 +1236,7 @@ P.G. and C.F. received funding from the FutureLab program (grant 281K126A20) of 
 % ================================================================================================
 \section{Generalized resource competition}
 \label{ssec:supplement0}
-We consider a microbial consortium consisting of $N$ different cell types competing for one common resource pool. For sake of simplicity we consider only growth and division; the model then reads:
+We consider a microbial consortium consisting of $N$ different cell types competing for one common resource pool. For the sake of simplicity we consider only growth and division; the model then reads:
 \begin{align}
 \dot{G}_1&=\mu_1\tilde{R}G_1\nonumber\\
 	&\;\;\vdots\\
@@ -1262,11 +1262,11 @@ and the reduced system is given by:
 	&\;\;\vdots\\
 \dot{G}_N&=\mu_N\left(1-\sum_{i=1}^N\frac{G_i(t)}{N_t^{i}}\right)G_N\nonumber.
 \end{align}
-The fixed point of this system depends on the initial conditions $G_i(t=0)$, the growth rates $\mu_i$ and the maximal capacities $N_t^{i}$. In case the initial conditions are all the same ($G_i(t=0)=G_0$) as well as the growth rates the fixed point is given by: 
+The fixed point of this system depends on the initial conditions $G_i(t=0)$, the growth rates $\mu_i$ and the maximal capacities $N_t^{i}$. In case the initial conditions are all the same ($G_i(t=0)=G_0$) as well as the growth rates, the fixed point is given by: 
 \begin{align}
 G_k^s&=\frac{\prod_{i=1}^N N_t^{i}}{\sum_{i=1}^N \prod_{j\neq i}^{N}N_t^{j}},\; \text{for all k.}
 \end{align}
-As example for the fixed point, consider a system consisting of three different cell types with $N_t^1=10^3$, $N_t^2=10^4$, and $N_t^3=10^5$. The fixed point is given by:
+As an example of the fixed point, consider a system consisting of three different cell types with $N_t^1=10^3$, $N_t^2=10^4$, and $N_t^3=10^5$. The fixed point is given by:
 \begin{align}
 G_1^s=G_2^s=G_3^s&=\frac{10^3\times10^4\times10^5}{10^4\times10^5+10^3\times10^5+10^3\times10^4}=\frac{10^{12}}{10^9+10^8+10^7}=900.901.
 \end{align}
@@ -1683,7 +1683,7 @@ We use the calculated mappings, see Eq.~\eqref{eq:ode-abm-mappings}, between the
 \end{table}
 %
 Every parameter of Table~\ref{tab:spatial_limit_init} that is present in the \ac{ode} version of the
-model was converted directly to its \ac{abm} analogon, and its value was adopted from the previous
+model was converted directly to its \ac{abm} analog, and its value was adopted from the previous
 analyses of the \ac{ode} model (see Fig.~\ref{fig:3pool_resource_plots}). The remaining parameters
 are the conversion factor $\sigma$, the diffusion constants $D_X$, the mechanical and interaction
 parameters, and the division volume $V_t$. The values of the diffusion constants were justified in
