@@ -339,10 +339,10 @@ if __name__ == "__main__":
     SCALE = 0.000213134
 
     MAKE_GRID_PLOT = True
-    GRID_OUT_PATH = "pool_paper_casestudy/out/wo_pH/finalresult/5exps/profile_likelihood_grid.png"
+    GRID_OUT_PATH = "pool_paper_casestudy/out/wo_pH/profile_likelihood_grid.png"
 
     MAKE_INDIVIDUAL_PLOTS = True
-    INDIVIDUAL_OUT_DIR = "pool_paper_casestudy/out/wo_pH/finalresult/5exps/profile_likelihood_individual"
+    INDIVIDUAL_OUT_DIR = "pool_paper_casestudy/out/wo_pH/profile_likelihood_individual"
     INDIVIDUAL_FILE_EXT = "pdf"  # or "pdf"
     # ================================================================
 

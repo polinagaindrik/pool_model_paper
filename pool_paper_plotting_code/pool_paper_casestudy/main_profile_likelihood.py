@@ -48,7 +48,7 @@ if __name__ == "__main__":
     # --------------------------------------------------------------
     path2 = "pool_paper_casestudy/out/wo_pH/"
     n_cl = 4
-    add_name = '_MM'
+    add_name = '_MM_wopH'
 
     result = fm.output.read_from_json(f"Result_calibration_5exps{add_name}_local.json", dir=path2)
     param_opt = np.array(result["param_ode"])

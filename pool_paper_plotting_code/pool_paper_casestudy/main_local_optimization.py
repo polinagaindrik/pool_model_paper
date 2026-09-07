@@ -108,7 +108,7 @@ if __name__ == "__main__":
     ################ Control parameters: ######################## 
     path = 'pool_paper_casestudy/out/wo_pH/'
     path2 = 'pool_paper_casestudy/out/wo_pH/'
-    add_name = '_5exps_MM'
+    add_name = '_5exps_MM_wopH'
     model = fm.mdl.ode_model_coculture_wopH_MM
     names = ['Ls23K', 'LsCTC494', 'Lm', 'Ls23K-Lm', 'LsCTC494-Lm']
 
