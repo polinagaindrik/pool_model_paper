@@ -1376,6 +1376,7 @@ where $n_{\text{data}}$ is the number of data points, $y_i$ are the measured dat
 Here we normalize the residuals by the maximum value of the measured data $y_{i,\max}$ to account for the different scales of the measured variables, i.e., bacterial counts, bacteriocin and lactic acid concentrations.
 %
 The result of model selection between the pH-dependent and pH-independent growth models is summarized in Table~\ref{tab:model_selection_pH}.
+
 \begin{table}[H]
 \centering\small
     {\renewcommand{\arraystretch}{1.15}
@@ -1385,8 +1386,8 @@ The result of model selection between the pH-dependent and pH-independent growth
         \toprule
         Model & $-2 \log L(\mathbf{p},\hat\sigma^2)$ & $n_\text{params}$ & AIC\\
         \midrule
-        pH-independent & -69.35 & 16 & -35.3466 \\
-        pH-dependent & -83.04 & 25 & -31.0362 \\
+        pH-independent & -71.92 & 14 & -41.92 \\
+        pH-dependent & -85.32 & 23 & -37.32 \\
         \bottomrule
     \end{tabular}}
     \caption{Comparison of the pH-dependent~\eqref{eq:case_study_mu_pH} and pH-independent secondary models for \textit{two-species toxin model}~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034} using AIC~\eqref{eq:AIC}.
