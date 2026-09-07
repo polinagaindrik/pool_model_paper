@@ -787,7 +787,7 @@ The parameter $N_t^i$ is the bacterium-specific capacity of the resource pool, i
 %
 The experimental data show that the accumulation of lactic acid causes a decrease in the pH of the microenvironment, which in turn can inhibit bacterial growth.
 To determine the relevance of the pH model in the description of growth curves, we performed a model selection between pH-dependent growth rates described by Zwietering's gamma model~\citep{zwietering_decision_1992} and pH-independent rates using the Akaike information criterion (AIC)~\citep{akaike1100705}.
-As a result, although pH-dependence slightly improves the model fit, the AIC values indicate that the pH-independent model is preferred due to the significant increase in the number of free parameters (see Appendix~\ref{sec:supplement-case-study-pH-dependence}).
+As a result, although pH-dependence slightly improves the model fit, the AIC values indicate that the pH-independent model is preferred due to the number of model parameters (see Appendix~\ref{sec:supplement-case-study-pH-dependence}).
 Thus, we will further assume that the growth rates for all strains are constant with time.\\
 %
 A model was calibrated for each of the three strains using the experimental data from the monoculture experiments, with the resulting parameter values shown in Table~\ref{tab:case_study_parameters_3_estimations} and initial conditions shown in Table~\ref{tab:case_study_init_conditions}.
@@ -1373,7 +1373,7 @@ where $n_{\text{data}}$ is the number of data points, $y_i$ are the measured dat
     \hat\sigma^2 = \frac{1}{n_{\text{data}}}\sum_{i=1}^{n_{\text{data}}} \left(\frac{y_i - \hat y_i(\mathbf{p})}{y_{i,\max}}\right)^2.
 \label{eq:sigma_mle_normalized}
 \end{equation}
-Here we normalize the residuals by the maximum value of the measured data $y_{i,\max}$ to account for the different scales of the measured variables, e.g., bacterial counts, bacteriocin and lactic acid concentrations.
+Here we normalize the residuals by the maximum value of the measured data $y_{i,\max}$ to account for the different scales of the measured variables, i.e., bacterial counts, bacteriocin and lactic acid concentrations.
 %
 The result of model selection between the pH-dependent and pH-independent growth models is summarized in Table~\ref{tab:model_selection_pH}.
 \begin{table}[H]
@@ -1389,13 +1389,13 @@ The result of model selection between the pH-dependent and pH-independent growth
         pH-dependent & -83.04 & 25 & -31.0362 \\
         \bottomrule
     \end{tabular}}
-    \caption{Comparison of the pH-dependent~\eqref{eq:case_study_mu_pH} and pH-independent growth model using AIC~\eqref{eq:AIC}.
-    Both models fit to the same number of data points $n_{\text{data}}=187$ corresponding to the case of the \textit{Two-species toxin model}~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034} calibrated on all 5 experiments. The negative log-likelihood is denoted by $-2 \log L(\mathbf{p},\hat\sigma^2)$, and $n_\text{params}$ is the number of free parameters in each model.
+    \caption{Comparison of the pH-dependent~\eqref{eq:case_study_mu_pH} and pH-independent secondary models for \textit{two-species toxin model}~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034} using AIC~\eqref{eq:AIC}.
+    Both models were calibrated using three monoculture and two coculture experiments, with number of data points $n_{\text{data}}=187$. The negative log-likelihood is denoted by $-2 \log L(\mathbf{p},\hat\sigma^2)$, and $n_\text{params}$ is the number of estimated ODE parameters in each model.
     }
     \label{tab:model_selection_pH}
 \end{table}
 The pH-dependent growth rates show a smaller value of the cost function and, hence, a better fit to the data.
-However, the AIC favors the pH-independent model over the pH-dependent one, due to the significant increase in the number of free parameters.
+However, the AIC favors the pH-independent model over the pH-dependent one, due to the smaller number of parameters.
 %
 \section{Case study parameter values}
 \label{sec:supplement-case-study-parameters}
@@ -1436,7 +1436,7 @@ $\kappa_T$ & -& - & $6.09\times 10^{-6}$ & ($4.92$, $7.66$)$\times10^{-6}$ \\
 \bottomrule
 \end{tabular}}
 \caption{
-      Estimated model parameters in the three optimization scenarios for the pH-independent, Michaelis-Menten toxin-inhibition model: monoculture-fits for the \textit{Single-species model}, the combined monocultures and coculture fit of Lm-CTC1034 and Ls-23K for the \textit{Two-species resource model}, the fit combining all experiments for the \textit{Two-species toxin model}. 95\% confidence intervals are reported for the \textit{Two-species toxin model} and calculated from profile likelihoods in Fig.~\ref{fig:case_study_profile_likelihoods}.
+      Estimated model parameters in the three optimization scenarios for the pH-independent, Michaelis-Menten toxin-inhibition model: monoculture-fits for the \textit{single-species model}, the combined monocultures and coculture fit of Lm-CTC1034 and Ls-23K for the \textit{two-species resource model}, the fit combining all experiments for the \textit{two-species toxin model}. 95\% confidence intervals are reported for the \textit{two-species toxin model} and calculated from profile likelihoods in Fig.~\ref{fig:case_study_profile_likelihoods}.
      }
 \label{tab:case_study_parameters_3_estimations}
 \end{table}
@@ -1476,14 +1476,14 @@ Co.             & $G_\text{LsCTC494}(0)$ & - & - & $1.11\times 10^{5}$ \\
 \bottomrule
 \end{tabular}}
 \caption{
-      Initial conditions for each variable of the $\textbf{G}$ vector in each experiment used in the three optimization scenarios: monoculture-fits for the \textit{Single-species model}, the combined monocultures and coculture fit of Lm-CTC1034 and Ls-23K for the \textit{Two-species resource model}, the fit combining all experiments for the \textit{Two-species toxin model}.
+      Initial conditions for each variable of the $\textbf{G}$ vector in each experiment used in the three optimization scenarios: monoculture-fits for the \textit{single-species model}, the combined monocultures and coculture fit of Lm-CTC1034 and Ls-23K for the \textit{two-species resource model}, the fit combining all experiments for the \textit{two-species toxin model}.
      }
 \label{tab:case_study_init_conditions}
 \end{table}
 %
 \section{Profile likelihoods for the case study}
 \label{sec:supplement-case-study-profile-likelihoods}
-To investigate the identifiability of the \textit{Two-species toxin model} given experimental data in the case study, we computed profile likelihoods for each parameter $p_j$.
+To investigate the identifiability of the \textit{two-species toxin model} given experimental data in the case study, we computed profile likelihoods.
 For each parameter $p_j$, a specific value $p_j^{(k)}$ was fixed, and the remaining parameters were re-optimized to minimize the cost function $\mathcal{L}$~\citep{kreutz_profile_2013}.
 As in~\citet{ferrer-bustinsAntilisterialEffect2024} no measurement error model was available for the bacterial count data, we therefore assume additive Gaussian noise $\epsilon \sim \mathcal{N}(0, \sigma^2)$ with unknown variance $\sigma^2$, shared across all observables.
 Under this assumption, $-2\log L(\mathbf{p})$ is proportional to the least-squares cost function $\mathcal{L}(\mathbf{p})$ up to an additive constant that does not depend on $\mathbf{p}$.
@@ -1525,9 +1525,9 @@ The resulting profile likelihood curves and confidence intervals are presented i
     \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_12_kappa_LA_GLsCTC494_cdot_10_9.pdf}
     \includegraphics[width=0.32\textwidth]{Figures-pool_model_real_data_profile_14_kappa_LA_GLm_cdot_10_9.pdf}
     \caption{
-      Profile likelihood curves for the parameters of the \textit{Two-species toxin model}~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034}, estimated from all five experiments.
-      (A-C) growth rates, (D-F) decimal logarithm of resource capacities, (G-H) toxin-effect parameters $\omega'_\text{Lm}$ and $K_m$, (I) the toxin production rate $\kappa_\text{T/G}^\text{LsCTC494}$, and (J-N) lactic-acid production rates $\kappa_\text{LA}$ and $\kappa_\text{LA/G}$.
-      In each panel, the solid line shows the profile of $\Delta(-2\log L)$ relative to the global optimum as the corresponding parameter is fixed across a grid of values and all others are re-optimized; the red dashed vertical line marks the optimal estimated value. The dotted horizontal line indicates the 95\% confidence threshold ($\chi^2_{1,0.95} \approx 3.84$), and the shaded region marks the resulting approximate 95\% confidence interval.
+      Profile likelihood curves for the parameters of the \textit{two-species toxin model}~\eqref{eq:case_study_ode_coculture_LsCTC494-LmCTC1034}, estimated from all five experiments.
+      (A-C) growth rates, (D-F) decimal logarithm of resource capacities, (G-H) toxin-effect parameters $\omega'_\text{Lm}$ and $K_m$, (I) the toxin production rate $\kappa_\text{T/G}^\text{LsCTC494}$, and (J-N) lactic-acid production rates.
+      In each panel, the solid line shows the profile of $\Delta(-2\log L)$ relative to the global optimum as the corresponding parameter is fixed across a grid of values and all others are re-optimized; the red dashed vertical line marks the optimal estimated value. The dotted gray horizontal line indicates the 95\% confidence threshold ($\chi^2_{1,0.95} \approx 3.84$), and the shaded region marks the resulting approximate 95\% confidence interval.
      }
     \label{fig:case_study_profile_likelihoods}
     \end{center}
