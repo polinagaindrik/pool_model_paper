@@ -191,7 +191,6 @@ def plot_comparisons(data_cells, output_path, save_prefix, title=None):
 
     fig.savefig(output_path / f"{save_prefix}-abm_ode_comparison.png")
     fig.savefig(output_path / f"{save_prefix}-abm_ode_comparison.pdf")
-    fig.savefig(output_path / f"{save_prefix}-abm_ode_comparison.eps")
     plt.close(fig)
 
 
