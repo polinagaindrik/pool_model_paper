@@ -469,7 +469,8 @@ def _plot_bacteria(df_cells, ax):
         np.array([x for x in df_cells["element.cell.cellular_reactions.cell_volume"]]) / np.pi
     ) ** 0.5
     c = [
-        "#24398c" if x else "#8c2424"
+        # COLORS_ALL["N_A"] if x else COLORS_ALL["N_B"]
+        "#8c2424" if x else "#24398c"
         for x in df_cells["element.cell.cellular_reactions.species"] == "S1"
     ]
 
@@ -480,7 +481,7 @@ def _plot_bacteria(df_cells, ax):
                 pos,
                 radius=si,
                 facecolor=ci,
-                edgecolor=ci,
+                edgecolor=None,
             )
             ax.add_patch(circle)
         else:
