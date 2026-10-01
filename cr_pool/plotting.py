@@ -276,18 +276,14 @@ def _determine_image_save_path(output_path, iteration, save_prefix, fmt="png"):
 
 def _create_base_canvas(domain):
     # Define limits for domain from simulation settings
-    xlims = np.array([0.0, domain.size])
-    ylims = np.array([0.0, domain.size])
+    lims = np.array([0.0, domain.size])
 
     # Define the overall size of the figure and adapt to if the domain was not symmetric
-    figsize_x = 16
-    figsize_y = (ylims[1] - ylims[0]) / (xlims[1] - xlims[0]) * figsize_x
-
-    fig, ax = plt.subplots(figsize=(figsize_x, figsize_y))
+    fig, ax = plt.subplots(figsize=(16, 16))
 
     # Sets correct boundaries for our domain
-    ax.set_xlim(*xlims)
-    ax.set_ylim(*ylims)
+    ax.set_xlim(*lims)
+    ax.set_ylim(*lims)
 
     # Hide axes
     ax.get_xaxis().set_visible(False)
