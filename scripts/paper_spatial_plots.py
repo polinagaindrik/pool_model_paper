@@ -138,3 +138,4 @@ if __name__ == "__main__":
             pb.update()
             crp.save_snapshot(output_path, iters[24], save_prefix, True, ["png", "pdf"])
             pb.update()
+    pb.close()
