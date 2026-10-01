@@ -517,7 +517,7 @@ def save_snapshot(
         return None
 
     # Get simulation settings and particles at the specified iteration
-    domain, cells, meta_params = get_simulation_settings(output_path)
+    domain, _, _ = get_simulation_settings(output_path)
     df_cells = get_elements_at_iter(
         output_path,
         iteration,
@@ -536,11 +536,6 @@ def save_snapshot(
     _plot_voxels(df_voxels, ax, mapper2)
 
     _plot_bacteria(df_cells, ax)
-
-    # Plot labels in bottom left corner
-    n_bacteria_1 = len(df_cells[df_cells["element.cell.cellular_reactions.species"] == "S1"])
-    n_bacteria_2 = len(df_cells[df_cells["element.cell.cellular_reactions.species"] != "S1"])
-    # _plot_labels(fig, ax, n_bacteria_1, n_bacteria_2)
 
     # Save figure and cut off excess white space
     for format in formats:
