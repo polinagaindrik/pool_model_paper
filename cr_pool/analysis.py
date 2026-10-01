@@ -153,7 +153,6 @@ def analyze_all_cell_voxel_data(
             .sort_values("iteration")
             .reset_index(drop=True)
         )
-        print("Loaded cells")
         data_cells.to_csv(cells_csv_path)
     if pb is not None:
         pb.update()
